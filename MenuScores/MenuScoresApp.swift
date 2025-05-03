@@ -19,7 +19,6 @@ struct MenuScoresApp: App {
 //            ContentView()
 //        }
         MenuBarExtra {
-            
             Menu("NHL Games") {
                             Text(formattedDate(from: vm.games.first?.date ?? "Invalid Date"))
                                 .font(.headline)

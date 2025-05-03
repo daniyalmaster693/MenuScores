@@ -9,7 +9,7 @@ import Foundation
 
 struct Scoreboard {
     struct Urls {
-        static let gamesArray = URL (string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=20250225")!
+        static let gamesArray = URL (string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard")!
+        
     }
-    
 }
