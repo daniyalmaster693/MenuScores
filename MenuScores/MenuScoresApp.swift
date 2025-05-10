@@ -62,6 +62,14 @@ struct MenuScoresApp: App {
                     await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
                 }
             }
+            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
+                    if let updatedGame = nhlVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "NHL")
+                    }
+                }
+            }
             
             Menu("NBA Games") {
                 Text(formattedDate(from: nbaVM.games.first?.date ?? "Invalid Date"))
@@ -94,6 +102,14 @@ struct MenuScoresApp: App {
                 LeagueSelectionModel.shared.currentLeague = "NBA"
                 Task {
                     await nbaVM.populateGames(from: Scoreboard.Urls.nba)
+                }
+            }
+            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await nbaVM.populateGames(from: Scoreboard.Urls.nba)
+                    if let updatedGame = nbaVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "NBA")
+                    }
                 }
             }
             
@@ -130,6 +146,14 @@ struct MenuScoresApp: App {
                     await nflVM.populateGames(from: Scoreboard.Urls.nfl)
                 }
             }
+            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await nflVM.populateGames(from: Scoreboard.Urls.nfl)
+                    if let updatedGame = nflVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "NFL")
+                    }
+                }
+            }
             
             Menu("MLB Games") {
                 Text(formattedDate(from: mlbVM.games.first?.date ?? "Invalid Date"))
@@ -162,6 +186,14 @@ struct MenuScoresApp: App {
                 LeagueSelectionModel.shared.currentLeague = "MLB"
                 Task {
                     await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
+                }
+            }
+            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
+                    if let updatedGame = mlbVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "MLB")
+                    }
                 }
             }
 
