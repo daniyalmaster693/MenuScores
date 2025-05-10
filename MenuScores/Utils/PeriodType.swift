@@ -18,7 +18,7 @@ func periodPrefix(for league: String) -> String {
     case "NFL":
         return "Q"
     case "MLB":
-        return "I"
+        return ""
     case "F1":
         return "L"
     default:
