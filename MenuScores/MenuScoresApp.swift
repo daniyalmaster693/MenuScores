@@ -8,7 +8,7 @@
 import SwiftUI
 
 class LeagueSelectionModel: ObservableObject {
-    @Published var currentLeague: String = "NHL"
+    @Published var currentLeague: String = ""
 }
 
 extension LeagueSelectionModel {
@@ -19,20 +19,25 @@ extension LeagueSelectionModel {
 struct MenuScoresApp: App {
     @State var currentTitle: String = "Select a Game"
     @State var currentGameID: String = "0"
-    @StateObject private var vm = GamesListView()
+    
+    @StateObject private var nhlVM = GamesListView()
+    @StateObject private var nbaVM = GamesListView()
+    @StateObject private var wnbaVM = GamesListView()
+    @StateObject private var nflVM = GamesListView()
+    @StateObject private var mlbVM = GamesListView()
+    @StateObject private var f1VM = GamesListView()
 
     var body: some Scene {
         MenuBarExtra {
             Menu("NHL Games") {
-                Text(formattedDate(from: vm.games.first?.date ?? "Invalid Date"))
+                Text(formattedDate(from: nhlVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
-                Divider()
-                    .padding(.bottom)
+                Divider().padding(.bottom)
 
-                if !vm.games.isEmpty {
-                    ForEach(Array(vm.games.enumerated()), id: \.1.id) { _, game in
+                if !nhlVM.games.isEmpty {
+                    ForEach(Array(nhlVM.games.enumerated()), id: \.1.id) { _, game in
                         Button {
-                            currentTitle = displayText(for: game)
+                            currentTitle = displayText(for: game, league: "NHL")
                             currentGameID = game.id
                         } label: {
                             AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
@@ -42,18 +47,121 @@ struct MenuScoresApp: App {
                             }
                             .frame(width: 40, height: 40)
 
-                            Text(displayText(for: game))
+                            Text(displayText(for: game, league: "NHL"))
                         }
                     }
                 } else {
                     Text("Loading games...")
                         .foregroundColor(.gray)
+                        .padding()
                 }
             }
             .onAppear {
                 LeagueSelectionModel.shared.currentLeague = "NHL"
                 Task {
-                    await vm.populateGames()
+                    await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
+                }
+            }
+            
+            Menu("NBA Games") {
+                Text(formattedDate(from: nbaVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !nbaVM.games.isEmpty {
+                    ForEach(Array(nbaVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "NBA")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "NBA"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "NBA"
+                Task {
+                    await nbaVM.populateGames(from: Scoreboard.Urls.nba)
+                }
+            }
+            
+            Menu("NFL Games") {
+                Text(formattedDate(from: nflVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !nflVM.games.isEmpty {
+                    ForEach(Array(nflVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "NFL")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "NFL"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "NFL"
+                Task {
+                    await nflVM.populateGames(from: Scoreboard.Urls.nfl)
+                }
+            }
+            
+            Menu("MLB Games") {
+                Text(formattedDate(from: mlbVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !mlbVM.games.isEmpty {
+                    ForEach(Array(mlbVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "MLB")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "MLB"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "MLB"
+                Task {
+                    await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
                 }
             }
 

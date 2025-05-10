@@ -11,9 +11,9 @@ import Foundation
 class GamesListView: ObservableObject {
     @Published var games: [Event] = []
 
-    func populateGames() async {
+    func populateGames(from url: URL) async {
         do {
-            self.games = try await getGames().getGamesArray(url: Scoreboard.Urls.gamesArray)
+            self.games = try await getGames().getGamesArray(url: url)
         } catch {
             print("Failed to fetch games:", error)
         }
