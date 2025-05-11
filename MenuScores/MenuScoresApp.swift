@@ -15,6 +15,13 @@ extension LeagueSelectionModel {
     static let shared = LeagueSelectionModel()
 }
 
+func openSettings() {
+    let environment = EnvironmentValues()
+    environment.openSettings()
+    NSApp.setActivationPolicy(.regular)
+    NSApp.activate(ignoringOtherApps: true)
+}
+
 @main
 struct MenuScoresApp: App {
     @State var currentTitle: String = "Select a Game"
@@ -22,10 +29,8 @@ struct MenuScoresApp: App {
     
     @StateObject private var nhlVM = GamesListView()
     @StateObject private var nbaVM = GamesListView()
-    @StateObject private var wnbaVM = GamesListView()
     @StateObject private var nflVM = GamesListView()
     @StateObject private var mlbVM = GamesListView()
-    @StateObject private var f1VM = GamesListView()
 
     var body: some Scene {
         MenuBarExtra {
@@ -205,7 +210,14 @@ struct MenuScoresApp: App {
             } label: {
                 Text("Clear Set Game")
             }
-            .keyboardShortcut("r")
+            .keyboardShortcut("c")
+            
+            Button {
+                openSettings()
+            } label: {
+                Text("Settings")
+            }
+            .keyboardShortcut(",")
 
             Button {
                 NSApplication.shared.terminate(nil)
@@ -218,6 +230,10 @@ struct MenuScoresApp: App {
                 Image(systemName: "dot.radiowaves.left.and.right")
                 Text(currentTitle)
             }
+        }
+        
+        Settings {
+            SettingsView()
         }
     }
 }
