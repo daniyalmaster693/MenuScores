@@ -215,7 +215,7 @@ struct MenuScoresApp: App {
             Button {
                 openSettings()
             } label: {
-                Text("Settings")
+                Text("Preferences")
             }
             .keyboardShortcut(",")
 
