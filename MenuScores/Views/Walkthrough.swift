@@ -1,7 +1,9 @@
 import SwiftUI
+import UserNotifications
 
 struct WalkthroughView: View {
     @State private var currentPage = 0
+    @State private var notificationStatusMessage: String?
 
     let totalPages = 5
     let titles = [
@@ -102,10 +104,28 @@ struct WalkthroughView: View {
                             
                             
                             Button("Enable Notifications") {
-                                // Placeholder action
+                                let center = UNUserNotificationCenter.current()
+                                center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                                    DispatchQueue.main.async {
+                                        if let error = error {
+                                            notificationStatusMessage = "Error: \(error.localizedDescription)"
+                                        } else if granted {
+                                            notificationStatusMessage = "Notifications granted!"
+                                        } else {
+                                            notificationStatusMessage = "Notifications were not allowed."
+                                        }
+                                    }
+                                }
                             }
                             .buttonStyle(.bordered)
                             .padding(.top, 4)
+                            
+                            if let message = notificationStatusMessage {
+                                Text(message)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                    .padding(.top, 2)
+                            }
                         }
                         .frame(width: 180, alignment: .leading)
 

@@ -22,7 +22,7 @@ func openSettings() {
     NSApp.activate(ignoringOtherApps: true)
 }
 
-func openWalkthrough() {
+func showWalkthrough() {
     let walkthroughWindow = NSWindow(
         contentRect: NSRect(x: 0, y: 0, width: 750, height: 425),
         styleMask: [.titled, .closable, .fullSizeContentView],
@@ -55,8 +55,21 @@ func openWalkthrough() {
     NSApp.activate(ignoringOtherApps: true)
 }
 
+
 @main
 struct MenuScoresApp: App {
+    // Walkthrough
+    
+    init() {
+            let hasLaunchedBeforeKey = "hasLaunchedBefore"
+            let userDefaults = UserDefaults.standard
+
+            if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
+                showWalkthrough()
+                userDefaults.set(true, forKey: hasLaunchedBeforeKey)
+            }
+        }
+    
     // Refresh Interval Settings
     
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
@@ -559,13 +572,6 @@ struct MenuScoresApp: App {
                 Text("Clear Set Game")
             }
             .keyboardShortcut("c")
-            
-            Button {
-                openWalkthrough()
-            } label: {
-                Text("Open Walkthrough")
-            }
-            .keyboardShortcut("w")
             
             Button {
                 openSettings()
