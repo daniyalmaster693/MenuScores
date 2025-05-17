@@ -20,11 +20,12 @@ func openSettings() {
     environment.openSettings()
     NSApp.setActivationPolicy(.regular)
     NSApp.activate(ignoringOtherApps: true)
-    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
 }
 
 @main
 struct MenuScoresApp: App {
+    // Refresh Interval Settings
+    
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
     private var refreshInterval: TimeInterval {
@@ -42,8 +43,26 @@ struct MenuScoresApp: App {
         }
     }
     
+        
+    // Toggled League Settings
+    
+    @AppStorage("enableNHL") private var enableNHL = true
+    @AppStorage("enableNBA") private var enableNBA = true
+    @AppStorage("enableWNBA") private var enableWNBA = true
+    @AppStorage("enableNCAAM") private var enableNCAAM = true
+    @AppStorage("enableNCAAF") private var enableNCAAF = true
+    @AppStorage("enableNFL") private var enableNFL = true
+    @AppStorage("enableMLB") private var enableMLB = true
+    @AppStorage("enableNLL") private var enableNLL = true
+    @AppStorage("enableUEFA") private var enableUEFA = true
+    @AppStorage("enableEPL") private var enableEPL = true
+    
+    // Title State Settings
+    
     @State var currentTitle: String = "Select a Game"
     @State var currentGameID: String = "0"
+    
+    // League Fetching
     
     @StateObject private var nhlVM = GamesListView()
     @StateObject private var nbaVM = GamesListView()
@@ -58,6 +77,7 @@ struct MenuScoresApp: App {
 
     var body: some Scene {
         MenuBarExtra {
+            if enableNHL {
             Menu("NHL Games") {
                 Text(formattedDate(from: nhlVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -99,7 +119,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableNBA {
             Menu("NBA Games") {
                 Text(formattedDate(from: nbaVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -141,7 +163,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableWNBA {
             Menu("WNBA Games") {
                 Text(formattedDate(from: wnbaVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -183,7 +207,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableNCAAM {
             Menu("NCAA M Games") {
                 Text(formattedDate(from: ncaamVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -225,7 +251,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableNCAAF {
             Menu("NCAA F Games") {
                 Text(formattedDate(from: ncaafVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -267,7 +295,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableNFL {
             Menu("NFL Games") {
                 Text(formattedDate(from: nflVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -309,7 +339,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableMLB {
             Menu("MLB Games") {
                 Text(formattedDate(from: mlbVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -351,7 +383,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableUEFA {
             Menu("UEFA Games") {
                 Text(formattedDate(from: uefaVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -393,7 +427,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableEPL {
             Menu("EPL Games") {
                 Text(formattedDate(from: eplVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -435,7 +471,9 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+            }
             
+            if enableNLL {
             Menu("NLL Games") {
                 Text(formattedDate(from: nllVM.games.first?.date ?? "Invalid Date"))
                     .font(.headline)
@@ -476,6 +514,7 @@ struct MenuScoresApp: App {
                         currentTitle = displayText(for: updatedGame, league: "NLL")
                     }
                 }
+            }
             }
 
             Divider()
