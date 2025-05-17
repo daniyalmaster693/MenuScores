@@ -24,7 +24,6 @@ struct WalkthroughView: View {
     
     let notificationsSections = [
         ("Game Start Alerts", "Receive notifications when games start, so you never miss a moment."),
-        ("Score Updates", "Get notified about important score changes during games."),
         ("Game Completion", "Receive alerts when games end with final scores.")
     ]
     

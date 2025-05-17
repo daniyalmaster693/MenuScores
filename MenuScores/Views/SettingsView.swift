@@ -9,9 +9,8 @@ import SwiftUI
 import LaunchAtLogin
 
 struct SettingsView: View {
-    @State private var notiGameStart = false
-    @State private var notiGameUpdate = false
-    @State private var notiGameComplete = false
+    @AppStorage("notiGameStart") private var notiGameStart = false
+    @AppStorage("notiGameComplete") private var notiGameComplete = false
     
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
     let refreshOptions = ["10 seconds", "15 seconds","20 seconds", "30 seconds", "40 seconds", "50 seconds", "1 minute", "2 minutes", "5 minutes"]
@@ -55,11 +54,6 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Toggle("Enable notifications for game start", isOn: $notiGameStart)
                         Text("Recieve notifications when games start")
-                            .font(.callout)
-                            .foregroundColor(.secondary)
-                        
-                        Toggle("Enable notifications for score updates", isOn: $notiGameUpdate)
-                        Text("Receive notifications for important game events")
                             .font(.callout)
                             .foregroundColor(.secondary)
                         
@@ -132,7 +126,7 @@ struct SettingsView: View {
             }
             .padding(.vertical, 8)
         }
-        .frame(maxWidth: 500, minHeight: 530, idealHeight: 800, maxHeight: .infinity)
+        .frame(maxWidth: 500, minHeight: 480, idealHeight: 800, maxHeight: .infinity)
         .onDisappear {
             NSApp.setActivationPolicy(.accessory)
             NSApp.deactivate()

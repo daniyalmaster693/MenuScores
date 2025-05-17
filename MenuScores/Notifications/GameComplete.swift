@@ -15,6 +15,7 @@ func gameCompleteNotification(gameId: String, gameTitle: String, newState: Strin
     let content = UNMutableNotificationContent()
     content.title = "Game Finished!"
     content.body = "\(gameTitle)"
+    content.interruptionLevel = .timeSensitive
     content.sound = .default
     
     let request = UNNotificationRequest(identifier: "gameComplete_\(gameId)", content: content, trigger: nil)

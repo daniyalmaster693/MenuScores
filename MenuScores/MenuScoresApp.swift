@@ -110,6 +110,11 @@ struct MenuScoresApp: App {
     @AppStorage("enableITA") private var enableITA = true
     @AppStorage("enableNLL") private var enableNLL = true
     
+    // Notification Settings
+    
+    @AppStorage("notiGameStart") private var notiGameStart = false
+    @AppStorage("notiGameComplete") private var notiGameComplete = false
+    
     // Title State Settings
     
     @State var currentTitle: String = "Select a Game"
@@ -178,14 +183,19 @@ struct MenuScoresApp: App {
                         await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
                                 if let updatedGame = nhlVM.games.first(where: { $0.id == currentGameID }) {
                                     currentTitle = displayText(for: updatedGame, league: "NHL")
+                                    
                                     let newState = updatedGame.status.type.state
                                     
-                                    if previousGameState != "in" && newState == "in" {
-                                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                    if (notiGameStart) {
+                                        if previousGameState != "in" && newState == "in" {
+                                            gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                        }
                                     }
                                     
-                                    if previousGameState != "post" && newState == "post" {
-                                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                    if (notiGameComplete) {
+                                        if previousGameState != "post" && newState == "post" {
+                                            gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                        }
                                     }
                                     
                                     previousGameState = newState
@@ -237,12 +247,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "NBA")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -294,12 +308,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "WNBA")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -351,12 +369,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "NCAA M")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -408,12 +430,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "NCAA M")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -465,12 +491,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "NFL")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -522,12 +552,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "MLB")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -579,12 +613,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "F1")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -636,12 +674,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "PGA")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -693,12 +735,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "LPGA")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -750,12 +796,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "UEFA")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -807,12 +857,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "EPL")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -864,12 +918,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "ESP")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -921,12 +979,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "GER")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -978,12 +1040,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "ITA")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
@@ -1035,12 +1101,16 @@ struct MenuScoresApp: App {
                             currentTitle = displayText(for: updatedGame, league: "NLL")
                             let newState = updatedGame.status.type.state
                             
-                            if previousGameState != "in" && newState == "in" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameStart) {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
-                            if previousGameState != "post" && newState == "post" {
-                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            if (notiGameComplete) {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
                             }
                             
                             previousGameState = newState
