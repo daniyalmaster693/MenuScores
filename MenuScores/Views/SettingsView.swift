@@ -38,8 +38,14 @@ struct SettingsView: View {
     @AppStorage("enableNCAAF") private var enableNCAAF = true
     @AppStorage("enableNFL") private var enableNFL = true
     @AppStorage("enableMLB") private var enableMLB = true
+    @AppStorage("enableF1") private var enableF1 = true
+    @AppStorage("enablePGA") private var enablePGA = true
+    @AppStorage("enableLPGA") private var enableLPGA = true
     @AppStorage("enableUEFA") private var enableUEFA = true
     @AppStorage("enableEPL") private var enableEPL = true
+    @AppStorage("enableESP") private var enableESP = true
+    @AppStorage("enableGER") private var enableGER = true
+    @AppStorage("enableITA") private var enableITA = true
     @AppStorage("enableNLL") private var enableNLL = true
     
     var body: some View {
@@ -96,9 +102,19 @@ struct SettingsView: View {
                         
                         VStack(alignment: .leading, spacing: 8) {
                             Toggle("MLB", isOn: $enableMLB)
+                            Toggle("F1", isOn: $enableF1)
+                            Toggle("PGA", isOn: $enablePGA)
+                            Toggle("LPGA", isOn: $enableLPGA)
                             Toggle("UEFA", isOn: $enableUEFA)
                             Toggle("EPL", isOn: $enableEPL)
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 8) {
+                            Toggle("ESP", isOn: $enableESP)
+                            Toggle("GER", isOn: $enableGER)
+                            Toggle("ITA", isOn: $enableITA)
                             Toggle("NLL", isOn: $enableNLL)
+                            
                         }
                     }
                 }
