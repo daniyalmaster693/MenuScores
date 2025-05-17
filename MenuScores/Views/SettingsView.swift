@@ -54,7 +54,7 @@ struct SettingsView: View {
                 LabeledContent("Notifications") {
                     VStack(alignment: .leading, spacing: 8) {
                         Toggle("Enable notifications for game start", isOn: $notiGameStart)
-                        Text("Recieve notifications 15 minutes before games start")
+                        Text("Recieve notifications when games start")
                             .font(.callout)
                             .foregroundColor(.secondary)
                         

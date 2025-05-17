@@ -61,7 +61,7 @@ struct MenuScoresApp: App {
     // Walkthrough
     
     init() {
-        UserDefaults.standard.removeObject(forKey: "hasLaunchedBefore")
+//        UserDefaults.standard.removeObject(forKey: "hasLaunchedBefore")
             let hasLaunchedBeforeKey = "hasLaunchedBefore"
             let userDefaults = UserDefaults.standard
 
@@ -114,6 +114,8 @@ struct MenuScoresApp: App {
     
     @State var currentTitle: String = "Select a Game"
     @State var currentGameID: String = "0"
+    @State var currentGameState: String = "pre"
+    @State private var previousGameState: String? = nil
     
     // League Fetching
     
@@ -147,6 +149,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "NHL")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -173,8 +176,20 @@ struct MenuScoresApp: App {
                 .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
                     Task {
                         await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
-                        if let updatedGame = nhlVM.games.first(where: { $0.id == currentGameID }) {
-                            currentTitle = displayText(for: updatedGame, league: "NHL")
+                                if let updatedGame = nhlVM.games.first(where: { $0.id == currentGameID }) {
+                                    currentTitle = displayText(for: updatedGame, league: "NHL")
+                                    let newState = updatedGame.status.type.state
+                                    
+                                    if previousGameState != "in" && newState == "in" {
+                                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                    }
+                                    
+                                    if previousGameState != "post" && newState == "post" {
+                                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                    }
+                                    
+                                    previousGameState = newState
+                                    currentGameState = newState
                         }
                     }
                 }
@@ -411,6 +426,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "MLB")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
