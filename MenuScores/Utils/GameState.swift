@@ -9,7 +9,7 @@ func displayText(for game: Event, league: String) -> String {
     guard let competition = game.competitions.first else { return game.shortName }
     let competitors = competition.competitors
 
-    if league == "MLB", game.status.type.state == "in" {
+    if (league == "MLB" || league == "UEFA" || league == "EPL"), game.status.type.state == "in" {
         return "\(competitors[1].team.abbreviation) \(competitors[1].score) - \(competitors[0].team.abbreviation) \(competitors[0].score)    \(game.status.type.shortDetail)"
     }
 

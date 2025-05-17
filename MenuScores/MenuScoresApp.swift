@@ -20,17 +20,41 @@ func openSettings() {
     environment.openSettings()
     NSApp.setActivationPolicy(.regular)
     NSApp.activate(ignoringOtherApps: true)
+    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
 }
 
 @main
 struct MenuScoresApp: App {
+    @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
+
+    private var refreshInterval: TimeInterval {
+        switch selectedOption {
+        case "10 seconds": return 10
+        case "15 seconds": return 15
+        case "20 seconds": return 20
+        case "30 seconds": return 30
+        case "40 seconds": return 40
+        case "50 seconds": return 50
+        case "1 minute": return 60
+        case "2 minutes": return 120
+        case "5 minutes": return 300
+        default: return 15
+        }
+    }
+    
     @State var currentTitle: String = "Select a Game"
     @State var currentGameID: String = "0"
     
     @StateObject private var nhlVM = GamesListView()
     @StateObject private var nbaVM = GamesListView()
+    @StateObject private var wnbaVM = GamesListView()
+    @StateObject private var ncaamVM = GamesListView()
+    @StateObject private var ncaafVM = GamesListView()
     @StateObject private var nflVM = GamesListView()
     @StateObject private var mlbVM = GamesListView()
+    @StateObject private var uefaVM = GamesListView()
+    @StateObject private var eplVM = GamesListView()
+    @StateObject private var nllVM = GamesListView()
 
     var body: some Scene {
         MenuBarExtra {
@@ -67,7 +91,7 @@ struct MenuScoresApp: App {
                     await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
                 }
             }
-            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
                 Task {
                     await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
                     if let updatedGame = nhlVM.games.first(where: { $0.id == currentGameID }) {
@@ -109,11 +133,137 @@ struct MenuScoresApp: App {
                     await nbaVM.populateGames(from: Scoreboard.Urls.nba)
                 }
             }
-            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
                 Task {
                     await nbaVM.populateGames(from: Scoreboard.Urls.nba)
                     if let updatedGame = nbaVM.games.first(where: { $0.id == currentGameID }) {
                         currentTitle = displayText(for: updatedGame, league: "NBA")
+                    }
+                }
+            }
+            
+            Menu("WNBA Games") {
+                Text(formattedDate(from: wnbaVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !wnbaVM.games.isEmpty {
+                    ForEach(Array(wnbaVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "WNBA")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "WNBA"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "WNBA"
+                Task {
+                    await wnbaVM.populateGames(from: Scoreboard.Urls.wnba)
+                }
+            }
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await wnbaVM.populateGames(from: Scoreboard.Urls.wnba)
+                    if let updatedGame = wnbaVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "WNBA")
+                    }
+                }
+            }
+            
+            Menu("NCAA M Games") {
+                Text(formattedDate(from: ncaamVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !ncaamVM.games.isEmpty {
+                    ForEach(Array(ncaamVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "NCAA M")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "NCAA M"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "NCAA M"
+                Task {
+                    await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
+                }
+            }
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
+                    if let updatedGame = ncaamVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "NCAA M")
+                    }
+                }
+            }
+            
+            Menu("NCAA F Games") {
+                Text(formattedDate(from: ncaafVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !ncaafVM.games.isEmpty {
+                    ForEach(Array(ncaafVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "NCAA F")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "NCAA F"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "NCAA F"
+                Task {
+                    await ncaafVM.populateGames(from: Scoreboard.Urls.ncaaf)
+                }
+            }
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
+                    if let updatedGame = ncaamVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "NCAA M")
                     }
                 }
             }
@@ -151,7 +301,7 @@ struct MenuScoresApp: App {
                     await nflVM.populateGames(from: Scoreboard.Urls.nfl)
                 }
             }
-            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
                 Task {
                     await nflVM.populateGames(from: Scoreboard.Urls.nfl)
                     if let updatedGame = nflVM.games.first(where: { $0.id == currentGameID }) {
@@ -193,11 +343,137 @@ struct MenuScoresApp: App {
                     await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
                 }
             }
-            .onReceive(Timer.publish(every: 20, on: .main, in: .common).autoconnect()) { _ in
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
                 Task {
                     await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
                     if let updatedGame = mlbVM.games.first(where: { $0.id == currentGameID }) {
                         currentTitle = displayText(for: updatedGame, league: "MLB")
+                    }
+                }
+            }
+            
+            Menu("UEFA Games") {
+                Text(formattedDate(from: uefaVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !uefaVM.games.isEmpty {
+                    ForEach(Array(uefaVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "UEFA")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "UEFA"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "UEFA"
+                Task {
+                    await uefaVM.populateGames(from: Scoreboard.Urls.uefa)
+                }
+            }
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await uefaVM.populateGames(from: Scoreboard.Urls.uefa)
+                    if let updatedGame = uefaVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "UEFA")
+                    }
+                }
+            }
+            
+            Menu("EPL Games") {
+                Text(formattedDate(from: eplVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !eplVM.games.isEmpty {
+                    ForEach(Array(eplVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "EPL")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "EPL"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "EPL"
+                Task {
+                    await eplVM.populateGames(from: Scoreboard.Urls.epl)
+                }
+            }
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await eplVM.populateGames(from: Scoreboard.Urls.epl)
+                    if let updatedGame = eplVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "EPL")
+                    }
+                }
+            }
+            
+            Menu("NLL Games") {
+                Text(formattedDate(from: nllVM.games.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+                Divider().padding(.bottom)
+
+                if !nllVM.games.isEmpty {
+                    ForEach(Array(nllVM.games.enumerated()), id: \.1.id) { _, game in
+                        Button {
+                            currentTitle = displayText(for: game, league: "NLL")
+                            currentGameID = game.id
+                        } label: {
+                            AsyncImage(url: URL(string: game.competitions[0].competitors[1].team.logo)) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: "NLL"))
+                        }
+                    }
+                } else {
+                    Text("Loading games...")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                LeagueSelectionModel.shared.currentLeague = "NLL"
+                Task {
+                    await nllVM.populateGames(from: Scoreboard.Urls.nll)
+                }
+            }
+            .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                Task {
+                    await nllVM.populateGames(from: Scoreboard.Urls.nll)
+                    if let updatedGame = nllVM.games.first(where: { $0.id == currentGameID }) {
+                        currentTitle = displayText(for: updatedGame, league: "NLL")
                     }
                 }
             }
