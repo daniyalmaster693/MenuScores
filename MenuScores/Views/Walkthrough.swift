@@ -19,7 +19,7 @@ struct WalkthroughView: View {
     let menuBarHelpSections = [
         ("Selecting a Game", "Select a game from any league to pin it."),
         ("Refreshing Scores", "Scores update automatically, but you can adjust how often they refresh from the settings window."),
-        ("Clearing Selection", "Use the 'Clear Set Game' option to remove the pinned score from the menubar, or simply select a differnt game.")
+        ("Clearing Selection", "Use the 'Clear Set Game' option to remove the pinned score from the menubar, or simply select a different game.")
     ]
     
     let notificationsSections = [

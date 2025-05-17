@@ -61,6 +61,7 @@ struct MenuScoresApp: App {
     // Walkthrough
     
     init() {
+        UserDefaults.standard.removeObject(forKey: "hasLaunchedBefore")
             let hasLaunchedBeforeKey = "hasLaunchedBefore"
             let userDefaults = UserDefaults.standard
 
