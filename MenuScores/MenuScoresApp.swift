@@ -206,6 +206,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "NBA")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -234,6 +235,18 @@ struct MenuScoresApp: App {
                         await nbaVM.populateGames(from: Scoreboard.Urls.nba)
                         if let updatedGame = nbaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NBA")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -250,6 +263,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "WNBA")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -278,6 +292,18 @@ struct MenuScoresApp: App {
                         await wnbaVM.populateGames(from: Scoreboard.Urls.wnba)
                         if let updatedGame = wnbaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "WNBA")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -294,6 +320,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "NCAA M")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -322,6 +349,18 @@ struct MenuScoresApp: App {
                         await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
                         if let updatedGame = ncaamVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NCAA M")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -338,6 +377,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "NCAA F")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -366,6 +406,18 @@ struct MenuScoresApp: App {
                         await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
                         if let updatedGame = ncaamVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NCAA M")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -382,6 +434,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "NFL")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -410,6 +463,18 @@ struct MenuScoresApp: App {
                         await nflVM.populateGames(from: Scoreboard.Urls.nfl)
                         if let updatedGame = nflVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NFL")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -455,6 +520,18 @@ struct MenuScoresApp: App {
                         await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
                         if let updatedGame = mlbVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "MLB")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -471,6 +548,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "F1")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true")) { image in
                                     image.resizable().scaledToFit()
@@ -499,6 +577,18 @@ struct MenuScoresApp: App {
                         await f1VM.populateGames(from: Scoreboard.Urls.f1)
                         if let updatedGame = f1VM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "F1")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -515,6 +605,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "PGA")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin")) { image in
                                     image.resizable().scaledToFit()
@@ -543,6 +634,18 @@ struct MenuScoresApp: App {
                         await pgaVM.populateGames(from: Scoreboard.Urls.pga)
                         if let updatedGame = pgaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "PGA")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -559,6 +662,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "LPGA")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin")) { image in
                                     image.resizable().scaledToFit()
@@ -587,6 +691,18 @@ struct MenuScoresApp: App {
                         await lpgaVM.populateGames(from: Scoreboard.Urls.lpga)
                         if let updatedGame = lpgaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "LPGA")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -603,6 +719,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "UEFA")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -631,6 +748,18 @@ struct MenuScoresApp: App {
                         await uefaVM.populateGames(from: Scoreboard.Urls.uefa)
                         if let updatedGame = uefaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "UEFA")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -647,6 +776,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "EPL")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -675,6 +805,18 @@ struct MenuScoresApp: App {
                         await eplVM.populateGames(from: Scoreboard.Urls.epl)
                         if let updatedGame = eplVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "EPL")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -691,6 +833,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "ESP")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -719,6 +862,18 @@ struct MenuScoresApp: App {
                         await espVM.populateGames(from: Scoreboard.Urls.esp)
                         if let updatedGame = espVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "ESP")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -735,6 +890,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "GER")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -763,6 +919,18 @@ struct MenuScoresApp: App {
                         await gerVM.populateGames(from: Scoreboard.Urls.ger)
                         if let updatedGame = gerVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "GER")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -779,6 +947,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "ITA")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -807,6 +976,18 @@ struct MenuScoresApp: App {
                         await itaVM.populateGames(from: Scoreboard.Urls.ita)
                         if let updatedGame = itaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "ITA")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
@@ -823,6 +1004,7 @@ struct MenuScoresApp: App {
                             Button {
                                 currentTitle = displayText(for: game, league: "NLL")
                                 currentGameID = game.id
+                                currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
                                     image.resizable().scaledToFit()
@@ -851,6 +1033,18 @@ struct MenuScoresApp: App {
                         await nllVM.populateGames(from: Scoreboard.Urls.nll)
                         if let updatedGame = nllVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NLL")
+                            let newState = updatedGame.status.type.state
+                            
+                            if previousGameState != "in" && newState == "in" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            if previousGameState != "post" && newState == "post" {
+                                gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                            }
+                            
+                            previousGameState = newState
+                            currentGameState = newState
                         }
                     }
                 }
