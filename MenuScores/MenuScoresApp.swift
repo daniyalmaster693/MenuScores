@@ -15,13 +15,6 @@ extension LeagueSelectionModel {
     static let shared = LeagueSelectionModel()
 }
 
-func openSettings() {
-    let environment = EnvironmentValues()
-    environment.openSettings()
-    NSApp.setActivationPolicy(.regular)
-    NSApp.activate(ignoringOtherApps: true)
-}
-
 func showWalkthrough() {
     let walkthroughWindow = NSWindow(
         contentRect: NSRect(x: 0, y: 0, width: 750, height: 425),
@@ -61,7 +54,6 @@ struct MenuScoresApp: App {
     // Walkthrough
     
     init() {
-//        UserDefaults.standard.removeObject(forKey: "hasLaunchedBefore")
             let hasLaunchedBeforeKey = "hasLaunchedBefore"
             let userDefaults = UserDefaults.standard
 
@@ -1130,12 +1122,17 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("c")
             
-            Button {
-                openSettings()
-            } label: {
-                Text("Preferences")
+            if #available(macOS 14, *) {
+                Button {
+                    let environment = EnvironmentValues()
+                    environment.openSettings()
+                    NSApp.setActivationPolicy(.regular)
+                    NSApp.activate(ignoringOtherApps: true)
+                } label: {
+                    Text("Preferences")
+                }
+                .keyboardShortcut(",")
             }
-            .keyboardShortcut(",")
 
             Button {
                 NSApplication.shared.terminate(nil)
