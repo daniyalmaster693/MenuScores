@@ -33,7 +33,7 @@ MenuScores is a lightweight macOS menu bar app that brings sports and scores rig
 2. Hovering over a league will show a dropdown of all the games for the day in that league.
 3. Clicking on a game will pin it.
 4. You can use the clear set game option, or click on a different game to clear the title.
-5. You can quit the app directly from the menubar, or open the preferences window to configure app behaviors.
+5. You can quit the app directly from the menubar, or open the preferences window to configure app behaviors (this can be done by pressing Cmd + , after opening the menubar component, or clicking the preferences button if your on macOS 14.0 and later).
 
 ## Dependencies
 
