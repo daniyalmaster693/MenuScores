@@ -118,6 +118,7 @@ struct SettingsView: View {
                         LaunchAtLogin.Toggle()
                         
                         Button("Check for Updates") {
+                            checkForUpdates()
                         }
                         .buttonStyle(.bordered)
                         .padding(.top, 8)
