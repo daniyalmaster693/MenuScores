@@ -3,6 +3,7 @@
 MenuScores is a lightweight macOS menu bar app that brings sports and scores right to your desktop.
 
 [![GitHub License](https://img.shields.io/github/license/daniyalmaster693/MenuScores)](LICENSE)
+<a href="https://github.com/daniyalmaster693/MenuScores/releases/latest"><img src="https://img.shields.io/github/v/release/daniyalmaster693/MenuScores"></a>
 [![Downloads](https://img.shields.io/github/downloads/daniyalmaster693/MenuScores/total.svg)](https://github.com/daniyalmaster693/MenuScores/releases)
 
 ## Features
