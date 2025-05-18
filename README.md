@@ -6,6 +6,25 @@ MenuScores is a lightweight macOS menu bar app that brings sports and scores rig
 <a href="https://github.com/daniyalmaster693/MenuScores/releases/latest"><img src="https://img.shields.io/github/v/release/daniyalmaster693/MenuScores"></a>
 [![Downloads](https://img.shields.io/github/downloads/daniyalmaster693/MenuScores/total.svg)](https://github.com/daniyalmaster693/MenuScores/releases)
 
+## Supported Leagues
+
+- NHL
+- NBA
+- WNBA
+- Men's College Basketball
+- Women's College Basketball
+- NFL
+- MLB
+- F1
+- PGA
+- LGA
+- UEFA – UEFA Champions League
+- EPL – English Premier League
+- ESP – La Liga (Spain)
+- GER – Bundesliga (Germany)
+- ITA – Serie A (Italy)
+- NLL
+
 ## Features
 
 - **Live Menubar Scores** - Pin games to your menu bar and receive real-time score updates available at a glance.
