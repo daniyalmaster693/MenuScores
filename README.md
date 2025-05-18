@@ -16,6 +16,8 @@ MenuScores is a lightweight macOS menu bar app that brings sports and scores rig
 
 ## Installation
 
+**Requires macOS and later**
+
 1. Download the latest release
 2. Move the app to your **Applications folder**
 3. Run the app.
