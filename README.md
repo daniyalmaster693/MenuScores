@@ -37,7 +37,7 @@ MenuScores is a lightweight macOS menu bar app that brings sports and scores rig
 
 ## Dependencies
 
-- [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern).
+- [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
 
 ## Contributions
 
