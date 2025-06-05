@@ -5,15 +5,15 @@
 //  Created by Daniyal Master on 2025-05-11.
 //
 
-import SwiftUI
 import LaunchAtLogin
+import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
     
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
-    let refreshOptions = ["10 seconds", "15 seconds","20 seconds", "30 seconds", "40 seconds", "50 seconds", "1 minute", "2 minutes", "5 minutes"]
+    let refreshOptions = ["10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds", "50 seconds", "1 minute", "2 minutes", "5 minutes"]
     
     var refreshInterval: Double {
         switch selectedOption {
@@ -91,7 +91,6 @@ struct SettingsView: View {
                             Toggle("NCAA M", isOn: $enableNCAAM)
                             Toggle("NCAA F", isOn: $enableNCAAF)
                             Toggle("NFL", isOn: $enableNFL)
-                            
                         }
                         
                         VStack(alignment: .leading, spacing: 8) {
@@ -108,7 +107,6 @@ struct SettingsView: View {
                             Toggle("GER", isOn: $enableGER)
                             Toggle("ITA", isOn: $enableITA)
                             Toggle("NLL", isOn: $enableNLL)
-                            
                         }
                     }
                 }
