@@ -1146,7 +1146,13 @@ struct MenuScoresApp: App {
         }
         
         Settings {
-            SettingsView()
+            if #available(macOS 15.0, *) {
+                SettingsView()
+                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+                    .containerBackground(.ultraThickMaterial, for: .window)
+            } else {
+                SettingsView()
+            }
         }
     }
 }
