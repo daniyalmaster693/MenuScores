@@ -27,7 +27,7 @@ struct LeagueSettingsView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            Text("General")
+            Text("Leagues")
                 .font(.title2)
                 .bold()
 
@@ -107,24 +107,6 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
-                Section("Golf") {
-                    Toggle(isOn: $enablePGA) {
-                        HStack {
-                            Image(systemName: "figure.golf")
-                                .foregroundColor(.secondary)
-                            Text("PGA")
-                        }
-                    }
-
-                    Toggle(isOn: $enableLPGA) {
-                        HStack {
-                            Image(systemName: "figure.golf")
-                                .foregroundColor(.secondary)
-                            Text("LPGA")
-                        }
-                    }
-                }
 
                 Section("Soccer") {
                     Toggle(isOn: $enableUEFA) {
@@ -164,6 +146,24 @@ struct LeagueSettingsView: View {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.secondary)
                             Text("Italian Serie A")
+                        }
+                    }
+                }
+                
+                Section("Golf") {
+                    Toggle(isOn: $enablePGA) {
+                        HStack {
+                            Image(systemName: "figure.golf")
+                                .foregroundColor(.secondary)
+                            Text("PGA")
+                        }
+                    }
+
+                    Toggle(isOn: $enableLPGA) {
+                        HStack {
+                            Image(systemName: "figure.golf")
+                                .foregroundColor(.secondary)
+                            Text("LPGA")
                         }
                     }
                 }

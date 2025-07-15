@@ -10,12 +10,10 @@ import SwiftUI
 
 struct GeneralSettingsView: View {
     @AppStorage("showInDock") private var showInDock = false
-    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
-    @AppStorage("showDefaultText") private var showDefaultText = false
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
     let refreshOptions = ["10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds", "50 seconds", "1 minute", "2 minutes", "5 minutes"]
 
@@ -33,6 +31,13 @@ struct GeneralSettingsView: View {
         default: return 15
         }
     }
+    
+    func updateActivationPolicy() {
+            DispatchQueue.main.async {
+                NSApp.setActivationPolicy(showInDock ? .regular : .accessory)
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        }
 
     var body: some View {
         VStack(spacing: 4) {
@@ -80,14 +85,6 @@ struct GeneralSettingsView: View {
                         }
                         .pickerStyle(.menu)
                         .frame(width: 150)
-                    }
-
-                    Toggle(isOn: $showDefaultText) {
-                        HStack {
-                            Image(systemName: "text.alignleft")
-                                .foregroundColor(.secondary)
-                            Text("Show Default Select a Game Text")
-                        }
                     }
                 }
 
