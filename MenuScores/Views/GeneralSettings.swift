@@ -6,10 +6,23 @@
 //
 
 import LaunchAtLogin
-import UserNotifications
+import Sparkle
 import SwiftUI
+import UserNotifications
 
 struct GeneralSettingsView: View {
+    let updater: SPUUpdater
+    @StateObject private var updateViewModel: CheckForUpdatesViewModel
+    
+    final class CheckForUpdatesViewModel: ObservableObject {
+        @Published var canCheckForUpdates = false
+
+        init(updater: SPUUpdater) {
+            updater.publisher(for: \.canCheckForUpdates)
+                .assign(to: &$canCheckForUpdates)
+        }
+    }
+    
     @State private var notificationStatusMessage: String?
     @AppStorage("showInDock") private var showInDock = false
     
@@ -39,6 +52,11 @@ struct GeneralSettingsView: View {
             NSApp.setActivationPolicy(showInDock ? .regular : .accessory)
             NSApp.activate(ignoringOtherApps: true)
         }
+    }
+    
+    init(updater: SPUUpdater) {
+        self.updater = updater
+        _updateViewModel = StateObject(wrappedValue: CheckForUpdatesViewModel(updater: updater))
     }
     
     var body: some View {
@@ -77,6 +95,19 @@ struct GeneralSettingsView: View {
                 
                 Section {
                     HStack {
+                        Label("Updates", systemImage: "arrow.2.circlepath")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Check for Updates") {
+                            updater.checkForUpdates()
+                        }
+                        .buttonStyle(.bordered)
+                        .disabled(!updateViewModel.canCheckForUpdates)
+                    }
+                }
+                
+                Section("Behavior") {
+                    HStack {
                         Label("Refresh Interval", systemImage: "timer")
                             .foregroundColor(.primary)
                         Spacer()
@@ -107,7 +138,7 @@ struct GeneralSettingsView: View {
                         }
                     }
                 } header: {
-                    HStack( spacing: 4) {
+                    HStack(spacing: 4) {
                         HStack {
                             Text("Notifications")
                                 .font(.headline)

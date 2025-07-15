@@ -4,5 +4,7 @@
 <dict>
 	<key>NSUserNotificationUsageDescription</key>
 	<string>Used to notify you about game start and completion updates</string>
+	<key>SUFeedURL</key>
+	<string></string>
 </dict>
 </plist>

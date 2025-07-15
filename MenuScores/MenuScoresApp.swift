@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2025-05-03.
 //
 
+import Sparkle
 import SwiftUI
 
 class LeagueSelectionModel: ObservableObject {
@@ -17,6 +18,18 @@ extension LeagueSelectionModel {
 
 @main
 struct MenuScoresApp: App {
+    // Sparkle Updater Closure
+        
+    private let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
+    
+    private var updater: SPUUpdater {
+        updaterController.updater
+    }
+    
     // Refresh Interval Settings
     
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
@@ -191,26 +204,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = nbaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NBA")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableWNBA {
                 Menu("WNBA Games") {
                     Text(formattedDate(from: wnbaVM.games.first?.date ?? "Invalid Date"))
@@ -252,26 +265,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = wnbaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "WNBA")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableNCAAM {
                 Menu("NCAA M Games") {
                     Text(formattedDate(from: ncaamVM.games.first?.date ?? "Invalid Date"))
@@ -313,26 +326,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = ncaamVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NCAA M")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableNCAAF {
                 Menu("NCAA F Games") {
                     Text(formattedDate(from: ncaafVM.games.first?.date ?? "Invalid Date"))
@@ -374,26 +387,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = ncaamVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NCAA M")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableNFL {
                 Menu("NFL Games") {
                     Text(formattedDate(from: nflVM.games.first?.date ?? "Invalid Date"))
@@ -435,26 +448,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = nflVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NFL")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableMLB {
                 Menu("MLB Games") {
                     Text(formattedDate(from: mlbVM.games.first?.date ?? "Invalid Date"))
@@ -496,26 +509,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = mlbVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "MLB")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableF1 {
                 Menu("F1 Races") {
                     Text(formattedDate(from: f1VM.games.first?.date ?? "Invalid Date"))
@@ -557,26 +570,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = f1VM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "F1")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enablePGA {
                 Menu("PGA Games") {
                     Text(formattedDate(from: pgaVM.games.first?.date ?? "Invalid Date"))
@@ -618,26 +631,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = pgaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "PGA")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableLPGA {
                 Menu("LPGA Games") {
                     Text(formattedDate(from: lpgaVM.games.first?.date ?? "Invalid Date"))
@@ -679,26 +692,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = lpgaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "LPGA")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableUEFA {
                 Menu("UEFA Games") {
                     Text(formattedDate(from: uefaVM.games.first?.date ?? "Invalid Date"))
@@ -740,26 +753,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = uefaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "UEFA")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableEPL {
                 Menu("EPL Games") {
                     Text(formattedDate(from: eplVM.games.first?.date ?? "Invalid Date"))
@@ -801,32 +814,32 @@ struct MenuScoresApp: App {
                         if let updatedGame = eplVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "EPL")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableESP {
                 Menu("ESP Games") {
                     Text(formattedDate(from: espVM.games.first?.date ?? "Invalid Date"))
                         .font(.headline)
                     Divider().padding(.bottom)
-                    
+                                
                     if !espVM.games.isEmpty {
                         ForEach(Array(espVM.games.enumerated()), id: \.1.id) { _, game in
                             Button {
@@ -840,7 +853,7 @@ struct MenuScoresApp: App {
                                     ProgressView()
                                 }
                                 .frame(width: 40, height: 40)
-                                
+                                            
                                 Text(displayText(for: game, league: "ESP"))
                             }
                         }
@@ -862,32 +875,32 @@ struct MenuScoresApp: App {
                         if let updatedGame = espVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "ESP")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableGER {
                 Menu("GER Games") {
                     Text(formattedDate(from: gerVM.games.first?.date ?? "Invalid Date"))
                         .font(.headline)
                     Divider().padding(.bottom)
-                    
+                                
                     if !gerVM.games.isEmpty {
                         ForEach(Array(gerVM.games.enumerated()), id: \.1.id) { _, game in
                             Button {
@@ -901,7 +914,7 @@ struct MenuScoresApp: App {
                                     ProgressView()
                                 }
                                 .frame(width: 40, height: 40)
-                                
+                                            
                                 Text(displayText(for: game, league: "GER"))
                             }
                         }
@@ -923,32 +936,32 @@ struct MenuScoresApp: App {
                         if let updatedGame = gerVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "GER")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableITA {
                 Menu("ITA Games") {
                     Text(formattedDate(from: itaVM.games.first?.date ?? "Invalid Date"))
                         .font(.headline)
                     Divider().padding(.bottom)
-                    
+                                
                     if !itaVM.games.isEmpty {
                         ForEach(Array(itaVM.games.enumerated()), id: \.1.id) { _, game in
                             Button {
@@ -962,7 +975,7 @@ struct MenuScoresApp: App {
                                     ProgressView()
                                 }
                                 .frame(width: 40, height: 40)
-                                
+                                            
                                 Text(displayText(for: game, league: "ITA"))
                             }
                         }
@@ -984,26 +997,26 @@ struct MenuScoresApp: App {
                         if let updatedGame = itaVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "ITA")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
                     }
                 }
             }
-            
+                        
             if enableNLL {
                 Menu("NLL Games") {
                     Text(formattedDate(from: nllVM.games.first?.date ?? "Invalid Date"))
@@ -1045,19 +1058,19 @@ struct MenuScoresApp: App {
                         if let updatedGame = nllVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NLL")
                             let newState = updatedGame.status.type.state
-                            
+                                        
                             if notiGameStart {
                                 if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             if notiGameComplete {
                                 if previousGameState != "post" && newState == "post" {
                                     gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                                 }
                             }
-                            
+                                        
                             previousGameState = newState
                             currentGameState = newState
                         }
@@ -1102,11 +1115,11 @@ struct MenuScoresApp: App {
         
         Settings {
             if #available(macOS 15.0, *) {
-                SettingsView()
+                SettingsView(updater: updater)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
                     .containerBackground(.ultraThickMaterial, for: .window)
             } else {
-                SettingsView()
+                SettingsView(updater: updater)
             }
         }
     }

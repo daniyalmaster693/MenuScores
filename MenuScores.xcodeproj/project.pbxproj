@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D3DB0632DD8D2E200B70D39 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 0D3DB0622DD8D2E200B70D39 /* LaunchAtLogin */; };
+		0D9112422E26ECF900A464E5 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0D9112412E26ECF900A464E5 /* Sparkle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D3DB0632DD8D2E200B70D39 /* LaunchAtLogin in Frameworks */,
+				0D9112422E26ECF900A464E5 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			name = MenuScores;
 			packageProductDependencies = (
 				0D3DB0622DD8D2E200B70D39 /* LaunchAtLogin */,
+				0D9112412E26ECF900A464E5 /* Sparkle */,
 			);
 			productName = MenuScores;
 			productReference = 0D9553192DC6700100615774 /* MenuScores.app */;
@@ -203,6 +206,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0D3DB0612DD8D2E200B70D39 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
+				0D9112402E26ECF900A464E5 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0D95531A2DC6700100615774 /* Products */;
@@ -580,6 +584,14 @@
 				kind = branch;
 			};
 		};
+		0D9112402E26ECF900A464E5 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -587,6 +599,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0D3DB0612DD8D2E200B70D39 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
 			productName = LaunchAtLogin;
+		};
+		0D9112412E26ECF900A464E5 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D9112402E26ECF900A464E5 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

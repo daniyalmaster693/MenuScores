@@ -5,9 +5,12 @@
 //  Created by Daniyal Master on 2025-05-11.
 //
 
+import Sparkle
 import SwiftUI
 
 struct SettingsView: View {
+    let updater: SPUUpdater
+
     enum Tab: String, CaseIterable, Identifiable {
         case general = "General"
         case league = "Leagues"
@@ -32,7 +35,7 @@ struct SettingsView: View {
             Group {
                 switch selectedTab {
                 case .general:
-                    GeneralSettingsView()
+                    GeneralSettingsView(updater: updater)
                 case .league:
                     LeagueSettingsView()
                 default:
