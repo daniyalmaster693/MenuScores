@@ -59,7 +59,11 @@ struct MenuScoresApp: App {
     @AppStorage("enableWNBA") private var enableWNBA = true
     @AppStorage("enableNCAAM") private var enableNCAAM = true
     @AppStorage("enableNCAAF") private var enableNCAAF = true
+    
     @AppStorage("enableNFL") private var enableNFL = true
+    @AppStorage("enableCFL") private var enableCFL = true
+    @AppStorage("enableFNCAA") private var enableFNCAA = true
+    
     @AppStorage("enableMLB") private var enableMLB = true
     @AppStorage("enableF1") private var enableF1 = true
     @AppStorage("enablePGA") private var enablePGA = true
@@ -96,7 +100,11 @@ struct MenuScoresApp: App {
     @StateObject private var wnbaVM = GamesListView()
     @StateObject private var ncaamVM = GamesListView()
     @StateObject private var ncaafVM = GamesListView()
+    
     @StateObject private var nflVM = GamesListView()
+    @StateObject private var cflVM = GamesListView()
+    @StateObject private var fncaaVM = GamesListView()
+    
     @StateObject private var mlbVM = GamesListView()
     @StateObject private var f1VM = GamesListView()
     @StateObject private var pgaVM = GamesListView()
@@ -580,6 +588,130 @@ struct MenuScoresApp: App {
                         await nflVM.populateGames(from: Scoreboard.Urls.nfl)
                         if let updatedGame = nflVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NFL")
+                            let newState = updatedGame.status.type.state
+                                        
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+            
+//            if enableCFL {
+//                Menu("CFL Games") {
+//                    Text(formattedDate(from: cflVM.games.first?.date ?? "Invalid Date"))
+//                        .font(.headline)
+//                    Divider().padding(.bottom)
+//
+//                    if !cflVM.games.isEmpty {
+//                        ForEach(Array(cflVM.games.enumerated()), id: \.1.id) { _, game in
+//                            Button {
+//                                currentTitle = displayText(for: game, league: "CFL")
+//                                currentGameID = game.id
+//                                currentGameState = game.status.type.state
+//                            } label: {
+//                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+//                                    image.resizable().scaledToFit()
+//                                } placeholder: {
+//                                    ProgressView()
+//                                }
+//                                .frame(width: 40, height: 40)
+//
+//                                Text(displayText(for: game, league: "CFL"))
+//                            }
+//                        }
+//                    } else {
+//                        Text("Loading games...")
+//                            .foregroundColor(.gray)
+//                            .padding()
+//                    }
+//                }
+//                .onAppear {
+//                    LeagueSelectionModel.shared.currentLeague = "CFL"
+//                    Task {
+//                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
+//                    }
+//                }
+//                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+//                    Task {
+//                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
+//                        if let updatedGame = cflVM.games.first(where: { $0.id == currentGameID }) {
+//                            currentTitle = displayText(for: updatedGame, league: "CFL")
+//                            let newState = updatedGame.status.type.state
+//                                        
+//                            if notiGameStart {
+//                                if previousGameState != "in" && newState == "in" {
+//                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+//                                }
+//                            }
+//                                        
+//                            if notiGameComplete {
+//                                if previousGameState != "post" && newState == "post" {
+//                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+//                                }
+//                            }
+//                                        
+//                            previousGameState = newState
+//                            currentGameState = newState
+//                        }
+//                    }
+//                }
+//            }
+            
+            if enableFNCAA {
+                Menu("NCAA Football") {
+                    let groupedGames = Dictionary(grouping: fncaaVM.games) { game in
+                        formattedDate(from: game.date)
+                    }
+
+                    let sortedDates = groupedGames.keys.sorted()
+
+                    ForEach(sortedDates, id: \.self) { date in
+                        if let gamesForDate = groupedGames[date] {
+                            Menu(date) {
+                                ForEach(gamesForDate, id: \.id) { game in
+                                    Button {
+                                        currentTitle = displayText(for: game, league: "FNCAA")
+                                        currentGameID = game.id
+                                        currentGameState = game.status.type.state
+                                    } label: {
+                                        AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 40, height: 40)
+
+                                        Text(displayText(for: game, league: "FNCAA"))
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "FNCAA"
+                    Task {
+                        await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa)
+                        if let updatedGame = fncaaVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "FNCAA")
                             let newState = updatedGame.status.type.state
                                         
                             if notiGameStart {

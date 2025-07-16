@@ -12,12 +12,16 @@ struct Scoreboard {
         static let nhl = URL(string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard")!
         static let hncaam = URL(string: "https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/scoreboard")!
         static let hncaaf = URL(string: "https://site.api.espn.com/apis/site/v2/sports/hockey/womens-college-hockey/scoreboard")!
+        
         static let nba = URL(string: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard")!
         static let wnba = URL(string: "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard")!
         static let ncaam = URL(string: "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard")!
         static let ncaaf = URL(string: "https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard")!
+        
         static let nfl = URL(string: "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard")!
-        static let ncaa = URL(string: "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard")!
+        static let cfl = URL(string: "https://site.api.espn.com/apis/site/v2/sports/football/cfl/scoreboard")!
+        static let fncaa = URL(string: "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard")!
+        
         static let mlb = URL(string: "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard")!
         static let f1 = URL(string: "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard")!
         static let pga = URL(string: "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard")!
