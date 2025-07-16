@@ -68,6 +68,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableITA") private var enableITA = true
     @AppStorage("enableNLL") private var enableNLL = true
     
+    @AppStorage("enableHockeyM") private var enableHockeyM = true
+    @AppStorage("enableHockeyF") private var enableHockeyF = true
+    
     // Notification Settings
     
     @AppStorage("notiGameStart") private var notiGameStart = false
