@@ -69,17 +69,26 @@ struct MenuScoresApp: App {
     @AppStorage("enableSNCAA") private var enableSNCAA = true
     
     @AppStorage("enableF1") private var enableF1 = true
+    @AppStorage("enableMotoGP") private var enableMotoGP = true
+
+    @AppStorage("enableUFC") private var enableUFC = true
+    
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = true
+    
     @AppStorage("enableUEFA") private var enableUEFA = true
     @AppStorage("enableEPL") private var enableEPL = true
     @AppStorage("enableESP") private var enableESP = true
     @AppStorage("enableGER") private var enableGER = true
     @AppStorage("enableITA") private var enableITA = true
-    @AppStorage("enableNLL") private var enableNLL = true
     
-    @AppStorage("enableHockeyM") private var enableHockeyM = true
-    @AppStorage("enableHockeyF") private var enableHockeyF = true
+    @AppStorage("enableATP") private var enableATP = true
+    @AppStorage("enableWTA") private var enableWTA = true
+    
+    @AppStorage("enableNLL") private var enableNLL = true
+    @AppStorage("enablePLL") private var enablePLL = true
+    @AppStorage("enableLNCAAM") private var enableLNCAAM = true
+    @AppStorage("enableLNCAAF") private var enableLNCAAF = true
     
     // Notification Settings
     
@@ -120,7 +129,11 @@ struct MenuScoresApp: App {
     @StateObject private var espVM = GamesListView()
     @StateObject private var gerVM = GamesListView()
     @StateObject private var itaVM = GamesListView()
+    
     @StateObject private var nllVM = GamesListView()
+    @StateObject private var pllVM = GamesListView()
+    @StateObject private var lncaamVM = GamesListView()
+    @StateObject private var lncaafVM = GamesListView()
 
     var body: some Scene {
         MenuBarExtra {
@@ -1450,6 +1463,189 @@ struct MenuScoresApp: App {
                         await nllVM.populateGames(from: Scoreboard.Urls.nll)
                         if let updatedGame = nllVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NLL")
+                            let newState = updatedGame.status.type.state
+                                        
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+            
+            if enablePLL {
+                Menu("PLL Games") {
+                    Text(formattedDate(from: pllVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !pllVM.games.isEmpty {
+                        ForEach(Array(pllVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "PLL")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "PLL"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "PLL"
+                    Task {
+                        await pllVM.populateGames(from: Scoreboard.Urls.pll)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await pllVM.populateGames(from: Scoreboard.Urls.pll)
+                        if let updatedGame = pllVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "PLL")
+                            let newState = updatedGame.status.type.state
+                                        
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+            
+            if enableLNCAAM {
+                Menu("Men's College Lacrosse") {
+                    Text(formattedDate(from: lncaamVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !lncaamVM.games.isEmpty {
+                        ForEach(Array(lncaamVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "LNCAAM")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "LNCAAM"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "LNCAAM"
+                    Task {
+                        await lncaamVM.populateGames(from: Scoreboard.Urls.lncaam)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await lncaamVM.populateGames(from: Scoreboard.Urls.lncaam)
+                        if let updatedGame = lncaamVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "LNCAAM")
+                            let newState = updatedGame.status.type.state
+                                        
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+            
+            if enableLNCAAF {
+                Menu("Women's College Lacrosse") {
+                    Text(formattedDate(from: lncaafVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !lncaafVM.games.isEmpty {
+                        ForEach(Array(lncaafVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "LNCAAF")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "LNCAAF"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "LNCAAF"
+                    Task {
+                        await lncaafVM.populateGames(from: Scoreboard.Urls.lncaaf)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await lncaafVM.populateGames(from: Scoreboard.Urls.lncaaf)
+                        if let updatedGame = lncaafVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "LNCAAF")
                             let newState = updatedGame.status.type.state
                                         
                             if notiGameStart {

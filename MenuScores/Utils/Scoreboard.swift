@@ -34,6 +34,10 @@ struct Scoreboard {
         static let esp = URL(string: "https://site.api.espn.com/apis/site/v2/sports/soccer/ESP.1/scoreboard")!
         static let ger = URL(string: "https://site.api.espn.com/apis/site/v2/sports/soccer/GER.1/scoreboard")!
         static let ita = URL(string: "https://site.api.espn.com/apis/site/v2/sports/soccer/ITA.1/scoreboard")!
+        
         static let nll = URL(string: "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard")!
+        static let pll = URL(string: "https://site.api.espn.com/apis/site/v2/sports/lacrosse/pll/scoreboard")!
+        static let lncaam = URL(string: "https://site.api.espn.com/apis/site/v2/sports/lacrosse/mens-college-lacrosse/scoreboard")!
+        static let lncaaf = URL(string: "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard")!
     }
 }
