@@ -42,7 +42,10 @@ struct SettingsView: View {
                     Text("Select a tab")
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .frame(
+                maxWidth: .infinity, maxHeight: .infinity,
+                alignment: .topLeading
+            )
             .padding()
             .navigationTitle("")
             .toolbar(.hidden)
@@ -51,8 +54,8 @@ struct SettingsView: View {
     }
 }
 
-private extension SettingsView.Tab {
-    var iconName: String {
+extension SettingsView.Tab {
+    fileprivate var iconName: String {
         switch self {
         case .general: return "gearshape"
         case .league: return "sportscourt"

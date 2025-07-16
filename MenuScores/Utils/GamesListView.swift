@@ -22,7 +22,7 @@ class GamesListView: ObservableObject {
 
 struct GameListView {
     private var game: Event
-    
+
     init(game: Event) {
         self.game = game
     }

@@ -7,8 +7,9 @@
 
 func displayText(for game: Event, league: String) -> String {
     guard let competition = game.competitions.first,
-          let competitors = competition.competitors,
-          competitors.count >= 2 else {
+        let competitors = competition.competitors,
+        competitors.count >= 2
+    else {
         return game.shortName
     }
 
@@ -24,16 +25,17 @@ func displayText(for game: Event, league: String) -> String {
     let prefix = periodPrefix(for: league)
     let clockText = displayClock ?? ""
     let periodText = period.map { "\(prefix)\($0)" } ?? ""
-    
+
     let driverName: String
     if game.competitions.count > 4,
-       let f1Competitors = game.competitions[4].competitors,
-       !f1Competitors.isEmpty {
+        let f1Competitors = game.competitions[4].competitors,
+        !f1Competitors.isEmpty
+    {
         driverName = f1Competitors[0].athlete?.displayName ?? "Unknown"
     } else {
         driverName = "Unknown"
     }
-    
+
     var f1Period: Int?
     var f1DisplayClock: String?
     var f1State: String = ""
@@ -45,42 +47,44 @@ func displayText(for game: Event, league: String) -> String {
     }
     let f1PeriodText = f1Period.map { "\(prefix)\($0)" } ?? ""
 
-
-    if (league == "MLB" || league == "UEFA" || league == "EPL"), state == "in" {
+    if league == "MLB" || league == "UEFA" || league == "EPL", state == "in" {
         let detailText = shortDetail
-        return "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
+        return
+            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
     }
-    
+
     // F1 Race States
-    
-    if (league == "F1"), f1State == "pre" {
-        return "\(game.shortName) - \(formattedTime(from: game.endDate ?? game.date))"
+
+    if league == "F1", f1State == "pre" {
+        return
+            "\(game.shortName) - \(formattedTime(from: game.endDate ?? game.date))"
     }
-    
-    if (league == "F1"), f1State == "in" {
+
+    if league == "F1", f1State == "in" {
         let clockText = f1DisplayClock ?? ""
         return "\(driverName)     \(f1PeriodText) \(clockText)"
     }
-    
-    if (league == "F1"), f1State == "post" {
+
+    if league == "F1", f1State == "post" {
         return "\(driverName)     (Final)"
     }
-    
+
     // PGA Game States
-    
-    let golferName = game.competitions[0].competitors?.first?.athlete?.displayName ?? ""
+
+    let golferName =
+        game.competitions[0].competitors?.first?.athlete?.displayName ?? ""
     let golferScore = game.competitions[0].competitors?.first?.score ?? ""
     let golfRound = game.competitions[0].status.period
     let golfRoundText = golfRound.map { "\(prefix)\($0)" } ?? ""
-    
-    if (league == "PGA" || league == "LPGA"), state == "in" {
+
+    if league == "PGA" || league == "LPGA", state == "in" {
         return "\(golferName) \(golferScore)    \(golfRoundText)"
     }
-    
-    if (league == "PGA" || league == "LPGA"), state == "post" {
+
+    if league == "PGA" || league == "LPGA", state == "post" {
         return "\(golferName)     (Final)"
     }
-    
+
     // Normal State
 
     switch state {
@@ -88,10 +92,12 @@ func displayText(for game: Event, league: String) -> String {
         return "\(game.shortName) - \(formattedTime(from: game.date))"
 
     case "in":
-        return "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(periodText) \(clockText)"
+        return
+            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(periodText) \(clockText)"
 
     case "post":
-        return "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    (Final)"
+        return
+            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    (Final)"
 
     default:
         return game.shortName

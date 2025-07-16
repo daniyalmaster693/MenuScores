@@ -8,40 +8,42 @@
 import SwiftUI
 
 struct LeagueSettingsView: View {
+    // Toggled League Settings
+    
     @AppStorage("enableNHL") private var enableNHL = true
     @AppStorage("enableHNCAAM") private var enableHNCAAM = true
     @AppStorage("enableHNCAAF") private var enableHNCAAF = true
-    
+
     @AppStorage("enableNBA") private var enableNBA = true
     @AppStorage("enableWNBA") private var enableWNBA = true
     @AppStorage("enableNCAAM") private var enableNCAAM = true
     @AppStorage("enableNCAAF") private var enableNCAAF = true
-    
+
     @AppStorage("enableNFL") private var enableNFL = true
     @AppStorage("enableCFL") private var enableCFL = true
     @AppStorage("enableFNCAA") private var enableFNCAA = true
-    
+
     @AppStorage("enableMLB") private var enableMLB = true
     @AppStorage("enableBNCAA") private var enableBNCAA = true
     @AppStorage("enableSNCAA") private var enableSNCAA = true
-    
+
     @AppStorage("enableF1") private var enableF1 = true
     @AppStorage("enableMotoGP") private var enableMotoGP = true
 
     @AppStorage("enableUFC") private var enableUFC = true
-    
+
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = true
-    
+
     @AppStorage("enableUEFA") private var enableUEFA = true
     @AppStorage("enableEPL") private var enableEPL = true
     @AppStorage("enableESP") private var enableESP = true
     @AppStorage("enableGER") private var enableGER = true
     @AppStorage("enableITA") private var enableITA = true
-    
+
     @AppStorage("enableATP") private var enableATP = true
     @AppStorage("enableWTA") private var enableWTA = true
-    
+
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = true
     @AppStorage("enableLNCAAM") private var enableLNCAAM = true
@@ -62,7 +64,7 @@ struct LeagueSettingsView: View {
                             Text("NHL")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableHNCAAM) {
                         HStack {
                             Image(systemName: "hockey.puck")
@@ -70,7 +72,7 @@ struct LeagueSettingsView: View {
                             Text("Men's College Hockey")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableHNCAAF) {
                         HStack {
                             Image(systemName: "hockey.puck")
@@ -79,7 +81,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Basketball") {
                     Toggle(isOn: $enableNBA) {
                         HStack {
@@ -88,7 +90,7 @@ struct LeagueSettingsView: View {
                             Text("NBA")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableWNBA) {
                         HStack {
                             Image(systemName: "basketball")
@@ -96,7 +98,7 @@ struct LeagueSettingsView: View {
                             Text("WNBA")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableNCAAM) {
                         HStack {
                             Image(systemName: "basketball")
@@ -104,7 +106,7 @@ struct LeagueSettingsView: View {
                             Text("Men's College Basketball")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableNCAAF) {
                         HStack {
                             Image(systemName: "basketball")
@@ -113,7 +115,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Football") {
                     Toggle(isOn: $enableNFL) {
                         HStack {
@@ -122,7 +124,7 @@ struct LeagueSettingsView: View {
                             Text("NFL")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableCFL) {
                         HStack {
                             Image(systemName: "football")
@@ -130,7 +132,7 @@ struct LeagueSettingsView: View {
                             Text("CFL")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableFNCAA) {
                         HStack {
                             Image(systemName: "football")
@@ -139,7 +141,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Baseball") {
                     Toggle(isOn: $enableMLB) {
                         HStack {
@@ -148,7 +150,7 @@ struct LeagueSettingsView: View {
                             Text("MLB")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableBNCAA) {
                         HStack {
                             Image(systemName: "baseball")
@@ -156,7 +158,7 @@ struct LeagueSettingsView: View {
                             Text("College Baseball")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableSNCAA) {
                         HStack {
                             Image(systemName: "baseball")
@@ -165,7 +167,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Soccer") {
                     Toggle(isOn: $enableUEFA) {
                         HStack {
@@ -174,7 +176,7 @@ struct LeagueSettingsView: View {
                             Text("Champions League")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableEPL) {
                         HStack {
                             Image(systemName: "soccerball")
@@ -182,7 +184,7 @@ struct LeagueSettingsView: View {
                             Text("Premier League")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableESP) {
                         HStack {
                             Image(systemName: "soccerball")
@@ -190,7 +192,7 @@ struct LeagueSettingsView: View {
                             Text("LALIGA")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableGER) {
                         HStack {
                             Image(systemName: "soccerball")
@@ -198,7 +200,7 @@ struct LeagueSettingsView: View {
                             Text("German Bundesliga")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableITA) {
                         HStack {
                             Image(systemName: "soccerball")
@@ -207,7 +209,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Racing") {
                     Toggle(isOn: $enableF1) {
                         HStack {
@@ -216,7 +218,7 @@ struct LeagueSettingsView: View {
                             Text("F1")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableMotoGP) {
                         HStack {
                             Image(systemName: "flag.checkered")
@@ -225,7 +227,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Tennis") {
                     Toggle(isOn: $enableATP) {
                         HStack {
@@ -234,7 +236,7 @@ struct LeagueSettingsView: View {
                             Text("ATP Tour")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableWTA) {
                         HStack {
                             Image(systemName: "tennis.racket")
@@ -243,7 +245,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Golf") {
                     Toggle(isOn: $enablePGA) {
                         HStack {
@@ -261,7 +263,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Lacrosse") {
                     Toggle(isOn: $enableNLL) {
                         HStack {
@@ -270,7 +272,7 @@ struct LeagueSettingsView: View {
                             Text("NLL")
                         }
                     }
-                    
+
                     Toggle(isOn: $enablePLL) {
                         HStack {
                             Image(systemName: "figure.lacrosse")
@@ -278,7 +280,7 @@ struct LeagueSettingsView: View {
                             Text("PLL")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableLNCAAM) {
                         HStack {
                             Image(systemName: "figure.lacrosse")
@@ -286,7 +288,7 @@ struct LeagueSettingsView: View {
                             Text("Men's College Lacrosse")
                         }
                     }
-                    
+
                     Toggle(isOn: $enableLNCAAF) {
                         HStack {
                             Image(systemName: "figure.lacrosse")
@@ -295,7 +297,7 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section("Fighting") {
                     Toggle(isOn: $enableUFC) {
                         HStack {

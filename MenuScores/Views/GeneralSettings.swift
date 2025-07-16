@@ -13,7 +13,7 @@ import UserNotifications
 struct GeneralSettingsView: View {
     let updater: SPUUpdater
     @StateObject private var updateViewModel: CheckForUpdatesViewModel
-    
+
     final class CheckForUpdatesViewModel: ObservableObject {
         @Published var canCheckForUpdates = false
 
@@ -22,16 +22,19 @@ struct GeneralSettingsView: View {
                 .assign(to: &$canCheckForUpdates)
         }
     }
-    
+
     @State private var notificationStatusMessage: String?
     @AppStorage("showInDock") private var showInDock = false
-    
+
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
-    
+
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
-    let refreshOptions = ["10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds", "50 seconds", "1 minute", "2 minutes", "5 minutes"]
-    
+    let refreshOptions = [
+        "10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds",
+        "50 seconds", "1 minute", "2 minutes", "5 minutes",
+    ]
+
     var refreshInterval: Double {
         switch selectedOption {
         case "10 seconds": return 10
@@ -46,25 +49,26 @@ struct GeneralSettingsView: View {
         default: return 15
         }
     }
-    
+
     func updateActivationPolicy() {
         DispatchQueue.main.async {
             NSApp.setActivationPolicy(showInDock ? .regular : .accessory)
             NSApp.activate(ignoringOtherApps: true)
         }
     }
-    
+
     init(updater: SPUUpdater) {
         self.updater = updater
-        _updateViewModel = StateObject(wrappedValue: CheckForUpdatesViewModel(updater: updater))
+        _updateViewModel = StateObject(
+            wrappedValue: CheckForUpdatesViewModel(updater: updater))
     }
-    
+
     var body: some View {
         VStack(spacing: 4) {
             Text("General")
                 .font(.title2)
                 .bold()
-            
+
             Form {
                 Section {
                     HStack {
@@ -72,7 +76,7 @@ struct GeneralSettingsView: View {
                             .foregroundColor(.secondary)
                         LaunchAtLogin.Toggle()
                     }
-                    
+
                     HStack {
                         Toggle(isOn: $showInDock) {
                             HStack {
@@ -82,8 +86,9 @@ struct GeneralSettingsView: View {
                             }
                         }
                         .onChange(of: showInDock) { newValue in
-                            UserDefaults.standard.set(newValue, forKey: "showInDock")
-                            
+                            UserDefaults.standard.set(
+                                newValue, forKey: "showInDock")
+
                             if newValue {
                                 NSApp.setActivationPolicy(.regular)
                             } else {
@@ -92,7 +97,7 @@ struct GeneralSettingsView: View {
                         }
                     }
                 }
-                
+
                 Section {
                     HStack {
                         Label("Updates", systemImage: "arrow.2.circlepath")
@@ -105,7 +110,7 @@ struct GeneralSettingsView: View {
                         .disabled(!updateViewModel.canCheckForUpdates)
                     }
                 }
-                
+
                 Section("Behavior") {
                     HStack {
                         Label("Refresh Interval", systemImage: "timer")
@@ -120,7 +125,7 @@ struct GeneralSettingsView: View {
                         .frame(width: 150)
                     }
                 }
-                
+
                 Section {
                     Toggle(isOn: $notiGameStart) {
                         HStack {
@@ -129,7 +134,7 @@ struct GeneralSettingsView: View {
                             Text("Enable notifications for game start")
                         }
                     }
-                    
+
                     Toggle(isOn: $notiGameComplete) {
                         HStack {
                             Image(systemName: "bell.badge")
@@ -143,21 +148,25 @@ struct GeneralSettingsView: View {
                             Text("Notifications")
                                 .font(.headline)
                             Spacer()
-                            
+
                             if let message = notificationStatusMessage {
                                 Text(message)
                                     .font(.caption)
                                     .foregroundColor(.secondary)
                             }
-                            
+
                             Button(action: {
                                 UNUserNotificationCenter.current()
-                                    .requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                                    .requestAuthorization(options: [
+                                        .alert, .sound, .badge,
+                                    ]) { granted, error in
                                         DispatchQueue.main.async {
                                             if let error = error {
-                                                notificationStatusMessage = "\(error.localizedDescription)"
+                                                notificationStatusMessage =
+                                                    "\(error.localizedDescription)"
                                             } else if granted {
-                                                notificationStatusMessage = "Permissions granted!"
+                                                notificationStatusMessage =
+                                                    "Permissions granted!"
                                             }
                                         }
                                     }

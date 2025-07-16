@@ -12,15 +12,17 @@ enum NetworkError: Error {
 }
 
 class getGames {
-    func getGamesArray (url: URL) async throws -> [Event] {
+    func getGamesArray(url: URL) async throws -> [Event] {
         let (data, response) = try await URLSession.shared.data(from: url)
-        
+
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+            httpResponse.statusCode == 200
+        else {
             throw NetworkError.invalidResponse
         }
-        
-        let decoded = try JSONDecoder().decode(ScoreboardResponse.self, from: data)
+
+        let decoded = try JSONDecoder().decode(
+            ScoreboardResponse.self, from: data)
         return decoded.events
     }
 }

@@ -17,7 +17,7 @@ struct Event: Decodable {
     let name: String
     let shortName: String
     let competitions: [Competition]
-    let status: Status 
+    let status: Status
 }
 
 struct Status: Decodable {
