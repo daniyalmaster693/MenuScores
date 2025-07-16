@@ -23,6 +23,9 @@ struct Scoreboard {
         static let fncaa = URL(string: "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard")!
         
         static let mlb = URL(string: "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard")!
+        static let bncaa = URL(string: "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard")!
+        static let sncaa = URL(string: "https://site.api.espn.com/apis/site/v2/sports/baseball/college-softball/scoreboard")!
+        
         static let f1 = URL(string: "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard")!
         static let pga = URL(string: "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard")!
         static let lpga = URL(string: "https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard")!

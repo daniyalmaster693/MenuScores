@@ -65,6 +65,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableFNCAA") private var enableFNCAA = true
     
     @AppStorage("enableMLB") private var enableMLB = true
+    @AppStorage("enableBNCAA") private var enableBNCAA = true
+    @AppStorage("enableSNCAA") private var enableSNCAA = true
+    
     @AppStorage("enableF1") private var enableF1 = true
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = true
@@ -106,6 +109,9 @@ struct MenuScoresApp: App {
     @StateObject private var fncaaVM = GamesListView()
     
     @StateObject private var mlbVM = GamesListView()
+    @StateObject private var bncaaVM = GamesListView()
+    @StateObject private var sncaaVM = GamesListView()
+    
     @StateObject private var f1VM = GamesListView()
     @StateObject private var pgaVM = GamesListView()
     @StateObject private var lpgaVM = GamesListView()
@@ -773,6 +779,128 @@ struct MenuScoresApp: App {
                         await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
                         if let updatedGame = mlbVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "MLB")
+                            let newState = updatedGame.status.type.state
+                                        
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+            
+            if enableBNCAA {
+                Menu("NCAA Baseball") {
+                    Text(formattedDate(from: bncaaVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !bncaaVM.games.isEmpty {
+                        ForEach(Array(bncaaVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "BNCAA")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "BNCAA"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "BNCAA"
+                    Task {
+                        await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa)
+                        if let updatedGame = bncaaVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "BNCAA")
+                            let newState = updatedGame.status.type.state
+                                        
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                        
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+            
+            if enableSNCAA {
+                Menu("NCAA Softball") {
+                    Text(formattedDate(from: sncaaVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !sncaaVM.games.isEmpty {
+                        ForEach(Array(sncaaVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "SNCAA")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "SNCAA"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "SNCAA"
+                    Task {
+                        await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa)
+                        if let updatedGame = sncaaVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "SNCAA")
                             let newState = updatedGame.status.type.state
                                         
                             if notiGameStart {
