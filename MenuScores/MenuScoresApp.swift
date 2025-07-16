@@ -52,6 +52,9 @@ struct MenuScoresApp: App {
     // Toggled League Settings
     
     @AppStorage("enableNHL") private var enableNHL = true
+    @AppStorage("enableHNCAAM") private var enableHNCAAM = true
+    @AppStorage("enableHNCAAF") private var enableHNCAAF = true
+    
     @AppStorage("enableNBA") private var enableNBA = true
     @AppStorage("enableWNBA") private var enableWNBA = true
     @AppStorage("enableNCAAM") private var enableNCAAM = true
@@ -86,6 +89,9 @@ struct MenuScoresApp: App {
     // League Fetching
     
     @StateObject private var nhlVM = GamesListView()
+    @StateObject private var hncaamVM = GamesListView()
+    @StateObject private var hncaafVM = GamesListView()
+    
     @StateObject private var nbaVM = GamesListView()
     @StateObject private var wnbaVM = GamesListView()
     @StateObject private var ncaamVM = GamesListView()
@@ -144,6 +150,130 @@ struct MenuScoresApp: App {
                         await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
                         if let updatedGame = nhlVM.games.first(where: { $0.id == currentGameID }) {
                             currentTitle = displayText(for: updatedGame, league: "NHL")
+                                    
+                            let newState = updatedGame.status.type.state
+                                    
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                    
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                    
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+            
+            if enableHNCAAM {
+                Menu("NCAA M Hockey") {
+                    Text(formattedDate(from: hncaamVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !hncaamVM.games.isEmpty {
+                        ForEach(Array(hncaamVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "HNCAAM")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "HNCAAM"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "HNCAAM"
+                    Task {
+                        await hncaamVM.populateGames(from: Scoreboard.Urls.hncaam)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await hncaamVM.populateGames(from: Scoreboard.Urls.hncaam)
+                        if let updatedGame = hncaamVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "HNCAAM")
+                                    
+                            let newState = updatedGame.status.type.state
+                                    
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                    
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+                                    
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
+           
+            if enableHNCAAF {
+                Menu("NCAA F Hockey") {
+                    Text(formattedDate(from: hncaafVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !hncaafVM.games.isEmpty {
+                        ForEach(Array(hncaafVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "HNCAAF")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "HNCAAF"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "HNCAAF"
+                    Task {
+                        await hncaafVM.populateGames(from: Scoreboard.Urls.hncaaf)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await hncaafVM.populateGames(from: Scoreboard.Urls.hncaaf)
+                        if let updatedGame = hncaafVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "HNCAAF")
                                     
                             let newState = updatedGame.status.type.state
                                     
@@ -289,7 +419,7 @@ struct MenuScoresApp: App {
             }
                         
             if enableNCAAM {
-                Menu("NCAA M Games") {
+                Menu("NCAA M Basketball") {
                     Text(formattedDate(from: ncaamVM.games.first?.date ?? "Invalid Date"))
                         .font(.headline)
                     Divider().padding(.bottom)
@@ -350,7 +480,7 @@ struct MenuScoresApp: App {
             }
                         
             if enableNCAAF {
-                Menu("NCAA F Games") {
+                Menu("NCAA F Basketball") {
                     Text(formattedDate(from: ncaafVM.games.first?.date ?? "Invalid Date"))
                         .font(.headline)
                     Divider().padding(.bottom)

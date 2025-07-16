@@ -10,6 +10,8 @@ import Foundation
 struct Scoreboard {
     struct Urls {
         static let nhl = URL(string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard")!
+        static let hncaam = URL(string: "https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/scoreboard")!
+        static let hncaaf = URL(string: "https://site.api.espn.com/apis/site/v2/sports/hockey/womens-college-hockey/scoreboard")!
         static let nba = URL(string: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard")!
         static let wnba = URL(string: "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard")!
         static let ncaam = URL(string: "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard")!
