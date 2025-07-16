@@ -305,24 +305,6 @@ struct LeagueSettingsView: View {
                         }
                     }
                 }
-                
-                Section("Lacrosse") {
-                    Toggle(isOn: $enableNLL) {
-                        HStack {
-                            Image(systemName: "volleyball")
-                                .foregroundColor(.secondary)
-                            Text("Mens Collge Volleyball")
-                        }
-                    }
-                    
-                    Toggle(isOn: $enablePLL) {
-                        HStack {
-                            Image(systemName: "volleyball")
-                                .foregroundColor(.secondary)
-                            Text("Womens Collge Volleyball")
-                        }
-                    }
-                }
             }
         }.formStyle(.grouped)
     }
