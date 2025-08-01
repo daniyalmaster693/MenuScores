@@ -151,7 +151,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "NHL")
+                                    for: game, league: "NHL"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -192,17 +193,18 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "NHL")
+                                for: updatedGame, league: "NHL"
+                            )
 
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -213,7 +215,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -234,11 +237,11 @@ struct MenuScoresApp: App {
                     Divider().padding(.bottom)
 
                     if !hncaamVM.games.isEmpty {
-                        ForEach(Array(hncaamVM.games.enumerated()), id: \.1.id)
-                        { _, game in
+                        ForEach(Array(hncaamVM.games.enumerated()), id: \.1.id) { _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "HNCAAM")
+                                    for: game, league: "HNCAAM"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -281,17 +284,18 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "HNCAAM")
+                                for: updatedGame, league: "HNCAAM"
+                            )
 
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -302,7 +306,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -323,11 +328,11 @@ struct MenuScoresApp: App {
                     Divider().padding(.bottom)
 
                     if !hncaafVM.games.isEmpty {
-                        ForEach(Array(hncaafVM.games.enumerated()), id: \.1.id)
-                        { _, game in
+                        ForEach(Array(hncaafVM.games.enumerated()), id: \.1.id) { _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "HNCAAF")
+                                    for: game, league: "HNCAAF"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -370,17 +375,18 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "HNCAAF")
+                                for: updatedGame, league: "HNCAAF"
+                            )
 
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -391,7 +397,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -416,7 +423,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "NBA")
+                                    for: game, league: "NBA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -457,16 +465,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "NBA")
+                                for: updatedGame, league: "NBA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -477,7 +486,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -502,7 +512,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "WNBA")
+                                    for: game, league: "WNBA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -543,16 +554,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "WNBA")
+                                for: updatedGame, league: "WNBA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -563,7 +575,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -588,7 +601,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "NCAA M")
+                                    for: game, league: "NCAA M"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -629,16 +643,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "NCAA M")
+                                for: updatedGame, league: "NCAA M"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -649,7 +664,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -674,7 +690,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "NCAA F")
+                                    for: game, league: "NCAA F"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -715,16 +732,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "NCAA M")
+                                for: updatedGame, league: "NCAA M"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -735,7 +753,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -760,7 +779,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "NFL")
+                                    for: game, league: "NFL"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -801,16 +821,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "NFL")
+                                for: updatedGame, league: "NFL"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -821,7 +842,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -832,66 +854,59 @@ struct MenuScoresApp: App {
                 }
             }
 
-            //            if enableCFL {
-            //                Menu("CFL Games") {
-            //                    Text(formattedDate(from: cflVM.games.first?.date ?? "Invalid Date"))
-            //                        .font(.headline)
-            //                    Divider().padding(.bottom)
-            //
-            //                    if !cflVM.games.isEmpty {
-            //                        ForEach(Array(cflVM.games.enumerated()), id: \.1.id) { _, game in
-            //                            Button {
-            //                                currentTitle = displayText(for: game, league: "CFL")
-            //                                currentGameID = game.id
-            //                                currentGameState = game.status.type.state
-            //                            } label: {
-            //                                AsyncImage(url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")) { image in
-            //                                    image.resizable().scaledToFit()
-            //                                } placeholder: {
-            //                                    ProgressView()
-            //                                }
-            //                                .frame(width: 40, height: 40)
-            //
-            //                                Text(displayText(for: game, league: "CFL"))
-            //                            }
-            //                        }
-            //                    } else {
-            //                        Text("Loading games...")
-            //                            .foregroundColor(.gray)
-            //                            .padding()
-            //                    }
-            //                }
-            //                .onAppear {
-            //                    LeagueSelectionModel.shared.currentLeague = "CFL"
-            //                    Task {
-            //                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
-            //                    }
-            //                }
-            //                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
-            //                    Task {
-            //                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
-            //                        if let updatedGame = cflVM.games.first(where: { $0.id == currentGameID }) {
-            //                            currentTitle = displayText(for: updatedGame, league: "CFL")
-            //                            let newState = updatedGame.status.type.state
-            //
-            //                            if notiGameStart {
-            //                                if previousGameState != "in" && newState == "in" {
-            //                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-            //                                }
-            //                            }
-            //
-            //                            if notiGameComplete {
-            //                                if previousGameState != "post" && newState == "post" {
-            //                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-            //                                }
-            //                            }
-            //
-            //                            previousGameState = newState
-            //                            currentGameState = newState
-            //                        }
-            //                    }
-            //                }
-            //            }
+            if enableCFL {
+                Menu("CFL Games") {
+                    Text(formattedDate(from: cflVM.games.first?.date ?? "Invalid Date"))
+                        .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !cflVM.games.isEmpty {
+                        ForEach(Array(cflVM.games.enumerated()), id: \.1.id) { _, game in
+                            Button {
+                                currentTitle = displayText(for: game, league: "CFL")
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                Text(displayText(for: game, league: "CFL"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "CFL"
+                    Task {
+                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
+                    }
+                }
+                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
+                        if let updatedGame = cflVM.games.first(where: { $0.id == currentGameID }) {
+                            currentTitle = displayText(for: updatedGame, league: "CFL")
+                            let newState = updatedGame.status.type.state
+
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+
+                            if notiGameComplete {
+                                if previousGameState != "post" && newState == "post" {
+                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                                }
+                            }
+
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
+            }
 
             if enableFNCAA {
                 Menu("NCAA Football") {
@@ -908,7 +923,8 @@ struct MenuScoresApp: App {
                                 ForEach(gamesForDate, id: \.id) { game in
                                     Button {
                                         currentTitle = displayText(
-                                            for: game, league: "FNCAA")
+                                            for: game, league: "FNCAA"
+                                        )
                                         currentGameID = game.id
                                         currentGameState =
                                             game.status.type.state
@@ -927,7 +943,8 @@ struct MenuScoresApp: App {
 
                                         Text(
                                             displayText(
-                                                for: game, league: "FNCAA"))
+                                                for: game, league: "FNCAA"
+                                            ))
                                     }
                                 }
                             }
@@ -951,16 +968,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "FNCAA")
+                                for: updatedGame, league: "FNCAA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -971,7 +989,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -996,7 +1015,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "MLB")
+                                    for: game, league: "MLB"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1037,16 +1057,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "MLB")
+                                for: updatedGame, league: "MLB"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1057,7 +1078,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1082,7 +1104,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "BNCAA")
+                                    for: game, league: "BNCAA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1123,16 +1146,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "BNCAA")
+                                for: updatedGame, league: "BNCAA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1143,7 +1167,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1168,7 +1193,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "SNCAA")
+                                    for: game, league: "SNCAA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1209,16 +1235,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "SNCAA")
+                                for: updatedGame, league: "SNCAA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1229,7 +1256,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1254,7 +1282,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "UEFA")
+                                    for: game, league: "UEFA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1295,16 +1324,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "UEFA")
+                                for: updatedGame, league: "UEFA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1315,7 +1345,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1340,7 +1371,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "EPL")
+                                    for: game, league: "EPL"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1381,16 +1413,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "EPL")
+                                for: updatedGame, league: "EPL"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1401,7 +1434,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1426,7 +1460,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "ESP")
+                                    for: game, league: "ESP"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1467,16 +1502,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "ESP")
+                                for: updatedGame, league: "ESP"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1487,7 +1523,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1512,7 +1549,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "GER")
+                                    for: game, league: "GER"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1553,16 +1591,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "GER")
+                                for: updatedGame, league: "GER"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1573,7 +1612,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1598,7 +1638,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "ITA")
+                                    for: game, league: "ITA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1639,16 +1680,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "ITA")
+                                for: updatedGame, league: "ITA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1659,7 +1701,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1684,14 +1727,15 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "F1")
+                                    for: game, league: "F1"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(
                                     url: URL(
                                         string:
-                                            "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
                                     )
                                 ) { image in
                                     image.resizable().scaledToFit()
@@ -1726,16 +1770,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "F1")
+                                for: updatedGame, league: "F1"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1746,7 +1791,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1771,14 +1817,15 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "PGA")
+                                    for: game, league: "PGA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(
                                     url: URL(
                                         string:
-                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                     )
                                 ) { image in
                                     image.resizable().scaledToFit()
@@ -1813,16 +1860,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "PGA")
+                                for: updatedGame, league: "PGA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1833,7 +1881,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1858,14 +1907,15 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "LPGA")
+                                    for: game, league: "LPGA"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
                                 AsyncImage(
                                     url: URL(
                                         string:
-                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                     )
                                 ) { image in
                                     image.resizable().scaledToFit()
@@ -1900,16 +1950,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "LPGA")
+                                for: updatedGame, league: "LPGA"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1920,7 +1971,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -1945,7 +1997,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "NLL")
+                                    for: game, league: "NLL"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -1986,16 +2039,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "NLL")
+                                for: updatedGame, league: "NLL"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -2006,7 +2060,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -2031,7 +2086,8 @@ struct MenuScoresApp: App {
                             _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "PLL")
+                                    for: game, league: "PLL"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -2072,16 +2128,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "PLL")
+                                for: updatedGame, league: "PLL"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -2092,7 +2149,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -2113,11 +2171,11 @@ struct MenuScoresApp: App {
                     Divider().padding(.bottom)
 
                     if !lncaamVM.games.isEmpty {
-                        ForEach(Array(lncaamVM.games.enumerated()), id: \.1.id)
-                        { _, game in
+                        ForEach(Array(lncaamVM.games.enumerated()), id: \.1.id) { _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "LNCAAM")
+                                    for: game, league: "LNCAAM"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -2160,16 +2218,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "LNCAAM")
+                                for: updatedGame, league: "LNCAAM"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -2180,7 +2239,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -2201,11 +2261,11 @@ struct MenuScoresApp: App {
                     Divider().padding(.bottom)
 
                     if !lncaafVM.games.isEmpty {
-                        ForEach(Array(lncaafVM.games.enumerated()), id: \.1.id)
-                        { _, game in
+                        ForEach(Array(lncaafVM.games.enumerated()), id: \.1.id) { _, game in
                             Button {
                                 currentTitle = displayText(
-                                    for: game, league: "LNCAAF")
+                                    for: game, league: "LNCAAF"
+                                )
                                 currentGameID = game.id
                                 currentGameState = game.status.type.state
                             } label: {
@@ -2248,16 +2308,17 @@ struct MenuScoresApp: App {
                             $0.id == currentGameID
                         }) {
                             currentTitle = displayText(
-                                for: updatedGame, league: "LNCAAF")
+                                for: updatedGame, league: "LNCAAF"
+                            )
                             let newState = updatedGame.status.type.state
 
                             if notiGameStart {
-                                if previousGameState != "in" && newState == "in"
-                                {
+                                if previousGameState != "in" && newState == "in" {
                                     gameStartNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 
@@ -2268,7 +2329,8 @@ struct MenuScoresApp: App {
                                     gameCompleteNotification(
                                         gameId: currentGameID,
                                         gameTitle: currentTitle,
-                                        newState: newState)
+                                        newState: newState
+                                    )
                                 }
                             }
 

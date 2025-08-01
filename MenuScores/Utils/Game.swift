@@ -50,7 +50,7 @@ struct Team: Decodable {
     let displayName: String
     let abbreviation: String
     let name: String
-    let logo: String
+    let logo: String?
 }
 
 struct Athlete: Decodable {
