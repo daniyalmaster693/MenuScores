@@ -75,8 +75,12 @@ struct MenuScoresApp: App {
 
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = true
-
     @AppStorage("enableUEFA") private var enableUEFA = true
+    @AppStorage("enableMLS") private var enableMLS = true
+    @AppStorage("enableMEX") private var enableMEX = true
+    @AppStorage("enableFRA") private var enableFRA = true
+    @AppStorage("enableNED") private var enableNED = true
+    @AppStorage("enablePOR") private var enablePOR = true
     @AppStorage("enableEPL") private var enableEPL = true
     @AppStorage("enableESP") private var enableESP = true
     @AppStorage("enableGER") private var enableGER = true
@@ -122,9 +126,17 @@ struct MenuScoresApp: App {
     @StateObject private var sncaaVM = GamesListView()
 
     @StateObject private var f1VM = GamesListView()
+
     @StateObject private var pgaVM = GamesListView()
     @StateObject private var lpgaVM = GamesListView()
+
     @StateObject private var uefaVM = GamesListView()
+    @StateObject private var mlsVM = GamesListView()
+    @StateObject private var mexVM = GamesListView()
+    @StateObject private var fraVM = GamesListView()
+    @StateObject private var nedVM = GamesListView()
+    @StateObject private var porVM = GamesListView()
+
     @StateObject private var eplVM = GamesListView()
     @StateObject private var espVM = GamesListView()
     @StateObject private var gerVM = GamesListView()
@@ -308,7 +320,7 @@ struct MenuScoresApp: App {
 
             if enableUEFA {
                 SoccerMenu(
-                    title: "UEFA Games",
+                    title: "Champions League",
                     viewModel: uefaVM,
                     league: "UEFA",
                     fetchURL: Scoreboard.Urls.uefa,
@@ -319,9 +331,22 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableMLS {
+                SoccerMenu(
+                    title: "MLS Games",
+                    viewModel: mlsVM,
+                    league: "MLS",
+                    fetchURL: Scoreboard.Urls.mls,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             if enableEPL {
                 SoccerMenu(
-                    title: "EPL Games",
+                    title: "Premier League",
                     viewModel: eplVM,
                     league: "EPL",
                     fetchURL: Scoreboard.Urls.epl,
@@ -334,7 +359,7 @@ struct MenuScoresApp: App {
 
             if enableESP {
                 SoccerMenu(
-                    title: "ESP Games",
+                    title: "La Liga",
                     viewModel: espVM,
                     league: "ESP",
                     fetchURL: Scoreboard.Urls.esp,
@@ -347,7 +372,7 @@ struct MenuScoresApp: App {
 
             if enableGER {
                 SoccerMenu(
-                    title: "GER Games",
+                    title: "Budesliga",
                     viewModel: gerVM,
                     league: "GER",
                     fetchURL: Scoreboard.Urls.ger,
@@ -360,10 +385,62 @@ struct MenuScoresApp: App {
 
             if enableITA {
                 SoccerMenu(
-                    title: "ITA Games",
+                    title: "Serie A",
                     viewModel: itaVM,
                     league: "ITA",
                     fetchURL: Scoreboard.Urls.ita,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableMEX {
+                SoccerMenu(
+                    title: "Liga MX",
+                    viewModel: mexVM,
+                    league: "MEX",
+                    fetchURL: Scoreboard.Urls.mex,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableFRA {
+                SoccerMenu(
+                    title: "Ligue 1",
+                    viewModel: fraVM,
+                    league: "FRA",
+                    fetchURL: Scoreboard.Urls.fra,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableNED {
+                SoccerMenu(
+                    title: "Eredivisie",
+                    viewModel: nedVM,
+                    league: "NED",
+                    fetchURL: Scoreboard.Urls.ned,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enablePOR {
+                SoccerMenu(
+                    title: "Primeira Liga",
+                    viewModel: porVM,
+                    league: "POR",
+                    fetchURL: Scoreboard.Urls.por,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,

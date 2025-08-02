@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LeagueSettingsView: View {
     // Toggled League Settings
-    
+
     @AppStorage("enableNHL") private var enableNHL = true
     @AppStorage("enableHNCAAM") private var enableHNCAAM = true
     @AppStorage("enableHNCAAF") private var enableHNCAAF = true
@@ -36,6 +36,11 @@ struct LeagueSettingsView: View {
     @AppStorage("enableLPGA") private var enableLPGA = true
 
     @AppStorage("enableUEFA") private var enableUEFA = true
+    @AppStorage("enableMLS") private var enableMLS = true
+    @AppStorage("enableMEX") private var enableMEX = true
+    @AppStorage("enableFRA") private var enableFRA = true
+    @AppStorage("enableNED") private var enableNED = true
+    @AppStorage("enablePOR") private var enablePOR = true
     @AppStorage("enableEPL") private var enableEPL = true
     @AppStorage("enableESP") private var enableESP = true
     @AppStorage("enableGER") private var enableGER = true
@@ -177,6 +182,14 @@ struct LeagueSettingsView: View {
                         }
                     }
 
+                    Toggle(isOn: $enableMLS) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("MLS")
+                        }
+                    }
+
                     Toggle(isOn: $enableEPL) {
                         HStack {
                             Image(systemName: "soccerball")
@@ -189,7 +202,7 @@ struct LeagueSettingsView: View {
                         HStack {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.secondary)
-                            Text("LALIGA")
+                            Text("La Liga")
                         }
                     }
 
@@ -197,7 +210,7 @@ struct LeagueSettingsView: View {
                         HStack {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.secondary)
-                            Text("German Bundesliga")
+                            Text("Bundesliga")
                         }
                     }
 
@@ -205,7 +218,39 @@ struct LeagueSettingsView: View {
                         HStack {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.secondary)
-                            Text("Italian Serie A")
+                            Text("Serie A")
+                        }
+                    }
+
+                    Toggle(isOn: $enableMEX) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Liga MX")
+                        }
+                    }
+
+                    Toggle(isOn: $enableFRA) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Ligue 1")
+                        }
+                    }
+
+                    Toggle(isOn: $enableNED) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Eredivisie")
+                        }
+                    }
+
+                    Toggle(isOn: $enablePOR) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Primeira Liga")
                         }
                     }
                 }
