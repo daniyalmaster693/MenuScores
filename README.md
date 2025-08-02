@@ -70,6 +70,7 @@
 ## Dependencies
 
 - [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
+- [Sparkle](https://github.com/sparkle-project/Sparkle)
 
 ## Contributions
 
