@@ -9,6 +9,9 @@ import Sparkle
 import SwiftUI
 
 struct SettingsView: View {
+    @State private var showingAboutModal = false
+
+    @State private var isHovered = false
     let updater: SPUUpdater
 
     enum Tab: String, CaseIterable, Identifiable {
@@ -28,9 +31,52 @@ struct SettingsView: View {
                         .tag(tab)
                 }
                 .listStyle(.sidebar)
+
+                Spacer()
+
+                Button {
+                    showingAboutModal = true
+                } label: {
+                    HStack(spacing: 8) {
+                        if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
+                           let nsImage = NSImage(contentsOfFile: iconPath)
+                        {
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                                .cornerRadius(6)
+                        } else {
+                            Image(systemName: "app.fill")
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                                .cornerRadius(6)
+                        }
+
+                        VStack(alignment: .leading) {
+                            Text("MenuScores")
+                                .font(.footnote)
+                                .bold()
+
+                            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                                Text("Version (\(version))")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                    .padding()
+                    .frame(maxWidth: 150, alignment: .center)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
+                    )
+                }
+                .buttonStyle(.plain)
+                .onHover { hovering in
+                    isHovered = hovering
+                }
             }
-            .padding(.top, 7)
-            .frame(minWidth: 100)
+            .frame(minWidth: 150)
         } detail: {
             Group {
                 switch selectedTab {
@@ -51,11 +97,14 @@ struct SettingsView: View {
             .toolbar(.hidden)
         }
         .frame(minWidth: 700, idealWidth: 700, maxWidth: 700)
+        .sheet(isPresented: $showingAboutModal) {
+            AppLinksView()
+        }
     }
 }
 
-extension SettingsView.Tab {
-    fileprivate var iconName: String {
+private extension SettingsView.Tab {
+    var iconName: String {
         switch self {
         case .general: return "gearshape"
         case .league: return "sportscourt"
