@@ -134,5 +134,13 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard"
         )!
+        static let vncaam = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard"
+        )!
+        static let vncaaf = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard"
+        )!
     }
 }

@@ -94,6 +94,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableLNCAAM") private var enableLNCAAM = true
     @AppStorage("enableLNCAAF") private var enableLNCAAF = true
 
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = true
+    @AppStorage("enableVNCAAF") private var enableVNCAAF = true
+
     // Notification Settings
 
     @AppStorage("notiGameStart") private var notiGameStart = false
@@ -146,6 +149,9 @@ struct MenuScoresApp: App {
     @StateObject private var pllVM = GamesListView()
     @StateObject private var lncaamVM = GamesListView()
     @StateObject private var lncaafVM = GamesListView()
+
+    @StateObject private var vncaamVM = GamesListView()
+    @StateObject private var vncaafVM = GamesListView()
 
     var body: some Scene {
         MenuBarExtra {
@@ -519,6 +525,32 @@ struct MenuScoresApp: App {
                     viewModel: lncaafVM,
                     league: "LNCAAF",
                     fetchURL: Scoreboard.Urls.lncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableVNCAAM {
+                LacrosseMenu(
+                    title: "Men's College Volleyball",
+                    viewModel: vncaamVM,
+                    league: "VNCAAM",
+                    fetchURL: Scoreboard.Urls.vncaam,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableVNCAAF {
+                LacrosseMenu(
+                    title: "Women's College Volleyball",
+                    viewModel: vncaafVM,
+                    league: "VNCAAF",
+                    fetchURL: Scoreboard.Urls.vncaaf,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,

@@ -54,6 +54,9 @@ struct LeagueSettingsView: View {
     @AppStorage("enableLNCAAM") private var enableLNCAAM = true
     @AppStorage("enableLNCAAF") private var enableLNCAAF = true
 
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = true
+    @AppStorage("enableVNCAAF") private var enableVNCAAF = true
+
     var body: some View {
         VStack(spacing: 4) {
             Text("Leagues")
@@ -339,6 +342,24 @@ struct LeagueSettingsView: View {
                             Image(systemName: "figure.lacrosse")
                                 .foregroundColor(.secondary)
                             Text("Women's College Lacrosse")
+                        }
+                    }
+                }
+
+                Section("Volleyball") {
+                    Toggle(isOn: $enableVNCAAM) {
+                        HStack {
+                            Image(systemName: "volleyball")
+                                .foregroundColor(.secondary)
+                            Text("Men's College Volleyball")
+                        }
+                    }
+
+                    Toggle(isOn: $enableVNCAAF) {
+                        HStack {
+                            Image(systemName: "volleyball")
+                                .foregroundColor(.secondary)
+                            Text("Women's College Volleyball")
                         }
                     }
                 }
