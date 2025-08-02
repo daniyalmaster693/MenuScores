@@ -666,6 +666,14 @@ struct MenuScoresApp: App {
             }
 
             Button {
+                updater.checkForUpdates()
+            } label: {
+                Text("Check for Updates")
+            }
+            .buttonStyle(.bordered)
+            .keyboardShortcut("u")
+
+            Button {
                 NSApplication.shared.terminate(nil)
             } label: {
                 Text("Quit")
