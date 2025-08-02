@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D3DB0632DD8D2E200B70D39 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 0D3DB0622DD8D2E200B70D39 /* LaunchAtLogin */; };
+		0D44340B2E3E722100E9D117 /* DynamicNotchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0D44340A2E3E722100E9D117 /* DynamicNotchKit */; };
 		0D9112422E26ECF900A464E5 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 0D9112412E26ECF900A464E5 /* Sparkle */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D44340B2E3E722100E9D117 /* DynamicNotchKit in Frameworks */,
 				0D3DB0632DD8D2E200B70D39 /* LaunchAtLogin in Frameworks */,
 				0D9112422E26ECF900A464E5 /* Sparkle in Frameworks */,
 			);
@@ -121,6 +123,7 @@
 			packageProductDependencies = (
 				0D3DB0622DD8D2E200B70D39 /* LaunchAtLogin */,
 				0D9112412E26ECF900A464E5 /* Sparkle */,
+				0D44340A2E3E722100E9D117 /* DynamicNotchKit */,
 			);
 			productName = MenuScores;
 			productReference = 0D9553192DC6700100615774 /* MenuScores.app */;
@@ -207,6 +210,7 @@
 			packageReferences = (
 				0D3DB0612DD8D2E200B70D39 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 				0D9112402E26ECF900A464E5 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				0D4434092E3E722100E9D117 /* XCRemoteSwiftPackageReference "DynamicNotchKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0D95531A2DC6700100615774 /* Products */;
@@ -584,6 +588,14 @@
 				kind = branch;
 			};
 		};
+		0D4434092E3E722100E9D117 /* XCRemoteSwiftPackageReference "DynamicNotchKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MrKai77/DynamicNotchKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		0D9112402E26ECF900A464E5 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -599,6 +611,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0D3DB0612DD8D2E200B70D39 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
 			productName = LaunchAtLogin;
+		};
+		0D44340A2E3E722100E9D117 /* DynamicNotchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D4434092E3E722100E9D117 /* XCRemoteSwiftPackageReference "DynamicNotchKit" */;
+			productName = DynamicNotchKit;
 		};
 		0D9112412E26ECF900A464E5 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;

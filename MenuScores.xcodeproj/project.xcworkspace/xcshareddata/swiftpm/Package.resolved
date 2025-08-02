@@ -1,6 +1,15 @@
 {
-  "originHash" : "695aa54fc8ab687e182a20e4b1f6721fb133f12851a23faf6df3631bc0587a6b",
+  "originHash" : "5d3f3bfadf51fae69294bd84bc9b76ffcf73fcea5f6bcaeed55a894b5d47c043",
   "pins" : [
+    {
+      "identity" : "dynamicnotchkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MrKai77/DynamicNotchKit",
+      "state" : {
+        "revision" : "3c405930fd4d9f8498303683f32492c26d3a9b2b",
+        "version" : "1.0.0"
+      }
+    },
     {
       "identity" : "launchatlogin-modern",
       "kind" : "remoteSourceControl",

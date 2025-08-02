@@ -138,2207 +138,315 @@ struct MenuScoresApp: App {
     var body: some Scene {
         MenuBarExtra {
             if enableNHL {
-                Menu("NHL Games") {
-                    Text(
-                        formattedDate(
-                            from: nhlVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !nhlVM.games.isEmpty {
-                        ForEach(Array(nhlVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "NHL"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "NHL"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "NHL"
-                    Task {
-                        await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
-                        if let updatedGame = nhlVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "NHL"
-                            )
-
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                HockeyMenu(
+                    title: "NHL Games",
+                    viewModel: nhlVM,
+                    league: "NHL",
+                    fetchURL: Scoreboard.Urls.nhl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableHNCAAM {
-                Menu("NCAA M Hockey") {
-                    Text(
-                        formattedDate(
-                            from: hncaamVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !hncaamVM.games.isEmpty {
-                        ForEach(Array(hncaamVM.games.enumerated()), id: \.1.id) { _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "HNCAAM"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "HNCAAM"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "HNCAAM"
-                    Task {
-                        await hncaamVM.populateGames(
-                            from: Scoreboard.Urls.hncaam)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await hncaamVM.populateGames(
-                            from: Scoreboard.Urls.hncaam)
-                        if let updatedGame = hncaamVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "HNCAAM"
-                            )
-
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                HockeyMenu(
+                    title: "NCAA M Hockey",
+                    viewModel: hncaamVM,
+                    league: "HNCAAM",
+                    fetchURL: Scoreboard.Urls.hncaam,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableHNCAAF {
-                Menu("NCAA F Hockey") {
-                    Text(
-                        formattedDate(
-                            from: hncaafVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !hncaafVM.games.isEmpty {
-                        ForEach(Array(hncaafVM.games.enumerated()), id: \.1.id) { _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "HNCAAF"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "HNCAAF"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "HNCAAF"
-                    Task {
-                        await hncaafVM.populateGames(
-                            from: Scoreboard.Urls.hncaaf)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await hncaafVM.populateGames(
-                            from: Scoreboard.Urls.hncaaf)
-                        if let updatedGame = hncaafVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "HNCAAF"
-                            )
-
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                HockeyMenu(
+                    title: "NCAA F Hockey",
+                    viewModel: hncaafVM,
+                    league: "HNCAAF",
+                    fetchURL: Scoreboard.Urls.hncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableNBA {
-                Menu("NBA Games") {
-                    Text(
-                        formattedDate(
-                            from: nbaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !nbaVM.games.isEmpty {
-                        ForEach(Array(nbaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "NBA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "NBA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "NBA"
-                    Task {
-                        await nbaVM.populateGames(from: Scoreboard.Urls.nba)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await nbaVM.populateGames(from: Scoreboard.Urls.nba)
-                        if let updatedGame = nbaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "NBA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                BasketballMenu(
+                    title: "NBA Games",
+                    viewModel: nbaVM,
+                    league: "NBA",
+                    fetchURL: Scoreboard.Urls.nba,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableWNBA {
-                Menu("WNBA Games") {
-                    Text(
-                        formattedDate(
-                            from: wnbaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !wnbaVM.games.isEmpty {
-                        ForEach(Array(wnbaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "WNBA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "WNBA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "WNBA"
-                    Task {
-                        await wnbaVM.populateGames(from: Scoreboard.Urls.wnba)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await wnbaVM.populateGames(from: Scoreboard.Urls.wnba)
-                        if let updatedGame = wnbaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "WNBA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                BasketballMenu(
+                    title: "WNBA Games",
+                    viewModel: wnbaVM,
+                    league: "WNBA",
+                    fetchURL: Scoreboard.Urls.wnba,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableNCAAM {
-                Menu("NCAA M Basketball") {
-                    Text(
-                        formattedDate(
-                            from: ncaamVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !ncaamVM.games.isEmpty {
-                        ForEach(Array(ncaamVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "NCAA M"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "NCAA M"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "NCAA M"
-                    Task {
-                        await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
-                        if let updatedGame = ncaamVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "NCAA M"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                BasketballMenu(
+                    title: "NCAA M Basketball",
+                    viewModel: ncaamVM,
+                    league: "NCAA M",
+                    fetchURL: Scoreboard.Urls.ncaam,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableNCAAF {
-                Menu("NCAA F Basketball") {
-                    Text(
-                        formattedDate(
-                            from: ncaafVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !ncaafVM.games.isEmpty {
-                        ForEach(Array(ncaafVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "NCAA F"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "NCAA F"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "NCAA F"
-                    Task {
-                        await ncaafVM.populateGames(from: Scoreboard.Urls.ncaaf)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
-                        if let updatedGame = ncaamVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "NCAA M"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                BasketballMenu(
+                    title: "NCAA F Basketball",
+                    viewModel: ncaafVM,
+                    league: "NCAA F",
+                    fetchURL: Scoreboard.Urls.ncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableNFL {
-                Menu("NFL Games") {
-                    Text(
-                        formattedDate(
-                            from: nflVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !nflVM.games.isEmpty {
-                        ForEach(Array(nflVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "NFL"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "NFL"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "NFL"
-                    Task {
-                        await nflVM.populateGames(from: Scoreboard.Urls.nfl)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await nflVM.populateGames(from: Scoreboard.Urls.nfl)
-                        if let updatedGame = nflVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "NFL"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                FootballMenu(
+                    title: "NFL Games",
+                    viewModel: nflVM,
+                    league: "NFL",
+                    fetchURL: Scoreboard.Urls.nfl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableCFL {
-                Menu("CFL Games") {
-                    Text(formattedDate(from: cflVM.games.first?.date ?? "Invalid Date"))
-                        .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !cflVM.games.isEmpty {
-                        ForEach(Array(cflVM.games.enumerated()), id: \.1.id) { _, game in
-                            Button {
-                                currentTitle = displayText(for: game, league: "CFL")
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                Text(displayText(for: game, league: "CFL"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "CFL"
-                    Task {
-                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
-                    }
-                }
-                .onReceive(Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()) { _ in
-                    Task {
-                        await cflVM.populateGames(from: Scoreboard.Urls.cfl)
-                        if let updatedGame = cflVM.games.first(where: { $0.id == currentGameID }) {
-                            currentTitle = displayText(for: updatedGame, league: "CFL")
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post" && newState == "post" {
-                                    gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                FootballMenu(
+                    title: "CFL Games",
+                    viewModel: cflVM,
+                    league: "CFL",
+                    fetchURL: Scoreboard.Urls.cfl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableFNCAA {
-                Menu("NCAA Football") {
-                    let groupedGames = Dictionary(grouping: fncaaVM.games) {
-                        game in
-                        formattedDate(from: game.date)
-                    }
-
-                    let sortedDates = groupedGames.keys.sorted()
-
-                    ForEach(sortedDates, id: \.self) { date in
-                        if let gamesForDate = groupedGames[date] {
-                            Menu(date) {
-                                ForEach(gamesForDate, id: \.id) { game in
-                                    Button {
-                                        currentTitle = displayText(
-                                            for: game, league: "FNCAA"
-                                        )
-                                        currentGameID = game.id
-                                        currentGameState =
-                                            game.status.type.state
-                                    } label: {
-                                        AsyncImage(
-                                            url: URL(
-                                                string: game.competitions[0]
-                                                    .competitors?[1].team?.logo
-                                                    ?? "")
-                                        ) { image in
-                                            image.resizable().scaledToFit()
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
-                                        .frame(width: 40, height: 40)
-
-                                        Text(
-                                            displayText(
-                                                for: game, league: "FNCAA"
-                                            ))
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "FNCAA"
-                    Task {
-                        await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa)
-                        if let updatedGame = fncaaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "FNCAA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                FootballMenu(
+                    title: "NCAA Football",
+                    viewModel: fncaaVM,
+                    league: "FNCAA",
+                    fetchURL: Scoreboard.Urls.fncaa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableMLB {
-                Menu("MLB Games") {
-                    Text(
-                        formattedDate(
-                            from: mlbVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !mlbVM.games.isEmpty {
-                        ForEach(Array(mlbVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "MLB"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "MLB"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "MLB"
-                    Task {
-                        await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
-                        if let updatedGame = mlbVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "MLB"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                BaseballMenu(
+                    title: "MLB Games",
+                    viewModel: mlbVM,
+                    league: "MLB",
+                    fetchURL: Scoreboard.Urls.mlb,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableBNCAA {
-                Menu("NCAA Baseball") {
-                    Text(
-                        formattedDate(
-                            from: bncaaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !bncaaVM.games.isEmpty {
-                        ForEach(Array(bncaaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "BNCAA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "BNCAA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "BNCAA"
-                    Task {
-                        await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa)
-                        if let updatedGame = bncaaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "BNCAA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                BaseballMenu(
+                    title: "NCAA Baseball",
+                    viewModel: bncaaVM,
+                    league: "BNCAA",
+                    fetchURL: Scoreboard.Urls.bncaa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableSNCAA {
-                Menu("NCAA Softball") {
-                    Text(
-                        formattedDate(
-                            from: sncaaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !sncaaVM.games.isEmpty {
-                        ForEach(Array(sncaaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "SNCAA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "SNCAA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "SNCAA"
-                    Task {
-                        await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa)
-                        if let updatedGame = sncaaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "SNCAA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                BaseballMenu(
+                    title: "NCAA Softball",
+                    viewModel: sncaaVM,
+                    league: "SNCAA",
+                    fetchURL: Scoreboard.Urls.sncaa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableUEFA {
-                Menu("UEFA Games") {
-                    Text(
-                        formattedDate(
-                            from: uefaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !uefaVM.games.isEmpty {
-                        ForEach(Array(uefaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "UEFA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "UEFA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "UEFA"
-                    Task {
-                        await uefaVM.populateGames(from: Scoreboard.Urls.uefa)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await uefaVM.populateGames(from: Scoreboard.Urls.uefa)
-                        if let updatedGame = uefaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "UEFA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                SoccerMenu(
+                    title: "UEFA Games",
+                    viewModel: uefaVM,
+                    league: "UEFA",
+                    fetchURL: Scoreboard.Urls.uefa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableEPL {
-                Menu("EPL Games") {
-                    Text(
-                        formattedDate(
-                            from: eplVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !eplVM.games.isEmpty {
-                        ForEach(Array(eplVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "EPL"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "EPL"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "EPL"
-                    Task {
-                        await eplVM.populateGames(from: Scoreboard.Urls.epl)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await eplVM.populateGames(from: Scoreboard.Urls.epl)
-                        if let updatedGame = eplVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "EPL"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                SoccerMenu(
+                    title: "EPL Games",
+                    viewModel: eplVM,
+                    league: "EPL",
+                    fetchURL: Scoreboard.Urls.epl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableESP {
-                Menu("ESP Games") {
-                    Text(
-                        formattedDate(
-                            from: espVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !espVM.games.isEmpty {
-                        ForEach(Array(espVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "ESP"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "ESP"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "ESP"
-                    Task {
-                        await espVM.populateGames(from: Scoreboard.Urls.esp)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await espVM.populateGames(from: Scoreboard.Urls.esp)
-                        if let updatedGame = espVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "ESP"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                SoccerMenu(
+                    title: "ESP Games",
+                    viewModel: espVM,
+                    league: "ESP",
+                    fetchURL: Scoreboard.Urls.esp,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableGER {
-                Menu("GER Games") {
-                    Text(
-                        formattedDate(
-                            from: gerVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !gerVM.games.isEmpty {
-                        ForEach(Array(gerVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "GER"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "GER"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "GER"
-                    Task {
-                        await gerVM.populateGames(from: Scoreboard.Urls.ger)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await gerVM.populateGames(from: Scoreboard.Urls.ger)
-                        if let updatedGame = gerVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "GER"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                SoccerMenu(
+                    title: "GER Games",
+                    viewModel: gerVM,
+                    league: "GER",
+                    fetchURL: Scoreboard.Urls.ger,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableITA {
-                Menu("ITA Games") {
-                    Text(
-                        formattedDate(
-                            from: itaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !itaVM.games.isEmpty {
-                        ForEach(Array(itaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "ITA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "ITA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "ITA"
-                    Task {
-                        await itaVM.populateGames(from: Scoreboard.Urls.ita)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await itaVM.populateGames(from: Scoreboard.Urls.ita)
-                        if let updatedGame = itaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "ITA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
-            }
-
-            if enableF1 {
-                Menu("F1 Races") {
-                    Text(
-                        formattedDate(
-                            from: f1VM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !f1VM.games.isEmpty {
-                        ForEach(Array(f1VM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "F1"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string:
-                                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                                    )
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "F1"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "F1"
-                    Task {
-                        await f1VM.populateGames(from: Scoreboard.Urls.f1)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await f1VM.populateGames(from: Scoreboard.Urls.f1)
-                        if let updatedGame = f1VM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "F1"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                SoccerMenu(
+                    title: "ITA Games",
+                    viewModel: itaVM,
+                    league: "ITA",
+                    fetchURL: Scoreboard.Urls.ita,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enablePGA {
-                Menu("PGA Games") {
-                    Text(
-                        formattedDate(
-                            from: pgaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !pgaVM.games.isEmpty {
-                        ForEach(Array(pgaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "PGA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string:
-                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                    )
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "PGA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "PGA"
-                    Task {
-                        await pgaVM.populateGames(from: Scoreboard.Urls.pga)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await pgaVM.populateGames(from: Scoreboard.Urls.pga)
-                        if let updatedGame = pgaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "PGA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                GolfMenu(
+                    title: "PGA Games",
+                    viewModel: pgaVM,
+                    league: "PGA",
+                    fetchURL: Scoreboard.Urls.pga,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableLPGA {
-                Menu("LPGA Games") {
-                    Text(
-                        formattedDate(
-                            from: lpgaVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !lpgaVM.games.isEmpty {
-                        ForEach(Array(lpgaVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "LPGA"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string:
-                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                    )
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "LPGA"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "LPGA"
-                    Task {
-                        await lpgaVM.populateGames(from: Scoreboard.Urls.lpga)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await lpgaVM.populateGames(from: Scoreboard.Urls.lpga)
-                        if let updatedGame = lpgaVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "LPGA"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                GolfMenu(
+                    title: "LPGA Games",
+                    viewModel: lpgaVM,
+                    league: "LPGA",
+                    fetchURL: Scoreboard.Urls.lpga,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableNLL {
-                Menu("NLL Games") {
-                    Text(
-                        formattedDate(
-                            from: nllVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !nllVM.games.isEmpty {
-                        ForEach(Array(nllVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "NLL"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "NLL"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "NLL"
-                    Task {
-                        await nllVM.populateGames(from: Scoreboard.Urls.nll)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await nllVM.populateGames(from: Scoreboard.Urls.nll)
-                        if let updatedGame = nllVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "NLL"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                LacrosseMenu(
+                    title: "NLL Games",
+                    viewModel: nllVM,
+                    league: "NLL",
+                    fetchURL: Scoreboard.Urls.nll,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enablePLL {
-                Menu("PLL Games") {
-                    Text(
-                        formattedDate(
-                            from: pllVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !pllVM.games.isEmpty {
-                        ForEach(Array(pllVM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "PLL"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "PLL"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "PLL"
-                    Task {
-                        await pllVM.populateGames(from: Scoreboard.Urls.pll)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await pllVM.populateGames(from: Scoreboard.Urls.pll)
-                        if let updatedGame = pllVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "PLL"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                LacrosseMenu(
+                    title: "PLL Games",
+                    viewModel: pllVM,
+                    league: "PLL",
+                    fetchURL: Scoreboard.Urls.pll,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableLNCAAM {
-                Menu("Men's College Lacrosse") {
-                    Text(
-                        formattedDate(
-                            from: lncaamVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !lncaamVM.games.isEmpty {
-                        ForEach(Array(lncaamVM.games.enumerated()), id: \.1.id) { _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "LNCAAM"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "LNCAAM"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "LNCAAM"
-                    Task {
-                        await lncaamVM.populateGames(
-                            from: Scoreboard.Urls.lncaam)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await lncaamVM.populateGames(
-                            from: Scoreboard.Urls.lncaam)
-                        if let updatedGame = lncaamVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "LNCAAM"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                LacrosseMenu(
+                    title: "Men's College Lacrosse",
+                    viewModel: lncaamVM,
+                    league: "LNCAAM",
+                    fetchURL: Scoreboard.Urls.lncaam,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             if enableLNCAAF {
-                Menu("Women's College Lacrosse") {
-                    Text(
-                        formattedDate(
-                            from: lncaafVM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !lncaafVM.games.isEmpty {
-                        ForEach(Array(lncaafVM.games.enumerated()), id: \.1.id) { _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "LNCAAF"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string: game.competitions[0]
-                                            .competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "LNCAAF"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "LNCAAF"
-                    Task {
-                        await lncaafVM.populateGames(
-                            from: Scoreboard.Urls.lncaaf)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await lncaafVM.populateGames(
-                            from: Scoreboard.Urls.lncaaf)
-                        if let updatedGame = lncaafVM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "LNCAAF"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
+                LacrosseMenu(
+                    title: "Women's College Lacrosse",
+                    viewModel: lncaafVM,
+                    league: "LNCAAF",
+                    fetchURL: Scoreboard.Urls.lncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
             }
 
             Divider()
