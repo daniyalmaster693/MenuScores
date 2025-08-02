@@ -17,7 +17,7 @@
 <br>
 <br>
 
-<!-- <img src="/Assets/SuperCorners-Dark-1.png" width="100%" alt="SuperCorners"/><br/> -->
+<img src="/Assets/MenuScores-1.png" width="100%" alt="MenuScores"/><br/>
 
 ## Supported Leagues
 
