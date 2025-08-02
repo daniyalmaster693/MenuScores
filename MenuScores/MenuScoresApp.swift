@@ -602,5 +602,35 @@ struct MenuScoresApp: App {
                 SettingsView(updater: updater)
             }
         }
+
+        .commands {
+            CommandGroup(replacing: .help) {
+                Button("MenuScores Help") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+
+                Divider()
+
+                Button("Feedback") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores/issues/new") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+
+                Button("Changelog") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores/releases") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+
+                Button("License") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores/blob/main/License") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
+        }
     }
 }

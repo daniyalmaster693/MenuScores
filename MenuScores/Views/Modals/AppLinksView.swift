@@ -77,7 +77,7 @@ struct AppLinksView: View {
                 }
             }
             .formStyle(.grouped)
-            .frame(maxWidth: 725)
+            .frame(maxWidth: 650)
             .padding(.top, 7)
 
             Divider()
