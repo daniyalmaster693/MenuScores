@@ -28,9 +28,6 @@ struct LeagueSettingsView: View {
     @AppStorage("enableSNCAA") private var enableSNCAA = true
 
     @AppStorage("enableF1") private var enableF1 = true
-    @AppStorage("enableMotoGP") private var enableMotoGP = true
-
-    @AppStorage("enableUFC") private var enableUFC = true
 
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = true
@@ -45,9 +42,6 @@ struct LeagueSettingsView: View {
     @AppStorage("enableESP") private var enableESP = true
     @AppStorage("enableGER") private var enableGER = true
     @AppStorage("enableITA") private var enableITA = true
-
-    @AppStorage("enableATP") private var enableATP = true
-    @AppStorage("enableWTA") private var enableWTA = true
 
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = true
@@ -266,32 +260,6 @@ struct LeagueSettingsView: View {
                             Text("F1")
                         }
                     }
-
-                    Toggle(isOn: $enableMotoGP) {
-                        HStack {
-                            Image(systemName: "flag.checkered")
-                                .foregroundColor(.secondary)
-                            Text("Moto GP")
-                        }
-                    }
-                }
-
-                Section("Tennis") {
-                    Toggle(isOn: $enableATP) {
-                        HStack {
-                            Image(systemName: "tennis.racket")
-                                .foregroundColor(.secondary)
-                            Text("ATP Tour")
-                        }
-                    }
-
-                    Toggle(isOn: $enableWTA) {
-                        HStack {
-                            Image(systemName: "tennis.racket")
-                                .foregroundColor(.secondary)
-                            Text("WTA Tour")
-                        }
-                    }
                 }
 
                 Section("Golf") {
@@ -360,16 +328,6 @@ struct LeagueSettingsView: View {
                             Image(systemName: "volleyball")
                                 .foregroundColor(.secondary)
                             Text("Women's College Volleyball")
-                        }
-                    }
-                }
-
-                Section("Fighting") {
-                    Toggle(isOn: $enableUFC) {
-                        HStack {
-                            Image(systemName: "figure.boxing")
-                                .foregroundColor(.secondary)
-                            Text("UFC")
                         }
                     }
                 }

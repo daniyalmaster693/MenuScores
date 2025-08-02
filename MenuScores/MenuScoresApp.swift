@@ -69,12 +69,10 @@ struct MenuScoresApp: App {
     @AppStorage("enableSNCAA") private var enableSNCAA = true
 
     @AppStorage("enableF1") private var enableF1 = true
-    @AppStorage("enableMotoGP") private var enableMotoGP = true
-
-    @AppStorage("enableUFC") private var enableUFC = true
 
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = true
+
     @AppStorage("enableUEFA") private var enableUEFA = true
     @AppStorage("enableMLS") private var enableMLS = true
     @AppStorage("enableMEX") private var enableMEX = true
@@ -85,9 +83,6 @@ struct MenuScoresApp: App {
     @AppStorage("enableESP") private var enableESP = true
     @AppStorage("enableGER") private var enableGER = true
     @AppStorage("enableITA") private var enableITA = true
-
-    @AppStorage("enableATP") private var enableATP = true
-    @AppStorage("enableWTA") private var enableWTA = true
 
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = true
@@ -556,6 +551,96 @@ struct MenuScoresApp: App {
                     currentGameState: $currentGameState,
                     previousGameState: $previousGameState
                 )
+            }
+
+            if enableF1 {
+                Menu("F1 Races") {
+                    Text(
+                        formattedDate(
+                            from: f1VM.games.first?.date ?? "Invalid Date")
+                    )
+                    .font(.headline)
+                    Divider().padding(.bottom)
+
+                    if !f1VM.games.isEmpty {
+                        ForEach(Array(f1VM.games.enumerated()), id: \.1.id) {
+                            _, game in
+                            Button {
+                                currentTitle = displayText(
+                                    for: game, league: "F1"
+                                )
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
+                            } label: {
+                                AsyncImage(
+                                    url: URL(
+                                        string:
+                                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                    )
+                                ) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 40, height: 40)
+
+                                Text(displayText(for: game, league: "F1"))
+                            }
+                        }
+                    } else {
+                        Text("Loading games...")
+                            .foregroundColor(.gray)
+                            .padding()
+                    }
+                }
+                .onAppear {
+                    LeagueSelectionModel.shared.currentLeague = "F1"
+                    Task {
+                        await f1VM.populateGames(from: Scoreboard.Urls.f1)
+                    }
+                }
+                .onReceive(
+                    Timer.publish(
+                        every: refreshInterval, on: .main, in: .common
+                    ).autoconnect()
+                ) { _ in
+                    Task {
+                        await f1VM.populateGames(from: Scoreboard.Urls.f1)
+                        if let updatedGame = f1VM.games.first(where: {
+                            $0.id == currentGameID
+                        }) {
+                            currentTitle = displayText(
+                                for: updatedGame, league: "F1"
+                            )
+                            let newState = updatedGame.status.type.state
+
+                            if notiGameStart {
+                                if previousGameState != "in" && newState == "in" {
+                                    gameStartNotification(
+                                        gameId: currentGameID,
+                                        gameTitle: currentTitle,
+                                        newState: newState
+                                    )
+                                }
+                            }
+
+                            if notiGameComplete {
+                                if previousGameState != "post"
+                                    && newState == "post"
+                                {
+                                    gameCompleteNotification(
+                                        gameId: currentGameID,
+                                        gameTitle: currentTitle,
+                                        newState: newState
+                                    )
+                                }
+                            }
+
+                            previousGameState = newState
+                            currentGameState = newState
+                        }
+                    }
+                }
             }
 
             Divider()
