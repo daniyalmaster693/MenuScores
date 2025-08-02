@@ -1,12 +1,25 @@
-# MenuScores - Live Scores. Right From Your Menubar
+<div align="center">
+<img src="https://github.com/daniyalmaster693/SuperCorners/blob/main/MenuScores/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="200" alt="App Icon">
+
+  <h1>MenuScores</h1>
+  <p>Live Scores - Right From Your Menubar</p>
+
+</div>
+
+<div align="center">
+
+[![GitHub License](https://img.shields.io/github/license/daniyalmaster693/MenuScores)](License)
+[![Downloads](https://img.shields.io/github/downloads/daniyalmaster693/MenuScores/total.svg)](https://github.com/daniyalmaster693/MenuScores/releases)
+[![macOS Version](https://img.shields.io/badge/macOS-13.0%2B-blue.svg)](https://www.apple.com/macos/)
+
+</div>
+
+<br>
+<br>
+
+<!-- <img src="/Assets/SuperCorners-Dark-1.png" width="100%" alt="SuperCorners"/><br/> -->
 
 MenuScores is a lightweight macOS menu bar app that brings sports and scores right to your desktop.
-
-[![GitHub License](https://img.shields.io/github/license/daniyalmaster693/MenuScores)](LICENSE)
-<a href="https://github.com/daniyalmaster693/MenuScores/releases/latest"><img src="https://img.shields.io/github/v/release/daniyalmaster693/MenuScores"></a>
-[![Downloads](https://img.shields.io/github/downloads/daniyalmaster693/MenuScores/total.svg)](https://github.com/daniyalmaster693/MenuScores/releases)
-
-![Screenshot](https://i.imgur.com/VylkBCN.png)
 
 ## Supported Leagues
 
