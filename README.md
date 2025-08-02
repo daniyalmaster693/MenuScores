@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/daniyalmaster693/SuperCorners/blob/main/MenuScores/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="200" alt="App Icon">
+<img src="https://github.com/daniyalmaster693/MenuScores/blob/main/MenuScores/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="200" alt="App Icon">
 
   <h1>MenuScores</h1>
   <p>Live Scores - Right From Your Menubar</p>
@@ -18,8 +18,6 @@
 <br>
 
 <!-- <img src="/Assets/SuperCorners-Dark-1.png" width="100%" alt="SuperCorners"/><br/> -->
-
-MenuScores is a lightweight macOS menu bar app that brings sports and scores right to your desktop.
 
 ## Supported Leagues
 
