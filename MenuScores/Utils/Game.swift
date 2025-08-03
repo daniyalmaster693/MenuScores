@@ -18,6 +18,7 @@ struct Event: Decodable {
     let shortName: String
     let competitions: [Competition]
     let status: Status
+    let links: [Links]?
 }
 
 struct Status: Decodable {
@@ -51,10 +52,20 @@ struct Team: Decodable {
     let abbreviation: String
     let name: String
     let logo: String?
+    let links: [Links]
 }
 
 struct Athlete: Decodable {
     let fullName: String
     let displayName: String
     let shortName: String
+}
+
+struct Links: Decodable {
+    let language: String?
+    let href: String
+    let text: String
+    let shortText: String?
+    let isExternal: Bool
+    let isPremium: Bool
 }

@@ -49,21 +49,59 @@ struct FootballMenu: View {
                 if let gamesForDate = groupedGames[date] {
                     Menu(date) {
                         ForEach(gamesForDate, id: \.id) { game in
-                            Button {
-                                currentTitle = displayText(for: game, league: league)
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
+                            Menu {
+                                Button {
+                                    currentTitle = displayText(for: game, league: league)
+                                    currentGameID = game.id
+                                    currentGameState = game.status.type.state
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "pin")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                        Text("Pin Game to Menubar")
+                                    }
                                 }
-                                .frame(width: 40, height: 40)
 
-                                Text(displayText(for: game, league: league))
+                                Button {
+                                    // Add notch pinning logic here if needed
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "macbook")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                        Text("Pin Game to Notch")
+                                    }
+                                }
+
+                                Button {
+                                    if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
+                                        NSWorkspace.shared.open(url)
+                                    }
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                        Text("View Game Details")
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
+                                    ) { image in
+                                        image.resizable().scaledToFit()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 40, height: 40)
+
+                                    Text(displayText(for: game, league: league))
+                                }
                             }
                         }
                     }

@@ -528,7 +528,7 @@ struct MenuScoresApp: App {
             }
 
             if enableVNCAAM {
-                LacrosseMenu(
+                VolleyballMenu(
                     title: "Men's College Volleyball",
                     viewModel: vncaamVM,
                     league: "VNCAAM",
@@ -541,7 +541,7 @@ struct MenuScoresApp: App {
             }
 
             if enableVNCAAF {
-                LacrosseMenu(
+                VolleyballMenu(
                     title: "Women's College Volleyball",
                     viewModel: vncaafVM,
                     league: "VNCAAF",
