@@ -39,93 +39,96 @@ struct F1Menu: View {
 
     var body: some View {
         Menu(title) {
-            Text(formattedDate(from: viewModel.games.first?.date ?? "Invalid Date"))
-                .font(.headline)
-            Divider().padding(.bottom)
-
             if !viewModel.games.isEmpty {
                 ForEach(Array(viewModel.games.enumerated()), id: \.1.id) { _, game in
-                    Menu {
-                        Button {
-                            currentTitle = displayText(for: game, league: league)
-                            currentGameID = game.id
-                            currentGameState = game.status.type.state
-                        } label: {
-                            HStack {
-                                Image(systemName: "pin")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Pin Race to Menubar")
-                            }
-                        }
-
-                        Button {
-                            // Add your notch pinning logic here
-                        } label: {
-                            HStack {
-                                Image(systemName: "macbook")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Pin Race to Notch")
-                            }
-                        }
-
-                        Divider()
-
-                        if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
+                    if let country = game.circuit?.address.country {
+                        Menu(country) {
+                            Text(formattedDate(from: game.endDate ?? "Invalid Date"))
+                                .font(.headline)
+                            Divider().padding(.bottom)
                             Menu {
-                                let competitors = game.competitions[4].competitors ?? []
+                                Button {
+                                    currentTitle = displayText(for: game, league: league)
+                                    currentGameID = game.id
+                                    currentGameState = game.status.type.state
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "pin")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                        Text("Pin Race to Menubar")
+                                    }
+                                }
 
-                                ForEach(competitors, id: \.id) { competitor in
-                                    Button {} label: {
-                                        HStack {
-                                            Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
-                                                .lineLimit(1)
-                                                .truncationMode(.tail)
+                                Button {
+                                    // Add your notch pinning logic here
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "macbook")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                        Text("Pin Race to Notch")
+                                    }
+                                }
+
+                                Divider()
+
+                                if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
+                                    Menu {
+                                        let competitors = game.competitions[4].competitors ?? []
+
+                                        ForEach(competitors, id: \.id) { competitor in
+                                            Button {} label: {
+                                                HStack {
+                                                    Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
+                                                        .lineLimit(1)
+                                                        .truncationMode(.tail)
+                                                }
+                                            }
                                         }
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "flag.checkered")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("Leaderboard")
+                                        }
+                                    }
+                                }
+
+                                Button {
+                                    if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
+                                        NSWorkspace.shared.open(url)
+                                    }
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "info.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
+                                        Text("View Race Details")
                                     }
                                 }
                             } label: {
                                 HStack {
-                                    Image(systemName: "flag.checkered")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 20, height: 20)
-                                    Text("Leaderboard")
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                        )
+                                    ) { image in
+                                        image.resizable().scaledToFit()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 40, height: 40)
+
+                                    Text(displayText(for: game, league: league))
                                 }
                             }
-                        }
-
-                        Button {
-                            if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
-                                NSWorkspace.shared.open(url)
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "info.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("View Race Details")
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            AsyncImage(
-                                url: URL(
-                                    string:
-                                    "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                                )
-                            ) { image in
-                                image.resizable().scaledToFit()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 40, height: 40)
-
-                            Text(displayText(for: game, league: league))
                         }
                     }
                 }

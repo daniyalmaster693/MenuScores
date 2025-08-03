@@ -67,7 +67,7 @@ enum Scoreboard {
 
         static let f1 = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard?dates=2025"
         )!
         static let pga = URL(
             string:

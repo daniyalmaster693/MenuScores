@@ -19,6 +19,7 @@ struct Event: Decodable {
     let competitions: [Competition]
     let status: Status
     let links: [Links]?
+    let circuit: Circuit?
 }
 
 struct Status: Decodable {
@@ -75,4 +76,15 @@ struct Links: Decodable {
 struct Flag: Decodable {
     let href: String
     let alt: String
+}
+
+struct Circuit: Decodable {
+    let id: String
+    let fullName: String
+    let address: Address
+}
+
+struct Address: Decodable {
+    let city: String
+    let country: String
 }
