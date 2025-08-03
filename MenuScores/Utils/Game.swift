@@ -42,6 +42,7 @@ struct Competition: Decodable {
 struct Competitor: Decodable {
     let id: String
     let score: String?
+    let order: Int?
     let winner: Bool?
     let athlete: Athlete?
     let team: Team?

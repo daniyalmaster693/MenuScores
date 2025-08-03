@@ -70,6 +70,31 @@ struct GolfMenu: View {
                             }
                         }
 
+                        Divider()
+
+                        Menu {
+                            let competitors = game.competitions.first?.competitors ?? []
+                            let topCompetitors = competitors.prefix(15)
+
+                            ForEach(topCompetitors, id: \.id) { competitor in
+                                Button {} label: {
+                                    HStack {
+                                        Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown") - Score: \(competitor.score ?? "-")")
+                                            .lineLimit(1)
+                                            .truncationMode(.tail)
+                                    }
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Image(systemName: "figure.golf")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("Leaderboard")
+                            }
+                        }
+
                         Button {
                             if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
                                 NSWorkspace.shared.open(url)
