@@ -449,6 +449,19 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableF1 {
+                F1Menu(
+                    title: "F1 Races",
+                    viewModel: f1VM,
+                    league: "F1",
+                    fetchURL: Scoreboard.Urls.f1,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             if enablePGA {
                 GolfMenu(
                     title: "PGA Games",
@@ -551,96 +564,6 @@ struct MenuScoresApp: App {
                     currentGameState: $currentGameState,
                     previousGameState: $previousGameState
                 )
-            }
-
-            if enableF1 {
-                Menu("F1 Races") {
-                    Text(
-                        formattedDate(
-                            from: f1VM.games.first?.date ?? "Invalid Date")
-                    )
-                    .font(.headline)
-                    Divider().padding(.bottom)
-
-                    if !f1VM.games.isEmpty {
-                        ForEach(Array(f1VM.games.enumerated()), id: \.1.id) {
-                            _, game in
-                            Button {
-                                currentTitle = displayText(
-                                    for: game, league: "F1"
-                                )
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-                            } label: {
-                                AsyncImage(
-                                    url: URL(
-                                        string:
-                                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                                    )
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text(displayText(for: game, league: "F1"))
-                            }
-                        }
-                    } else {
-                        Text("Loading games...")
-                            .foregroundColor(.gray)
-                            .padding()
-                    }
-                }
-                .onAppear {
-                    LeagueSelectionModel.shared.currentLeague = "F1"
-                    Task {
-                        await f1VM.populateGames(from: Scoreboard.Urls.f1)
-                    }
-                }
-                .onReceive(
-                    Timer.publish(
-                        every: refreshInterval, on: .main, in: .common
-                    ).autoconnect()
-                ) { _ in
-                    Task {
-                        await f1VM.populateGames(from: Scoreboard.Urls.f1)
-                        if let updatedGame = f1VM.games.first(where: {
-                            $0.id == currentGameID
-                        }) {
-                            currentTitle = displayText(
-                                for: updatedGame, league: "F1"
-                            )
-                            let newState = updatedGame.status.type.state
-
-                            if notiGameStart {
-                                if previousGameState != "in" && newState == "in" {
-                                    gameStartNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            if notiGameComplete {
-                                if previousGameState != "post"
-                                    && newState == "post"
-                                {
-                                    gameCompleteNotification(
-                                        gameId: currentGameID,
-                                        gameTitle: currentTitle,
-                                        newState: newState
-                                    )
-                                }
-                            }
-
-                            previousGameState = newState
-                            currentGameState = newState
-                        }
-                    }
-                }
             }
 
             Divider()

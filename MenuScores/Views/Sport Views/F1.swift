@@ -1,13 +1,13 @@
 //
-//  Golf.swift
+//  F1.swift
 //  MenuScores
 //
-//  Created by Daniyal Master on 2025-08-02.
+//  Created by Daniyal Master on 2025-08-03.
 //
 
 import SwiftUI
 
-struct GolfMenu: View {
+struct F1Menu: View {
     let title: String
     @ObservedObject var viewModel: GamesListView
     let league: String
@@ -56,30 +56,31 @@ struct GolfMenu: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
-                                Text("Pin Game to Menubar")
+                                Text("Pin Race to Menubar")
                             }
                         }
 
-                        Button {} label: {
+                        Button {
+                            // Add your notch pinning logic here
+                        } label: {
                             HStack {
                                 Image(systemName: "macbook")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
-                                Text("Pin Game to Notch")
+                                Text("Pin Race to Notch")
                             }
                         }
 
                         Divider()
 
                         Menu {
-                            let competitors = game.competitions.first?.competitors ?? []
-                            let topCompetitors = competitors.prefix(15)
+                            let competitors = game.competitions[4].competitors ?? []
 
-                            ForEach(topCompetitors, id: \.id) { competitor in
+                            ForEach(competitors, id: \.id) { competitor in
                                 Button {} label: {
                                     HStack {
-                                        Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown") \(competitor.score ?? "-")")
+                                        Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
                                             .lineLimit(1)
                                             .truncationMode(.tail)
                                     }
@@ -87,7 +88,7 @@ struct GolfMenu: View {
                             }
                         } label: {
                             HStack {
-                                Image(systemName: "figure.golf")
+                                Image(systemName: "flag.checkered")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
@@ -105,19 +106,23 @@ struct GolfMenu: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
-                                Text("View Game Details")
+                                Text("View Race Details")
                             }
                         }
                     } label: {
                         HStack {
                             AsyncImage(
-                                url: URL(string: leagueLogoURL(for: league))
+                                url: URL(
+                                    string:
+                                    "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                )
                             ) { image in
                                 image.resizable().scaledToFit()
                             } placeholder: {
                                 ProgressView()
                             }
                             .frame(width: 40, height: 40)
+
                             Text(displayText(for: game, league: league))
                         }
                     }
@@ -161,8 +166,4 @@ struct GolfMenu: View {
             }
         }
     }
-}
-
-private func leagueLogoURL(for league: String) -> String {
-    return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
 }

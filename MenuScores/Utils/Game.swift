@@ -60,6 +60,7 @@ struct Athlete: Decodable {
     let fullName: String
     let displayName: String
     let shortName: String
+    let flag: Flag
 }
 
 struct Links: Decodable {
@@ -69,4 +70,9 @@ struct Links: Decodable {
     let shortText: String?
     let isExternal: Bool
     let isPremium: Bool
+}
+
+struct Flag: Decodable {
+    let href: String
+    let alt: String
 }
