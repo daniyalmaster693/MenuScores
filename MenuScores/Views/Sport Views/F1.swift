@@ -74,25 +74,27 @@ struct F1Menu: View {
 
                         Divider()
 
-                        Menu {
-                            let competitors = game.competitions[4].competitors ?? []
+                        if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
+                            Menu {
+                                let competitors = game.competitions[4].competitors ?? []
 
-                            ForEach(competitors, id: \.id) { competitor in
-                                Button {} label: {
-                                    HStack {
-                                        Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
-                                            .lineLimit(1)
-                                            .truncationMode(.tail)
+                                ForEach(competitors, id: \.id) { competitor in
+                                    Button {} label: {
+                                        HStack {
+                                            Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
+                                                .lineLimit(1)
+                                                .truncationMode(.tail)
+                                        }
                                     }
                                 }
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "flag.checkered")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Leaderboard")
+                            } label: {
+                                HStack {
+                                    Image(systemName: "flag.checkered")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("Leaderboard")
+                                }
                             }
                         }
 

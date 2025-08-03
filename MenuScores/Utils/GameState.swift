@@ -26,6 +26,14 @@ func displayText(for game: Event, league: String) -> String {
     let clockText = displayClock ?? ""
     let periodText = period.map { "\(prefix)\($0)" } ?? ""
 
+    if league == "MLB" || league == "UEFA" || league == "EPL", state == "in" {
+        let detailText = shortDetail
+        return
+            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
+    }
+
+    // F1 Race States
+
     let driverName: String
     if game.competitions.count > 4,
        let f1Competitors = game.competitions[4].competitors,
@@ -44,14 +52,6 @@ func displayText(for game: Event, league: String) -> String {
         f1State = game.competitions[4].status.type.state
     }
     let f1PeriodText = f1Period.map { "\(prefix)\($0)" } ?? ""
-
-    if league == "MLB" || league == "UEFA" || league == "EPL", state == "in" {
-        let detailText = shortDetail
-        return
-            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
-    }
-
-    // F1 Race States
 
     if league == "F1", f1State == "pre" {
         return

@@ -72,26 +72,28 @@ struct GolfMenu: View {
 
                         Divider()
 
-                        Menu {
-                            let competitors = game.competitions.first?.competitors ?? []
-                            let topCompetitors = competitors.prefix(15)
+                        if game.status.type.state == "in" || game.status.type.state == "post" {
+                            Menu {
+                                let competitors = game.competitions.first?.competitors ?? []
+                                let topCompetitors = competitors.prefix(15)
 
-                            ForEach(topCompetitors, id: \.id) { competitor in
-                                Button {} label: {
-                                    HStack {
-                                        Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown") \(competitor.score ?? "-")")
-                                            .lineLimit(1)
-                                            .truncationMode(.tail)
+                                ForEach(topCompetitors, id: \.id) { competitor in
+                                    Button {} label: {
+                                        HStack {
+                                            Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown") \(competitor.score ?? "-")")
+                                                .lineLimit(1)
+                                                .truncationMode(.tail)
+                                        }
                                     }
                                 }
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "figure.golf")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Leaderboard")
+                            } label: {
+                                HStack {
+                                    Image(systemName: "figure.golf")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("Leaderboard")
+                                }
                             }
                         }
 
