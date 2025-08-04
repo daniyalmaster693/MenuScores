@@ -7,6 +7,8 @@
 
 import Foundation
 
+let currentYear = Calendar.current.component(.year, from: Date())
+
 enum Scoreboard {
     enum Urls {
         static let nhl = URL(
@@ -67,7 +69,7 @@ enum Scoreboard {
 
         static let f1 = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard?dates=2025"
+            "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard?dates=\(currentYear)"
         )!
         static let pga = URL(
             string:
