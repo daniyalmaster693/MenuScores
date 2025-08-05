@@ -91,49 +91,61 @@ struct F1Menu: View {
                                                             .frame(maxWidth: .infinity, alignment: .leading)
                                                             .padding(.leading, 10)
 
-                                                        HStack {
-                                                            Text("Current Leaders")
-                                                                .font(.system(size: 14, weight: .medium))
-                                                                .padding(.leading, 10)
+                                                        if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
+                                                            HStack {
+                                                                Text("Current Leaders")
+                                                                    .font(.system(size: 14, weight: .medium))
+                                                                    .padding(.leading, 10)
 
-                                                            Spacer()
+                                                                Spacer()
 
-                                                            if let lap = game.competitions[4].status.period {
-                                                                Text("L\(lap)")
-                                                                    .font(.system(size: 14, weight: .semibold))
-                                                                    .padding(.trailing, 10)
-                                                            }
-                                                        }.padding(.top, 5)
+                                                                if let lap = game.competitions[4].status.period {
+                                                                    Text("L\(lap)")
+                                                                        .font(.system(size: 14, weight: .semibold))
+                                                                        .padding(.trailing, 10)
+                                                                }
+                                                            }.padding(.top, 5)
 
-                                                        VStack {
-                                                            let competitors = game.competitions[4].competitors ?? []
+                                                            VStack {
+                                                                let competitors = game.competitions[4].competitors ?? []
 
-                                                            ForEach(competitors.prefix(5), id: \.id) { competitor in
-                                                                HStack {
-                                                                    if let flagURLString = competitor.athlete?.flag.href,
-                                                                       let flagURL = URL(string: flagURLString)
-                                                                    {
-                                                                        AsyncImage(url: flagURL) { image in
-                                                                            image.resizable().scaledToFit()
-                                                                        } placeholder: {
-                                                                            ProgressView()
+                                                                ForEach(competitors.prefix(5), id: \.id) { competitor in
+                                                                    HStack {
+                                                                        if let flagURLString = competitor.athlete?.flag.href,
+                                                                           let flagURL = URL(string: flagURLString)
+                                                                        {
+                                                                            AsyncImage(url: flagURL) { image in
+                                                                                image.resizable().scaledToFit()
+                                                                            } placeholder: {
+                                                                                ProgressView()
+                                                                            }
+                                                                            .frame(width: 16, height: 16)
+                                                                            .padding(.trailing, 3)
+                                                                            .padding(.leading, 10)
                                                                         }
-                                                                        .frame(width: 16, height: 16)
-                                                                        .padding(.trailing, 3)
-                                                                        .padding(.leading, 10)
-                                                                    }
 
-                                                                    Text("\(competitor.order ?? 0). ")
-                                                                        .lineLimit(1)
-                                                                        .truncationMode(.tail)
+                                                                        Text("\(competitor.order ?? 0). ")
+                                                                            .lineLimit(1)
+                                                                            .truncationMode(.tail)
 
-                                                                    Text("\(competitor.athlete?.displayName ?? "Unknown")")
-                                                                        .lineLimit(1)
-                                                                        .truncationMode(.tail)
+                                                                        Text("\(competitor.athlete?.displayName ?? "Unknown")")
+                                                                            .lineLimit(1)
+                                                                            .truncationMode(.tail)
 
-                                                                }.frame(maxWidth: .infinity, alignment: .leading)
-                                                            }
-                                                        }.padding(.top, 10)
+                                                                    }.frame(maxWidth: .infinity, alignment: .leading)
+                                                                }
+                                                            }.padding(.top, 10)
+                                                        }
+
+                                                        if game.competitions[4].status.type.state == "pre" {
+                                                            HStack {
+                                                                Image(systemName: "flag.checkered")
+                                                                    .font(.system(size: 14))
+
+                                                                Text("Game Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))")
+                                                                    .font(.system(size: 14, weight: .medium))
+                                                            }.frame(maxWidth: .infinity, alignment: .center)
+                                                        }
                                                     }
                                                 }
                                             }
