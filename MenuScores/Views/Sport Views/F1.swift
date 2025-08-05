@@ -68,71 +68,72 @@ struct F1Menu: View {
                                             hoverBehavior: .all,
                                             style: .notch
                                         ) {
-                                            HStack {
+                                            VStack {
                                                 HStack(spacing: 4) {
                                                     VStack {
                                                         HStack {
                                                             AsyncImage(
-                                                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
+                                                                url: URL(
+                                                                    string:
+                                                                    "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                                                )
                                                             ) { image in
-                                                                image
-                                                                    .resizable()
-                                                                    .scaledToFit()
+                                                                image.resizable().scaledToFit()
                                                             } placeholder: {
-                                                                Color.gray
+                                                                ProgressView()
                                                             }
                                                             .frame(width: 32, height: 32)
                                                             .padding(.trailing, 3)
 
-                                                            VStack {
-                                                                Text("\(game.competitions[0].competitors?[1].score ?? "-")")
-                                                                    .font(.system(size: 22, weight: .medium))
+                                                            Text("\(game.shortName)")
+                                                                .font(.system(size: 18, weight: .medium))
+                                                        }.padding(.bottom, 7)
+                                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                                            .padding(.leading, 10)
 
-                                                                Text("\(game.competitions[0].competitors?[1].team?.abbreviation ?? "")")
-                                                                    .font(.system(size: 12, weight: .medium))
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                HStack(spacing: 4) {
-                                                    if game.status.type.state == "post" {
-                                                        Text("Final")
-                                                            .font(.system(size: 19, weight: .semibold))
-                                                    } else if game.status.type.state == "pre" {
-                                                        Text("Pre")
-                                                            .font(.system(size: 19, weight: .semibold))
-                                                    } else {
-                                                        Text("P\(game.status.period ?? 0) \(game.status.displayClock ?? "")")
-                                                            .font(.system(size: 19, weight: .semibold))
-                                                    }
-                                                }
-                                                .padding(.leading, 30)
-                                                .padding(.trailing, 30)
-
-                                                HStack(spacing: 4) {
-                                                    VStack {
                                                         HStack {
-                                                            VStack {
-                                                                Text("\(game.competitions[0].competitors?[0].score ?? "-")")
-                                                                    .font(.system(size: 22, weight: .medium))
+                                                            Text("Current Leaders")
+                                                                .font(.system(size: 14, weight: .medium))
+                                                                .padding(.leading, 10)
 
-                                                                Text("\(game.competitions[0].competitors?[0].team?.abbreviation ?? "")")
-                                                                    .font(.system(size: 12, weight: .medium))
-                                                            }
+                                                            Spacer()
 
-                                                            AsyncImage(
-                                                                url: URL(string: game.competitions[0].competitors?[0].team?.logo ?? "")
-                                                            ) { image in
-                                                                image
-                                                                    .resizable()
-                                                                    .scaledToFit()
-                                                            } placeholder: {
-                                                                Color.gray
+                                                            if let lap = game.competitions[4].status.period {
+                                                                Text("L\(lap)")
+                                                                    .font(.system(size: 14, weight: .semibold))
+                                                                    .padding(.trailing, 10)
                                                             }
-                                                            .frame(width: 32, height: 32)
-                                                            .padding(.leading, 3)
-                                                        }
+                                                        }.padding(.top, 5)
+
+                                                        VStack {
+                                                            let competitors = game.competitions[4].competitors ?? []
+
+                                                            ForEach(competitors.prefix(5), id: \.id) { competitor in
+                                                                HStack {
+                                                                    if let flagURLString = competitor.athlete?.flag.href,
+                                                                       let flagURL = URL(string: flagURLString)
+                                                                    {
+                                                                        AsyncImage(url: flagURL) { image in
+                                                                            image.resizable().scaledToFit()
+                                                                        } placeholder: {
+                                                                            ProgressView()
+                                                                        }
+                                                                        .frame(width: 16, height: 16)
+                                                                        .padding(.trailing, 3)
+                                                                        .padding(.leading, 10)
+                                                                    }
+
+                                                                    Text("\(competitor.order ?? 0). ")
+                                                                        .lineLimit(1)
+                                                                        .truncationMode(.tail)
+
+                                                                    Text("\(competitor.athlete?.displayName ?? "Unknown")")
+                                                                        .lineLimit(1)
+                                                                        .truncationMode(.tail)
+
+                                                                }.frame(maxWidth: .infinity, alignment: .leading)
+                                                            }
+                                                        }.padding(.top, 10)
                                                     }
                                                 }
                                             }
