@@ -140,7 +140,7 @@ struct F1Menu: View {
                                                         if game.competitions[4].status.type.state == "pre" {
                                                             HStack {
                                                                 Image(systemName: "flag.checkered")
-                                                                    .font(.system(size: 14))
+                                                                    .font(.system(size: 12))
 
                                                                 Text("Race Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))")
                                                                     .font(.system(size: 14, weight: .medium))
