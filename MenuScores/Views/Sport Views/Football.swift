@@ -5,8 +5,8 @@
 //  Created by Daniyal Master on 2025-08-02.
 //
 
-import SwiftUI
 import DynamicNotchKit
+import SwiftUI
 
 struct FootballMenu: View {
     let title: String
@@ -174,6 +174,8 @@ struct FootballMenu: View {
                                                 .padding(.leading, 3)
                                             }
                                         }
+
+                                        DynamicNotchManager.shared.currentNotch = notch
 
                                         await notch.expand()
                                         try await Task.sleep(for: .seconds(2))
