@@ -57,7 +57,7 @@ struct SoccerMenu: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
-                                Text("Pin Game to Menubar")
+                                Image(systemName: "menubar.rectangle")
                             }
                         }
 

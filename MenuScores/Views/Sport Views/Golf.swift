@@ -53,7 +53,7 @@ struct GolfMenu: View {
                             currentGameState = game.status.type.state
                         } label: {
                             HStack {
-                                Image(systemName: "pin")
+                                Image(systemName: "menubar.rectangle")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
