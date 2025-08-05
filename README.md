@@ -22,24 +22,41 @@
 ## Supported Leagues
 
 - NHL
+- Men's College Hockey
+- Women's College Hockey
 - NBA
 - WNBA
 - Men's College Basketball
 - Women's College Basketball
 - NFL
+- CFL
+- College Football
 - MLB
+- College Baseball
+- College Softball
+- Champions League
+- MLS
+- Premier League
+- La Liga
+- Bundesliga
+- Serie A
+- LIGA MX
+- Ligue 1
+- Eredivisie
+- Primeira Liga
 - F1
 - PGA
-- LGA
-- UEFA – UEFA Champions League
-- EPL – English Premier League
-- ESP – La Liga (Spain)
-- GER – Bundesliga (Germany)
-- ITA – Serie A (Italy)
+- LPGA
 - NLL
+- PLL
+- Men's College Lacrosse
+- Women's College Lacrosse
+- Men's College Volleyball
+- Women's College Volleyball
 
 ## Features
 
+- **Live Notch Scores** - Pin games to your notch and receive real-time score updates available at a glace.
 - **Live Menubar Scores** - Pin games to your menu bar and receive real-time score updates available at a glance.
 - **Smart Notifications** - Get notified when a pinned game starts or finishes.
 - **League Control** - Choose which leagues are shown and stay focused on the sports you care about.
