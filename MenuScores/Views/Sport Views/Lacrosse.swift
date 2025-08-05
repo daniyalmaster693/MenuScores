@@ -136,7 +136,7 @@ struct LacrosseMenu: View {
                                         }
                                     }
                                 } compactLeading: {
-                                    HStack(spacing: 4) {
+                                    HStack {
                                         AsyncImage(
                                             url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
                                         ) { image in
@@ -147,13 +147,12 @@ struct LacrosseMenu: View {
                                             Color.gray
                                         }
                                         .frame(width: 18, height: 18)
-                                        .padding(.trailing, 3)
 
                                         Text("\(game.competitions[0].competitors?[1].score ?? "-")")
                                             .font(.system(size: 14, weight: .semibold))
                                     }
                                 } compactTrailing: {
-                                    HStack(spacing: 4) {
+                                    HStack {
                                         Text("\(game.competitions[0].competitors?[0].score ?? "-")")
                                             .font(.system(size: 14, weight: .semibold))
 
@@ -167,7 +166,6 @@ struct LacrosseMenu: View {
                                             Color.gray
                                         }
                                         .frame(width: 18, height: 18)
-                                        .padding(.leading, 3)
                                     }
                                 }
 
