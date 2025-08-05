@@ -64,8 +64,8 @@ struct HockeyMenu: View {
                         Button {
                             Task {
                                 let notch = DynamicNotch(
-                                    hoverBehavior: .all
-//                                    style: .notch
+                                    hoverBehavior: .all,
+                                    style: .notch
                                 ) {
                                     HStack {
                                         HStack(spacing: 4) {
