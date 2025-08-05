@@ -142,7 +142,7 @@ struct F1Menu: View {
                                                                 Image(systemName: "flag.checkered")
                                                                     .font(.system(size: 14))
 
-                                                                Text("Game Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))")
+                                                                Text("Race Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))")
                                                                     .font(.system(size: 14, weight: .medium))
                                                             }.frame(maxWidth: .infinity, alignment: .center)
                                                         }
