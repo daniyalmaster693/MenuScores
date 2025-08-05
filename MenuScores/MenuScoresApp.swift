@@ -571,6 +571,9 @@ struct MenuScoresApp: App {
             Button {
                 currentTitle = ""
                 currentGameID = ""
+                currentGameState = ""
+                previousGameState = nil
+                DynamicNotchManager.shared.clearNotch()
             } label: {
                 Text("Clear Set Game")
             }
