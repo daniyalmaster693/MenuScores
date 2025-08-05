@@ -88,7 +88,7 @@ struct F1Menu: View {
                                                             Text("\(game.shortName)")
                                                                 .font(.system(size: 18, weight: .medium))
                                                         }.padding(.bottom, 7)
-                                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                                            .frame(maxWidth: .infinity, alignment: .center)
                                                             .padding(.leading, 10)
 
                                                         if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {

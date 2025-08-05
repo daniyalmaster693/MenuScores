@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2025-08-02.
 //
 
+import DynamicNotchKit
 import SwiftUI
 
 struct GolfMenu: View {
@@ -60,13 +61,139 @@ struct GolfMenu: View {
                             }
                         }
 
-                        Button {} label: {
+                        Button {
+                            Task {
+                                let notch = DynamicNotch(
+                                    hoverBehavior: .all,
+                                    style: .notch
+                                ) {
+                                    VStack {
+                                        HStack(spacing: 4) {
+                                            VStack {
+                                                HStack {
+                                                    AsyncImage(
+                                                        url: URL(
+                                                            string:
+                                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                                        )
+                                                    ) { image in
+                                                        image.resizable().scaledToFit()
+                                                    } placeholder: {
+                                                        ProgressView()
+                                                    }
+                                                    .frame(width: 32, height: 32)
+                                                    .padding(.trailing, 3)
+
+                                                    Text("\(game.shortName)")
+                                                        .font(.system(size: 18, weight: .medium))
+                                                }.padding(.bottom, 7)
+                                                    .frame(maxWidth: .infinity, alignment: .center)
+                                                    .padding(.leading, 10)
+
+                                                if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
+                                                    HStack {
+                                                        Text("Current Leaders")
+                                                            .font(.system(size: 14, weight: .medium))
+                                                            .padding(.leading, 10)
+
+                                                        Spacer()
+
+                                                        if let round = game.competitions[0].status.period {
+                                                            Text("R\(round)")
+                                                                .font(.system(size: 14, weight: .semibold))
+                                                                .padding(.trailing, 10)
+                                                        }
+                                                    }.padding(.top, 5)
+
+                                                    VStack {
+                                                        let competitors = game.competitions[0].competitors ?? []
+
+                                                        ForEach(competitors.prefix(5), id: \.id) { competitor in
+                                                            HStack {
+                                                                HStack {
+                                                                    if let flagURLString = competitor.athlete?.flag.href,
+                                                                       let flagURL = URL(string: flagURLString)
+                                                                    {
+                                                                        AsyncImage(url: flagURL) { image in
+                                                                            image.resizable().scaledToFit()
+                                                                        } placeholder: {
+                                                                            ProgressView()
+                                                                        }
+                                                                        .frame(width: 16, height: 16)
+                                                                        .padding(.trailing, 3)
+                                                                        .padding(.leading, 10)
+                                                                    }
+
+                                                                    Text("\(competitor.order ?? 0). ")
+                                                                        .lineLimit(1)
+                                                                        .truncationMode(.tail)
+
+                                                                    Text("\(competitor.athlete?.displayName ?? "Unknown")")
+                                                                        .lineLimit(1)
+                                                                        .truncationMode(.tail)
+                                                                }
+
+                                                                Text("\(competitor.score ?? "-")")
+                                                                    .lineLimit(1)
+                                                                    .truncationMode(.tail)
+
+                                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                                        }
+                                                    }.padding(.top, 10)
+                                                }
+
+                                                if game.competitions[0].status.type.state == "pre" {
+                                                    HStack {
+                                                        Image(systemName: "figure.golf")
+                                                            .font(.system(size: 12))
+
+                                                        Text("Tournament Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))")
+                                                            .font(.system(size: 14, weight: .medium))
+                                                    }.frame(maxWidth: .infinity, alignment: .center)
+                                                }
+                                            }
+                                        }
+                                    }
+                                } compactLeading: {
+                                    HStack {
+                                        AsyncImage(
+                                            url: URL(
+                                                string:
+                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                            )
+                                        ) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 18, height: 18)
+                                    }
+                                } compactTrailing: {
+                                    HStack {
+                                        if let lap = game.competitions[0].status.period {
+                                            Text("R\(lap)")
+                                                .font(.system(size: 14, weight: .semibold))
+                                        } else {
+                                            Text("R -")
+                                                .font(.system(size: 14, weight: .semibold))
+                                        }
+                                    }
+                                }
+
+                                DynamicNotchManager.shared.currentNotch = notch
+
+                                await notch.expand()
+                                try await Task.sleep(for: .seconds(2))
+                                await notch.compact()
+                                try await Task.sleep(for: .seconds(2))
+                            }
+                        } label: {
                             HStack {
                                 Image(systemName: "macbook")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
-                                Text("Pin Game to Notch")
+                                Text("Pin Race to Notch")
                             }
                         }
 
