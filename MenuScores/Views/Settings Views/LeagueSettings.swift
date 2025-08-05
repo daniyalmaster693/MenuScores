@@ -11,45 +11,47 @@ struct LeagueSettingsView: View {
     // Toggled League Settings
 
     @AppStorage("enableNHL") private var enableNHL = true
-    @AppStorage("enableHNCAAM") private var enableHNCAAM = true
-    @AppStorage("enableHNCAAF") private var enableHNCAAF = true
+    @AppStorage("enableHNCAAM") private var enableHNCAAM = false
+    @AppStorage("enableHNCAAF") private var enableHNCAAF = false
 
     @AppStorage("enableNBA") private var enableNBA = true
-    @AppStorage("enableWNBA") private var enableWNBA = true
-    @AppStorage("enableNCAAM") private var enableNCAAM = true
-    @AppStorage("enableNCAAF") private var enableNCAAF = true
+    @AppStorage("enableWNBA") private var enableWNBA = false
+    @AppStorage("enableNCAAM") private var enableNCAAM = false
+    @AppStorage("enableNCAAF") private var enableNCAAF = false
 
     @AppStorage("enableNFL") private var enableNFL = true
-    @AppStorage("enableCFL") private var enableCFL = true
-    @AppStorage("enableFNCAA") private var enableFNCAA = true
+    @AppStorage("enableCFL") private var enableCFL = false
+    @AppStorage("enableFNCAA") private var enableFNCAA = false
 
     @AppStorage("enableMLB") private var enableMLB = true
-    @AppStorage("enableBNCAA") private var enableBNCAA = true
-    @AppStorage("enableSNCAA") private var enableSNCAA = true
+    @AppStorage("enableBNCAA") private var enableBNCAA = false
+    @AppStorage("enableSNCAA") private var enableSNCAA = false
 
     @AppStorage("enableF1") private var enableF1 = true
 
     @AppStorage("enablePGA") private var enablePGA = true
-    @AppStorage("enableLPGA") private var enableLPGA = true
+    @AppStorage("enableLPGA") private var enableLPGA = false
 
-    @AppStorage("enableUEFA") private var enableUEFA = true
+    @AppStorage("enableUEFA") private var enableUEFA = false
     @AppStorage("enableMLS") private var enableMLS = true
-    @AppStorage("enableMEX") private var enableMEX = true
-    @AppStorage("enableFRA") private var enableFRA = true
-    @AppStorage("enableNED") private var enableNED = true
-    @AppStorage("enablePOR") private var enablePOR = true
-    @AppStorage("enableEPL") private var enableEPL = true
-    @AppStorage("enableESP") private var enableESP = true
-    @AppStorage("enableGER") private var enableGER = true
-    @AppStorage("enableITA") private var enableITA = true
+    @AppStorage("enableMEX") private var enableMEX = false
+    @AppStorage("enableFRA") private var enableFRA = false
+    @AppStorage("enableNED") private var enableNED = false
+    @AppStorage("enablePOR") private var enablePOR = false
+    @AppStorage("enableEPL") private var enableEPL = false
+    @AppStorage("enableESP") private var enableESP = false
+    @AppStorage("enableGER") private var enableGER = false
+    @AppStorage("enableITA") private var enableITA = false
 
     @AppStorage("enableNLL") private var enableNLL = true
-    @AppStorage("enablePLL") private var enablePLL = true
-    @AppStorage("enableLNCAAM") private var enableLNCAAM = true
-    @AppStorage("enableLNCAAF") private var enableLNCAAF = true
+    @AppStorage("enablePLL") private var enablePLL = false
+    @AppStorage("enableLNCAAM") private var enableLNCAAM = false
+    @AppStorage("enableLNCAAF") private var enableLNCAAF = false
 
-    @AppStorage("enableVNCAAM") private var enableVNCAAM = true
-    @AppStorage("enableVNCAAF") private var enableVNCAAF = true
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = false
+    @AppStorage("enableVNCAAF") private var enableVNCAAF = false
+
+    // League Settings View
 
     var body: some View {
         VStack(spacing: 4) {
