@@ -183,6 +183,8 @@ struct LacrosseMenu: View {
 
                                 DynamicNotchManager.shared.currentNotch = notch
 
+//                                await notch.expand()
+//                                try? await Task.sleep(for: .seconds(2))
                                 await notch.compact()
                             }
                         } label: {

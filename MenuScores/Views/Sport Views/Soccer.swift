@@ -59,11 +59,11 @@ struct SoccerMenu: View {
                             pinnedByNotch = false
                         } label: {
                             HStack {
-                                Image(systemName: "pin")
+                                Image(systemName: "menubar.rectangle")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
-                                Image(systemName: "menubar.rectangle")
+                                Text("Pin Game to Menubar")
                             }
                         }
 
@@ -183,6 +183,8 @@ struct SoccerMenu: View {
 
                                 DynamicNotchManager.shared.currentNotch = notch
 
+//                                await notch.expand()
+//                                try? await Task.sleep(for: .seconds(2))
                                 await notch.compact()
                             }
                         } label: {
