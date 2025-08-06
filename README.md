@@ -2,7 +2,7 @@
 <img src="https://github.com/daniyalmaster693/MenuScores/blob/main/MenuScores/Assets.xcassets/AppIcon.appiconset/icon_256x256%201.png" width="200" alt="App Icon">
 
   <h1>MenuScores</h1>
-  <p>Live Scores - Right From Your Menubar</p>
+  <p>Live Scores - Right From Your Menubar and Notch</p>
 
 </div>
 
