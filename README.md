@@ -80,8 +80,11 @@
 
 1. Clicking on the menubar title will show a list available leagues.
 2. Hovering over a league will show a dropdown of all the games for the day in that league.
-3. Clicking on a game will pin it.
-4. You can use the clear set game option, or click on a different game to clear the title.
+3. Hover over a game will allow you to choose from pinning the game to your menubar, notch, or viewing it in your browser.
+
+**Note: the notch feature works best on Macbooks with a notch. It will still work on non notched devices, but hovering over it will not open the expanded view.**
+
+4. You can use the clear set game option, or pin a different game to clear the title.
 5. You can quit the app directly from the menubar, or open the preferences window to configure app behaviors (this can be done by pressing Cmd + , after opening the menubar component, or clicking the preferences button if your on macOS 14.0 and later).
 
 ## Dependencies
