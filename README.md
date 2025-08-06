@@ -89,6 +89,7 @@
 
 ## Dependencies
 
+- [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
 - [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 
