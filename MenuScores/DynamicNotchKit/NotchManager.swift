@@ -13,7 +13,7 @@ class DynamicNotchManager {
 
     private init() {}
 
-    private var _currentNotch: (any DynamicNotchControllable)? = nil
+    private var _currentNotch: (any DynamicNotchControllable)?
 
     var currentNotch: (any DynamicNotchControllable)? {
         get { _currentNotch }
