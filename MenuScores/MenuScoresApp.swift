@@ -464,7 +464,7 @@ struct MenuScoresApp: App {
 
             if enablePGA {
                 GolfMenu(
-                    title: "PGA Games",
+                    title: "PGA Golf",
                     viewModel: pgaVM,
                     league: "PGA",
                     fetchURL: Scoreboard.Urls.pga,
@@ -477,7 +477,7 @@ struct MenuScoresApp: App {
 
             if enableLPGA {
                 GolfMenu(
-                    title: "LPGA Games",
+                    title: "LPGA Golf",
                     viewModel: lpgaVM,
                     league: "LPGA",
                     fetchURL: Scoreboard.Urls.lpga,
