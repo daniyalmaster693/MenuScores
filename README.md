@@ -67,9 +67,20 @@
 
 **Requires macOS 13.0 and later**
 
-1. Download the latest release
-2. Move the app to your **Applications folder**
-3. Run the app.
+### Manual Installation
+
+1. Download the latest release.
+2. Move the app to your **Applications folder**.
+3. Run the app and grant necessary permissions when prompted.
+
+### Homebrew
+
+You can also install MenuScores using Homebrew:
+
+```bash
+brew tap daniyalmaster693/casks
+brew install --cask menuscores
+```
 
 **Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
 
