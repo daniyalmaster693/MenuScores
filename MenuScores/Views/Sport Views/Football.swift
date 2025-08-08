@@ -268,115 +268,117 @@ struct FootballMenu: View {
                     previousGameState = newState
                     currentGameState = newState
 
-                    let notch = DynamicNotch(
-                        hoverBehavior: .all,
-                        style: .notch
-                    ) {
-                        HStack {
-                            HStack(spacing: 4) {
-                                VStack {
-                                    HStack {
-                                        AsyncImage(
-                                            url: URL(string: updatedGame.competitions[0].competitors?[1].team?.logo ?? "")
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFit()
-                                        } placeholder: {
-                                            Color.gray
+                    if pinnedByNotch {
+                        let notch = DynamicNotch(
+                            hoverBehavior: .all,
+                            style: .notch
+                        ) {
+                            HStack {
+                                HStack(spacing: 4) {
+                                    VStack {
+                                        HStack {
+                                            AsyncImage(
+                                                url: URL(string: updatedGame.competitions[0].competitors?[1].team?.logo ?? "")
+                                            ) { image in
+                                                image
+                                                    .resizable()
+                                                    .scaledToFit()
+                                            } placeholder: {
+                                                Color.gray
+                                            }
+                                            .frame(width: 32, height: 32)
+                                            .padding(.trailing, 3)
+
+                                            VStack {
+                                                Text("\(updatedGame.competitions[0].competitors?[1].score ?? "-")")
+                                                    .font(.system(size: 22, weight: .medium))
+
+                                                Text("\(updatedGame.competitions[0].competitors?[1].team?.abbreviation ?? "")")
+                                                    .font(.system(size: 12, weight: .medium))
+                                            }
                                         }
-                                        .frame(width: 32, height: 32)
-                                        .padding(.trailing, 3)
+                                    }
+                                }
 
-                                        VStack {
-                                            Text("\(updatedGame.competitions[0].competitors?[1].score ?? "-")")
-                                                .font(.system(size: 22, weight: .medium))
+                                HStack(spacing: 4) {
+                                    if updatedGame.status.type.state == "post" {
+                                        Text("Final")
+                                            .font(.system(size: 19, weight: .semibold))
+                                    } else if updatedGame.status.type.state == "pre" {
+                                        Text("Pre")
+                                            .font(.system(size: 19, weight: .semibold))
+                                    } else {
+                                        Text("Q\(updatedGame.status.period ?? 0) \(updatedGame.status.displayClock ?? "")")
+                                            .font(.system(size: 19, weight: .semibold))
+                                    }
+                                }
+                                .padding(.leading, 30)
+                                .padding(.trailing, 30)
 
-                                            Text("\(updatedGame.competitions[0].competitors?[1].team?.abbreviation ?? "")")
-                                                .font(.system(size: 12, weight: .medium))
+                                HStack(spacing: 4) {
+                                    VStack {
+                                        HStack {
+                                            VStack {
+                                                Text("\(updatedGame.competitions[0].competitors?[0].score ?? "-")")
+                                                    .font(.system(size: 22, weight: .medium))
+
+                                                Text("\(updatedGame.competitions[0].competitors?[0].team?.abbreviation ?? "")")
+                                                    .font(.system(size: 12, weight: .medium))
+                                            }
+
+                                            AsyncImage(
+                                                url: URL(string: updatedGame.competitions[0].competitors?[0].team?.logo ?? "")
+                                            ) { image in
+                                                image
+                                                    .resizable()
+                                                    .scaledToFit()
+                                            } placeholder: {
+                                                Color.gray
+                                            }
+                                            .frame(width: 32, height: 32)
+                                            .padding(.leading, 3)
                                         }
                                     }
                                 }
                             }
-
-                            HStack(spacing: 4) {
-                                if updatedGame.status.type.state == "post" {
-                                    Text("Final")
-                                        .font(.system(size: 19, weight: .semibold))
-                                } else if updatedGame.status.type.state == "pre" {
-                                    Text("Pre")
-                                        .font(.system(size: 19, weight: .semibold))
-                                } else {
-                                    Text("Q\(updatedGame.status.period ?? 0) \(updatedGame.status.displayClock ?? "")")
-                                        .font(.system(size: 19, weight: .semibold))
+                        } compactLeading: {
+                            HStack {
+                                AsyncImage(
+                                    url: URL(string: updatedGame.competitions[0].competitors?[1].team?.logo ?? "")
+                                ) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                } placeholder: {
+                                    Color.gray
                                 }
+                                .frame(width: 18, height: 18)
+
+                                Text("\(updatedGame.competitions[0].competitors?[1].score ?? "-")")
+                                    .font(.system(size: 14, weight: .semibold))
                             }
-                            .padding(.leading, 30)
-                            .padding(.trailing, 30)
+                        } compactTrailing: {
+                            HStack {
+                                Text("\(updatedGame.competitions[0].competitors?[0].score ?? "-")")
+                                    .font(.system(size: 14, weight: .semibold))
 
-                            HStack(spacing: 4) {
-                                VStack {
-                                    HStack {
-                                        VStack {
-                                            Text("\(updatedGame.competitions[0].competitors?[0].score ?? "-")")
-                                                .font(.system(size: 22, weight: .medium))
-
-                                            Text("\(updatedGame.competitions[0].competitors?[0].team?.abbreviation ?? "")")
-                                                .font(.system(size: 12, weight: .medium))
-                                        }
-
-                                        AsyncImage(
-                                            url: URL(string: updatedGame.competitions[0].competitors?[0].team?.logo ?? "")
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFit()
-                                        } placeholder: {
-                                            Color.gray
-                                        }
-                                        .frame(width: 32, height: 32)
-                                        .padding(.leading, 3)
-                                    }
+                                AsyncImage(
+                                    url: URL(string: updatedGame.competitions[0].competitors?[0].team?.logo ?? "")
+                                ) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                } placeholder: {
+                                    Color.gray
                                 }
+                                .frame(width: 18, height: 18)
                             }
                         }
-                    } compactLeading: {
-                        HStack {
-                            AsyncImage(
-                                url: URL(string: updatedGame.competitions[0].competitors?[1].team?.logo ?? "")
-                            ) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                            } placeholder: {
-                                Color.gray
-                            }
-                            .frame(width: 18, height: 18)
 
-                            Text("\(updatedGame.competitions[0].competitors?[1].score ?? "-")")
-                                .font(.system(size: 14, weight: .semibold))
-                        }
-                    } compactTrailing: {
-                        HStack {
-                            Text("\(updatedGame.competitions[0].competitors?[0].score ?? "-")")
-                                .font(.system(size: 14, weight: .semibold))
+                        DynamicNotchManager.shared.currentNotch = notch
 
-                            AsyncImage(
-                                url: URL(string: updatedGame.competitions[0].competitors?[0].team?.logo ?? "")
-                            ) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                            } placeholder: {
-                                Color.gray
-                            }
-                            .frame(width: 18, height: 18)
-                        }
+                        await notch.compact()
                     }
-
-                    DynamicNotchManager.shared.currentNotch = notch
-
-                    await notch.compact()
                 }
             }
         }

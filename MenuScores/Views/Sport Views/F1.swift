@@ -303,120 +303,122 @@ struct F1Menu: View {
                     previousGameState = newState
                     currentGameState = newState
 
-                    let notch = DynamicNotch(
-                        hoverBehavior: .all,
-                        style: .notch
-                    ) {
-                        VStack {
-                            HStack(spacing: 4) {
-                                VStack {
-                                    HStack {
-                                        AsyncImage(
-                                            url: URL(
-                                                string:
-                                                "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                                            )
-                                        ) { image in
-                                            image.resizable().scaledToFit()
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
-                                        .frame(width: 32, height: 32)
-                                        .padding(.trailing, 3)
-
-                                        Text("\(updatedGame.shortName)")
-                                            .font(.system(size: 18, weight: .medium))
-                                    }.padding(.bottom, 7)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                        .padding(.leading, 10)
-
-                                    if updatedGame.competitions[4].status.type.state == "in" || updatedGame.competitions[4].status.type.state == "post" {
+                    if pinnedByNotch {
+                        let notch = DynamicNotch(
+                            hoverBehavior: .all,
+                            style: .notch
+                        ) {
+                            VStack {
+                                HStack(spacing: 4) {
+                                    VStack {
                                         HStack {
-                                            Text("Current Leaders")
-                                                .font(.system(size: 14, weight: .medium))
-                                                .padding(.leading, 10)
-
-                                            Spacer()
-
-                                            if let lap = updatedGame.competitions[4].status.period {
-                                                Text("L\(lap)")
-                                                    .font(.system(size: 14, weight: .semibold))
-                                                    .padding(.trailing, 10)
+                                            AsyncImage(
+                                                url: URL(
+                                                    string:
+                                                    "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                                )
+                                            ) { image in
+                                                image.resizable().scaledToFit()
+                                            } placeholder: {
+                                                ProgressView()
                                             }
-                                        }.padding(.top, 5)
+                                            .frame(width: 32, height: 32)
+                                            .padding(.trailing, 3)
 
-                                        VStack {
-                                            let competitors = updatedGame.competitions[4].competitors ?? []
+                                            Text("\(updatedGame.shortName)")
+                                                .font(.system(size: 18, weight: .medium))
+                                        }.padding(.bottom, 7)
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .padding(.leading, 10)
 
-                                            ForEach(competitors.prefix(5), id: \.id) { competitor in
-                                                HStack {
-                                                    if let flagURLString = competitor.athlete?.flag.href,
-                                                       let flagURL = URL(string: flagURLString)
-                                                    {
-                                                        AsyncImage(url: flagURL) { image in
-                                                            image.resizable().scaledToFit()
-                                                        } placeholder: {
-                                                            ProgressView()
+                                        if updatedGame.competitions[4].status.type.state == "in" || updatedGame.competitions[4].status.type.state == "post" {
+                                            HStack {
+                                                Text("Current Leaders")
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .padding(.leading, 10)
+
+                                                Spacer()
+
+                                                if let lap = updatedGame.competitions[4].status.period {
+                                                    Text("L\(lap)")
+                                                        .font(.system(size: 14, weight: .semibold))
+                                                        .padding(.trailing, 10)
+                                                }
+                                            }.padding(.top, 5)
+
+                                            VStack {
+                                                let competitors = updatedGame.competitions[4].competitors ?? []
+
+                                                ForEach(competitors.prefix(5), id: \.id) { competitor in
+                                                    HStack {
+                                                        if let flagURLString = competitor.athlete?.flag.href,
+                                                           let flagURL = URL(string: flagURLString)
+                                                        {
+                                                            AsyncImage(url: flagURL) { image in
+                                                                image.resizable().scaledToFit()
+                                                            } placeholder: {
+                                                                ProgressView()
+                                                            }
+                                                            .frame(width: 16, height: 16)
+                                                            .padding(.trailing, 3)
+                                                            .padding(.leading, 10)
                                                         }
-                                                        .frame(width: 16, height: 16)
-                                                        .padding(.trailing, 3)
-                                                        .padding(.leading, 10)
-                                                    }
 
-                                                    Text("\(competitor.order ?? 0). ")
-                                                        .lineLimit(1)
-                                                        .truncationMode(.tail)
+                                                        Text("\(competitor.order ?? 0). ")
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
 
-                                                    Text("\(competitor.athlete?.displayName ?? "Unknown")")
-                                                        .lineLimit(1)
-                                                        .truncationMode(.tail)
+                                                        Text("\(competitor.athlete?.displayName ?? "Unknown")")
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
 
-                                                }.frame(maxWidth: .infinity, alignment: .leading)
-                                            }
-                                        }.padding(.top, 10)
-                                    }
+                                                    }.frame(maxWidth: .infinity, alignment: .leading)
+                                                }
+                                            }.padding(.top, 10)
+                                        }
 
-                                    if updatedGame.competitions[4].status.type.state == "pre" {
-                                        HStack {
-                                            Image(systemName: "flag.checkered")
-                                                .font(.system(size: 12))
+                                        if updatedGame.competitions[4].status.type.state == "pre" {
+                                            HStack {
+                                                Image(systemName: "flag.checkered")
+                                                    .font(.system(size: 12))
 
-                                            Text("Race Date: \(formattedDate(from: updatedGame.endDate ?? "Invalid Date"))")
-                                                .font(.system(size: 14, weight: .medium))
-                                        }.frame(maxWidth: .infinity, alignment: .center)
+                                                Text("Race Date: \(formattedDate(from: updatedGame.endDate ?? "Invalid Date"))")
+                                                    .font(.system(size: 14, weight: .medium))
+                                            }.frame(maxWidth: .infinity, alignment: .center)
+                                        }
                                     }
                                 }
                             }
-                        }
-                    } compactLeading: {
-                        HStack {
-                            AsyncImage(
-                                url: URL(
-                                    string:
-                                    "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                                )
-                            ) { image in
-                                image.resizable().scaledToFit()
-                            } placeholder: {
-                                ProgressView()
+                        } compactLeading: {
+                            HStack {
+                                AsyncImage(
+                                    url: URL(
+                                        string:
+                                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                    )
+                                ) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 18, height: 18)
                             }
-                            .frame(width: 18, height: 18)
-                        }
-                    } compactTrailing: {
-                        HStack {
-                            if let lap = updatedGame.competitions[4].status.period {
-                                Text("L\(lap)")
-                                    .font(.system(size: 14, weight: .semibold))
-                            } else {
-                                Text("L -")
-                                    .font(.system(size: 14, weight: .semibold))
+                        } compactTrailing: {
+                            HStack {
+                                if let lap = updatedGame.competitions[4].status.period {
+                                    Text("L\(lap)")
+                                        .font(.system(size: 14, weight: .semibold))
+                                } else {
+                                    Text("L -")
+                                        .font(.system(size: 14, weight: .semibold))
+                                }
                             }
                         }
+
+                        DynamicNotchManager.shared.currentNotch = notch
+
+                        await notch.compact()
                     }
-
-                    DynamicNotchManager.shared.currentNotch = notch
-
-                    await notch.compact()
                 }
             }
         }
