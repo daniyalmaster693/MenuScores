@@ -6,7 +6,15 @@
 //
 
 import DynamicNotchKit
+import KeyboardShortcuts
 import SwiftUI
+
+var localCornerMonitor: Any?
+var globalCornerMonitor: Any?
+
+extension KeyboardShortcuts.Name {
+    static let notchActivation = Self("notchActivation")
+}
 
 struct HockeyMenu: View {
     let title: String
@@ -182,10 +190,6 @@ struct HockeyMenu: View {
                                 }
 
                                 DynamicNotchManager.shared.currentNotch = notch
-
-//                                await notch.expand()
-//                                try? await Task.sleep(for: .seconds(2))
-
                                 await notch.compact()
                             }
                         } label: {
@@ -370,9 +374,24 @@ struct HockeyMenu: View {
                             }
                         }
 
-                        DynamicNotchManager.shared.currentNotch = notch
+                        DynamicNotchManager.shared.clearNotch()
 
+                        DynamicNotchManager.shared.currentNotch = notch
                         await notch.compact()
+
+                        KeyboardShortcuts.setShortcut(.init(.space, modifiers: [.control, .shift]), for: .notchActivation)
+
+                        KeyboardShortcuts.onKeyDown(for: .notchActivation) {
+                            Task {
+                                await notch.expand()
+                            }
+                        }
+
+                        KeyboardShortcuts.onKeyUp(for: .notchActivation) {
+                            Task {
+                                await notch.compact()
+                            }
+                        }
                     }
                 }
             }
