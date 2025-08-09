@@ -98,6 +98,19 @@ brew install --cask menuscores
 4. You can use the clear set game option, or pin a different game to clear the title.
 5. You can quit the app directly from the menubar, or open the preferences window to configure app behaviors (this can be done by pressing Cmd + , after opening the menubar component, or clicking the preferences button if your on macOS 14.0 and later).
 
+## Roadmap
+
+- [x] ~~Notch Display for Games~~
+- [x] ~~Links to more game info~~
+- [x] ~~Entire year race schedule for F1~~
+- [ ] Additional pre game info in the notch component
+- [ ] Recent plays in the notch component
+- [ ] F1 and Golf Standings in Pre Race and Tournament Views
+- [ ] Smoother overall notch animations for score updates
+- [ ] Automatically pin games to the notch or menubar (favorite teams feature)
+
+...and more to come...
+
 ## Dependencies
 
 - [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
