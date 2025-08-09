@@ -48,7 +48,7 @@ struct LeagueSettingsView: View {
     @AppStorage("enableLNCAAM") private var enableLNCAAM = false
     @AppStorage("enableLNCAAF") private var enableLNCAAF = false
 
-    @AppStorage("enableVNCAAM") private var enableVNCAAM = false
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = true
     @AppStorage("enableVNCAAF") private var enableVNCAAF = false
 
     // League Settings View

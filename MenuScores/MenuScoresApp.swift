@@ -89,7 +89,7 @@ struct MenuScoresApp: App {
     @AppStorage("enableLNCAAM") private var enableLNCAAM = false
     @AppStorage("enableLNCAAF") private var enableLNCAAF = false
 
-    @AppStorage("enableVNCAAM") private var enableVNCAAM = false
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = true
     @AppStorage("enableVNCAAF") private var enableVNCAAF = false
 
     // Notification Settings
@@ -573,7 +573,6 @@ struct MenuScoresApp: App {
                 currentGameID = ""
                 currentGameState = ""
                 previousGameState = nil
-                DynamicNotchManager.shared.clearNotch()
             } label: {
                 Text("Clear Set Game")
             }

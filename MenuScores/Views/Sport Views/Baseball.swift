@@ -6,6 +6,7 @@
 //
 
 import DynamicNotchKit
+import KeyboardShortcuts
 import SwiftUI
 
 struct BaseballMenu: View {
@@ -13,6 +14,9 @@ struct BaseballMenu: View {
     @ObservedObject var viewModel: GamesListView
     let league: String
     let fetchURL: URL
+
+    @StateObject private var notchViewModel = NotchViewModel()
+    @State private var notch: DynamicNotch<Info, CompactLeading, CompactTrailing>? = nil
 
     @State private var pinnedByNotch = false
     @State private var pinnedByMenubar = false
@@ -74,118 +78,39 @@ struct BaseballMenu: View {
                             pinnedByNotch = true
                             pinnedByMenubar = false
 
+                            notchViewModel.game = game
+
                             Task {
-                                let notch = DynamicNotch(
-                                    hoverBehavior: .all,
-                                    style: .notch
-                                ) {
-                                    HStack {
-                                        HStack(spacing: 4) {
-                                            VStack {
-                                                HStack {
-                                                    AsyncImage(
-                                                        url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
-                                                    ) { image in
-                                                        image
-                                                            .resizable()
-                                                            .scaledToFit()
-                                                    } placeholder: {
-                                                        Color.gray
-                                                    }
-                                                    .frame(width: 32, height: 32)
-                                                    .padding(.trailing, 3)
+                                if notch == nil {
+                                    let newNotch = DynamicNotch(
+                                        hoverBehavior: .all,
+                                        style: .notch
+                                    ) {
+                                        Info(notchViewModel: notchViewModel)
+                                    } compactLeading: {
+                                        CompactLeading(notchViewModel: notchViewModel)
+                                    } compactTrailing: {
+                                        CompactTrailing(notchViewModel: notchViewModel)
+                                    }
+                                    notch = newNotch
+                                    await newNotch.compact()
 
-                                                    VStack {
-                                                        Text("\(game.competitions[0].competitors?[1].score ?? "-")")
-                                                            .font(.system(size: 22, weight: .medium))
+                                    // Keyboard Shortcut
 
-                                                        Text("\(game.competitions[0].competitors?[1].team?.abbreviation ?? "")")
-                                                            .font(.system(size: 12, weight: .medium))
-                                                    }
-                                                }
-                                            }
-                                        }
+                                    KeyboardShortcuts.setShortcut(.init(.space, modifiers: [.control, .shift]), for: .notchActivation)
 
-                                        HStack(spacing: 4) {
-                                            if game.status.type.state == "post" {
-                                                Text("Final")
-                                                    .font(.system(size: 19, weight: .semibold))
-                                            } else if game.status.type.state == "pre" {
-                                                Text("Pre")
-                                                    .font(.system(size: 19, weight: .semibold))
-                                            } else {
-                                                Text("\(game.status.type.detail ?? "")")
-                                                    .font(.system(size: 19, weight: .semibold))
-                                            }
-                                        }
-                                        .padding(.leading, 30)
-                                        .padding(.trailing, 30)
-
-                                        HStack(spacing: 4) {
-                                            VStack {
-                                                HStack {
-                                                    VStack {
-                                                        Text("\(game.competitions[0].competitors?[0].score ?? "-")")
-                                                            .font(.system(size: 22, weight: .medium))
-
-                                                        Text("\(game.competitions[0].competitors?[0].team?.abbreviation ?? "")")
-                                                            .font(.system(size: 12, weight: .medium))
-                                                    }
-
-                                                    AsyncImage(
-                                                        url: URL(string: game.competitions[0].competitors?[0].team?.logo ?? "")
-                                                    ) { image in
-                                                        image
-                                                            .resizable()
-                                                            .scaledToFit()
-                                                    } placeholder: {
-                                                        Color.gray
-                                                    }
-                                                    .frame(width: 32, height: 32)
-                                                    .padding(.leading, 3)
-                                                }
-                                            }
+                                    KeyboardShortcuts.onKeyDown(for: .notchActivation) {
+                                        Task {
+                                            await notch?.expand()
                                         }
                                     }
-                                } compactLeading: {
-                                    HStack {
-                                        AsyncImage(
-                                            url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFit()
-                                        } placeholder: {
-                                            Color.gray
-                                        }
-                                        .frame(width: 18, height: 18)
 
-                                        Text("\(game.competitions[0].competitors?[1].score ?? "-")")
-                                            .font(.system(size: 14, weight: .semibold))
-                                    }
-                                } compactTrailing: {
-                                    HStack {
-                                        Text("\(game.competitions[0].competitors?[0].score ?? "-")")
-                                            .font(.system(size: 14, weight: .semibold))
-
-                                        AsyncImage(
-                                            url: URL(string: game.competitions[0].competitors?[0].team?.logo ?? "")
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFit()
-                                        } placeholder: {
-                                            Color.gray
+                                    KeyboardShortcuts.onKeyUp(for: .notchActivation) {
+                                        Task {
+                                            await notch?.compact()
                                         }
-                                        .frame(width: 18, height: 18)
                                     }
                                 }
-
-                                DynamicNotchManager.shared.currentNotch = notch
-
-//                                await notch.expand()
-//                                try? await Task.sleep(for: .seconds(2))
-                                await notch.compact()
                             }
                         } label: {
                             HStack {
@@ -251,131 +176,18 @@ struct BaseballMenu: View {
 
                     let newState = updatedGame.status.type.state
 
-                    if notiGameStart {
-                        if previousGameState != "in" && newState == "in" {
-                            gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                        }
+                    if notiGameStart && previousGameState != "in" && newState == "in" {
+                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                     }
-
-                    if notiGameComplete {
-                        if previousGameState != "post" && newState == "post" {
-                            gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                        }
+                    if notiGameComplete && previousGameState != "post" && newState == "post" {
+                        gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
                     }
 
                     previousGameState = newState
                     currentGameState = newState
 
                     if pinnedByNotch {
-                        let notch = DynamicNotch(
-                            hoverBehavior: .all,
-                            style: .notch
-                        ) {
-                            HStack {
-                                HStack(spacing: 4) {
-                                    VStack {
-                                        HStack {
-                                            AsyncImage(
-                                                url: URL(string: updatedGame.competitions[0].competitors?[1].team?.logo ?? "")
-                                            ) { image in
-                                                image
-                                                    .resizable()
-                                                    .scaledToFit()
-                                            } placeholder: {
-                                                Color.gray
-                                            }
-                                            .frame(width: 32, height: 32)
-                                            .padding(.trailing, 3)
-
-                                            VStack {
-                                                Text("\(updatedGame.competitions[0].competitors?[1].score ?? "-")")
-                                                    .font(.system(size: 22, weight: .medium))
-
-                                                Text("\(updatedGame.competitions[0].competitors?[1].team?.abbreviation ?? "")")
-                                                    .font(.system(size: 12, weight: .medium))
-                                            }
-                                        }
-                                    }
-                                }
-
-                                HStack(spacing: 4) {
-                                    if updatedGame.status.type.state == "post" {
-                                        Text("Final")
-                                            .font(.system(size: 19, weight: .semibold))
-                                    } else if updatedGame.status.type.state == "pre" {
-                                        Text("Pre")
-                                            .font(.system(size: 19, weight: .semibold))
-                                    } else {
-                                        Text("\(updatedGame.status.type.detail ?? "")")
-                                            .font(.system(size: 19, weight: .semibold))
-                                    }
-                                }
-                                .padding(.leading, 30)
-                                .padding(.trailing, 30)
-
-                                HStack(spacing: 4) {
-                                    VStack {
-                                        HStack {
-                                            VStack {
-                                                Text("\(updatedGame.competitions[0].competitors?[0].score ?? "-")")
-                                                    .font(.system(size: 22, weight: .medium))
-
-                                                Text("\(updatedGame.competitions[0].competitors?[0].team?.abbreviation ?? "")")
-                                                    .font(.system(size: 12, weight: .medium))
-                                            }
-
-                                            AsyncImage(
-                                                url: URL(string: updatedGame.competitions[0].competitors?[0].team?.logo ?? "")
-                                            ) { image in
-                                                image
-                                                    .resizable()
-                                                    .scaledToFit()
-                                            } placeholder: {
-                                                Color.gray
-                                            }
-                                            .frame(width: 32, height: 32)
-                                            .padding(.leading, 3)
-                                        }
-                                    }
-                                }
-                            }
-                        } compactLeading: {
-                            HStack {
-                                AsyncImage(
-                                    url: URL(string: updatedGame.competitions[0].competitors?[1].team?.logo ?? "")
-                                ) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                } placeholder: {
-                                    Color.gray
-                                }
-                                .frame(width: 18, height: 18)
-
-                                Text("\(updatedGame.competitions[0].competitors?[1].score ?? "-")")
-                                    .font(.system(size: 14, weight: .semibold))
-                            }
-                        } compactTrailing: {
-                            HStack {
-                                Text("\(updatedGame.competitions[0].competitors?[0].score ?? "-")")
-                                    .font(.system(size: 14, weight: .semibold))
-
-                                AsyncImage(
-                                    url: URL(string: updatedGame.competitions[0].competitors?[0].team?.logo ?? "")
-                                ) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                } placeholder: {
-                                    Color.gray
-                                }
-                                .frame(width: 18, height: 18)
-                            }
-                        }
-
-                        DynamicNotchManager.shared.currentNotch = notch
-
-                        await notch.compact()
+                        notchViewModel.game = updatedGame
                     }
                 }
             }

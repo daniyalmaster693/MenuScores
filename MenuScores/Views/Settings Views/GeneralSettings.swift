@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2025-07-10.
 //
 
+import KeyboardShortcuts
 import LaunchAtLogin
 import Sparkle
 import SwiftUI
@@ -87,7 +88,8 @@ struct GeneralSettingsView: View {
                         }
                         .onChange(of: showInDock) { newValue in
                             UserDefaults.standard.set(
-                                newValue, forKey: "showInDock")
+                                newValue, forKey: "showInDock"
+                            )
 
                             if newValue {
                                 NSApp.setActivationPolicy(.regular)
@@ -123,6 +125,16 @@ struct GeneralSettingsView: View {
                         }
                         .pickerStyle(.menu)
                         .frame(width: 150)
+                    }
+
+                    Section {
+                        HStack {
+                            Label("Activation Shortcut", systemImage: "macbook")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            KeyboardShortcuts.Recorder(for: .notchActivation)
+                                .frame(width: 130)
+                        }
                     }
                 }
 
