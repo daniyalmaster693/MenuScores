@@ -170,7 +170,7 @@ struct Info: View {
 //                                Image(systemName: "flag.checkered")
 //                                    .font(.system(size: 12))
 //
-//                                Text("Race Date: \(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
+//                                Text("Race Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
 //                                    .font(.system(size: 14, weight: .medium))
 //                            }.frame(maxWidth: .infinity, alignment: .center)
 //                        }
@@ -258,7 +258,7 @@ struct Info: View {
 //                                Image(systemName: "figure.golf")
 //                                    .font(.system(size: 12))
 //
-//                                Text("Tournament Date: \(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
+//                                Text("Tournament Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
 //                                                .font(.system(size: 14, weight: .medium))
 //                                        }.frame(maxWidth: .infinity, alignment: .center)
 //                        }
