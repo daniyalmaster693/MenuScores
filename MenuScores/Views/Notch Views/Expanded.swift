@@ -44,7 +44,7 @@ struct Info: View {
                         Text("Final")
                             .font(.system(size: 19, weight: .semibold))
                     } else if game.status.type.state == "pre" {
-                        Text("Pre")
+                        Text(formattedTime(from: game.date))
                             .font(.system(size: 19, weight: .semibold))
                     } else {
                         Text("\(game.status.type.detail ?? "")")
@@ -59,7 +59,7 @@ struct Info: View {
 //                        Text("Final")
 //                            .font(.system(size: 19, weight: .semibold))
 //                    } else if game.status.type.state == "pre" {
-//                        Text("Pre")
+//                        Text(formattedTime(from: game.date))
 //                            .font(.system(size: 19, weight: .semibold))
 //                    } else {
 //                        Text("P\(game.status.period ?? 0) \(game.status.displayClock ?? "")")
@@ -170,7 +170,7 @@ struct Info: View {
 //                                Image(systemName: "flag.checkered")
 //                                    .font(.system(size: 12))
 //
-//                                Text("Race Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))")
+//                                Text("Race Date: \(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
 //                                    .font(.system(size: 14, weight: .medium))
 //                            }.frame(maxWidth: .infinity, alignment: .center)
 //                        }
@@ -258,9 +258,9 @@ struct Info: View {
 //                                Image(systemName: "figure.golf")
 //                                    .font(.system(size: 12))
 //
-//                                Text("Tournament Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))")
-//                                    .font(.system(size: 14, weight: .medium))
-//                            }.frame(maxWidth: .infinity, alignment: .center)
+//                                Text("Tournament Date: \(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
+//                                                .font(.system(size: 14, weight: .medium))
+//                                        }.frame(maxWidth: .infinity, alignment: .center)
 //                        }
 //                    }
 //                }
