@@ -129,7 +129,7 @@ struct GeneralSettingsView: View {
 
                     Section {
                         HStack {
-                            Label("Activation Shortcut", systemImage: "macbook")
+                            Label("Expand Notch", systemImage: "macbook")
                                 .foregroundColor(.primary)
                             Spacer()
                             KeyboardShortcuts.Recorder(for: .notchActivation)
