@@ -5,10 +5,23 @@
 //  Created by Daniyal Master on 2025-08-09.
 //
 
+import Sparkle
 import SwiftUI
 
 struct Info: View {
     @ObservedObject var notchViewModel: NotchViewModel
+
+    // Sparkle Updater Closure
+
+    private let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
+
+    private var updater: SPUUpdater {
+        updaterController.updater
+    }
 
     var body: some View {
         if let game = notchViewModel.game {
@@ -54,20 +67,20 @@ struct Info: View {
                 .padding(.leading, 30)
                 .padding(.trailing, 30)
 
-//                HStack(spacing: 4) {
-//                    if game.status.type.state == "post" {
-//                        Text("Final")
-//                            .font(.system(size: 19, weight: .semibold))
-//                    } else if game.status.type.state == "pre" {
-//                        Text(formattedTime(from: game.date))
-//                            .font(.system(size: 19, weight: .semibold))
-//                    } else {
-//                        Text("P\(game.status.period ?? 0) \(game.status.displayClock ?? "")")
-//                            .font(.system(size: 19, weight: .semibold))
-//                    }
-//                }
-//                .padding(.leading, 30)
-//                .padding(.trailing, 30)
+                //                HStack(spacing: 4) {
+                //                    if game.status.type.state == "post" {
+                //                        Text("Final")
+                //                            .font(.system(size: 19, weight: .semibold))
+                //                    } else if game.status.type.state == "pre" {
+                //                        Text(formattedTime(from: game.date))
+                //                            .font(.system(size: 19, weight: .semibold))
+                //                    } else {
+                //                        Text("P\(game.status.period ?? 0) \(game.status.displayClock ?? "")")
+                //                            .font(.system(size: 19, weight: .semibold))
+                //                    }
+                //                }
+                //                .padding(.leading, 30)
+                //                .padding(.trailing, 30)
 
                 HStack(spacing: 4) {
                     VStack {
@@ -94,6 +107,33 @@ struct Info: View {
                         }
                     }
                 }
+            }.contextMenu {
+                if #available(macOS 14, *) {
+                    Button {
+                        let environment = EnvironmentValues()
+                        environment.openSettings()
+                        NSApp.setActivationPolicy(.regular)
+                        NSApp.activate(ignoringOtherApps: true)
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
+                }
+
+                Button {
+                    updater.checkForUpdates()
+                } label: {
+                    Text("Check for Updates")
+                }
+                .buttonStyle(.bordered)
+                .keyboardShortcut("u")
+
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Text("Quit")
+                }
+                .keyboardShortcut("q")
             }
 
 //            VStack {
@@ -176,6 +216,33 @@ struct Info: View {
 //                        }
 //                    }
 //                }
+//            }.contextMenu {
+//                if #available(macOS 14, *) {
+//                    Button {
+//                        let environment = EnvironmentValues()
+//                        environment.openSettings()
+//                        NSApp.setActivationPolicy(.regular)
+//                        NSApp.activate(ignoringOtherApps: true)
+//                    } label: {
+//                        Text("Preferences")
+//                    }
+//                    .keyboardShortcut(",")
+//                }
+//
+//                Button {
+//                    updater.checkForUpdates()
+//                } label: {
+//                    Text("Check for Updates")
+//                }
+//                .buttonStyle(.bordered)
+//                .keyboardShortcut("u")
+//
+//                Button {
+//                    NSApplication.shared.terminate(nil)
+//                } label: {
+//                    Text("Quit")
+//                }
+//                .keyboardShortcut("q")
 //            }
 
 //            VStack {
@@ -259,11 +326,38 @@ struct Info: View {
 //                                    .font(.system(size: 12))
 //
 //                                Text("Tournament Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
-//                                                .font(.system(size: 14, weight: .medium))
-//                                        }.frame(maxWidth: .infinity, alignment: .center)
+//                                    .font(.system(size: 14, weight: .medium))
+//                            }.frame(maxWidth: .infinity, alignment: .center)
 //                        }
 //                    }
 //                }
+//            }.contextMenu {
+//                if #available(macOS 14, *) {
+//                    Button {
+//                        let environment = EnvironmentValues()
+//                        environment.openSettings()
+//                        NSApp.setActivationPolicy(.regular)
+//                        NSApp.activate(ignoringOtherApps: true)
+//                    } label: {
+//                        Text("Preferences")
+//                    }
+//                    .keyboardShortcut(",")
+//                }
+//
+//                Button {
+//                    updater.checkForUpdates()
+//                } label: {
+//                    Text("Check for Updates")
+//                }
+//                .buttonStyle(.bordered)
+//                .keyboardShortcut("u")
+//
+//                Button {
+//                    NSApplication.shared.terminate(nil)
+//                } label: {
+//                    Text("Quit")
+//                }
+//                .keyboardShortcut("q")
 //            }
         }
     }
