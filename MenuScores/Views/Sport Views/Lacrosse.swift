@@ -86,12 +86,15 @@ struct LacrosseMenu: View {
                                         hoverBehavior: .all,
                                         style: .notch
                                     ) {
-                                        Info(notchViewModel: notchViewModel)
+                                        Info(notchViewModel: notchViewModel, sport: "Lacrosse")
                                     } compactLeading: {
-                                        CompactLeading(notchViewModel: notchViewModel)
+                                        CompactLeading(notchViewModel: notchViewModel, sport: "Lacrosse")
                                     } compactTrailing: {
-                                        CompactTrailing(notchViewModel: notchViewModel)
+                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Lacrosse")
                                     }
+
+                                    notchViewModel.sport = "Lacrosse"
+
                                     notch = newNotch
                                     await newNotch.compact()
 

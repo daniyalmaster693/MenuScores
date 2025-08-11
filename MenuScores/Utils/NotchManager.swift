@@ -17,6 +17,7 @@ extension KeyboardShortcuts.Name {
 
 class NotchViewModel: ObservableObject {
     @Published var game: Event?
+    var sport: String = ""
 
     @Published var currentGameID: String
     @Published var currentGameState: String
