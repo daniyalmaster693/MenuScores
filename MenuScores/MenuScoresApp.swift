@@ -104,6 +104,10 @@ struct MenuScoresApp: App {
     @State var currentGameState: String = "pre"
     @State private var previousGameState: String? = nil
 
+    // Notch Data
+
+    @StateObject private var notchViewModel = NotchViewModel()
+
     // League Fetching
 
     @StateObject private var nhlVM = GamesListView()
@@ -573,6 +577,17 @@ struct MenuScoresApp: App {
                 currentGameID = ""
                 currentGameState = ""
                 previousGameState = nil
+
+                Task {
+                    if let notch = NotchViewModel.shared.notch {
+                        await notch.hide()
+                    }
+                    NotchViewModel.shared.game = nil
+                    NotchViewModel.shared.currentGameID = ""
+                    NotchViewModel.shared.currentGameState = ""
+                    NotchViewModel.shared.previousGameState = ""
+                    NotchViewModel.shared.notch = nil
+                }
             } label: {
                 Text("Clear Set Game")
             }

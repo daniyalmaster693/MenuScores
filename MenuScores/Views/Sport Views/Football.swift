@@ -16,7 +16,6 @@ struct FootballMenu: View {
     let fetchURL: URL
 
     @StateObject private var notchViewModel = NotchViewModel()
-    @State private var notch: DynamicNotch<Info, CompactLeading, CompactTrailing>? = nil
 
     @State private var pinnedByNotch = false
     @State private var pinnedByMenubar = false
@@ -85,35 +84,42 @@ struct FootballMenu: View {
                                     notchViewModel.game = game
 
                                     Task {
-                                        if notch == nil {
-                                            let newNotch = DynamicNotch(
-                                                hoverBehavior: .all,
-                                                style: .notch
-                                            ) {
-                                                Info(notchViewModel: notchViewModel, sport: "Football")
-                                            } compactLeading: {
-                                                CompactLeading(notchViewModel: notchViewModel, sport: "Football")
-                                            } compactTrailing: {
-                                                CompactTrailing(notchViewModel: notchViewModel, sport: "Football")
+                                        if let existingNotch = NotchViewModel.shared.notch {
+                                            await existingNotch.hide()
+                                            NotchViewModel.shared.game = nil
+                                            NotchViewModel.shared.currentGameID = ""
+                                            NotchViewModel.shared.currentGameState = ""
+                                            NotchViewModel.shared.previousGameState = ""
+                                            NotchViewModel.shared.notch = nil
+                                        }
+
+                                        let newNotch = DynamicNotch(
+                                            hoverBehavior: .all,
+                                            style: .notch
+                                        ) {
+                                            Info(notchViewModel: notchViewModel, sport: "Football")
+                                        } compactLeading: {
+                                            CompactLeading(notchViewModel: notchViewModel, sport: "Football")
+                                        } compactTrailing: {
+                                            CompactTrailing(notchViewModel: notchViewModel, sport: "Football")
+                                        }
+
+                                        NotchViewModel.shared.notch = newNotch
+                                        await newNotch.compact()
+
+                                        // Keyboard Shortcut
+
+                                        KeyboardShortcuts.setShortcut(.init(.space, modifiers: [.control, .shift]), for: .notchActivation)
+
+                                        KeyboardShortcuts.onKeyDown(for: .notchActivation) {
+                                            Task {
+                                                await NotchViewModel.shared.notch?.expand()
                                             }
+                                        }
 
-                                            notch = newNotch
-                                            await newNotch.compact()
-
-                                            // Keyboard Shortcut
-
-                                            KeyboardShortcuts.setShortcut(.init(.space, modifiers: [.control, .shift]), for: .notchActivation)
-
-                                            KeyboardShortcuts.onKeyDown(for: .notchActivation) {
-                                                Task {
-                                                    await notch?.expand()
-                                                }
-                                            }
-
-                                            KeyboardShortcuts.onKeyUp(for: .notchActivation) {
-                                                Task {
-                                                    await notch?.compact()
-                                                }
+                                        KeyboardShortcuts.onKeyUp(for: .notchActivation) {
+                                            Task {
+                                                await NotchViewModel.shared.notch?.compact()
                                             }
                                         }
                                     }
