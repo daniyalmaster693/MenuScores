@@ -93,8 +93,6 @@ struct LacrosseMenu: View {
                                         CompactTrailing(notchViewModel: notchViewModel, sport: "Lacrosse")
                                     }
 
-                                    notchViewModel.sport = "Lacrosse"
-
                                     notch = newNotch
                                     await newNotch.compact()
 
