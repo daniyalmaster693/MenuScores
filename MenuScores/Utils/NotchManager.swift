@@ -6,15 +6,7 @@
 //
 
 import DynamicNotchKit
-import KeyboardShortcuts
 import SwiftUI
-
-var localCornerMonitor: Any?
-var globalCornerMonitor: Any?
-
-extension KeyboardShortcuts.Name {
-    static let notchActivation = Self("notchActivation")
-}
 
 class NotchViewModel: ObservableObject {
     static let shared = NotchViewModel()

@@ -6,7 +6,6 @@
 //
 
 import DynamicNotchKit
-import KeyboardShortcuts
 import SwiftUI
 
 struct F1Menu: View {
@@ -103,22 +102,6 @@ struct F1Menu: View {
 
                                         NotchViewModel.shared.notch = newNotch
                                         await newNotch.compact()
-
-                                        // Keyboard Shortcut
-
-                                        KeyboardShortcuts.setShortcut(.init(.space, modifiers: [.control, .shift]), for: .notchActivation)
-
-                                        KeyboardShortcuts.onKeyDown(for: .notchActivation) {
-                                            Task {
-                                                await NotchViewModel.shared.notch?.expand()
-                                            }
-                                        }
-
-                                        KeyboardShortcuts.onKeyUp(for: .notchActivation) {
-                                            Task {
-                                                await NotchViewModel.shared.notch?.compact()
-                                            }
-                                        }
                                     }
                                 } label: {
                                     HStack {
