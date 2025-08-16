@@ -115,6 +115,13 @@ struct Info: View {
                         }
                     }
                 }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
                     if #available(macOS 14, *) {
                         Button {
                             let environment = EnvironmentValues()

@@ -601,8 +601,6 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("c")
 
-            Divider()
-
             if #available(macOS 14, *) {
                 Button {
                     let environment = EnvironmentValues()
