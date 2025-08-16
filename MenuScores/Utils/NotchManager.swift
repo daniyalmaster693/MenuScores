@@ -10,6 +10,8 @@ import KeyboardShortcuts
 import SwiftUI
 
 class NotchViewModel: ObservableObject {
+    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
+
     static let shared = NotchViewModel()
     private static var didRegisterShortcuts = false
 
@@ -34,13 +36,19 @@ class NotchViewModel: ObservableObject {
 
             KeyboardShortcuts.onKeyDown(for: .notchActivation) {
                 Task { @MainActor in
-                    await NotchViewModel.shared.notch?.expand()
+                    let screens = NSScreen.screens
+                    if screens.indices.contains(self.notchScreenIndex) {
+                        await NotchViewModel.shared.notch?.expand(on: screens[self.notchScreenIndex])
+                    }
                 }
             }
 
             KeyboardShortcuts.onKeyUp(for: .notchActivation) {
                 Task { @MainActor in
-                    await NotchViewModel.shared.notch?.compact()
+                    let screens = NSScreen.screens
+                    if screens.indices.contains(self.notchScreenIndex) {
+                        await NotchViewModel.shared.notch?.compact(on: screens[self.notchScreenIndex])
+                    }
                 }
             }
         }

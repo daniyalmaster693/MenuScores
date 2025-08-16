@@ -15,7 +15,6 @@ struct BehaviorSettingsView: View {
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
     @AppStorage("enableNotch") private var enableNotch = true
-    @AppStorage("showInFullScreen") private var showInFullScreen = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
@@ -55,22 +54,14 @@ struct BehaviorSettingsView: View {
                         }
                     }
 
-                    Toggle(isOn: $showInFullScreen) {
-                        HStack {
-                            Image(systemName: "rectangle.inset.fill")
-                                .foregroundColor(.secondary)
-                            Text("Show in Full Screen")
-                        }
-                    }.disabled(!enableNotch)
-
                     HStack {
                         Label("Notch Display", systemImage: "display")
                             .foregroundColor(.primary)
                         Spacer()
                         Picker("", selection: $notchScreenIndex) {
-                            ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                                let name = screen.localizedName ?? "Screen \(index + 1)"
-                                Text(name).tag(index)
+                            ForEach(NSScreen.screens.indices, id: \.self) { index in
+                                Text(NSScreen.screens[index].localizedName ?? "Screen \(index + 1)")
+                                    .tag(index)
                             }
                         }
                         .pickerStyle(.menu)

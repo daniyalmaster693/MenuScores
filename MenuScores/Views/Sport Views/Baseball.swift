@@ -25,6 +25,7 @@ struct BaseballMenu: View {
     @Binding var currentGameState: String
     @Binding var previousGameState: String?
 
+    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
@@ -101,7 +102,7 @@ struct BaseballMenu: View {
                                 }
 
                                 NotchViewModel.shared.notch = newNotch
-                                await newNotch.compact()
+                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
                             }
                         } label: {
                             HStack {
