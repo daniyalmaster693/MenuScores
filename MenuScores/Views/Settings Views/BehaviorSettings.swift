@@ -60,7 +60,7 @@ struct BehaviorSettingsView: View {
                         Spacer()
                         Picker("", selection: $notchScreenIndex) {
                             ForEach(NSScreen.screens.indices, id: \.self) { index in
-                                Text(NSScreen.screens[index].localizedName ?? "Screen \(index + 1)")
+                                Text(NSScreen.screens[index].localizedName)
                                     .tag(index)
                             }
                         }

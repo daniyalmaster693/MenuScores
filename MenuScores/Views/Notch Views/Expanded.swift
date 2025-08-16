@@ -9,6 +9,7 @@ import Sparkle
 import SwiftUI
 
 struct Info: View {
+    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
     var sport: String
 

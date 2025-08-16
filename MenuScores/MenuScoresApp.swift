@@ -107,6 +107,7 @@ struct MenuScoresApp: App {
     // Notch Data
 
     @StateObject private var notchViewModel = NotchViewModel()
+    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
     // League Fetching
 
@@ -572,6 +573,13 @@ struct MenuScoresApp: App {
 
             Divider()
 
+            Picker("Choose Display", selection: $notchScreenIndex) {
+                ForEach(NSScreen.screens.indices, id: \.self) { index in
+                    Text(NSScreen.screens[index].localizedName)
+                        .tag(index)
+                }
+            }
+
             Button {
                 currentTitle = ""
                 currentGameID = ""
@@ -592,6 +600,8 @@ struct MenuScoresApp: App {
                 Text("Clear Set Game")
             }
             .keyboardShortcut("c")
+
+            Divider()
 
             if #available(macOS 14, *) {
                 Button {
