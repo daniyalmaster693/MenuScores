@@ -107,7 +107,11 @@ struct MenuScoresApp: App {
     // Notch Data
 
     @StateObject private var notchViewModel = NotchViewModel()
+
+    // Notch Behaviors
+
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
+    @AppStorage("enableNotch") private var enableNotch = true
 
     // League Fetching
 
@@ -573,10 +577,12 @@ struct MenuScoresApp: App {
 
             Divider()
 
-            Picker("Choose Display", selection: $notchScreenIndex) {
-                ForEach(NSScreen.screens.indices, id: \.self) { index in
-                    Text(NSScreen.screens[index].localizedName)
-                        .tag(index)
+            if enableNotch {
+                Picker("Choose Display", selection: $notchScreenIndex) {
+                    ForEach(NSScreen.screens.indices, id: \.self) { index in
+                        Text(NSScreen.screens[index].localizedName)
+                            .tag(index)
+                    }
                 }
             }
 

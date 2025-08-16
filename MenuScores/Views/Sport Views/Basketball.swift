@@ -24,7 +24,9 @@ struct BasketballMenu: View {
     @Binding var currentGameState: String
     @Binding var previousGameState: String?
 
+    @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
+
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
@@ -70,46 +72,48 @@ struct BasketballMenu: View {
                             }
                         }
 
-                        Button {
-                            currentGameID = game.id
-                            currentGameState = game.status.type.state
+                        if enableNotch {
+                            Button {
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
 
-                            pinnedByNotch = true
-                            pinnedByMenubar = false
+                                pinnedByNotch = true
+                                pinnedByMenubar = false
 
-                            notchViewModel.game = game
+                                notchViewModel.game = game
 
-                            Task {
-                                if let existingNotch = NotchViewModel.shared.notch {
-                                    await existingNotch.hide()
-                                    NotchViewModel.shared.game = nil
-                                    NotchViewModel.shared.currentGameID = ""
-                                    NotchViewModel.shared.currentGameState = ""
-                                    NotchViewModel.shared.previousGameState = ""
-                                    NotchViewModel.shared.notch = nil
+                                Task {
+                                    if let existingNotch = NotchViewModel.shared.notch {
+                                        await existingNotch.hide()
+                                        NotchViewModel.shared.game = nil
+                                        NotchViewModel.shared.currentGameID = ""
+                                        NotchViewModel.shared.currentGameState = ""
+                                        NotchViewModel.shared.previousGameState = ""
+                                        NotchViewModel.shared.notch = nil
+                                    }
+
+                                    let newNotch = DynamicNotch(
+                                        hoverBehavior: .all,
+                                        style: .notch
+                                    ) {
+                                        Info(notchViewModel: notchViewModel, sport: "Basketball")
+                                    } compactLeading: {
+                                        CompactLeading(notchViewModel: notchViewModel, sport: "Basketball")
+                                    } compactTrailing: {
+                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Basketball")
+                                    }
+
+                                    NotchViewModel.shared.notch = newNotch
+                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
                                 }
-
-                                let newNotch = DynamicNotch(
-                                    hoverBehavior: .all,
-                                    style: .notch
-                                ) {
-                                    Info(notchViewModel: notchViewModel, sport: "Basketball")
-                                } compactLeading: {
-                                    CompactLeading(notchViewModel: notchViewModel, sport: "Basketball")
-                                } compactTrailing: {
-                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Basketball")
+                            } label: {
+                                HStack {
+                                    Image(systemName: "macbook")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("Pin Game to Notch")
                                 }
-
-                                NotchViewModel.shared.notch = newNotch
-                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "macbook")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Pin Game to Notch")
                             }
                         }
 
