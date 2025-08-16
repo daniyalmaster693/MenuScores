@@ -6,10 +6,12 @@
 //
 
 import DynamicNotchKit
+import KeyboardShortcuts
 import SwiftUI
 
 class NotchViewModel: ObservableObject {
     static let shared = NotchViewModel()
+    private static var didRegisterShortcuts = false
 
     var notch: DynamicNotch<Info, CompactLeading, CompactTrailing>? = nil
 
@@ -24,5 +26,23 @@ class NotchViewModel: ObservableObject {
         self.currentGameID = currentGameID
         self.currentGameState = currentGameState
         self.previousGameState = previousGameState
+
+        // Keyboard Shortcut
+
+        if !Self.didRegisterShortcuts {
+            Self.didRegisterShortcuts = true
+
+            KeyboardShortcuts.onKeyDown(for: .notchActivation) {
+                Task { @MainActor in
+                    await NotchViewModel.shared.notch?.expand()
+                }
+            }
+
+            KeyboardShortcuts.onKeyUp(for: .notchActivation) {
+                Task { @MainActor in
+                    await NotchViewModel.shared.notch?.compact()
+                }
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import DynamicNotchKit
+import KeyboardShortcuts
 import SwiftUI
 
 struct BaseballMenu: View {

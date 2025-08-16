@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2025-07-10.
 //
 
+import KeyboardShortcuts
 import LaunchAtLogin
 import Sparkle
 import SwiftUI
@@ -124,6 +125,14 @@ struct GeneralSettingsView: View {
                         }
                         .pickerStyle(.menu)
                         .frame(width: 150)
+                    }
+
+                    HStack {
+                        Label("Expand Notch", systemImage: "macbook")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        KeyboardShortcuts.Recorder(for: .notchActivation)
+                            .frame(width: 130)
                     }
                 }
 
