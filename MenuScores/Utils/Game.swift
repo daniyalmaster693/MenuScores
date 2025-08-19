@@ -4,6 +4,7 @@
 //
 //  Created by Daniyal Master on 2025-05-03.
 //
+
 import Foundation
 
 struct ScoreboardResponse: Decodable {
@@ -55,6 +56,7 @@ struct Team: Decodable {
     let name: String
     let logo: String?
     let links: [Links]
+    let color: String?
 }
 
 struct Athlete: Decodable {
