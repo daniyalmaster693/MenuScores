@@ -6,3 +6,35 @@
 //
 
 import Foundation
+
+struct PlaybyPlayResponse: Decodable {
+    let plays: [Plays]
+}
+
+struct Plays: Decodable {
+    let id: String
+    let wallClock: String
+    let type: [PlayType]
+    let team: [TeamID]
+    let awayScore: Int
+    let homeScore: Int
+    let outs: Int?
+    let scoreValue: Int?
+}
+
+struct PlayType: Decodable {
+    let id: String
+    let text: String
+    let type: String
+    let alternateText: String?
+}
+
+struct TeamID: Decodable {
+    let id: String
+}
+
+struct Period: Decodable {
+    let type: String
+    let number: Int
+    let displayValue: String
+}

@@ -146,10 +146,10 @@ struct Info: View {
 
                     HStack {
                         Capsule()
-                            .fill(Color(hex: game.competitions[0].competitors?[1].team?.color ?? "#000000"))
+                            .fill(Color(hex: game.competitions[0].competitors?[0].team?.color ?? "#000000"))
                             .frame(width: 3, height: 16)
 
-                        Text("Jonathan Kuminga makes two point jump shot")
+                        Text("Chad Patrick pitches to Seiya Suzuki")
                             .truncationMode(.tail)
                     }.padding(.top, 10)
                 }

@@ -51,6 +51,7 @@ struct Competitor: Decodable {
 }
 
 struct Team: Decodable {
+    let id: String
     let displayName: String
     let abbreviation: String
     let name: String
