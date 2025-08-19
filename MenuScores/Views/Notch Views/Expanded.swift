@@ -232,7 +232,7 @@ struct Info: View {
                         }
                     }
 
-                    if game.competitions[0].status.type.state == "in" {
+                    if sport != "Soccer" && game.competitions[0].status.type.state == "in" {
                         HStack {
                             Capsule()
                                 .fill(capsuleColor)
