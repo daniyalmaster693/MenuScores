@@ -48,6 +48,7 @@ struct Info: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
 
+    @State private var refreshID = UUID()
     @State private var latestPlayText: String = "Loading..."
     @State private var capsuleColor: Color = .black
     var sport: String
@@ -100,9 +101,9 @@ struct Info: View {
 
             let teamIndex: Int
             if playTeamID == competitors[1].team?.id {
-                teamIndex = 0 // Away team
+                teamIndex = 1
             } else {
-                teamIndex = 1 // Home team
+                teamIndex = 0
             }
 
             let teamHex = competitors[teamIndex].team?.color ?? "#000000"
@@ -232,16 +233,8 @@ struct Info: View {
                     // TODO: Make this only appear for live games and work dynamically
 
                     HStack {
-                        let teamHex = game.competitions[0].competitors?[0].team?.color ?? "#000000"
-                        let altHex = game.competitions[0].competitors?[0].team?.alternateColor ?? "#000000"
-
-                        let mainColor = Color(hex: teamHex)
-                        let altColor = Color(hex: altHex)
-
-                        let fillColor = altColor.brightness() < 0.1 ? mainColor : altColor
-
                         Capsule()
-                            .fill(fillColor)
+                            .fill(capsuleColor)
                             .frame(width: 3, height: 16)
 
                         Text(latestPlayText)
@@ -252,6 +245,7 @@ struct Info: View {
                             await fetchLatestPlayTeamColor()
                         }
                     }
+                    .id(refreshID)
                     .padding(.top, 10)
                     .frame(maxHeight: 22, alignment: .center)
                 }
