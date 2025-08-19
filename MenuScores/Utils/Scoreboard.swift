@@ -45,11 +45,11 @@ enum Scoreboard {
 
         static let nfl = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+            "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
         )!
         static let cfl = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/football/cfl/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+            "https://site.api.espn.com/apis/site/v2/sports/football/cfl/scoreboard"
         )!
         static let fncaa = URL(
             string:
