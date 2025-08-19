@@ -47,7 +47,9 @@ extension Color {
 struct Info: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
+
     @State private var latestPlayText: String = "Loading..."
+    @State private var capsuleColor: Color = .black
     var sport: String
 
     // Recent Player Fetcher
@@ -75,6 +77,50 @@ struct Info: View {
             print("Failed to fetch play-by-play: \(error)")
             DispatchQueue.main.async {
                 self.latestPlayText = "N/A"
+            }
+        }
+    }
+
+    // Play by Play Event Team Mapper
+
+    func fetchLatestPlayTeamColor() async {
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=401811885"
+        guard let url = URL(string: urlString) else { return }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
+
+            guard let latestPlay = response.plays?.last else { return }
+
+            let playTeamID = latestPlay.team?.id
+            guard let game = notchViewModel.game else { return }
+            let competitors = game.competitions[0].competitors ?? []
+
+            let teamIndex: Int
+            if playTeamID == competitors[1].team?.id {
+                teamIndex = 0 // Away team
+            } else {
+                teamIndex = 1 // Home team
+            }
+
+            let teamHex = competitors[teamIndex].team?.color ?? "#000000"
+            let altHex = competitors[teamIndex].team?.alternateColor ?? "#000000"
+
+            let mainColor = Color(hex: teamHex)
+            let altColor = Color(hex: altHex)
+
+            let fillColor = altColor.brightness() < 0.1 ? mainColor : altColor
+
+            DispatchQueue.main.async {
+                self.capsuleColor = fillColor
+            }
+
+        } catch {
+            print("Failed to fetch latest play color: \(error)")
+            DispatchQueue.main.async {
+                self.capsuleColor = .black
             }
         }
     }
@@ -183,6 +229,8 @@ struct Info: View {
                         }
                     }
 
+                    // TODO: Make this only appear for live games and work dynamically
+
                     HStack {
                         let teamHex = game.competitions[0].competitors?[0].team?.color ?? "#000000"
                         let altHex = game.competitions[0].competitors?[0].team?.alternateColor ?? "#000000"
@@ -199,11 +247,13 @@ struct Info: View {
                         Text(latestPlayText)
                             .truncationMode(.tail)
                     }.task {
-                        if let gameID = notchViewModel.game?.id {
+                        if let _ = notchViewModel.game?.id {
                             await fetchLatestPlay()
+                            await fetchLatestPlayTeamColor()
                         }
                     }
                     .padding(.top, 10)
+                    .frame(maxHeight: 22, alignment: .center)
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {

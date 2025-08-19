@@ -12,10 +12,11 @@ struct PlaybyPlayResponse: Decodable {
 }
 
 struct Plays: Decodable {
-//    let id: String
     let text: String?
+    let team: TeamID?
+
+//    let id: String
 //    let type: [PlayType]
-//    let team: [TeamID]
 //    let awayScore: Int
 //    let homeScore: Int
 //    let outs: Int?
@@ -29,9 +30,10 @@ struct Plays: Decodable {
 //    let alternateText: String?
 // }
 //
-// struct TeamID: Decodable {
-//    let id: String
-// }
+struct TeamID: Decodable {
+    let id: String
+}
+
 //
 // struct Period: Decodable {
 //    let type: String
