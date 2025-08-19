@@ -56,6 +56,8 @@ struct Info: View {
     // Recent Player Fetcher
 
     func fetchLatestPlay() async {
+        // TODO: Make this work dynamically for any sport that isn't racing or soccer
+
         let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=401811885"
         guard let url = URL(string: urlString) else { return }
 
@@ -230,24 +232,24 @@ struct Info: View {
                         }
                     }
 
-                    // TODO: Make this only appear for live games and work dynamically
+                    if game.competitions[0].status.type.state == "in" {
+                        HStack {
+                            Capsule()
+                                .fill(capsuleColor)
+                                .frame(width: 3, height: 16)
 
-                    HStack {
-                        Capsule()
-                            .fill(capsuleColor)
-                            .frame(width: 3, height: 16)
-
-                        Text(latestPlayText)
-                            .truncationMode(.tail)
-                    }.task {
-                        if let _ = notchViewModel.game?.id {
-                            await fetchLatestPlay()
-                            await fetchLatestPlayTeamColor()
+                            Text(latestPlayText)
+                                .truncationMode(.tail)
+                        }.task {
+                            if let _ = notchViewModel.game?.id {
+                                await fetchLatestPlay()
+                                await fetchLatestPlayTeamColor()
+                            }
                         }
+                        .id(refreshID)
+                        .padding(.top, 10)
+                        .frame(maxHeight: 22, alignment: .center)
                     }
-                    .id(refreshID)
-                    .padding(.top, 10)
-                    .frame(maxHeight: 22, alignment: .center)
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
