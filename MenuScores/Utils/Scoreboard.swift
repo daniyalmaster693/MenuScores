@@ -7,6 +7,8 @@
 
 import Foundation
 
+// F1 Calendar Year
+
 let currentYear = Calendar.current.component(.year, from: Date())
 
 enum Scoreboard {
@@ -43,15 +45,15 @@ enum Scoreboard {
 
         static let nfl = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let cfl = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/football/cfl/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/football/cfl/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let fncaa = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
 
         static let mlb = URL(
