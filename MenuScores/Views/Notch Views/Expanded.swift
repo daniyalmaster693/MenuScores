@@ -35,6 +35,15 @@ extension Color {
     }
 }
 
+extension Color {
+    func brightness() -> Double {
+        let nsColor = NSColor(self)
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        nsColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return 0.299 * Double(red) + 0.587 * Double(green) + 0.114 * Double(blue)
+    }
+}
+
 struct Info: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
@@ -145,11 +154,19 @@ struct Info: View {
                     }
 
                     HStack {
+                        let teamHex = game.competitions[0].competitors?[0].team?.color ?? "#000000"
+                        let altHex = game.competitions[0].competitors?[0].team?.alternateColor ?? "#000000"
+
+                        let mainColor = Color(hex: teamHex)
+                        let altColor = Color(hex: altHex)
+
+                        let fillColor = altColor.brightness() < 0.1 ? mainColor : altColor
+
                         Capsule()
-                            .fill(Color(hex: game.competitions[0].competitors?[0].team?.color ?? "#000000"))
+                            .fill(fillColor)
                             .frame(width: 3, height: 16)
 
-                        Text("Chad Patrick pitches to Seiya Suzuki")
+                        Text("Pitch 1 : Strike 1 Looking")
                             .truncationMode(.tail)
                     }.padding(.top, 10)
                 }

@@ -58,6 +58,7 @@ struct Team: Decodable {
     let logo: String?
     let links: [Links]
     let color: String?
+    let alternateColor: String?
 }
 
 struct Athlete: Decodable {
