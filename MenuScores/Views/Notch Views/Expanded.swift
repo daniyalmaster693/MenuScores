@@ -47,7 +47,37 @@ extension Color {
 struct Info: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
+    @State private var latestPlayText: String = "Loading..."
     var sport: String
+
+    // Recent Player Fetcher
+
+    func fetchLatestPlay() async {
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=401811885"
+        guard let url = URL(string: urlString) else { return }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
+
+            if let plays = response.plays, !plays.isEmpty {
+                let latestPlay = plays.last!
+                DispatchQueue.main.async {
+                    self.latestPlayText = latestPlay.text ?? "-"
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.latestPlayText = "N/A"
+                }
+            }
+        } catch {
+            print("Failed to fetch play-by-play: \(error)")
+            DispatchQueue.main.async {
+                self.latestPlayText = "N/A"
+            }
+        }
+    }
 
     // Sparkle Updater Closure
 
@@ -166,9 +196,14 @@ struct Info: View {
                             .fill(fillColor)
                             .frame(width: 3, height: 16)
 
-                        Text("Pitch 1 : Strike 1 Looking")
+                        Text(latestPlayText)
                             .truncationMode(.tail)
-                    }.padding(.top, 10)
+                    }.task {
+                        if let gameID = notchViewModel.game?.id {
+                            await fetchLatestPlay()
+                        }
+                    }
+                    .padding(.top, 10)
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
