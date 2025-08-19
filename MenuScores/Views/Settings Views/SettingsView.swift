@@ -110,7 +110,7 @@ private extension SettingsView.Tab {
     var iconName: String {
         switch self {
         case .general: return "gearshape"
-        case .behavior: return "switch.2"
+        case .behavior: return "slider.horizontal.3"
         case .league: return "sportscourt"
         }
     }
