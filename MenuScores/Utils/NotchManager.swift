@@ -32,6 +32,10 @@ class NotchViewModel: ObservableObject {
 
         // Keyboard Shortcut
 
+        if KeyboardShortcuts.Name.notchActivation.shortcut == nil {
+            KeyboardShortcuts.setShortcut(.init(.h, modifiers: [.command, .option]), for: .notchActivation)
+        }
+
         if !Self.didRegisterShortcuts {
             Self.didRegisterShortcuts = true
 
