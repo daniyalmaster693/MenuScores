@@ -102,10 +102,10 @@ brew install --cask menuscores
 - [x] ~~Notch Display for Games~~
 - [x] ~~Links to more game info~~
 - [x] ~~Entire year race schedule for F1~~
-- [ ] Additional pre game info in the notch component
 - [ ] Recent plays in the notch component
-- [ ] F1 and Golf Standings in Pre Race and Tournament Views
+- [ ] Alerts for in game events (eg: powerplays, timeouts, yellow cards, etc)
 - [ ] Smoother overall notch animations for score updates
+- [ ] App Widgets
 - [ ] Automatically pin games to the notch or menubar (favorite teams feature)
 
 ...and more to come...
