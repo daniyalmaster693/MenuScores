@@ -48,9 +48,19 @@ struct Info: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
 
-    @State private var refreshID = UUID()
+    // Recent Play Variables
+
     @State private var latestPlayText: String = "Loading..."
     @State private var capsuleColor: Color = .black
+    @State private var refreshID = UUID()
+
+    // MARK: League Related Text Variables
+
+    // MLB
+
+    @State private var outs: String = "Loading..."
+    @State private var balls: String = "Loading..."
+    @State private var strikes: String = "Loading..."
 
     var sport: String
     var league: String
@@ -88,8 +98,6 @@ struct Info: View {
     // Recent Player Fetcher
 
     func fetchLatestPlay() async {
-        // TODO: Make this work dynamically for any sport that isn't racing or soccer
-
         let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
@@ -109,7 +117,25 @@ struct Info: View {
                         self.latestPlayText = "N/A"
                     }
                 }
-            } else {
+            }
+
+            if sport.lowercased() == "baseball" {
+                if let plays = response.plays, !plays.isEmpty {
+                    let latestPlay = plays.last!
+                    DispatchQueue.main.async {
+                        self.latestPlayText = latestPlay.text ?? "-"
+                        self.outs = latestPlay.outs.map { String($0) } ?? "-"
+                        self.balls = latestPlay.pitchCount?.balls.map { String($0) } ?? "-"
+                        self.strikes = latestPlay.pitchCount?.strikes.map { String($0) } ?? "-"
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.latestPlayText = "N/A"
+                    }
+                }
+            }
+
+            else {
                 if let plays = response.plays, !plays.isEmpty {
                     let latestPlay = plays.last!
                     DispatchQueue.main.async {
@@ -129,11 +155,7 @@ struct Info: View {
         }
     }
 
-    // Play by Play Event Team Mapper
-
     func fetchLatestPlayTeamColor() async {
-        // TODO: Make sure api still works for college leagues and other sports
-
         let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
@@ -145,8 +167,6 @@ struct Info: View {
             guard let latestPlay = (sport.lowercased() == "football" ? response.scoringPlays?.last : response.plays?.last) else {
                 return
             }
-
-            // TODO: Update to use scoring plays for football
 
             let playTeamID = latestPlay.team?.id
             guard let game = notchViewModel.game else { return }
@@ -284,14 +304,36 @@ struct Info: View {
                     }
 
                     if sport != "Soccer" && sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "in" {
-                        HStack(alignment: .center, spacing: 10) {
-                            Capsule()
-                                .fill(capsuleColor)
-                                .frame(width: 3, height: 16)
+                        VStack(alignment: .center) {
+                            HStack(alignment: .center, spacing: 10) {
+                                Capsule()
+                                    .fill(capsuleColor)
+                                    .frame(width: 3, height: 16)
 
-                            Text(latestPlayText)
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: false, vertical: true)
+                                Text(latestPlayText)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .font(.system(size: 14, weight: .medium))
+                            }.frame(maxHeight: 22, alignment: .center)
+
+                            if sport == "Baseball" {
+                                HStack(alignment: .center, spacing: 20) {
+                                    Text("Outs: \(outs)")
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .font(.system(size: 13, weight: .medium))
+
+                                    Text("Balls: \(balls)")
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .font(.system(size: 13, weight: .medium))
+
+                                    Text("Strikes: \(strikes)")
+                                        .lineLimit(nil)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .font(.system(size: 13, weight: .medium))
+                                }.padding(.top, 7)
+                            }
                         }
                         .task {
                             if let _ = notchViewModel.game?.id {
@@ -301,7 +343,6 @@ struct Info: View {
                         }
                         .id(refreshID)
                         .padding(.top, 10)
-                        .frame(maxHeight: 22, alignment: .center)
                     }
                 }
                 .contextMenu {
