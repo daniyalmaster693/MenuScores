@@ -119,27 +119,17 @@ struct Info: View {
                 }
             }
 
-            if sport.lowercased() == "baseball" {
-                if let plays = response.plays, !plays.isEmpty {
-                    let latestPlay = plays.last!
-                    DispatchQueue.main.async {
-                        self.latestPlayText = latestPlay.text ?? "-"
-                        self.outs = latestPlay.outs.map { String($0) } ?? "-"
-                        self.balls = latestPlay.pitchCount?.balls.map { String($0) } ?? "-"
-                        self.strikes = latestPlay.pitchCount?.strikes.map { String($0) } ?? "-"
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.latestPlayText = "N/A"
-                    }
-                }
-            }
-
             else {
                 if let plays = response.plays, !plays.isEmpty {
                     let latestPlay = plays.last!
                     DispatchQueue.main.async {
                         self.latestPlayText = latestPlay.text ?? "-"
+
+                        if sport == "Baseball" {
+                            self.outs = latestPlay.outs.map { String($0) } ?? "-"
+                            self.balls = latestPlay.pitchCount?.balls.map { String($0) } ?? "-"
+                            self.strikes = latestPlay.pitchCount?.strikes.map { String($0) } ?? "-"
+                        }
                     }
                 } else {
                     DispatchQueue.main.async {
