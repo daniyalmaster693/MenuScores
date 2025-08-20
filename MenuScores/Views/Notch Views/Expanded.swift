@@ -159,8 +159,8 @@ struct Info: View {
                 teamIndex = 0
             }
 
-            let teamHex = competitors[teamIndex].team?.color ?? "#000000"
-            let altHex = competitors[teamIndex].team?.alternateColor ?? "#000000"
+            let teamHex = competitors[teamIndex].team?.color ?? "#FFFFFF"
+            let altHex = competitors[teamIndex].team?.alternateColor ?? "#FFFFFF"
 
             let mainColor = Color(hex: teamHex)
             let altColor = Color(hex: altHex)
