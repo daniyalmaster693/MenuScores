@@ -58,7 +58,7 @@ struct Info: View {
     func fetchLatestPlay() async {
         // TODO: Make this work dynamically for any sport that isn't racing or soccer
 
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
@@ -89,7 +89,7 @@ struct Info: View {
     func fetchLatestPlayTeamColor() async {
         // TODO: Make this work dynamically for any sport that isn't racing or soccer
 
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
