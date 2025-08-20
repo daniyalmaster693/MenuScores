@@ -20,7 +20,6 @@ struct LeagueSettingsView: View {
     @AppStorage("enableNCAAF") private var enableNCAAF = false
 
     @AppStorage("enableNFL") private var enableNFL = true
-    @AppStorage("enableCFL") private var enableCFL = false
     @AppStorage("enableFNCAA") private var enableFNCAA = false
 
     @AppStorage("enableMLB") private var enableMLB = true
@@ -126,14 +125,6 @@ struct LeagueSettingsView: View {
                             Image(systemName: "football")
                                 .foregroundColor(.secondary)
                             Text("NFL")
-                        }
-                    }
-
-                    Toggle(isOn: $enableCFL) {
-                        HStack {
-                            Image(systemName: "football")
-                                .foregroundColor(.secondary)
-                            Text("CFL")
                         }
                     }
 

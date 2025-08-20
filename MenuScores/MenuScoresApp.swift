@@ -61,7 +61,6 @@ struct MenuScoresApp: App {
     @AppStorage("enableNCAAF") private var enableNCAAF = false
 
     @AppStorage("enableNFL") private var enableNFL = true
-    @AppStorage("enableCFL") private var enableCFL = false
     @AppStorage("enableFNCAA") private var enableFNCAA = false
 
     @AppStorage("enableMLB") private var enableMLB = true
@@ -125,7 +124,6 @@ struct MenuScoresApp: App {
     @StateObject private var ncaafVM = GamesListView()
 
     @StateObject private var nflVM = GamesListView()
-    @StateObject private var cflVM = GamesListView()
     @StateObject private var fncaaVM = GamesListView()
 
     @StateObject private var mlbVM = GamesListView()
