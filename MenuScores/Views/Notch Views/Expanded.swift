@@ -387,7 +387,7 @@ struct Info: View {
                                 } placeholder: {
                                     ProgressView()
                                 }
-                                .frame(width: 32, height: 32)
+                                .frame(width: 28, height: 28)
                                 .padding(.trailing, 3)
 
                                 Text("\(game.shortName)")
@@ -452,7 +452,7 @@ struct Info: View {
                                     Image(systemName: "flag.checkered")
                                         .font(.system(size: 12))
 
-                                    Text("Race Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
+                                    Text("\(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
                                         .font(.system(size: 14, weight: .medium))
                                 }.frame(maxWidth: .infinity, alignment: .center)
                             }
@@ -510,7 +510,7 @@ struct Info: View {
                                 } placeholder: {
                                     ProgressView()
                                 }
-                                .frame(width: 32, height: 32)
+                                .frame(width: 28, height: 28)
                                 .padding(.trailing, 3)
 
                                 Text("\(game.shortName)")
@@ -581,7 +581,7 @@ struct Info: View {
                                     Image(systemName: "figure.golf")
                                         .font(.system(size: 12))
 
-                                    Text("Tournament Date: \(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
+                                    Text("\(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
                                         .font(.system(size: 14, weight: .medium))
                                 }.frame(maxWidth: .infinity, alignment: .center)
                             }
