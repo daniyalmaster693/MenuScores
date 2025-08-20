@@ -90,7 +90,7 @@ struct LeagueSettingsView: View {
                                 .font(.headline)
                             Spacer()
 
-                            Button("Disable All") {
+                            Button(action: {
                                 enableNHL = false
                                 enableHNCAAM = false
                                 enableHNCAAF = false
@@ -122,11 +122,15 @@ struct LeagueSettingsView: View {
                                 enableLNCAAF = false
                                 enableVNCAAM = false
                                 enableVNCAAF = false
+                            }) {
+                                HStack {
+                                    Image(systemName: "xmark.circle")
+                                    Text("Disable All")
+                                }
                             }
                             .buttonStyle(.plain)
                             .foregroundColor(.secondary)
                             .font(.subheadline)
-                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -210,19 +214,19 @@ struct LeagueSettingsView: View {
                 }
 
                 Section("Soccer") {
-                    Toggle(isOn: $enableUEFA) {
-                        HStack {
-                            Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
-                            Text("Champions League")
-                        }
-                    }
-
                     Toggle(isOn: $enableMLS) {
                         HStack {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.secondary)
                             Text("MLS")
+                        }
+                    }
+
+                    Toggle(isOn: $enableUEFA) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Champions League")
                         }
                     }
 
