@@ -291,6 +291,7 @@ struct Info: View {
 
                             Text(latestPlayText)
                                 .truncationMode(.tail)
+                                .frame(maxWidth: 250, alignment: .leading)
                         }.task {
                             if let _ = notchViewModel.game?.id {
                                 await fetchLatestPlay()
