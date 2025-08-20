@@ -96,7 +96,7 @@ struct HockeyMenu: View {
                                         hoverBehavior: .all,
                                         style: .notch
                                     ) {
-                                        Info(notchViewModel: notchViewModel, sport: "Hockey")
+                                        Info(notchViewModel: notchViewModel, sport: "Hockey", league: "\(league)")
                                     } compactLeading: {
                                         CompactLeading(notchViewModel: notchViewModel, sport: "Hockey")
                                     } compactTrailing: {

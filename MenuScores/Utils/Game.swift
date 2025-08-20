@@ -9,6 +9,13 @@ import Foundation
 
 struct ScoreboardResponse: Decodable {
     let events: [Event]
+    let leagues: [Leagues]
+}
+
+struct Leagues: Decodable {
+    let name: String?
+    let abbreviation: String?
+    let slug: String
 }
 
 struct Event: Decodable {

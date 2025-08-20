@@ -51,14 +51,16 @@ struct Info: View {
     @State private var refreshID = UUID()
     @State private var latestPlayText: String = "Loading..."
     @State private var capsuleColor: Color = .black
+
     var sport: String
+    var league: String
 
     // Recent Player Fetcher
 
     func fetchLatestPlay() async {
         // TODO: Make this work dynamically for any sport that isn't racing or soccer
 
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(league.lowercased())/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
@@ -87,9 +89,9 @@ struct Info: View {
     // Play by Play Event Team Mapper
 
     func fetchLatestPlayTeamColor() async {
-        // TODO: Make this work dynamically for any sport that isn't racing or soccer
+        // TODO: Make sure api still works for college leagues and other sports
 
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(league.lowercased())/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
@@ -120,6 +122,7 @@ struct Info: View {
 
             DispatchQueue.main.async {
                 self.capsuleColor = fillColor
+                print(league)
             }
 
         } catch {
