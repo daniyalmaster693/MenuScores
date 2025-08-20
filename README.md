@@ -29,7 +29,6 @@
 - Men's College Basketball
 - Women's College Basketball
 - NFL
-- CFL
 - College Football
 - MLB
 - College Baseball
