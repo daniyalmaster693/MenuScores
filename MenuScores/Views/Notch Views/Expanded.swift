@@ -15,11 +15,11 @@ extension Color {
         Scanner(string: hex).scanHexInt64(&int)
         let a, r, g, b: UInt64
         switch hex.count {
-        case 3: // RGB (12-bit)
+        case 3:
             (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: // RGB (24-bit)
+        case 6:
             (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8: // ARGB (32-bit)
+        case 8:
             (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
         default:
             (a, r, g, b) = (255, 0, 0, 0)
@@ -58,7 +58,7 @@ struct Info: View {
     func fetchLatestPlay() async {
         // TODO: Make this work dynamically for any sport that isn't racing or soccer
 
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=401811885"
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
@@ -87,7 +87,9 @@ struct Info: View {
     // Play by Play Event Team Mapper
 
     func fetchLatestPlayTeamColor() async {
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=401811885"
+        // TODO: Make this work dynamically for any sport that isn't racing or soccer
+
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
