@@ -5,11 +5,25 @@
 //  Created by Daniyal Master on 2025-08-09.
 //
 
+import Sparkle
 import SwiftUI
 
 struct CompactLeading: View {
+    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
     var sport: String
+
+    // Sparkle Updater Closure
+
+    private let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
+
+    private var updater: SPUUpdater {
+        updaterController.updater
+    }
 
     var body: some View {
         if let game = notchViewModel.game {
@@ -28,6 +42,40 @@ struct CompactLeading: View {
 
                     Text("\(game.competitions[0].competitors?[1].score ?? "-")")
                         .font(.system(size: 14, weight: .semibold))
+                }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    if #available(macOS 14, *) {
+                        Button {
+                            let environment = EnvironmentValues()
+                            environment.openSettings()
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+                    }
+
+                    Button {
+                        updater.checkForUpdates()
+                    } label: {
+                        Text("Check for Updates")
+                    }
+                    .buttonStyle(.bordered)
+                    .keyboardShortcut("u")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
                 }
             }
 
@@ -44,6 +92,40 @@ struct CompactLeading: View {
                         ProgressView()
                     }
                     .frame(width: 18, height: 18)
+                }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    if #available(macOS 14, *) {
+                        Button {
+                            let environment = EnvironmentValues()
+                            environment.openSettings()
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+                    }
+
+                    Button {
+                        updater.checkForUpdates()
+                    } label: {
+                        Text("Check for Updates")
+                    }
+                    .buttonStyle(.bordered)
+                    .keyboardShortcut("u")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
                 }
             }
 
@@ -60,6 +142,40 @@ struct CompactLeading: View {
                         ProgressView()
                     }
                     .frame(width: 18, height: 18)
+                }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    if #available(macOS 14, *) {
+                        Button {
+                            let environment = EnvironmentValues()
+                            environment.openSettings()
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+                    }
+
+                    Button {
+                        updater.checkForUpdates()
+                    } label: {
+                        Text("Check for Updates")
+                    }
+                    .buttonStyle(.bordered)
+                    .keyboardShortcut("u")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
                 }
             }
         }
