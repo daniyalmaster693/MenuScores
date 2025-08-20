@@ -71,7 +71,7 @@ enum Scoreboard {
         )!
         static let pga = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard?dates=20250803"
+            "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard"
         )!
         static let lpga = URL(
             string:
