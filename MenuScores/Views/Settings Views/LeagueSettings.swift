@@ -59,7 +59,7 @@ struct LeagueSettingsView: View {
                 .bold()
 
             Form {
-                Section("Hockey") {
+                Section {
                     Toggle(isOn: $enableNHL) {
                         HStack {
                             Image(systemName: "hockey.puck")
@@ -81,6 +81,52 @@ struct LeagueSettingsView: View {
                             Image(systemName: "hockey.puck")
                                 .foregroundColor(.secondary)
                             Text("Women's College Hockey")
+                        }
+                    }
+                } header: {
+                    HStack(spacing: 4) {
+                        HStack {
+                            Text("Hockey")
+                                .font(.headline)
+                            Spacer()
+
+                            Button("Disable All") {
+                                enableNHL = false
+                                enableHNCAAM = false
+                                enableHNCAAF = false
+                                enableNBA = false
+                                enableWNBA = false
+                                enableNCAAM = false
+                                enableNCAAF = false
+                                enableNFL = false
+                                enableFNCAA = false
+                                enableMLB = false
+                                enableBNCAA = false
+                                enableSNCAA = false
+                                enableF1 = false
+                                enablePGA = false
+                                enableLPGA = false
+                                enableUEFA = false
+                                enableMLS = false
+                                enableMEX = false
+                                enableFRA = false
+                                enableNED = false
+                                enablePOR = false
+                                enableEPL = false
+                                enableESP = false
+                                enableGER = false
+                                enableITA = false
+                                enableNLL = false
+                                enablePLL = false
+                                enableLNCAAM = false
+                                enableLNCAAF = false
+                                enableVNCAAM = false
+                                enableVNCAAF = false
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
+                            .font(.subheadline)
+                            .buttonStyle(.plain)
                         }
                     }
                 }
