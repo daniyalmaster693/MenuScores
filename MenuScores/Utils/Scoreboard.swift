@@ -32,7 +32,7 @@ enum Scoreboard {
         )!
         static let wnba = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=20250314"
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard"
         )!
         static let ncaam = URL(
             string:
