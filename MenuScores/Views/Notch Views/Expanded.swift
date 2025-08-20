@@ -398,7 +398,7 @@ struct Info: View {
 
                             if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
                                 HStack {
-                                    Text("Current Leaders")
+                                    Text("Leaders")
                                         .font(.system(size: 14, weight: .medium))
                                         .padding(.leading, 10)
 
@@ -521,7 +521,7 @@ struct Info: View {
 
                             if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
                                 HStack {
-                                    Text("Current Leaders")
+                                    Text("Leaders")
                                         .font(.system(size: 14, weight: .medium))
                                         .padding(.leading, 10)
 
