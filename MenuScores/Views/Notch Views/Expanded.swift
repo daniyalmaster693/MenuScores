@@ -284,15 +284,16 @@ struct Info: View {
                     }
 
                     if sport != "Soccer" && sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "in" {
-                        HStack {
+                        HStack(alignment: .center, spacing: 10) {
                             Capsule()
                                 .fill(capsuleColor)
                                 .frame(width: 3, height: 16)
 
                             Text(latestPlayText)
-                                .truncationMode(.tail)
-                                .frame(maxWidth: 250)
-                        }.task {
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .task {
                             if let _ = notchViewModel.game?.id {
                                 await fetchLatestPlay()
                                 await fetchLatestPlayTeamColor()
