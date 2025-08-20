@@ -527,41 +527,46 @@ struct Info: View {
                                     }
                                 }.padding(.top, 5)
 
-                                VStack {
-                                    let competitors = game.competitions[0].competitors ?? []
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    VStack(spacing: 4) {
+                                        let competitors = game.competitions[0].competitors ?? []
 
-                                    ForEach(competitors.prefix(5), id: \.id) { competitor in
-                                        HStack {
+                                        ForEach(competitors.prefix(15), id: \.id) { competitor in
                                             HStack {
-                                                if let flagURLString = competitor.athlete?.flag.href,
-                                                   let flagURL = URL(string: flagURLString)
-                                                {
-                                                    AsyncImage(url: flagURL) { image in
-                                                        image.resizable().scaledToFit()
-                                                    } placeholder: {
-                                                        ProgressView()
+                                                HStack {
+                                                    if let flagURLString = competitor.athlete?.flag.href,
+                                                       let flagURL = URL(string: flagURLString)
+                                                    {
+                                                        AsyncImage(url: flagURL) { image in
+                                                            image.resizable().scaledToFit()
+                                                        } placeholder: {
+                                                            ProgressView()
+                                                        }
+                                                        .frame(width: 16, height: 16)
+                                                        .padding(.trailing, 3)
+                                                        .padding(.leading, 10)
                                                     }
-                                                    .frame(width: 16, height: 16)
-                                                    .padding(.trailing, 3)
-                                                    .padding(.leading, 10)
+
+                                                    Text("\(competitor.order ?? 0). ")
+                                                        .lineLimit(1)
+                                                        .truncationMode(.tail)
+
+                                                    Text("\(competitor.athlete?.displayName ?? "Unknown")")
+                                                        .lineLimit(1)
+                                                        .truncationMode(.tail)
                                                 }
 
-                                                Text("\(competitor.order ?? 0). ")
+                                                Text("\(competitor.score ?? "-")")
                                                     .lineLimit(1)
                                                     .truncationMode(.tail)
 
-                                                Text("\(competitor.athlete?.displayName ?? "Unknown")")
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-                                            }
-
-                                            Text("\(competitor.score ?? "-")")
-                                                .lineLimit(1)
-                                                .truncationMode(.tail)
-
-                                        }.frame(maxWidth: .infinity, alignment: .leading)
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                        }
                                     }
-                                }.padding(.top, 10)
+                                }
+                                .frame(maxHeight: 95)
+                                .padding(.top, 10)
+                                .padding(.bottom, 5)
                             }
 
                             if game.competitions[0].status.type.state == "pre" {
