@@ -283,7 +283,7 @@ struct Info: View {
                         }
                     }
 
-                    if sport != "Soccer" && sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "post" {
+                    if sport != "Soccer" && sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "in" {
                         HStack {
                             Capsule()
                                 .fill(capsuleColor)
