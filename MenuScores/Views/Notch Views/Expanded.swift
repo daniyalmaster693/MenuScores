@@ -63,9 +63,9 @@ struct Info: View {
 
         case "HNCAAF": return "womens-college-hockey"
 
-        case "NCAAM": return "mens-college-basketball"
+        case "NCAA M": return "mens-college-basketball"
 
-        case "NCAAF": return "womens-college-basketball"
+        case "NCAA F": return "womens-college-basketball"
 
         case "FNCAA": return "college-football"
 

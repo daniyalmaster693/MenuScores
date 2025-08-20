@@ -32,15 +32,15 @@ enum Scoreboard {
         )!
         static let wnba = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=20250314"
         )!
         static let ncaam = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?dates=20250314"
         )!
         static let ncaaf = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard?dates=20250314"
         )!
 
         static let nfl = URL(
