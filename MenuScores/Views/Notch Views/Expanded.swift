@@ -50,17 +50,17 @@ struct Info: View {
 
     // Recent Play Variables
 
-    @State private var latestPlayText: String = "Loading..."
+    @State private var latestPlayText: String = ""
     @State private var capsuleColor: Color = .black
     @State private var refreshID = UUID()
 
-    // MARK: League Related Text Variables
+    // MARK: Sport Related Text Variables
 
-    // MLB
+    // Baseball
 
-    @State private var outs: String = "Loading..."
-    @State private var balls: String = "Loading..."
-    @State private var strikes: String = "Loading..."
+    @State private var outs: String = ""
+    @State private var balls: String = ""
+    @State private var strikes: String = ""
 
     var sport: String
     var league: String
