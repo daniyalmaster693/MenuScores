@@ -263,19 +263,6 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableCFL {
-                FootballMenu(
-                    title: "CFL Games",
-                    viewModel: cflVM,
-                    league: "CFL",
-                    fetchURL: Scoreboard.Urls.cfl,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
             if enableFNCAA {
                 FootballMenu(
                     title: "NCAA Football",

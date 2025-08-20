@@ -9,6 +9,7 @@ import Foundation
 
 struct PlaybyPlayResponse: Decodable {
     let plays: [Plays]?
+    let scoringPlays: [Plays]?
 }
 
 struct Plays: Decodable {

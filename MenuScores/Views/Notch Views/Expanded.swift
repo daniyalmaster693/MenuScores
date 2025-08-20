@@ -55,12 +55,42 @@ struct Info: View {
     var sport: String
     var league: String
 
+    // College League Mapper
+
+    func apiLeague(for league: String) -> String {
+        switch league.uppercased() {
+        case "HNCAAM": return "mens-college-hockey"
+
+        case "HNCAAF": return "womens-college-hockey"
+
+        case "NCAAM": return "mens-college-basketball"
+
+        case "NCAAF": return "womens-college-basketball"
+
+        case "FNCAA": return "college-football"
+
+        case "BNCAA": return "college-baseball"
+
+        case "SNCAA": return "college-softball"
+
+        case "LNCAAM": return "mens-college-lacrosse"
+
+        case "LNCAAF": return "womens-college-lacrosse"
+
+        case "VNCAAM": return "mens-college-volleyball"
+
+        case "VNCAAF": return "womens-college-volleyball"
+
+        default: return league.lowercased()
+        }
+    }
+
     // Recent Player Fetcher
 
     func fetchLatestPlay() async {
         // TODO: Make this work dynamically for any sport that isn't racing or soccer
 
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(league.lowercased())/summary?event=\(notchViewModel.game?.id ?? "0")"
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
@@ -68,14 +98,27 @@ struct Info: View {
             let decoder = JSONDecoder()
             let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
 
-            if let plays = response.plays, !plays.isEmpty {
-                let latestPlay = plays.last!
-                DispatchQueue.main.async {
-                    self.latestPlayText = latestPlay.text ?? "-"
+            if sport.lowercased() == "football" {
+                if let scoringPlays = response.scoringPlays, !scoringPlays.isEmpty {
+                    let latestPlay = scoringPlays.last!
+                    DispatchQueue.main.async {
+                        self.latestPlayText = latestPlay.text ?? "-"
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.latestPlayText = "N/A"
+                    }
                 }
             } else {
-                DispatchQueue.main.async {
-                    self.latestPlayText = "N/A"
+                if let plays = response.plays, !plays.isEmpty {
+                    let latestPlay = plays.last!
+                    DispatchQueue.main.async {
+                        self.latestPlayText = latestPlay.text ?? "-"
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.latestPlayText = "N/A"
+                    }
                 }
             }
         } catch {
@@ -91,7 +134,7 @@ struct Info: View {
     func fetchLatestPlayTeamColor() async {
         // TODO: Make sure api still works for college leagues and other sports
 
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(league.lowercased())/summary?event=\(notchViewModel.game?.id ?? "0")"
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
         guard let url = URL(string: urlString) else { return }
 
         do {
@@ -99,7 +142,11 @@ struct Info: View {
             let decoder = JSONDecoder()
             let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
 
-            guard let latestPlay = response.plays?.last else { return }
+            guard let latestPlay = (sport.lowercased() == "football" ? response.scoringPlays?.last : response.plays?.last) else {
+                return
+            }
+
+            // TODO: Update to use scoring plays for football
 
             let playTeamID = latestPlay.team?.id
             guard let game = notchViewModel.game else { return }
@@ -122,7 +169,6 @@ struct Info: View {
 
             DispatchQueue.main.async {
                 self.capsuleColor = fillColor
-                print(league)
             }
 
         } catch {
@@ -237,7 +283,7 @@ struct Info: View {
                         }
                     }
 
-                    if sport != "Soccer" && game.competitions[0].status.type.state == "in" {
+                    if sport != "Soccer" && sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "post" {
                         HStack {
                             Capsule()
                                 .fill(capsuleColor)
