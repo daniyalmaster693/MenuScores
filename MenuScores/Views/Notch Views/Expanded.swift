@@ -65,7 +65,7 @@ struct Info: View {
     var sport: String
     var league: String
 
-    // College League Mapper
+    // League Name Mapper
 
     func apiLeague(for league: String) -> String {
         switch league.uppercased() {
@@ -92,6 +92,24 @@ struct Info: View {
         case "VNCAAF": return "womens-college-volleyball"
 
         case "MLS": return "USA.1"
+
+        case "UEFA": return "uefa.champions"
+
+        case "EPL": return "ENG.1"
+
+        case "ESP": return "ESP.1"
+
+        case "GER": return "GER.1"
+
+        case "ITA": return "ITA.1"
+
+        case "MEX": return "MEX.1"
+
+        case "FRA": return "FRA.1"
+
+        case "NED": return "NED.1"
+
+        case "POR": return "POR.1"
 
         default: return league.lowercased()
         }

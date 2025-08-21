@@ -313,12 +313,12 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableUEFA {
+            if enableMLS {
                 SoccerMenu(
-                    title: "Champions League",
-                    viewModel: uefaVM,
-                    league: "UEFA",
-                    fetchURL: Scoreboard.Urls.uefa,
+                    title: "MLS Games",
+                    viewModel: mlsVM,
+                    league: "MLS",
+                    fetchURL: Scoreboard.Urls.mls,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
@@ -326,12 +326,12 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableMLS {
+            if enableUEFA {
                 SoccerMenu(
-                    title: "MLS Games",
-                    viewModel: mlsVM,
-                    league: "MLS",
-                    fetchURL: Scoreboard.Urls.mls,
+                    title: "Champions League",
+                    viewModel: uefaVM,
+                    league: "UEFA",
+                    fetchURL: Scoreboard.Urls.uefa,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
