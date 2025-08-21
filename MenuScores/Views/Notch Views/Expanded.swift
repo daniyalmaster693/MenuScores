@@ -363,16 +363,18 @@ struct Info: View {
 
                     if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "in" {
                         VStack(alignment: .center) {
-                            HStack(alignment: .center, spacing: 10) {
-                                Capsule()
-                                    .fill(capsuleColor)
-                                    .frame(width: 3, height: 16)
+                            ScrollView(.horizontal, showsIndicators: true) {
+                                HStack(alignment: .center, spacing: 10) {
+                                    Capsule()
+                                        .fill(capsuleColor)
+                                        .frame(width: 3, height: 16)
 
-                                Text(latestPlayText)
-                                    .lineLimit(1)
-                                    .truncationMode(.tail)
-                                    .font(.system(size: 14, weight: .medium))
-                            }.frame(maxWidth: 265, maxHeight: 22, alignment: .center)
+                                    Text(latestPlayText)
+                                        .font(.system(size: 14, weight: .medium))
+                                }
+                                .frame(maxHeight: 22, alignment: .center)
+                            }
+                            .frame(maxWidth: 265, maxHeight: 22, alignment: .center)
 
                             if sport == "Baseball" {
                                 HStack(alignment: .center, spacing: 20) {
@@ -405,16 +407,18 @@ struct Info: View {
 
                     if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post" {
                         VStack(alignment: .center) {
-                            HStack(alignment: .center, spacing: 10) {
-                                Capsule()
-                                    .fill(.white)
-                                    .frame(width: 3, height: 16)
+                            ScrollView(.horizontal, showsIndicators: true) {
+                                HStack(alignment: .center, spacing: 10) {
+                                    Capsule()
+                                        .fill(.white)
+                                        .frame(width: 3, height: 16)
 
-                                Text(postGameText)
-                                    .lineLimit(1)
-                                    .truncationMode(.tail)
-                                    .font(.system(size: 14, weight: .medium))
-                            }.frame(maxWidth: 265, maxHeight: 22, alignment: .center)
+                                    Text(postGameText)
+                                        .font(.system(size: 14, weight: .medium))
+                                }
+                                .frame(maxHeight: 22, alignment: .center)
+                            }
+                            .frame(maxWidth: 265, maxHeight: 22, alignment: .center)
                         }
                         .task {
                             if let _ = notchViewModel.game?.id {

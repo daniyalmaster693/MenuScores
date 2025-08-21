@@ -54,7 +54,7 @@ enum Scoreboard {
 
         static let mlb = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20250820"
         )!
         static let bncaa = URL(
             string:
@@ -83,7 +83,7 @@ enum Scoreboard {
         )!
         static let mls = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.1/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.1/scoreboard?dates=20250809"
         )!
         static let mex = URL(
             string:
