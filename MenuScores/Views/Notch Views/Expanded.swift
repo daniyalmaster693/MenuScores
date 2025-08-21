@@ -51,6 +51,7 @@ struct Info: View {
     // Recent Play Variables
 
     @State private var latestPlayText: String = ""
+    @State private var postGameText: String = ""
     @State private var capsuleColor: Color = .black
     @State private var refreshID = UUID()
 
@@ -228,6 +229,34 @@ struct Info: View {
         }
     }
 
+    // Fetch Post Game Article Headline
+
+    func fetchGameHeadline() async {
+        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
+        guard let url = URL(string: urlString) else { return }
+
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
+
+            if let article = response.article {
+                DispatchQueue.main.async {
+                    self.postGameText = article.headline ?? article.linkText ?? "-"
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.postGameText = "N/A"
+                }
+            }
+        } catch {
+            print("Failed to fetch play-by-play: \(error)")
+            DispatchQueue.main.async {
+                self.postGameText = "N/A"
+            }
+        }
+    }
+
     // Sparkle Updater Closure
 
     private let updaterController = SPUStandardUpdaterController(
@@ -332,7 +361,7 @@ struct Info: View {
                         }
                     }
 
-                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "post" {
+                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "in" {
                         VStack(alignment: .center) {
                             HStack(alignment: .center, spacing: 10) {
                                 Capsule()
@@ -368,6 +397,28 @@ struct Info: View {
                             if let _ = notchViewModel.game?.id {
                                 await fetchLatestPlay()
                                 await fetchLatestPlayTeamColor()
+                            }
+                        }
+                        .id(refreshID)
+                        .padding(.top, 10)
+                    }
+
+                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "post" {
+                        VStack(alignment: .center) {
+                            HStack(alignment: .center, spacing: 10) {
+                                Capsule()
+                                    .fill(.white)
+                                    .frame(width: 3, height: 16)
+
+                                Text(postGameText)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                                    .font(.system(size: 14, weight: .medium))
+                            }.frame(maxWidth: 265, maxHeight: 22, alignment: .center)
+                        }
+                        .task {
+                            if let _ = notchViewModel.game?.id {
+                                await fetchGameHeadline()
                             }
                         }
                         .id(refreshID)

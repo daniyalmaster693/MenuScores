@@ -11,6 +11,14 @@ struct PlaybyPlayResponse: Decodable {
     let plays: [Plays]?
     let scoringPlays: [Plays]?
     let keyEvents: [Plays]?
+    let article: Article?
+}
+
+struct Article: Decodable {
+    let type: String?
+    let headline: String?
+    let description: String?
+    let linkText: String?
 }
 
 struct Plays: Decodable {
