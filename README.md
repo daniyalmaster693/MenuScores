@@ -55,7 +55,7 @@
 
 ## Features
 
-- **Live Notch Scores** - Pin games to your notch and receive real-time score updates available at a glace.
+- **Live Notch Scores** - Pin games to your notch and receive real-time score updates and game info available at a glace.
 - **Live Menubar Scores** - Pin games to your menu bar and receive real-time score updates available at a glance.
 - **Smart Notifications** - Get notified when a pinned game starts or finishes.
 - **League Control** - Choose which leagues are shown and stay focused on the sports you care about.
