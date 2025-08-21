@@ -130,7 +130,7 @@ struct Info: View {
                 if let scoringPlays = response.scoringPlays, !scoringPlays.isEmpty {
                     let latestPlay = scoringPlays.last!
                     DispatchQueue.main.async {
-                        self.latestPlayText = latestPlay.text ?? "-"
+                        self.latestPlayText = latestPlay.text ?? latestPlay.type?.text ?? "-"
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -143,7 +143,7 @@ struct Info: View {
                 if let keyEvents = response.keyEvents, !keyEvents.isEmpty {
                     let latestPlay = keyEvents.last!
                     DispatchQueue.main.async {
-                        self.latestPlayText = latestPlay.shortText ?? latestPlay.text ?? "-"
+                        self.latestPlayText = latestPlay.text ?? latestPlay.type?.text ?? "-"
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -156,7 +156,7 @@ struct Info: View {
                 if let plays = response.plays, !plays.isEmpty {
                     let latestPlay = plays.last!
                     DispatchQueue.main.async {
-                        self.latestPlayText = latestPlay.text ?? "-"
+                        self.latestPlayText = latestPlay.text ?? latestPlay.type?.text ?? "-"
 
                         if sport == "Baseball" {
                             self.outs = latestPlay.outs.map { String($0) } ?? "-"

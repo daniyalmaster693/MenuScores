@@ -83,7 +83,7 @@ enum Scoreboard {
         )!
         static let mls = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.1/scoreboard?dates=20250809"
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.1/scoreboard"
         )!
         static let mex = URL(
             string:

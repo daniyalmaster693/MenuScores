@@ -18,7 +18,15 @@ struct Plays: Decodable {
     let shortText: String?
     let team: TeamID?
     let outs: Int?
+    let type: PlayType?
     let pitchCount: PitchCount?
+}
+
+struct PlayType: Decodable {
+    let id: String?
+    let text: String?
+    let type: String?
+    let alternateText: String?
 }
 
 struct PitchCount: Decodable {
