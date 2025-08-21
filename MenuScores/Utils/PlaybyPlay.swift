@@ -10,10 +10,12 @@ import Foundation
 struct PlaybyPlayResponse: Decodable {
     let plays: [Plays]?
     let scoringPlays: [Plays]?
+    let keyEvents: [Plays]?
 }
 
 struct Plays: Decodable {
     let text: String?
+    let shortText: String?
     let team: TeamID?
     let outs: Int?
     let pitchCount: PitchCount?

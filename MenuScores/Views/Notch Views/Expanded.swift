@@ -91,6 +91,8 @@ struct Info: View {
 
         case "VNCAAF": return "womens-college-volleyball"
 
+        case "MLS": return "USA.1"
+
         default: return league.lowercased()
         }
     }
@@ -111,6 +113,19 @@ struct Info: View {
                     let latestPlay = scoringPlays.last!
                     DispatchQueue.main.async {
                         self.latestPlayText = latestPlay.text ?? "-"
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.latestPlayText = "N/A"
+                    }
+                }
+            }
+
+            if sport.lowercased() == "soccer" {
+                if let keyEvents = response.keyEvents, !keyEvents.isEmpty {
+                    let latestPlay = keyEvents.last!
+                    DispatchQueue.main.async {
+                        self.latestPlayText = latestPlay.shortText ?? latestPlay.text ?? "-"
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -154,7 +169,13 @@ struct Info: View {
             let decoder = JSONDecoder()
             let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
 
-            guard let latestPlay = (sport.lowercased() == "football" ? response.scoringPlays?.last : response.plays?.last) else {
+            guard let latestPlay = (
+                sport.lowercased() == "football"
+                    ? response.scoringPlays?.last
+                    : sport.lowercased() == "soccer"
+                    ? response.keyEvents?.last
+                    : response.plays?.last
+            ) else {
                 return
             }
 
@@ -293,7 +314,7 @@ struct Info: View {
                         }
                     }
 
-                    if sport != "Soccer" && sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "in" {
+                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "post" {
                         VStack(alignment: .center) {
                             HStack(alignment: .center, spacing: 10) {
                                 Capsule()
@@ -301,10 +322,10 @@ struct Info: View {
                                     .frame(width: 3, height: 16)
 
                                 Text(latestPlayText)
-                                    .lineLimit(nil)
-                                    .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
                                     .font(.system(size: 14, weight: .medium))
-                            }.frame(maxHeight: 22, alignment: .center)
+                            }.frame(maxWidth: 265, maxHeight: 22, alignment: .center)
 
                             if sport == "Baseball" {
                                 HStack(alignment: .center, spacing: 20) {
