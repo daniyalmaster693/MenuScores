@@ -135,7 +135,7 @@ struct Info: View {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.latestPlayText = "N/A"
+                        self.latestPlayText = "No Recent Plays"
                     }
                 }
             }
@@ -148,7 +148,7 @@ struct Info: View {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.latestPlayText = "N/A"
+                        self.latestPlayText = "No Recent Plays"
                     }
                 }
             }
@@ -167,14 +167,14 @@ struct Info: View {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self.latestPlayText = "N/A"
+                        self.latestPlayText = "No Recent Plays"
                     }
                 }
             }
         } catch {
             print("Failed to fetch play-by-play: \(error)")
             DispatchQueue.main.async {
-                self.latestPlayText = "N/A"
+                self.latestPlayText = "No Recent Plays"
             }
         }
     }
@@ -246,13 +246,13 @@ struct Info: View {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.postGameText = "N/A"
+                    self.postGameText = "No headline available"
                 }
             }
         } catch {
             print("Failed to fetch play-by-play: \(error)")
             DispatchQueue.main.async {
-                self.postGameText = "N/A"
+                self.postGameText = "No headline available"
             }
         }
     }
