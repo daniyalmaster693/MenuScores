@@ -403,7 +403,7 @@ struct Info: View {
                         .padding(.top, 10)
                     }
 
-                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "post" {
+                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post" {
                         VStack(alignment: .center) {
                             HStack(alignment: .center, spacing: 10) {
                                 Capsule()
