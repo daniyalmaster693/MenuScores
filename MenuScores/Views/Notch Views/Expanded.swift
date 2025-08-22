@@ -633,13 +633,38 @@ struct Info: View {
                             }
 
                             if game.competitions[4].status.type.state == "pre" {
-                                HStack {
-                                    Image(systemName: "flag.checkered")
-                                        .font(.system(size: 12))
+                                VStack {
+                                    HStack {
+                                        AsyncImage(
+                                            url: URL(
+                                                string:
+                                                "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                            )
+                                        ) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 28, height: 28)
+                                        .padding(.trailing, 3)
 
-                                    Text("\(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
-                                        .font(.system(size: 14, weight: .medium))
-                                }.frame(maxWidth: .infinity, alignment: .center)
+                                        Text("\(game.shortName)")
+                                            .font(.system(size: 18, weight: .medium))
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .padding(.leading, 10)
+                                    .padding(.trailing, 10)
+
+                                    HStack {
+                                        Image(systemName: "flag.checkered")
+                                            .font(.system(size: 12))
+
+                                        Text("\(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
+                                            .font(.system(size: 14, weight: .medium))
+                                    }
+                                    .padding(.top, 2)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                }
                             }
                         }
                     }
