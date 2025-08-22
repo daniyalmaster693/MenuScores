@@ -27,7 +27,7 @@ struct CompactTrailing: View {
 
     var body: some View {
         if let game = notchViewModel.game {
-            if sport != "Racing" && sport != "Golf" {
+            if sport != "F1" && sport != "Golf" {
                 HStack {
                     Text("\(game.competitions[0].competitors?[0].score ?? "-")")
                         .font(.system(size: 14, weight: .semibold))
@@ -79,7 +79,7 @@ struct CompactTrailing: View {
                 }
             }
 
-            if sport == "Racing" {
+            if sport == "F1" {
                 HStack {
                     if let lap = game.competitions[4].status.period {
                         Text("L\(lap)")

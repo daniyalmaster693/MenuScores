@@ -27,7 +27,7 @@ struct CompactLeading: View {
 
     var body: some View {
         if let game = notchViewModel.game {
-            if sport != "Racing" && sport != "Golf" {
+            if sport != "F1" && sport != "Golf" {
                 HStack {
                     AsyncImage(
                         url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
@@ -79,7 +79,7 @@ struct CompactLeading: View {
                 }
             }
 
-            if sport == "Racing" {
+            if sport == "F1" {
                 HStack {
                     AsyncImage(
                         url: URL(
