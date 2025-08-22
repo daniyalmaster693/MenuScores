@@ -119,14 +119,17 @@ struct RacingMenu: View {
 
                     } label: {
                         HStack {
-//                            AsyncImage(
-//                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
-//                            ) { image in
-//                                image.resizable().scaledToFit()
-//                            } placeholder: {
-//                                ProgressView()
-//                            }
-//                            .frame(width: 40, height: 40)
+                            AsyncImage(
+                                url: URL(
+                                    string:
+                                    "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
+                                )
+                            ) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
 
                             Text(displayText(for: game, league: league))
                         }
