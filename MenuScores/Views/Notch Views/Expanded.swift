@@ -497,9 +497,11 @@ struct Info: View {
 
                                 Text("\(game.shortName)")
                                     .font(.system(size: 18, weight: .medium))
-                            }.padding(.bottom, 7)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.leading, 10)
+                            }
+                            .padding(.bottom, 7)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.leading, 10)
+                            .padding(.trailing, 10)
 
                             if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
                                 HStack {
@@ -620,9 +622,11 @@ struct Info: View {
 
                                 Text("\(game.name)")
                                     .font(.system(size: 18, weight: .medium))
-                            }.padding(.bottom, 7)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.leading, 10)
+                            }
+                            .padding(.bottom, 7)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.leading, 10)
+                            .padding(.trailing, 10)
 
                             if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
                                 HStack {
