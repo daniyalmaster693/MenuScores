@@ -834,95 +834,138 @@ struct Info: View {
                 VStack {
                     HStack(spacing: 4) {
                         VStack {
-                            HStack {
-                                AsyncImage(
-                                    url: URL(
-                                        string:
-                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                    )
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 28, height: 28)
-                                .padding(.trailing, 3)
-
-                                Text("\(game.shortName)")
-                                    .font(.system(size: 18, weight: .medium))
-                            }.padding(.bottom, 7)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.leading, 10)
-
                             if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
                                 HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                        )
+                                    ) { image in
+                                        image.resizable().scaledToFit()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 18, height: 18)
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
+
                                     Text("Leaders")
                                         .font(.system(size: 14, weight: .medium))
-                                        .padding(.leading, 10)
 
                                     Spacer()
 
-                                    if let round = game.competitions[0].status.period {
-                                        Text("R\(round)")
+                                    if game.competitions[0].status.type.state == "in" {
+                                        if let lap = game.competitions[0].status.period {
+                                            Text("L\(lap)")
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .padding(.trailing, 10)
+                                        }
+                                    } else {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.system(size: 10))
+
+                                            Text(
+                                                "\(game.competitions[0].competitors?[0].athlete?.shortName ?? "-")"
+                                            )
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 10)
-                                    }
-                                }.padding(.top, 5)
-
-                                ScrollView(.vertical, showsIndicators: true) {
-                                    VStack(spacing: 4) {
-                                        let competitors = game.competitions[0].competitors ?? []
-
-                                        ForEach(competitors.prefix(15), id: \.id) { competitor in
-                                            HStack {
-                                                HStack {
-                                                    if let flagURLString = competitor.athlete?.flag.href,
-                                                       let flagURL = URL(string: flagURLString)
-                                                    {
-                                                        AsyncImage(url: flagURL) { image in
-                                                            image.resizable().scaledToFit()
-                                                        } placeholder: {
-                                                            ProgressView()
-                                                        }
-                                                        .frame(width: 16, height: 16)
-                                                        .padding(.trailing, 3)
-                                                        .padding(.leading, 10)
-                                                    }
-
-                                                    Text("\(competitor.order ?? 0). ")
-                                                        .lineLimit(1)
-                                                        .truncationMode(.tail)
-
-                                                    Text("\(competitor.athlete?.displayName ?? "Unknown")")
-                                                        .lineLimit(1)
-                                                        .truncationMode(.tail)
-                                                }
-
-                                                Text("\(competitor.score ?? "-")")
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-
-                                            }.frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                 }
-                                .frame(maxHeight: 95)
+
+                                VStack(spacing: 5) {
+                                    HStack {
+                                        Text("#").frame(width: 30, alignment: .leading)
+                                        Text("Golfer").frame(width: 150, alignment: .leading)
+                                        Text("Score").frame(width: 80, alignment: .trailing)
+                                    }
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .padding(.horizontal, 10)
+
+                                    Divider()
+
+                                    ScrollView(.vertical, showsIndicators: true) {
+                                        VStack(spacing: 4) {
+                                            let competitors = game.competitions[0].competitors ?? []
+
+                                            ForEach(competitors.prefix(10), id: \.id) { competitor in
+                                                HStack {
+                                                    Text("\(competitor.order ?? 0)")
+                                                        .frame(width: 30, alignment: .leading)
+
+                                                    HStack(spacing: 4) {
+                                                        if let flagURLString = competitor.athlete?.flag.href,
+                                                           let flagURL = URL(string: flagURLString)
+                                                        {
+                                                            AsyncImage(url: flagURL) { image in
+                                                                image.resizable().scaledToFit()
+                                                            } placeholder: {
+                                                                Color.gray.opacity(0.3)
+                                                            }
+                                                            .frame(width: 16, height: 16)
+                                                            .padding(.trailing, 5)
+                                                        }
+
+                                                        Text(competitor.athlete?.displayName ?? "Unknown")
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                    }.frame(width: 150, alignment: .leading)
+
+                                                    Text(competitor.score ?? "-")
+                                                        .frame(width: 80, alignment: .trailing)
+                                                }
+                                                .font(.system(size: 13))
+                                                .padding(.horizontal, 10)
+                                            }
+                                        }
+                                    }
+                                }
+                                .frame(maxHeight: 120)
                                 .padding(.top, 10)
                                 .padding(.bottom, 5)
                             }
 
                             if game.competitions[0].status.type.state == "pre" {
-                                HStack {
-                                    Image(systemName: "figure.golf")
-                                        .font(.system(size: 12))
+                                VStack {
+                                    HStack {
+                                        AsyncImage(
+                                            url: URL(
+                                                string:
+                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                            )
+                                        ) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 28, height: 28)
+                                        .padding(.trailing, 3)
 
-                                    Text("\(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
-                                        .font(.system(size: 14, weight: .medium))
-                                }.frame(maxWidth: .infinity, alignment: .center)
+                                        Text("\(game.shortName)")
+                                            .font(.system(size: 18, weight: .medium))
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .padding(.leading, 10)
+                                    .padding(.trailing, 10)
+
+                                    HStack {
+                                        Image(systemName: "figure.golf")
+                                            .font(.system(size: 12))
+
+                                        Text("\(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
+                                            .font(.system(size: 14, weight: .medium))
+                                    }
+                                    .padding(.top, 2)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                }
                             }
                         }
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
