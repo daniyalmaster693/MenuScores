@@ -452,7 +452,7 @@ struct MenuScoresApp: App {
             }
 
             if enableF1 {
-                RacingMenu(
+                F1Menu(
                     title: "F1 Races",
                     viewModel: f1VM,
                     league: "F1",

@@ -8,7 +8,7 @@
 import DynamicNotchKit
 import SwiftUI
 
-struct RacingMenu: View {
+struct F1Menu: View {
     let title: String
     @ObservedObject var viewModel: GamesListView
     let league: String
