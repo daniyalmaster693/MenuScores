@@ -68,12 +68,16 @@ struct MenuScoresApp: App {
     @AppStorage("enableSNCAA") private var enableSNCAA = false
 
     @AppStorage("enableF1") private var enableF1 = true
+    @AppStorage("enableNC") private var enableNC = false
+    @AppStorage("enableNCS") private var enableNCS = false
+    @AppStorage("enableNCT") private var enableNCT = false
+    @AppStorage("enableIRL") private var enableIRL = false
 
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = false
 
-    @AppStorage("enableUEFA") private var enableUEFA = false
     @AppStorage("enableMLS") private var enableMLS = true
+    @AppStorage("enableUEFA") private var enableUEFA = false
     @AppStorage("enableMEX") private var enableMEX = false
     @AppStorage("enableFRA") private var enableFRA = false
     @AppStorage("enableNED") private var enableNED = false
@@ -131,6 +135,10 @@ struct MenuScoresApp: App {
     @StateObject private var sncaaVM = GamesListView()
 
     @StateObject private var f1VM = GamesListView()
+    @StateObject private var ncVM = GamesListView()
+    @StateObject private var ncsVM = GamesListView()
+    @StateObject private var nctVM = GamesListView()
+    @StateObject private var irlVM = GamesListView()
 
     @StateObject private var pgaVM = GamesListView()
     @StateObject private var lpgaVM = GamesListView()
@@ -444,7 +452,7 @@ struct MenuScoresApp: App {
             }
 
             if enableF1 {
-                F1Menu(
+                RacingMenu(
                     title: "F1 Races",
                     viewModel: f1VM,
                     league: "F1",
