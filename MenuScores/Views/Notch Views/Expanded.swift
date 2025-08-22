@@ -600,6 +600,129 @@ struct Info: View {
                 }
             }
 
+            if sport == "Racing" {
+                VStack {
+                    HStack(spacing: 4) {
+                        VStack {
+                            HStack {
+                                AsyncImage(
+                                    url: URL(
+                                        string:
+                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
+                                    )
+                                ) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 28, height: 28)
+                                .padding(.trailing, 3)
+
+                                Text("\(game.name)")
+                                    .font(.system(size: 18, weight: .medium))
+                            }.padding(.bottom, 7)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.leading, 10)
+
+                            if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
+                                HStack {
+                                    Text("Leaders")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .padding(.leading, 10)
+
+                                    Spacer()
+
+                                    if let lap = game.competitions[0].status.period {
+                                        Text("L\(lap)")
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 10)
+                                    }
+                                }.padding(.top, 5)
+
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    VStack(spacing: 4) {
+                                        let competitors = game.competitions[0].competitors ?? []
+
+                                        ForEach(competitors, id: \.id) { competitor in
+                                            HStack {
+                                                if let flagURLString = competitor.athlete?.flag.href,
+                                                   let flagURL = URL(string: flagURLString)
+                                                {
+                                                    AsyncImage(url: flagURL) { image in
+                                                        image.resizable().scaledToFit()
+                                                    } placeholder: {
+                                                        ProgressView()
+                                                    }
+                                                    .frame(width: 16, height: 16)
+                                                    .padding(.trailing, 3)
+                                                    .padding(.leading, 10)
+                                                }
+
+                                                Text("\(competitor.order ?? 0). ")
+                                                    .lineLimit(1)
+                                                    .truncationMode(.tail)
+
+                                                Text("\(competitor.athlete?.displayName ?? "Unknown")")
+                                                    .lineLimit(1)
+                                                    .truncationMode(.tail)
+
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                    }
+                                }
+                                .frame(maxHeight: 95)
+                                .padding(.top, 10)
+                                .padding(.bottom, 5)
+                            }
+
+                            if game.competitions[0].status.type.state == "pre" {
+                                HStack {
+                                    Image(systemName: "flag.checkered")
+                                        .font(.system(size: 12))
+
+                                    Text("\(formattedDate(from: game.date))  @  \(formattedTime(from: game.date))")
+                                        .font(.system(size: 14, weight: .medium))
+                                }.frame(maxWidth: .infinity, alignment: .center)
+                            }
+                        }
+                    }
+                }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    if #available(macOS 14, *) {
+                        Button {
+                            let environment = EnvironmentValues()
+                            environment.openSettings()
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+                    }
+
+                    Button {
+                        updater.checkForUpdates()
+                    } label: {
+                        Text("Check for Updates")
+                    }
+                    .buttonStyle(.bordered)
+                    .keyboardShortcut("u")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
+                }
+            }
+
             if sport == "Golf" {
                 VStack {
                     HStack(spacing: 4) {
