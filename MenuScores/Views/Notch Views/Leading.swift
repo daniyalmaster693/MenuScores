@@ -27,7 +27,7 @@ struct CompactLeading: View {
 
     var body: some View {
         if let game = notchViewModel.game {
-            if sport != "F1" && sport != "Golf" {
+            if sport != "F1" && sport != "Racing" && sport != "Golf" {
                 HStack {
                     AsyncImage(
                         url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
@@ -85,6 +85,56 @@ struct CompactLeading: View {
                         url: URL(
                             string:
                             "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                        )
+                    ) { image in
+                        image.resizable().scaledToFit()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(width: 18, height: 18)
+                }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    if #available(macOS 14, *) {
+                        Button {
+                            let environment = EnvironmentValues()
+                            environment.openSettings()
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+                    }
+
+                    Button {
+                        updater.checkForUpdates()
+                    } label: {
+                        Text("Check for Updates")
+                    }
+                    .buttonStyle(.bordered)
+                    .keyboardShortcut("u")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
+                }
+            }
+
+            if sport == "Racing" {
+                HStack {
+                    AsyncImage(
+                        url: URL(
+                            string:
+                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
                         )
                     ) { image in
                         image.resizable().scaledToFit()

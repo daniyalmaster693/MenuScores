@@ -271,7 +271,7 @@ struct Info: View {
 
     var body: some View {
         if let game = notchViewModel.game {
-            if sport != "F1" && sport != "Golf" {
+            if sport != "F1" && sport != "Racing" && sport != "Golf" {
                 VStack {
                     HStack {
                         HStack(spacing: 4) {
