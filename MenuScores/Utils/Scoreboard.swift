@@ -71,7 +71,7 @@ enum Scoreboard {
         )!
         static let nc = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-premier/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-premier/scoreboard?dates=20250803"
         )!
         static let ncs = URL(
             string:
