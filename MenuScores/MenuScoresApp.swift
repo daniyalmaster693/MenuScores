@@ -464,6 +464,58 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableNC {
+                RacingMenu(
+                    title: "Nascar Premier",
+                    viewModel: ncVM,
+                    league: "NC",
+                    fetchURL: Scoreboard.Urls.nc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableNCS {
+                RacingMenu(
+                    title: "Nascar Secondary",
+                    viewModel: ncsVM,
+                    league: "NCS",
+                    fetchURL: Scoreboard.Urls.ncs,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableNCT {
+                RacingMenu(
+                    title: "Nascar Truck",
+                    viewModel: nctVM,
+                    league: "NCT",
+                    fetchURL: Scoreboard.Urls.nct,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableIRL {
+                RacingMenu(
+                    title: "IndyCar",
+                    viewModel: irlVM,
+                    league: "IRL",
+                    fetchURL: Scoreboard.Urls.irl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             if enablePGA {
                 GolfMenu(
                     title: "PGA Golf",
