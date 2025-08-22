@@ -44,6 +44,10 @@
 - Eredivisie
 - Primeira Liga
 - F1
+- Nascar Premier
+- Nascar Secondary
+- Nascar Truck
+- IndyCar
 - PGA
 - LPGA
 - NLL
