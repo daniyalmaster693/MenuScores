@@ -27,12 +27,16 @@ struct LeagueSettingsView: View {
     @AppStorage("enableSNCAA") private var enableSNCAA = false
 
     @AppStorage("enableF1") private var enableF1 = true
+    @AppStorage("enableNC") private var enableNC = false
+    @AppStorage("enableNCS") private var enableNCS = false
+    @AppStorage("enableNCT") private var enableNCT = false
+    @AppStorage("enableIRL") private var enableIRL = false
 
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = false
 
-    @AppStorage("enableUEFA") private var enableUEFA = false
     @AppStorage("enableMLS") private var enableMLS = true
+    @AppStorage("enableUEFA") private var enableUEFA = false
     @AppStorage("enableMEX") private var enableMEX = false
     @AppStorage("enableFRA") private var enableFRA = false
     @AppStorage("enableNED") private var enableNED = false
@@ -104,6 +108,10 @@ struct LeagueSettingsView: View {
                                 enableBNCAA = false
                                 enableSNCAA = false
                                 enableF1 = false
+                                enableNC = false
+                                enableNCS = false
+                                enableNCT = false
+                                enableIRL = false
                                 enablePGA = false
                                 enableLPGA = false
                                 enableUEFA = false
@@ -301,6 +309,38 @@ struct LeagueSettingsView: View {
                             Image(systemName: "flag.checkered")
                                 .foregroundColor(.secondary)
                             Text("F1")
+                        }
+                    }
+
+                    Toggle(isOn: $enableNC) {
+                        HStack {
+                            Image(systemName: "flag.checkered")
+                                .foregroundColor(.secondary)
+                            Text("Nascar Premier")
+                        }
+                    }
+
+                    Toggle(isOn: $enableNCS) {
+                        HStack {
+                            Image(systemName: "flag.checkered")
+                                .foregroundColor(.secondary)
+                            Text("Nascar Secondary")
+                        }
+                    }
+
+                    Toggle(isOn: $enableNCT) {
+                        HStack {
+                            Image(systemName: "flag.checkered")
+                                .foregroundColor(.secondary)
+                            Text("Nascar Truck")
+                        }
+                    }
+
+                    Toggle(isOn: $enableIRL) {
+                        HStack {
+                            Image(systemName: "flag.checkered")
+                                .foregroundColor(.secondary)
+                            Text("IndyCar")
                         }
                     }
                 }

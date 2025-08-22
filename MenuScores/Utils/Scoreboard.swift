@@ -69,6 +69,23 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard?dates=\(currentYear)"
         )!
+        static let nc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-premier/scoreboard?dates=20250803"
+        )!
+        static let ncs = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-secondary/scoreboard"
+        )!
+
+        static let nct = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-truck/scoreboard"
+        )!
+        static let indyCar = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/racing/irl/scoreboard"
+        )!
         static let pga = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard"
