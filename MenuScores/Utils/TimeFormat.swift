@@ -23,3 +23,20 @@ func formattedTime(from dateString: String) -> String {
 
     return "Invalid Date"
 }
+
+func formattedDateForAPI(from dateString: String) -> String {
+    let inputFormatter = DateFormatter()
+    inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mmZ"
+    inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+    inputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+    guard let gameDate = inputFormatter.date(from: dateString) else {
+        return ""
+    }
+
+    let outputFormatter = DateFormatter()
+    outputFormatter.dateFormat = "yyyyMMdd"
+    outputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+    return outputFormatter.string(from: gameDate)
+}

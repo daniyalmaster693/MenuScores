@@ -261,7 +261,9 @@ struct Info: View {
     // Fetch Race Info
 
     func fetchRaceInfo() async {
-        let urlString = "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=f1&dates=20250803"
+        let dateForAPI = formattedDateForAPI(from: notchViewModel.game?.date ?? "")
+        let urlString = "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=f1&dates=\(dateForAPI)"
+
         guard let url = URL(string: urlString) else { return }
 
         do {
