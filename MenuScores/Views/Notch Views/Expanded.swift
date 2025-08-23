@@ -954,7 +954,7 @@ struct Info: View {
                                         VStack(spacing: 4) {
                                             let competitors = game.competitions[0].competitors ?? []
 
-                                            ForEach(competitors.prefix(10), id: \.id) { competitor in
+                                            ForEach(competitors.prefix(20), id: \.id) { competitor in
                                                 HStack {
                                                     Text("\(competitor.order ?? 0)")
                                                         .frame(width: 30, alignment: .leading)
