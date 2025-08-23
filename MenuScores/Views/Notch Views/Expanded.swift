@@ -716,9 +716,22 @@ struct Info: View {
                         VStack {
                             if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
                                 HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
+                                        )
+                                    ) { image in
+                                        image.resizable().scaledToFit()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 18, height: 18)
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
+
                                     Text("Leaders")
                                         .font(.system(size: 14, weight: .medium))
-                                        .padding(.leading, 10)
 
                                     Spacer()
 
