@@ -50,11 +50,8 @@ struct Info: View {
 
     // Recent Play Variables
 
-    @State private var latestPlayText: String = "Loading..."
-    @State private var postGameText: String = "Loading..."
     @State private var capsuleColor: Color = .black
     @State private var driverArray: [Driver] = []
-    @State private var refreshID = UUID()
 
     // MARK: Sport Related Text Variables
 
@@ -67,194 +64,32 @@ struct Info: View {
     var sport: String
     var league: String
 
-    // League Name Mapper
-
-    func apiLeague(for league: String) -> String {
-        switch league.uppercased() {
-        case "HNCAAM": return "mens-college-hockey"
-
-        case "HNCAAF": return "womens-college-hockey"
-
-        case "NCAA M": return "mens-college-basketball"
-
-        case "NCAA F": return "womens-college-basketball"
-
-        case "FNCAA": return "college-football"
-
-        case "BNCAA": return "college-baseball"
-
-        case "SNCAA": return "college-softball"
-
-        case "LNCAAM": return "mens-college-lacrosse"
-
-        case "LNCAAF": return "womens-college-lacrosse"
-
-        case "VNCAAM": return "mens-college-volleyball"
-
-        case "VNCAAF": return "womens-college-volleyball"
-
-        case "MLS": return "USA.1"
-
-        case "UEFA": return "uefa.champions"
-
-        case "EPL": return "ENG.1"
-
-        case "ESP": return "ESP.1"
-
-        case "GER": return "GER.1"
-
-        case "ITA": return "ITA.1"
-
-        case "MEX": return "MEX.1"
-
-        case "FRA": return "FRA.1"
-
-        case "NED": return "NED.1"
-
-        case "POR": return "POR.1"
-
-        default: return league.lowercased()
-        }
-    }
-
-    // Recent Player Fetcher
-
-    func fetchLatestPlay() async {
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
-        guard let url = URL(string: urlString) else { return }
-
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
-
-            if sport == "Football" {
-                if let scoringPlays = response.scoringPlays, !scoringPlays.isEmpty {
-                    let latestPlay = scoringPlays.last!
-                    DispatchQueue.main.async {
-                        self.latestPlayText = latestPlay.text ?? latestPlay.type?.text ?? "-"
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.latestPlayText = "No Recent Plays"
-                    }
-                }
-            }
-
-            if sport == "Soccer" {
-                if let keyEvents = response.keyEvents, !keyEvents.isEmpty {
-                    let latestPlay = keyEvents.last!
-                    DispatchQueue.main.async {
-                        self.latestPlayText = latestPlay.text ?? latestPlay.type?.text ?? "-"
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.latestPlayText = "No Recent Plays"
-                    }
-                }
-            }
-
-            else {
-                if let plays = response.plays, !plays.isEmpty {
-                    let latestPlay = plays.last!
-                    DispatchQueue.main.async {
-                        self.latestPlayText = latestPlay.text ?? latestPlay.type?.text ?? "-"
-
-                        if sport == "Baseball" {
-                            self.outs = latestPlay.outs.map { String($0) } ?? "-"
-                            self.balls = latestPlay.pitchCount?.balls.map { String($0) } ?? "-"
-                            self.strikes = latestPlay.pitchCount?.strikes.map { String($0) } ?? "-"
-                        }
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.latestPlayText = "No Recent Plays"
-                    }
-                }
-            }
-        } catch {
-            print("Failed to fetch play-by-play: \(error)")
-            DispatchQueue.main.async {
-                self.latestPlayText = "No Recent Plays"
-            }
-        }
-    }
+    // Fetch Latest Play Team Color
 
     func fetchLatestPlayTeamColor() async {
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
-        guard let url = URL(string: urlString) else { return }
+        guard let game = notchViewModel.game,
+              let latestPlayTeamID = game.competitions.first?.situation?.lastPlay.team.id
+        else { return }
 
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
+        let competitors = game.competitions.first?.competitors ?? []
 
-            guard let latestPlay = (
-                sport == "Football"
-                    ? response.scoringPlays?.last
-                    : sport.lowercased() == "soccer"
-                    ? response.keyEvents?.last
-                    : response.plays?.last
-            ) else {
-                return
-            }
-
-            let playTeamID = latestPlay.team?.id
-            guard let game = notchViewModel.game else { return }
-            let competitors = game.competitions[0].competitors ?? []
-
-            let teamIndex: Int
-            if playTeamID == competitors[1].team?.id {
-                teamIndex = 1
-            } else {
-                teamIndex = 0
-            }
-
-            let teamHex = competitors[teamIndex].team?.color ?? "#FFFFFF"
-            let altHex = competitors[teamIndex].team?.alternateColor ?? "#FFFFFF"
-
-            let mainColor = Color(hex: teamHex)
-            let altColor = Color(hex: altHex)
-
-            let fillColor = altColor.brightness() < 0.1 ? mainColor : altColor
-
-            DispatchQueue.main.async {
-                self.capsuleColor = fillColor
-            }
-
-        } catch {
-            print("Failed to fetch latest play color: \(error)")
-            DispatchQueue.main.async {
-                self.capsuleColor = .black
-            }
+        let teamIndex: Int
+        if competitors.count > 1, latestPlayTeamID == competitors[1].team?.id {
+            teamIndex = 1
+        } else {
+            teamIndex = 0
         }
-    }
 
-    // Fetch Post Game Article Headline
+        let teamHex = competitors[teamIndex].team?.color ?? "#FFFFFF"
+        let altHex = competitors[teamIndex].team?.alternateColor ?? "#FFFFFF"
 
-    func fetchGameHeadline() async {
-        let urlString = "https://site.web.api.espn.com/apis/site/v2/sports/\(sport.lowercased())/\(apiLeague(for: league))/summary?event=\(notchViewModel.game?.id ?? "0")"
-        guard let url = URL(string: urlString) else { return }
+        let mainColor = Color(hex: teamHex)
+        let altColor = Color(hex: altHex)
 
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let decoder = JSONDecoder()
-            let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
+        let fillColor = altColor.brightness() < 0.1 ? mainColor : altColor
 
-            if let article = response.article {
-                DispatchQueue.main.async {
-                    self.postGameText = article.headline ?? article.linkText ?? "-"
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.postGameText = "No headline available"
-                }
-            }
-        } catch {
-            print("Failed to fetch play-by-play: \(error)")
-            DispatchQueue.main.async {
-                self.postGameText = "No headline available"
-            }
+        DispatchQueue.main.async {
+            self.capsuleColor = fillColor
         }
     }
 
@@ -408,7 +243,7 @@ struct Info: View {
                                             .fill(capsuleColor)
                                             .frame(width: 3, height: 16)
 
-                                        Text(latestPlayText)
+                                        Text("\(game.competitions.first?.situation?.lastPlay.text ?? "-")")
                                             .font(.system(size: 14, weight: .medium))
                                             .fixedSize()
                                     }
@@ -440,15 +275,13 @@ struct Info: View {
                         }
                         .task {
                             if let _ = notchViewModel.game?.id {
-                                await fetchLatestPlay()
                                 await fetchLatestPlayTeamColor()
                             }
                         }
-//                        .id(refreshID)
                         .padding(.top, 10)
                     }
 
-                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post" {
+                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "post" {
                         VStack(alignment: .center) {
                             GeometryReader { geo in
                                 ScrollView(.horizontal, showsIndicators: false) {
@@ -456,8 +289,7 @@ struct Info: View {
                                         Capsule()
                                             .fill(.white)
                                             .frame(width: 3, height: 16)
-
-                                        Text(postGameText)
+                                        Text("\(game.competitions.first?.highlights?.first?.headline ?? game.competitions.first?.headlines?.first?.shortLinkText ?? "-")")
                                             .font(.system(size: 14, weight: .medium))
                                             .fixedSize()
                                     }
@@ -468,13 +300,6 @@ struct Info: View {
                             }
                             .frame(height: 22)
                         }
-
-                        .task {
-                            if let _ = notchViewModel.game?.id {
-                                await fetchGameHeadline()
-                            }
-                        }
-//                        .id(refreshID)
                         .padding(.top, 10)
                     }
                 }
@@ -635,12 +460,6 @@ struct Info: View {
                                     }
                                     .padding(.top, 5)
                                 }
-                                .task {
-                                    if let _ = notchViewModel.game?.id {
-                                        await fetchRaceInfo()
-                                    }
-                                }
-                                .id(refreshID)
                                 .frame(maxHeight: 130)
                                 .padding(.top, 10)
                                 .padding(.bottom, 5)

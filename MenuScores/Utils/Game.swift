@@ -46,6 +46,9 @@ struct Type: Decodable {
 struct Competition: Decodable {
     let competitors: [Competitor]?
     let status: Status
+    let situation: Situation?
+    let highlights: [Highlights]?
+    let headlines: [Headlines]?
 }
 
 struct Competitor: Decodable {
@@ -98,4 +101,32 @@ struct Circuit: Decodable {
 struct Address: Decodable {
     let city: String
     let country: String
+}
+
+struct Situation: Decodable {
+    let lastPlay: LastPlay
+}
+
+struct LastPlay: Decodable {
+    let text: String
+    let type: PlayType
+    let team: TeamID
+}
+
+struct PlayType: Decodable {
+    let text: String
+}
+
+struct TeamID: Decodable {
+    let id: String
+}
+
+struct Highlights: Decodable {
+    let headline: String
+    let description: String
+}
+
+struct Headlines: Decodable {
+    let shortLinkText: String?
+    let description: String?
 }
