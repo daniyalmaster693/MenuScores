@@ -105,6 +105,9 @@ struct Address: Decodable {
 
 struct Situation: Decodable {
     let lastPlay: LastPlay
+    let balls: Int?
+    let outs: Int?
+    let strikes: Int?
 }
 
 struct LastPlay: Decodable {

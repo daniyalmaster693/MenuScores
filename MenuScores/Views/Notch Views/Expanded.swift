@@ -57,10 +57,6 @@ struct Info: View {
 
     // Baseball
 
-    @State private var outs: String = "..."
-    @State private var balls: String = "..."
-    @State private var strikes: String = "..."
-
     var sport: String
     var league: String
 
@@ -256,17 +252,17 @@ struct Info: View {
 
                             if sport == "Baseball" {
                                 HStack(alignment: .center, spacing: 20) {
-                                    Text("Outs: \(outs)")
+                                    Text("Outs: \(game.competitions.first?.situation?.outs ?? 0)")
                                         .lineLimit(nil)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
 
-                                    Text("Balls: \(balls)")
+                                    Text("Balls: \(game.competitions.first?.situation?.balls ?? 0)")
                                         .lineLimit(nil)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
 
-                                    Text("Strikes: \(strikes)")
+                                    Text("Strikes: \(game.competitions.first?.situation?.strikes ?? 0)")
                                         .lineLimit(nil)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
