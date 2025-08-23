@@ -104,7 +104,7 @@ struct Address: Decodable {
 }
 
 struct Situation: Decodable {
-    let lastPlay: LastPlay
+    let lastPlay: LastPlay?
     let balls: Int?
     let outs: Int?
     let strikes: Int?
@@ -114,7 +114,7 @@ struct Situation: Decodable {
 struct LastPlay: Decodable {
     let text: String
     let type: PlayType
-    let team: TeamID
+    let team: TeamID?
 }
 
 struct PlayType: Decodable {

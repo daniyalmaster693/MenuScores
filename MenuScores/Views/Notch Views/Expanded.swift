@@ -50,7 +50,7 @@ struct Info: View {
 
     // Recent Play Variables
 
-    @State private var capsuleColor: Color = .black
+    @State private var capsuleColor: Color = .white
     @State private var driverArray: [Driver] = []
 
     // MARK: Sport Related Text Variables
@@ -64,7 +64,7 @@ struct Info: View {
 
     func fetchLatestPlayTeamColor() async {
         guard let game = notchViewModel.game,
-              let latestPlayTeamID = game.competitions.first?.situation?.lastPlay.team.id
+              let latestPlayTeamID = game.competitions.first?.situation?.lastPlay?.team?.id
         else { return }
 
         let competitors = game.competitions.first?.competitors ?? []
@@ -230,7 +230,7 @@ struct Info: View {
                         }
                     }
 
-                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "in" {
+                    if sport != "Lacrosse" && sport != "Volleyball" && sport != "Soccer" && game.competitions[0].status.type.state == "in" {
                         VStack(alignment: .center) {
                             GeometryReader { geo in
                                 ScrollView(.horizontal, showsIndicators: false) {
@@ -239,7 +239,7 @@ struct Info: View {
                                             .fill(capsuleColor)
                                             .frame(width: 3, height: 16)
 
-                                        Text("\(game.competitions.first?.situation?.lastPlay.text ?? "-")")
+                                        Text("\(game.competitions.first?.situation?.lastPlay?.text ?? "-")")
                                             .font(.system(size: 14, weight: .medium))
                                             .fixedSize()
                                     }
