@@ -166,7 +166,7 @@ struct SoccerMenu: View {
                     if pinnedByMenubar {
                         currentTitle = displayText(for: updatedGame, league: league)
                     } else if pinnedByNotch {
-                        currentTitle = "-"
+                        currentTitle = ""
                     }
 
                     let newState = updatedGame.status.type.state
