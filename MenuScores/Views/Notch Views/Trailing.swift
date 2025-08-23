@@ -173,8 +173,8 @@ struct CompactTrailing: View {
 
             if sport == "Golf" {
                 HStack {
-                    if let lap = game.competitions[0].status.period {
-                        Text("R\(lap)")
+                    if let round = game.competitions[0].status.period {
+                        Text("R\(round)")
                             .font(.system(size: 14, weight: .semibold))
                     } else {
                         Text("R -")
