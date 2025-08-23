@@ -713,28 +713,6 @@ struct Info: View {
                 VStack {
                     HStack(spacing: 4) {
                         VStack {
-                            HStack {
-                                AsyncImage(
-                                    url: URL(
-                                        string:
-                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
-                                    )
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 28, height: 28)
-                                .padding(.trailing, 3)
-
-                                Text("\(game.name)")
-                                    .font(.system(size: 18, weight: .medium))
-                            }
-                            .padding(.bottom, 7)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.leading, 10)
-                            .padding(.trailing, 10)
-
                             if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
                                 HStack {
                                     Text("Leaders")
@@ -743,61 +721,116 @@ struct Info: View {
 
                                     Spacer()
 
-                                    if let lap = game.competitions[0].status.period {
-                                        Text("L\(lap)")
+                                    if game.status.type.state == "in" {
+                                        if let lap = game.competitions[0].status.period {
+                                            Text("L\(lap)")
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .padding(.trailing, 10)
+                                        }
+                                    }
+
+                                    if game.status.type.state == "post" {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.system(size: 10))
+
+                                            Text(
+                                                "\(game.competitions[0].competitors?[1].athlete?.shortName ?? "-")"
+                                            )
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 10)
-                                    }
-                                }.padding(.top, 5)
-
-                                ScrollView(.vertical, showsIndicators: true) {
-                                    VStack(spacing: 4) {
-                                        let competitors = game.competitions[0].competitors ?? []
-
-                                        ForEach(competitors, id: \.id) { competitor in
-                                            HStack {
-                                                if let flagURLString = competitor.athlete?.flag?.href,
-                                                   let flagURL = URL(string: flagURLString)
-                                                {
-                                                    AsyncImage(url: flagURL) { image in
-                                                        image.resizable().scaledToFit()
-                                                    } placeholder: {
-                                                        ProgressView()
-                                                    }
-                                                    .frame(width: 16, height: 16)
-                                                    .padding(.trailing, 3)
-                                                    .padding(.leading, 10)
-                                                }
-
-                                                Text("\(competitor.order ?? 0). ")
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-
-                                                Text("\(competitor.athlete?.displayName ?? "Unknown")")
-                                                    .lineLimit(1)
-                                                    .truncationMode(.tail)
-
-                                            }.frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                 }
-                                .frame(maxHeight: 95)
+                                .padding(.top, 5)
+
+                                VStack(spacing: 5) {
+                                    HStack {
+                                        Text("#").frame(width: 30, alignment: .leading)
+                                        Text("Driver").frame(width: 160, alignment: .leading)
+                                    }
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .padding(.horizontal, 10)
+
+                                    Divider()
+
+                                    ScrollView(.vertical, showsIndicators: true) {
+                                        VStack(spacing: 4) {
+                                            let competitors = game.competitions[0].competitors ?? []
+
+                                            ForEach(competitors.dropFirst(), id: \.id) { competitor in
+                                                HStack {
+                                                    Text("\(competitor.order ?? 0)")
+                                                        .frame(width: 30, alignment: .leading)
+
+                                                    HStack(spacing: 4) {
+                                                        if let flagURLString = competitor.athlete?.flag?.href,
+                                                           let flagURL = URL(string: flagURLString)
+                                                        {
+                                                            AsyncImage(url: flagURL) { image in
+                                                                image.resizable().scaledToFit()
+                                                            } placeholder: {
+                                                                Color.gray.opacity(0.3)
+                                                            }
+                                                            .frame(width: 16, height: 16)
+                                                            .padding(.trailing, 5)
+                                                        }
+
+                                                        Text(competitor.athlete?.displayName ?? "Unknown")
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                    }
+                                                    .frame(width: 160, alignment: .leading)
+                                                }
+                                                .font(.system(size: 13))
+                                                .padding(.horizontal, 10)
+                                            }
+                                        }
+                                    }
+                                    .padding(.top, 5)
+                                }
+                                .frame(maxHeight: 130)
                                 .padding(.top, 10)
                                 .padding(.bottom, 5)
                             }
 
                             if game.competitions[0].status.type.state == "pre" {
                                 HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
+                                        )
+                                    ) { image in
+                                        image.resizable().scaledToFit()
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .frame(width: 28, height: 28)
+                                    .padding(.trailing, 3)
+
+                                    Text("\(game.shortName)")
+                                        .font(.system(size: 18, weight: .medium))
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.leading, 10)
+                                .padding(.trailing, 10)
+
+                                HStack {
                                     Image(systemName: "flag.checkered")
                                         .font(.system(size: 12))
 
-                                    Text("\(formattedDate(from: game.date))  @  \(formattedTime(from: game.date))")
+                                    Text("\(formattedDate(from: game.date)) @ \(formattedTime(from: game.date))")
                                         .font(.system(size: 14, weight: .medium))
-                                }.frame(maxWidth: .infinity, alignment: .center)
+                                }
+                                .padding(.top, 2)
+                                .frame(maxWidth: .infinity, alignment: .center)
                             }
                         }
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
