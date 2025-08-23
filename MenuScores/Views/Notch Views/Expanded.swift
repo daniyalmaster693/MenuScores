@@ -555,7 +555,7 @@ struct Info: View {
                                                 .font(.system(size: 10))
 
                                             Text(
-                                                "\(game.competitions[4].competitors?[0].athlete?.shortName ?? "-")"
+                                                "\(game.competitions[4].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
                                             )
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 10)
@@ -579,9 +579,10 @@ struct Info: View {
 
                                     ScrollView(.vertical, showsIndicators: true) {
                                         VStack(spacing: 4) {
-                                            ForEach(driverArray, id: \.id) { driver in
+                                            ForEach(driverArray.filter { $0.order != nil }, id: \.id) { driver in
                                                 HStack {
-                                                    Text("\(driver.order)").frame(width: 30, alignment: .leading)
+                                                    Text(driver.order.map { String($0) } ?? "-")
+                                                        .frame(width: 30, alignment: .leading)
 
                                                     HStack(spacing: 4) {
                                                         if let logoURL = URL(string: driver.logo) {
@@ -758,7 +759,7 @@ struct Info: View {
                                                 .font(.system(size: 10))
 
                                             Text(
-                                                "\(game.competitions[0].competitors?[1].athlete?.shortName ?? "-")"
+                                                "\(game.competitions[0].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
                                             )
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 10)
@@ -782,7 +783,7 @@ struct Info: View {
                                         VStack(spacing: 4) {
                                             let competitors = game.competitions[0].competitors ?? []
 
-                                            ForEach(competitors.dropFirst(), id: \.id) { competitor in
+                                            ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
                                                 HStack {
                                                     Text("\(competitor.order ?? 0)")
                                                         .frame(width: 30, alignment: .leading)
@@ -930,7 +931,7 @@ struct Info: View {
                                                 .font(.system(size: 10))
 
                                             Text(
-                                                "\(game.competitions[0].competitors?[0].athlete?.shortName ?? "-")"
+                                                "\(game.competitions[0].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
                                             )
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 10)
@@ -954,7 +955,7 @@ struct Info: View {
                                         VStack(spacing: 4) {
                                             let competitors = game.competitions[0].competitors ?? []
 
-                                            ForEach(competitors.prefix(20), id: \.id) { competitor in
+                                            ForEach(competitors.filter { $0.order != nil }.prefix(20), id: \.id) { competitor in
                                                 HStack {
                                                     Text("\(competitor.order ?? 0)")
                                                         .frame(width: 30, alignment: .leading)

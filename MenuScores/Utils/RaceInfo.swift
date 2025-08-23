@@ -43,7 +43,7 @@ struct Track: Decodable {
 
 struct Driver: Decodable {
     let id: String
-    let order: Int
+    let order: Int?
     let winner: Bool
     let displayName: String
     let name: String

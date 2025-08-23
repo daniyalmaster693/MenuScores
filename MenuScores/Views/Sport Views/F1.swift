@@ -124,7 +124,7 @@ struct F1Menu: View {
                                     Menu {
                                         let competitors = game.competitions[4].competitors ?? []
 
-                                        ForEach(competitors, id: \.id) { competitor in
+                                        ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
                                             Button {} label: {
                                                 HStack {
                                                     Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
