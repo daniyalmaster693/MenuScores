@@ -565,6 +565,7 @@ struct Info: View {
                                     }
                                     .font(.system(size: 12, weight: .semibold))
                                     .padding(.horizontal, 10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
 
                                     Divider()
 
@@ -620,7 +621,7 @@ struct Info: View {
                                                 }
                                                 .font(.system(size: 13))
                                                 .padding(.horizontal, 10)
-                                            }
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                     .padding(.top, 5)
@@ -752,6 +753,7 @@ struct Info: View {
                                     }
                                     .font(.system(size: 12, weight: .semibold))
                                     .padding(.horizontal, 10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
 
                                     Divider()
 
@@ -785,7 +787,7 @@ struct Info: View {
                                                 }
                                                 .font(.system(size: 13))
                                                 .padding(.horizontal, 10)
-                                            }
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                     .padding(.top, 5)
@@ -923,6 +925,7 @@ struct Info: View {
                                     }
                                     .font(.system(size: 12, weight: .semibold))
                                     .padding(.horizontal, 10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
 
                                     Divider()
 
@@ -958,7 +961,7 @@ struct Info: View {
                                                 }
                                                 .font(.system(size: 13))
                                                 .padding(.horizontal, 10)
-                                            }
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                 }
