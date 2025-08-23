@@ -108,7 +108,7 @@ struct Situation: Decodable {
     let balls: Int?
     let outs: Int?
     let strikes: Int?
-    let downDistance: String?
+    let downDistanceText: String?
 }
 
 struct LastPlay: Decodable {
