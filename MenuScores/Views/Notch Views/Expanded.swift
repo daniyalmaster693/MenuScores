@@ -857,13 +857,15 @@ struct Info: View {
 
                                     Spacer()
 
-                                    if game.competitions[0].status.type.state == "in" {
-                                        if let lap = game.competitions[0].status.period {
-                                            Text("L\(lap)")
+                                    if game.status.type.state == "in" {
+                                        if let round = game.competitions[0].status.period {
+                                            Text("R\(round)")
                                                 .font(.system(size: 14, weight: .semibold))
                                                 .padding(.trailing, 10)
                                         }
-                                    } else {
+                                    }
+
+                                    if game.status.type.state == "post" {
                                         HStack {
                                             Image(systemName: "trophy.fill")
                                                 .foregroundColor(.yellow)
