@@ -36,9 +36,22 @@
 		0D9553342DC6700300615774 /* MenuScoresUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuScoresUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0DB276AB2E5A25F70093A8A7 /* Exceptions for "MenuScores" folder in "MenuScores" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0D9553182DC6700100615774 /* MenuScores */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0D95531B2DC6700100615774 /* MenuScores */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0DB276AB2E5A25F70093A8A7 /* Exceptions for "MenuScores" folder in "MenuScores" target */,
+			);
 			path = MenuScores;
 			sourceTree = "<group>";
 		};
