@@ -323,7 +323,7 @@ struct Info: View {
                                         Text("\(game.competitions[0].competitors?[1].score ?? "-")")
                                             .font(.system(size: 22, weight: .medium))
 
-                                        Text("\(game.competitions[0].competitors?[1].team?.abbreviation ?? "")")
+                                        Text("\(game.competitions[0].competitors?[1].team?.abbreviation ?? "-")")
                                             .font(.system(size: 12, weight: .medium))
                                     }
                                 }
@@ -339,7 +339,7 @@ struct Info: View {
                                     Text(formattedTime(from: game.date))
                                         .font(.system(size: 19, weight: .semibold))
                                 } else {
-                                    Text("\(game.status.type.detail ?? "")")
+                                    Text("\(game.status.type.detail ?? "-")")
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
@@ -356,7 +356,7 @@ struct Info: View {
                                     Text(formattedTime(from: game.date))
                                         .font(.system(size: 19, weight: .semibold))
                                 } else {
-                                    Text("P\(game.status.period ?? 0) \(game.status.displayClock ?? "")")
+                                    Text("P\(game.status.period ?? 0) \(game.status.displayClock ?? "-")")
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
@@ -371,7 +371,7 @@ struct Info: View {
                                         Text("\(game.competitions[0].competitors?[0].score ?? "-")")
                                             .font(.system(size: 22, weight: .medium))
 
-                                        Text("\(game.competitions[0].competitors?[0].team?.abbreviation ?? "")")
+                                        Text("\(game.competitions[0].competitors?[0].team?.abbreviation ?? "-")")
                                             .font(.system(size: 12, weight: .medium))
                                     }
 
@@ -792,7 +792,7 @@ struct Info: View {
                                                             .padding(.trailing, 5)
                                                         }
 
-                                                        Text(competitor.athlete?.displayName ?? "Unknown")
+                                                        Text(competitor.athlete?.displayName ?? "-")
                                                             .lineLimit(1)
                                                             .truncationMode(.tail)
                                                     }
@@ -964,7 +964,7 @@ struct Info: View {
                                                             .padding(.trailing, 5)
                                                         }
 
-                                                        Text(competitor.athlete?.displayName ?? "Unknown")
+                                                        Text(competitor.athlete?.displayName ?? "-")
                                                             .lineLimit(1)
                                                             .truncationMode(.tail)
                                                     }.frame(width: 150, alignment: .leading)
@@ -1010,7 +1010,7 @@ struct Info: View {
                                         Image(systemName: "figure.golf")
                                             .font(.system(size: 12))
 
-                                        Text("\(formattedDate(from: game.endDate ?? "Invalid Date")) @ \(formattedTime(from: game.date))")
+                                        Text("\(formattedDate(from: game.endDate ?? "-")) @ \(formattedTime(from: game.date))")
                                             .font(.system(size: 14, weight: .medium))
                                     }
                                     .padding(.top, 2)

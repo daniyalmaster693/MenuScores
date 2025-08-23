@@ -13,18 +13,18 @@ func displayText(for game: Event, league: String) -> String {
         return game.shortName
     }
 
-    let awayAbbr = competitors[1].team?.abbreviation ?? ""
-    let homeAbbr = competitors[0].team?.abbreviation ?? ""
+    let awayAbbr = competitors[1].team?.abbreviation ?? "-"
+    let homeAbbr = competitors[0].team?.abbreviation ?? "-"
     let awayScore = competitors[1].score
     let homeScore = competitors[0].score
 
     let state = game.status.type.state
-    let shortDetail = game.status.type.shortDetail ?? ""
+    let shortDetail = game.status.type.shortDetail ?? "-"
     let displayClock = game.status.displayClock
     let period = game.status.period
     let prefix = periodPrefix(for: league)
-    let clockText = displayClock ?? ""
-    let periodText = period.map { "\(prefix)\($0)" } ?? ""
+    let clockText = displayClock ?? "-"
+    let periodText = period.map { "\(prefix)\($0)" } ?? "-"
 
     if league == "MLB" || league == "UEFA" || league == "EPL", state == "in" {
         let detailText = shortDetail
@@ -39,19 +39,19 @@ func displayText(for game: Event, league: String) -> String {
        let f1Competitors = game.competitions[4].competitors,
        !f1Competitors.isEmpty
     {
-        driverName = f1Competitors[0].athlete?.displayName ?? "Unknown"
+        driverName = f1Competitors[0].athlete?.displayName ?? "-"
     } else {
-        driverName = "Unknown"
+        driverName = "-"
     }
 
     var f1Period: Int?
-    var f1State = ""
+    var f1State = "-"
 
     if game.competitions.count > 4 {
         f1Period = game.competitions[4].status.period
         f1State = game.competitions[4].status.type.state
     }
-    let f1PeriodText = f1Period.map { "\(prefix)\($0)" } ?? ""
+    let f1PeriodText = f1Period.map { "\(prefix)\($0)" } ?? "-"
 
     if league == "F1", f1State == "pre" {
         return
@@ -68,7 +68,7 @@ func displayText(for game: Event, league: String) -> String {
 
     // Other Racing Game States
 
-    let leaderName = game.competitions[0].competitors?[1].athlete?.displayName ?? "Unknown"
+    let leaderName = game.competitions[0].competitors?[1].athlete?.displayName ?? "-"
 
     if league == "NC" || league == "NCS" || league == "NCT" || league == "IRL", state == "in" {
         return "\(leaderName) - \(periodText)"
@@ -81,10 +81,10 @@ func displayText(for game: Event, league: String) -> String {
     // PGA Game States
 
     let golferName =
-        game.competitions[0].competitors?.first?.athlete?.displayName ?? ""
-    let golferScore = game.competitions[0].competitors?.first?.score ?? ""
+        game.competitions[0].competitors?.first?.athlete?.displayName ?? "-"
+    let golferScore = game.competitions[0].competitors?.first?.score ?? "-"
     let golfRound = game.competitions[0].status.period
-    let golfRoundText = golfRound.map { "\(prefix)\($0)" } ?? ""
+    let golfRoundText = golfRound.map { "\(prefix)\($0)" } ?? "-"
 
     if league == "PGA" || league == "LPGA", state == "in" {
         return "\(golferName) \(golferScore)    \(golfRoundText)"

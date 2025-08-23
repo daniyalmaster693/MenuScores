@@ -133,7 +133,7 @@ struct BasketballMenu: View {
                     } label: {
                         HStack {
                             AsyncImage(
-                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "")
+                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/\(league).png&w=100&h=100&transparent=true" ?? "")
                             ) { image in
                                 image.resizable().scaledToFit()
                             } placeholder: {
@@ -166,7 +166,7 @@ struct BasketballMenu: View {
                     if pinnedByMenubar {
                         currentTitle = displayText(for: updatedGame, league: league)
                     } else if pinnedByNotch {
-                        currentTitle = ""
+                        currentTitle = "-"
                     }
 
                     let newState = updatedGame.status.type.state
