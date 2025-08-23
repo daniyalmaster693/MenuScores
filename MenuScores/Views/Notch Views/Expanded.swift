@@ -128,7 +128,7 @@ struct Info: View {
             let decoder = JSONDecoder()
             let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
 
-            if sport.lowercased() == "football" {
+            if sport == "Football" {
                 if let scoringPlays = response.scoringPlays, !scoringPlays.isEmpty {
                     let latestPlay = scoringPlays.last!
                     DispatchQueue.main.async {
@@ -141,7 +141,7 @@ struct Info: View {
                 }
             }
 
-            if sport.lowercased() == "soccer" {
+            if sport == "Soccer" {
                 if let keyEvents = response.keyEvents, !keyEvents.isEmpty {
                     let latestPlay = keyEvents.last!
                     DispatchQueue.main.async {
@@ -190,7 +190,7 @@ struct Info: View {
             let response = try decoder.decode(PlaybyPlayResponse.self, from: data)
 
             guard let latestPlay = (
-                sport.lowercased() == "football"
+                sport == "Football"
                     ? response.scoringPlays?.last
                     : sport.lowercased() == "soccer"
                     ? response.keyEvents?.last
@@ -381,7 +381,7 @@ struct Info: View {
 
                                     AsyncImage(
                                         url: URL(string: {
-                                            if sport == "volleyball" {
+                                            if sport == "Volleyball" {
                                                 return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                             } else {
                                                 return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
@@ -444,7 +444,7 @@ struct Info: View {
                                 await fetchLatestPlayTeamColor()
                             }
                         }
-                        .id(refreshID)
+//                        .id(refreshID)
                         .padding(.top, 10)
                     }
 
@@ -474,7 +474,7 @@ struct Info: View {
                                 await fetchGameHeadline()
                             }
                         }
-                        .id(refreshID)
+//                        .id(refreshID)
                         .padding(.top, 10)
                     }
                 }
