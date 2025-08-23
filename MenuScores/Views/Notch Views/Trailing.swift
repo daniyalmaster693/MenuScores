@@ -33,11 +33,15 @@ struct CompactTrailing: View {
                         .font(.system(size: 14, weight: .semibold))
 
                     AsyncImage(
-                        url: URL(string: game.competitions[0].competitors?[0].team?.logo ?? "")
+                        url: URL(string: {
+                            if sport == "volleyball" {
+                                return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                            } else {
+                                return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
+                            }
+                        }())
                     ) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
+                        image.resizable().scaledToFit()
                     } placeholder: {
                         Color.black
                     }

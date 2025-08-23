@@ -120,7 +120,7 @@ struct VolleyballMenu: View {
                     } label: {
                         HStack {
                             AsyncImage(
-                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/\(league).png&w=100&h=100&transparent=true" ?? "")
+                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin")
                             ) { image in
                                 image.resizable().scaledToFit()
                             } placeholder: {
