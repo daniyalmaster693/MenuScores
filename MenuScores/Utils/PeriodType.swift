@@ -37,6 +37,14 @@ func periodPrefix(for league: String) -> String {
         return ""
     case "F1":
         return "L"
+    case "NC":
+        return "L"
+    case "NCS":
+        return "L"
+    case "NCT":
+        return "L"
+    case "IRL":
+        return "L"
     case "PGA":
         return "R"
     case "LPGA":
