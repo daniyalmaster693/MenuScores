@@ -288,7 +288,7 @@ struct Info: View {
 
                     if sport != "Lacrosse" && sport != "Volleyball" &&
                         (game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post"),
-                        let headline = game.competitions.first?.highlights?.first?.headline ?? game.competitions.first?.headlines?.first?.shortLinkText
+                        let headline = game.competitions.first?.headlines?.first?.shortLinkText ?? game.competitions.first?.highlights?.first?.headline
                     {
                         VStack(alignment: .center) {
                             GeometryReader { geo in
