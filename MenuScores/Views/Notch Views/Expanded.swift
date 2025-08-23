@@ -277,7 +277,10 @@ struct Info: View {
                         .padding(.top, 10)
                     }
 
-                    if sport != "Lacrosse" && sport != "Volleyball" && game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post" {
+                    if sport != "Lacrosse" && sport != "Volleyball" &&
+                        (game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post"),
+                        let headline = game.competitions.first?.highlights?.first?.headline ?? game.competitions.first?.headlines?.first?.shortLinkText
+                    {
                         VStack(alignment: .center) {
                             GeometryReader { geo in
                                 ScrollView(.horizontal, showsIndicators: false) {
@@ -285,7 +288,7 @@ struct Info: View {
                                         Capsule()
                                             .fill(.white)
                                             .frame(width: 3, height: 16)
-                                        Text("\(game.competitions.first?.highlights?.first?.headline ?? game.competitions.first?.headlines?.first?.shortLinkText ?? "-")")
+                                        Text(headline)
                                             .font(.system(size: 14, weight: .medium))
                                             .fixedSize()
                                     }
