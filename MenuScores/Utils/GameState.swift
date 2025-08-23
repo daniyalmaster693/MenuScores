@@ -68,7 +68,7 @@ func displayText(for game: Event, league: String) -> String {
 
     // Other Racing Game States
 
-    let leaderName = game.competitions[0].competitors?.first?.athlete?.displayName ?? "Unknown"
+    let leaderName = game.competitions[0].competitors?[1].athlete?.displayName ?? "Unknown"
 
     if league == "NC" || league == "NCS" || league == "NCT" || league == "IRL", state == "in" {
         return "\(leaderName) - \(periodText)"
