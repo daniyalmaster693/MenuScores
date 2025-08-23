@@ -72,7 +72,7 @@ struct Athlete: Decodable {
     let fullName: String
     let displayName: String
     let shortName: String
-    let flag: Flag
+    let flag: Flag?
 }
 
 struct Links: Decodable {

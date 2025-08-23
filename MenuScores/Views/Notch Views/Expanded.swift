@@ -754,7 +754,7 @@ struct Info: View {
 
                                         ForEach(competitors, id: \.id) { competitor in
                                             HStack {
-                                                if let flagURLString = competitor.athlete?.flag.href,
+                                                if let flagURLString = competitor.athlete?.flag?.href,
                                                    let flagURL = URL(string: flagURLString)
                                                 {
                                                     AsyncImage(url: flagURL) { image in
@@ -899,7 +899,7 @@ struct Info: View {
                                                         .frame(width: 30, alignment: .leading)
 
                                                     HStack(spacing: 4) {
-                                                        if let flagURLString = competitor.athlete?.flag.href,
+                                                        if let flagURLString = competitor.athlete?.flag?.href,
                                                            let flagURL = URL(string: flagURLString)
                                                         {
                                                             AsyncImage(url: flagURL) { image in
