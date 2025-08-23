@@ -538,7 +538,9 @@ struct Info: View {
                                                 .font(.system(size: 14, weight: .semibold))
                                                 .padding(.trailing, 10)
                                         }
-                                    } else {
+                                    }
+
+                                    if game.competitions[4].status.type.state == "post" {
                                         HStack {
                                             Image(systemName: "trophy.fill")
                                                 .foregroundColor(.yellow)
