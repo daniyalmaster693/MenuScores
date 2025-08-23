@@ -360,7 +360,7 @@ struct Info: View {
                                     Text(formattedTime(from: game.date))
                                         .font(.system(size: 19, weight: .semibold))
                                 } else {
-                                    Text("P\(game.status.period ?? 0) \(game.status.displayClock ?? "-")")
+                                    Text("\(periodPrefix(for: league))\(game.status.period ?? 0) \(game.status.displayClock ?? "-")")
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
