@@ -307,6 +307,7 @@ struct Info: View {
                                 .frame(height: 22)
                             }
                             .frame(height: 22)
+                            .padding(.top, 10)
                         }
 
                         if game.competitions[0].status.type.state == "pre", let weather = game.weather {
@@ -319,7 +320,7 @@ struct Info: View {
                                     .fixedSize()
                             }.padding(.top, 3)
                         }
-                    }.padding(.top, 10)
+                    }
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
