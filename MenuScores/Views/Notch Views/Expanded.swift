@@ -468,6 +468,11 @@ struct Info: View {
                                     }
                                     .padding(.top, 5)
                                 }
+                                .task {
+                                    if let _ = notchViewModel.game?.id {
+                                        await fetchRaceInfo()
+                                    }
+                                }
                                 .frame(maxHeight: 130)
                                 .padding(.top, 10)
                                 .padding(.bottom, 5)
