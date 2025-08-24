@@ -93,19 +93,21 @@ struct F1Menu: View {
                                                 NotchViewModel.shared.notch = nil
                                             }
 
-                                            let newNotch = DynamicNotch(
-                                                hoverBehavior: .all,
-                                                style: .notch
-                                            ) {
-                                                Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
-                                            } compactLeading: {
-                                                CompactLeading(notchViewModel: notchViewModel, sport: "F1")
-                                            } compactTrailing: {
-                                                CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
-                                            }
+                                            if NotchViewModel.shared.notch == nil {
+                                                let newNotch = DynamicNotch(
+                                                    hoverBehavior: .all,
+                                                    style: .notch
+                                                ) {
+                                                    Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
+                                                } compactLeading: {
+                                                    CompactLeading(notchViewModel: notchViewModel, sport: "F1")
+                                                } compactTrailing: {
+                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
+                                                }
 
-                                            NotchViewModel.shared.notch = newNotch
-                                            await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                                NotchViewModel.shared.notch = newNotch
+                                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                            }
                                         }
                                     } label: {
                                         HStack {
