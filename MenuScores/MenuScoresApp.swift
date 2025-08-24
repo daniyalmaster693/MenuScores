@@ -71,7 +71,6 @@ struct MenuScoresApp: App {
     @AppStorage("enableNC") private var enableNC = false
     @AppStorage("enableNCS") private var enableNCS = false
     @AppStorage("enableNCT") private var enableNCT = false
-    @AppStorage("enableIRL") private var enableIRL = false
 
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = false
@@ -138,7 +137,6 @@ struct MenuScoresApp: App {
     @StateObject private var ncVM = GamesListView()
     @StateObject private var ncsVM = GamesListView()
     @StateObject private var nctVM = GamesListView()
-    @StateObject private var irlVM = GamesListView()
 
     @StateObject private var pgaVM = GamesListView()
     @StateObject private var lpgaVM = GamesListView()
@@ -496,19 +494,6 @@ struct MenuScoresApp: App {
                     viewModel: nctVM,
                     league: "NCT",
                     fetchURL: Scoreboard.Urls.nct,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableIRL {
-                RacingMenu(
-                    title: "IndyCar",
-                    viewModel: irlVM,
-                    league: "IRL",
-                    fetchURL: Scoreboard.Urls.irl,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,

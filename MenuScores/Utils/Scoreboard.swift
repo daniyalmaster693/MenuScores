@@ -82,10 +82,6 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-truck/scoreboard"
         )!
-        static let irl = URL(
-            string:
-            "https://site.api.espn.com/apis/site/v2/sports/racing/irl/scoreboard"
-        )!
         static let pga = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard"

@@ -30,7 +30,6 @@ struct LeagueSettingsView: View {
     @AppStorage("enableNC") private var enableNC = false
     @AppStorage("enableNCS") private var enableNCS = false
     @AppStorage("enableNCT") private var enableNCT = false
-    @AppStorage("enableIRL") private var enableIRL = false
 
     @AppStorage("enablePGA") private var enablePGA = true
     @AppStorage("enableLPGA") private var enableLPGA = false
@@ -111,7 +110,6 @@ struct LeagueSettingsView: View {
                                 enableNC = false
                                 enableNCS = false
                                 enableNCT = false
-                                enableIRL = false
                                 enablePGA = false
                                 enableLPGA = false
                                 enableUEFA = false
@@ -333,14 +331,6 @@ struct LeagueSettingsView: View {
                             Image(systemName: "flag.checkered")
                                 .foregroundColor(.secondary)
                             Text("Nascar Truck")
-                        }
-                    }
-
-                    Toggle(isOn: $enableIRL) {
-                        HStack {
-                            Image(systemName: "flag.checkered")
-                                .foregroundColor(.secondary)
-                            Text("IndyCar")
                         }
                     }
                 }
