@@ -25,6 +25,7 @@ struct Event: Decodable {
     let name: String
     let shortName: String
     let competitions: [Competition]
+    let weather: Weather?
     let status: Status
     let links: [Links]?
     let circuit: Circuit?
@@ -43,12 +44,29 @@ struct Type: Decodable {
     let shortDetail: String?
 }
 
+struct Weather: Decodable {
+    let temperature: Int?
+    let displayValue: String?
+}
+
 struct Competition: Decodable {
     let competitors: [Competitor]?
     let status: Status
     let situation: Situation?
     let highlights: [Highlights]?
     let headlines: [Headlines]?
+    let venue: Venue?
+}
+
+struct Venue: Decodable {
+    let id: String?
+    let fullName: String?
+    let address: VenueAddress?
+}
+
+struct VenueAddress: Decodable {
+    let city: String?
+    let state: String?
 }
 
 struct Competitor: Decodable {

@@ -286,11 +286,11 @@ struct Info: View {
                         .padding(.top, 10)
                     }
 
-                    if sport != "Lacrosse" && sport != "Volleyball" &&
-                        (game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post"),
-                        let headline = game.competitions.first?.headlines?.first?.shortLinkText ?? game.competitions.first?.highlights?.first?.headline
-                    {
-                        VStack(alignment: .center) {
+                    VStack(alignment: .center) {
+                        if sport != "Lacrosse" && sport != "Volleyball" &&
+                            (game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post"),
+                            let headline = game.competitions.first?.headlines?.first?.shortLinkText ?? game.competitions.first?.highlights?.first?.headline
+                        {
                             GeometryReader { geo in
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(alignment: .center, spacing: 10) {
@@ -308,8 +308,18 @@ struct Info: View {
                             }
                             .frame(height: 22)
                         }
-                        .padding(.top, 10)
-                    }
+
+                        if game.competitions[0].status.type.state == "pre", let weather = game.weather {
+                            HStack(spacing: 6) {
+                                Image(systemName: "location.fill")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.gray)
+                                Text("\(game.competitions[0].venue?.address?.city ?? "-"), \(game.competitions[0].venue?.address?.state ?? "-")   \(weather.temperature ?? 0)°")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .fixedSize()
+                            }.padding(.top, 3)
+                        }
+                    }.padding(.top, 10)
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
