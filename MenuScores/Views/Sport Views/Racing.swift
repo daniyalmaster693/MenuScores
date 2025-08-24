@@ -92,21 +92,19 @@ struct RacingMenu: View {
                                         NotchViewModel.shared.notch = nil
                                     }
 
-                                    if NotchViewModel.shared.notch == nil {
-                                        let newNotch = DynamicNotch(
-                                            hoverBehavior: .all,
-                                            style: .notch
-                                        ) {
-                                            Info(notchViewModel: notchViewModel, sport: "Racing", league: "\(league)")
-                                        } compactLeading: {
-                                            CompactLeading(notchViewModel: notchViewModel, sport: "Racing")
-                                        } compactTrailing: {
-                                            CompactTrailing(notchViewModel: notchViewModel, sport: "Racing")
-                                        }
-
-                                        NotchViewModel.shared.notch = newNotch
-                                        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                    let newNotch = DynamicNotch(
+                                        hoverBehavior: .all,
+                                        style: .notch
+                                    ) {
+                                        Info(notchViewModel: notchViewModel, sport: "Racing", league: "\(league)")
+                                    } compactLeading: {
+                                        CompactLeading(notchViewModel: notchViewModel, sport: "Racing")
+                                    } compactTrailing: {
+                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Racing")
                                     }
+
+                                    NotchViewModel.shared.notch = newNotch
+                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
                                 }
                             } label: {
                                 HStack {

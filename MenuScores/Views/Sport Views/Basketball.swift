@@ -92,21 +92,19 @@ struct BasketballMenu: View {
                                         NotchViewModel.shared.notch = nil
                                     }
 
-                                    if NotchViewModel.shared.notch == nil {
-                                        let newNotch = DynamicNotch(
-                                            hoverBehavior: .all,
-                                            style: .notch
-                                        ) {
-                                            Info(notchViewModel: notchViewModel, sport: "Basketball", league: "\(league)")
-                                        } compactLeading: {
-                                            CompactLeading(notchViewModel: notchViewModel, sport: "Basketball")
-                                        } compactTrailing: {
-                                            CompactTrailing(notchViewModel: notchViewModel, sport: "Basketball")
-                                        }
-
-                                        NotchViewModel.shared.notch = newNotch
-                                        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                    let newNotch = DynamicNotch(
+                                        hoverBehavior: .all,
+                                        style: .notch
+                                    ) {
+                                        Info(notchViewModel: notchViewModel, sport: "Basketball", league: "\(league)")
+                                    } compactLeading: {
+                                        CompactLeading(notchViewModel: notchViewModel, sport: "Basketball")
+                                    } compactTrailing: {
+                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Basketball")
                                     }
+
+                                    NotchViewModel.shared.notch = newNotch
+                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
                                 }
                             } label: {
                                 HStack {
