@@ -107,7 +107,7 @@ brew install --cask menuscores
 - [x] ~~Links to more game info~~
 - [x] ~~Entire year race schedule for F1~~
 - [x] ~Additional F1 Driver Info~
-- [x] ~Additional Pre Game info~~
+- [x] ~Additional Pre Game info~
 - [x] ~Additional Live Game Info~
 - [x] ~Recent plays in the notch component~
 - [ ] Alerts for in game events (eg: powerplays, timeouts, yellow cards, etc)
