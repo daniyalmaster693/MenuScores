@@ -156,6 +156,7 @@ struct Info: View {
 
                                     VStack {
                                         Text("\(game.competitions[0].competitors?[1].score ?? "-")")
+                                            .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 22, weight: .medium))
 
                                         Text("\(game.competitions[0].competitors?[1].team?.abbreviation ?? "-")")
@@ -175,6 +176,7 @@ struct Info: View {
                                         .font(.system(size: 19, weight: .semibold))
                                 } else {
                                     Text("\(game.status.type.detail ?? "-")")
+                                        .contentTransition(.numericText(countsDown: false))
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
@@ -192,6 +194,7 @@ struct Info: View {
                                         .font(.system(size: 19, weight: .semibold))
                                 } else {
                                     Text("\(periodPrefix(for: league))\(game.status.period ?? 0) \(game.status.displayClock ?? "-")")
+                                        .contentTransition(.numericText(countsDown: false))
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
@@ -204,6 +207,7 @@ struct Info: View {
                                 HStack {
                                     VStack {
                                         Text("\(game.competitions[0].competitors?[0].score ?? "-")")
+                                            .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 22, weight: .medium))
 
                                         Text("\(game.competitions[0].competitors?[0].team?.abbreviation ?? "-")")
@@ -253,16 +257,19 @@ struct Info: View {
                             if sport == "Baseball" {
                                 HStack(alignment: .center, spacing: 20) {
                                     Text("Outs: \(game.competitions.first?.situation?.outs ?? 0)")
+                                        .contentTransition(.numericText(countsDown: false))
                                         .lineLimit(nil)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
 
                                     Text("Balls: \(game.competitions.first?.situation?.balls ?? 0)")
+                                        .contentTransition(.numericText(countsDown: false))
                                         .lineLimit(nil)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
 
                                     Text("Strikes: \(game.competitions.first?.situation?.strikes ?? 0)")
+                                        .contentTransition(.numericText(countsDown: false))
                                         .lineLimit(nil)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
@@ -387,6 +394,7 @@ struct Info: View {
                                     if game.competitions[4].status.type.state == "in" {
                                         if let lap = game.competitions[4].status.period {
                                             Text("L\(lap)")
+                                                .contentTransition(.numericText(countsDown: false))
                                                 .font(.system(size: 14, weight: .semibold))
                                                 .padding(.trailing, 10)
                                         }
@@ -401,6 +409,7 @@ struct Info: View {
                                             Text(
                                                 "\(game.competitions[4].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
                                             )
+                                            .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 10)
                                         }
@@ -409,11 +418,20 @@ struct Info: View {
 
                                 VStack(spacing: 5) {
                                     HStack {
-                                        Text("#").frame(width: 30, alignment: .leading)
-                                        Text("Driver").frame(width: 130, alignment: .leading)
-                                        Text("Race Time").frame(width: 80, alignment: .trailing)
-                                        Text("Laps").frame(width: 50, alignment: .trailing)
-                                        Text("Pits").frame(width: 50, alignment: .trailing)
+                                        Text("#")
+                                            .frame(width: 30, alignment: .leading)
+
+                                        Text("Driver")
+                                            .frame(width: 130, alignment: .leading)
+
+                                        Text("Race Time")
+                                            .frame(width: 80, alignment: .trailing)
+
+                                        Text("Laps")
+                                            .frame(width: 50, alignment: .trailing)
+
+                                        Text("Pits")
+                                            .frame(width: 50, alignment: .trailing)
                                     }
                                     .font(.system(size: 12, weight: .semibold))
                                     .padding(.horizontal, 10)
@@ -426,6 +444,7 @@ struct Info: View {
                                             ForEach(driverArray.filter { $0.order != nil }, id: \.id) { driver in
                                                 HStack {
                                                     Text(driver.order.map { String($0) } ?? "-")
+                                                        .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 30, alignment: .leading)
 
                                                     HStack(spacing: 4) {
@@ -448,7 +467,9 @@ struct Info: View {
                                                     if driver.order == 1 {
                                                         Text(
                                                             "\(driver.time ?? "-")"
-                                                        ).frame(width: 80, alignment: .trailing)
+                                                        )
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                        .frame(width: 80, alignment: .trailing)
                                                     } else {
                                                         Text(
                                                             {
@@ -463,13 +484,17 @@ struct Info: View {
                                                                 }
                                                                 return "+-"
                                                             }()
-                                                        ).frame(width: 80, alignment: .trailing)
+                                                        )
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                        .frame(width: 80, alignment: .trailing)
                                                     }
 
                                                     Text(driver.laps)
+                                                        .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 50, alignment: .trailing)
 
                                                     Text(driver.pitsTaken ?? "-")
+                                                        .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 50, alignment: .trailing)
                                                 }
                                                 .font(.system(size: 13))
@@ -590,6 +615,7 @@ struct Info: View {
                                     if game.status.type.state == "in" {
                                         if let lap = game.competitions[0].status.period {
                                             Text("L\(lap)")
+                                                .contentTransition(.numericText(countsDown: false))
                                                 .font(.system(size: 14, weight: .semibold))
                                                 .padding(.trailing, 10)
                                         }
@@ -629,6 +655,7 @@ struct Info: View {
                                             ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
                                                 HStack {
                                                     Text("\(competitor.order ?? 0)")
+                                                        .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 30, alignment: .leading)
 
                                                     HStack(spacing: 4) {
@@ -762,6 +789,7 @@ struct Info: View {
                                     if game.status.type.state == "in" {
                                         if let round = game.competitions[0].status.period {
                                             Text("R\(round)")
+                                                .contentTransition(.numericText(countsDown: false))
                                                 .font(.system(size: 14, weight: .semibold))
                                                 .padding(.trailing, 10)
                                         }
@@ -784,9 +812,14 @@ struct Info: View {
 
                                 VStack(spacing: 5) {
                                     HStack {
-                                        Text("#").frame(width: 30, alignment: .leading)
-                                        Text("Golfer").frame(width: 150, alignment: .leading)
-                                        Text("Score").frame(width: 80, alignment: .trailing)
+                                        Text("#")
+                                            .frame(width: 30, alignment: .leading)
+
+                                        Text("Golfer")
+                                            .frame(width: 150, alignment: .leading)
+
+                                        Text("Score")
+                                            .frame(width: 80, alignment: .trailing)
                                     }
                                     .font(.system(size: 12, weight: .semibold))
                                     .padding(.horizontal, 10)
@@ -801,6 +834,7 @@ struct Info: View {
                                             ForEach(competitors.filter { $0.order != nil }.prefix(20), id: \.id) { competitor in
                                                 HStack {
                                                     Text("\(competitor.order ?? 0)")
+                                                        .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 30, alignment: .leading)
 
                                                     HStack(spacing: 4) {
@@ -822,6 +856,7 @@ struct Info: View {
                                                     }.frame(width: 150, alignment: .leading)
 
                                                     Text(competitor.score ?? "-")
+                                                        .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 80, alignment: .trailing)
                                                 }
                                                 .font(.system(size: 13))

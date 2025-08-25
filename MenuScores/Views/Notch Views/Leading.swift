@@ -45,6 +45,7 @@ struct CompactLeading: View {
                     .frame(width: 18, height: 18)
 
                     Text("\(game.competitions[0].competitors?[1].score ?? "-")")
+                        .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
                 }.contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
