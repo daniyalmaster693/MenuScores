@@ -89,17 +89,17 @@ brew install --cask menuscores
 
 ## Usage
 
-- After running the app, you'll be greeted with a walkthrough that will provide information about the different features of the app, and security and privacy concerns.
 - **In order to use the notifications feature**, you must grant permission for MenuScores to send notification. An option will be presented to do so in the walkthrough screen.
 
 1. Clicking on the menubar title will show a list available leagues.
 2. Hovering over a league will show a dropdown of all the games for the day in that league.
-3. Hover over a game will allow you to choose from pinning the game to your menubar, notch, or viewing it in your browser.
+3. Hovering over a game will allow you to choose from pinning the game to your menubar, notch, or viewing it in your browser.
 
 **Note: the notch feature works best on Macbooks with a notch. It will still work on non notched devices, but hovering over it will not open the expanded view.**
 
-4. You can use the clear set game option, or pin a different game to clear the title.
-5. You can quit the app directly from the menubar, or open the preferences window to configure app behaviors (this can be done by pressing Cmd + , after opening the menubar component, or clicking the preferences button if your on macOS 14.0 and later).
+4. You can use the clear set game option, or pin a different game to clear the menubar or notch.
+5. When a game is pinned to the notch, expanding it will reveal different info depending on the game state and league.
+6. You can quit the app directly from the menubar, or open the preferences window to configure app behaviors, or update the app.
 
 ## Roadmap
 
