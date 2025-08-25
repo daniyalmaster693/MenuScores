@@ -121,6 +121,7 @@ brew install --cask menuscores
 
 - [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
 - [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
+- [Keyboard Shortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 
 ## Contributions
