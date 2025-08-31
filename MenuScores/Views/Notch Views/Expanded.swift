@@ -424,8 +424,13 @@ struct Info: View {
                                         Text("Driver")
                                             .frame(width: 130, alignment: .leading)
 
-                                        Text("Race Time")
-                                            .frame(width: 80, alignment: .trailing)
+                                        if game.competitions[4].status.type.state == "post" {
+                                            Text("Race Time")
+                                                .frame(width: 100, alignment: .trailing)
+                                        } else {
+                                            Text("Driver Status")
+                                                .frame(width: 100, alignment: .trailing)
+                                        }
 
                                         Text("Laps")
                                             .frame(width: 50, alignment: .trailing)
@@ -464,29 +469,35 @@ struct Info: View {
                                                     }
                                                     .frame(width: 130, alignment: .leading)
 
-                                                    if driver.order == 1 {
-                                                        Text(
-                                                            "\(driver.time ?? "-")"
-                                                        )
-                                                        .contentTransition(.numericText(countsDown: false))
-                                                        .frame(width: 80, alignment: .trailing)
+                                                    if game.competitions[4].status.type.state == "post" {
+                                                        if driver.order == 1 {
+                                                            Text(
+                                                                "\(driver.time ?? "-")"
+                                                            )
+                                                            .contentTransition(.numericText(countsDown: false))
+                                                            .frame(width: 100, alignment: .trailing)
+                                                        } else {
+                                                            Text(
+                                                                {
+                                                                    if let behindTime = driver.behindTime, !behindTime.starts(with: "+") {
+                                                                        return "+\(behindTime)"
+                                                                    } else if let behindTime = driver.behindTime {
+                                                                        return behindTime
+                                                                    } else if let behindLaps = driver.behindLaps, let lapsInt = Int(behindLaps) {
+                                                                        return "+\(lapsInt) \(lapsInt == 1 ? "Lap" : "Laps")"
+                                                                    } else if let behindLaps = driver.behindLaps, !behindLaps.isEmpty {
+                                                                        return "+\(behindLaps)"
+                                                                    }
+                                                                    return "+-"
+                                                                }()
+                                                            )
+                                                            .contentTransition(.numericText(countsDown: false))
+                                                            .frame(width: 100, alignment: .trailing)
+                                                        }
                                                     } else {
-                                                        Text(
-                                                            {
-                                                                if let behindTime = driver.behindTime, !behindTime.starts(with: "+") {
-                                                                    return "+\(behindTime)"
-                                                                } else if let behindTime = driver.behindTime {
-                                                                    return behindTime
-                                                                } else if let behindLaps = driver.behindLaps, let lapsInt = Int(behindLaps) {
-                                                                    return "+\(lapsInt) \(lapsInt == 1 ? "Lap" : "Laps")"
-                                                                } else if let behindLaps = driver.behindLaps, !behindLaps.isEmpty {
-                                                                    return "+\(behindLaps)"
-                                                                }
-                                                                return "+-"
-                                                            }()
-                                                        )
-                                                        .contentTransition(.numericText(countsDown: false))
-                                                        .frame(width: 80, alignment: .trailing)
+                                                        Text(driver.status?.displayValue ?? "-")
+                                                            .contentTransition(.numericText(countsDown: false))
+                                                            .frame(width: 100, alignment: .trailing)
                                                     }
 
                                                     Text(driver.laps)

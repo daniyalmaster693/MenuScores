@@ -60,6 +60,12 @@ struct Driver: Decodable {
     let time: String?
     let pitsTaken: String?
     let vehicle: Vehicle?
+    let status: DriverStatus?
+}
+
+struct DriverStatus: Decodable {
+    let displayValue: String?
+    let period: Int?
 }
 
 struct Vehicle: Decodable {
