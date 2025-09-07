@@ -53,6 +53,7 @@ struct Info: View {
     @State private var capsuleColor: Color = .white
     @State private var driverArray: [Driver] = []
     @State private var totalLaps: String? = nil
+    @State private var flagColor: String? = nil
 
     // MARK: Sport Related Text Variables
 
@@ -107,6 +108,7 @@ struct Info: View {
                 DispatchQueue.main.async {
                     driverArray = race.competitors
                     totalLaps = race.laps
+                    flagColor = race.fullStatus?.flag
                 }
             } else {
                 DispatchQueue.main.async {
@@ -118,6 +120,23 @@ struct Info: View {
         } catch {
             print("Failed to fetch race info: \(error)")
             DispatchQueue.main.async {}
+        }
+    }
+
+    func mapFlagColor(_ flag: String?) -> Color {
+        switch flag?.uppercased() {
+        case "GREEN":
+            return .green
+        case "YELLOW":
+            return .yellow
+        case "RED":
+            return .red
+        case "BLUE":
+            return .blue
+        case "CHECKERED":
+            return .white
+        default:
+            return .gray
         }
     }
 
@@ -396,10 +415,16 @@ struct Info: View {
 
                                     if game.competitions[4].status.type.state == "in" {
                                         if let lap = game.competitions[4].status.period {
-                                            Text("Laps: \(lap)/\(totalLaps ?? "-")")
-                                                .contentTransition(.numericText(countsDown: false))
-                                                .font(.system(size: 14, weight: .semibold))
-                                                .padding(.trailing, 10)
+                                            HStack {
+                                                Image(systemName: "flag.checkered")
+                                                    .foregroundColor(mapFlagColor(flagColor))
+                                                    .font(.system(size: 12))
+
+                                                Text("Laps: \(lap)/\(totalLaps ?? "-")")
+                                                    .contentTransition(.numericText(countsDown: false))
+                                                    .font(.system(size: 14, weight: .semibold))
+                                                    .padding(.trailing, 10)
+                                            }
                                         }
                                     }
 
@@ -407,7 +432,7 @@ struct Info: View {
                                         HStack {
                                             Image(systemName: "trophy.fill")
                                                 .foregroundColor(.yellow)
-                                                .font(.system(size: 10))
+                                                .font(.system(size: 12))
 
                                             Text(
                                                 "\(game.competitions[4].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"

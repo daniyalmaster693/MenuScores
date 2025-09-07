@@ -27,6 +27,7 @@ struct Race: Decodable {
     let location: String
     let link: String
     let status: String
+    let fullStatus: FullStatus?
     let summary: String
     let period: Int
     let laps: String
@@ -34,6 +35,11 @@ struct Race: Decodable {
     let track: Track
     let note: String
     let competitors: [Driver]
+}
+
+struct FullStatus: Decodable {
+    let period: Int?
+    let flag: String?
 }
 
 struct Track: Decodable {
