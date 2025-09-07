@@ -113,7 +113,7 @@ struct F1Menu: View {
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 20, height: 20)
-                                            Text("Pin Game to Notch")
+                                            Text("Pin Race to Notch")
                                         }
                                     }
                                 }
