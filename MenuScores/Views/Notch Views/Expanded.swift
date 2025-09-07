@@ -456,8 +456,8 @@ struct Info: View {
                                             Text("Race Time")
                                                 .frame(width: 100, alignment: .trailing)
                                         } else {
-                                            Text("Driver Status")
-                                                .frame(width: 100, alignment: .trailing)
+                                            Text("Team")
+                                                .frame(width: 120, alignment: .trailing)
                                         }
 
                                         Text("Laps")
@@ -519,13 +519,11 @@ struct Info: View {
                                                                     return "+-"
                                                                 }()
                                                             )
-                                                            .contentTransition(.numericText(countsDown: false))
                                                             .frame(width: 100, alignment: .trailing)
                                                         }
                                                     } else {
-                                                        Text(driver.status?.displayValue ?? "-")
-                                                            .contentTransition(.numericText(countsDown: false))
-                                                            .frame(width: 100, alignment: .trailing)
+                                                        Text(driver.vehicle?.manufacturer ?? "-")
+                                                            .frame(width: 120, alignment: .trailing)
                                                     }
 
                                                     Text(driver.laps)
