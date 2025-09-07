@@ -52,6 +52,7 @@ struct Info: View {
 
     @State private var capsuleColor: Color = .white
     @State private var driverArray: [Driver] = []
+    @State private var totalLaps: String? = nil
 
     // MARK: Sport Related Text Variables
 
@@ -105,10 +106,12 @@ struct Info: View {
             if let race = response.sports.first?.leagues.first?.events[4] {
                 DispatchQueue.main.async {
                     driverArray = race.competitors
+                    totalLaps = race.laps
                 }
             } else {
                 DispatchQueue.main.async {
                     driverArray = []
+                    totalLaps = nil
                 }
             }
 
@@ -393,7 +396,7 @@ struct Info: View {
 
                                     if game.competitions[4].status.type.state == "in" {
                                         if let lap = game.competitions[4].status.period {
-                                            Text("L\(lap)")
+                                            Text("Laps: \(lap)/\(totalLaps ?? "-")")
                                                 .contentTransition(.numericText(countsDown: false))
                                                 .font(.system(size: 14, weight: .semibold))
                                                 .padding(.trailing, 10)
