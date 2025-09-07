@@ -580,7 +580,7 @@ struct Info: View {
                                         Image(systemName: "flag.checkered")
                                             .font(.system(size: 12))
 
-                                        Text("\(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.date))")
+                                        Text("\(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.endDate ?? "-"))")
                                             .font(.system(size: 14, weight: .medium))
                                     }
                                     .padding(.top, 2)
