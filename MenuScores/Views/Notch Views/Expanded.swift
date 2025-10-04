@@ -169,11 +169,14 @@ struct Info: View {
                                             }
                                         }())
                                     ) { image in
-                                        image.resizable().scaledToFit()
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 32, height: 32)
                                     } placeholder: {
                                         Color.black
                                     }
-                                    .frame(width: 32, height: 32)
                                     .padding(.trailing, 3)
 
                                     VStack {
@@ -245,11 +248,14 @@ struct Info: View {
                                             }
                                         }())
                                     ) { image in
-                                        image.resizable().scaledToFit()
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 32, height: 32)
                                     } placeholder: {
                                         Color.black
                                     }
-                                    .frame(width: 32, height: 32)
                                     .padding(.leading, 3)
                                 }
                             }
@@ -400,11 +406,14 @@ struct Info: View {
                                             "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
                                         )
                                     ) { image in
-                                        image.resizable().scaledToFit()
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 25, height: 25)
                                     } placeholder: {
                                         ProgressView()
                                     }
-                                    .frame(width: 25, height: 25)
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
 
@@ -483,11 +492,14 @@ struct Info: View {
                                                     HStack(spacing: 4) {
                                                         if let logoURL = URL(string: driver.logo) {
                                                             AsyncImage(url: logoURL) { image in
-                                                                image.resizable().scaledToFit()
+                                                                image
+                                                                    .resizable()
+                                                                    .interpolation(.high)
+                                                                    .scaledToFit()
+                                                                    .frame(width: 16, height: 16)
                                                             } placeholder: {
                                                                 Color.gray.opacity(0.3)
                                                             }
-                                                            .frame(width: 16, height: 16)
                                                             .padding(.trailing, 5)
                                                         }
 
@@ -560,11 +572,14 @@ struct Info: View {
                                                 "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
                                             )
                                         ) { image in
-                                            image.resizable().scaledToFit()
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .frame(width: 28, height: 28)
                                         } placeholder: {
                                             ProgressView()
                                         }
-                                        .frame(width: 28, height: 28)
                                         .padding(.trailing, 3)
 
                                         Text("\(game.shortName)")
@@ -636,11 +651,14 @@ struct Info: View {
                                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
                                         )
                                     ) { image in
-                                        image.resizable().scaledToFit()
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 18, height: 18)
                                     } placeholder: {
                                         ProgressView()
                                     }
-                                    .frame(width: 18, height: 18)
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
 
@@ -734,11 +752,14 @@ struct Info: View {
                                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
                                         )
                                     ) { image in
-                                        image.resizable().scaledToFit()
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 28, height: 28)
                                     } placeholder: {
                                         ProgressView()
                                     }
-                                    .frame(width: 28, height: 28)
                                     .padding(.trailing, 3)
 
                                     Text("\(game.shortName)")
@@ -810,11 +831,14 @@ struct Info: View {
                                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                         )
                                     ) { image in
-                                        image.resizable().scaledToFit()
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 18, height: 18)
                                     } placeholder: {
                                         ProgressView()
                                     }
-                                    .frame(width: 18, height: 18)
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
 
@@ -879,11 +903,14 @@ struct Info: View {
                                                            let flagURL = URL(string: flagURLString)
                                                         {
                                                             AsyncImage(url: flagURL) { image in
-                                                                image.resizable().scaledToFit()
+                                                                image
+                                                                    .resizable()
+                                                                    .interpolation(.high)
+                                                                    .scaledToFit()
+                                                                    .frame(width: 16, height: 16)
                                                             } placeholder: {
                                                                 Color.gray.opacity(0.3)
                                                             }
-                                                            .frame(width: 16, height: 16)
                                                             .padding(.trailing, 5)
                                                         }
 
@@ -916,11 +943,14 @@ struct Info: View {
                                                 "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                             )
                                         ) { image in
-                                            image.resizable().scaledToFit()
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .frame(width: 28, height: 28)
                                         } placeholder: {
                                             ProgressView()
                                         }
-                                        .frame(width: 28, height: 28)
                                         .padding(.trailing, 3)
 
                                         Text("\(game.shortName)")

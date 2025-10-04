@@ -42,11 +42,14 @@ struct CompactTrailing: View {
                             }
                         }())
                     ) { image in
-                        image.resizable().scaledToFit()
+                        image
+                            .resizable()
+                            .interpolation(.high)
+                            .scaledToFit()
+                            .frame(width: 18, height: 18)
                     } placeholder: {
                         Color.black
                     }
-                    .frame(width: 18, height: 18)
                 }.contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
