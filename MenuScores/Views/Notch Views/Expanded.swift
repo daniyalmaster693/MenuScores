@@ -50,7 +50,6 @@ struct Info: View {
 
     // Recent Play Variables
 
-    @State private var capsuleColor: Color = .white
     @State private var driverArray: [Driver] = []
     @State private var totalLaps: String? = nil
     @State private var flagColor: String? = nil
@@ -64,31 +63,24 @@ struct Info: View {
 
     // Fetch Latest Play Team Color
 
-    func fetchLatestPlayTeamColor() async {
+    var capsuleColor: Color {
         guard let game = notchViewModel.game,
-              let latestPlayTeamID = game.competitions.first?.situation?.lastPlay?.team?.id
-        else { return }
+              let lastPlay = game.competitions.first?.situation?.lastPlay,
+              let playTeamID = lastPlay.team?.id
+        else { return .white }
 
         let competitors = game.competitions.first?.competitors ?? []
 
-        let teamIndex: Int
-        if competitors.count > 1, latestPlayTeamID == competitors[1].team?.id {
-            teamIndex = 1
-        } else {
-            teamIndex = 0
+        if let matchingTeam = competitors.first(where: { $0.team?.id == playTeamID }) {
+            let mainHex = matchingTeam.team?.color ?? "#FFFFFF"
+            let altHex = matchingTeam.team?.alternateColor ?? "#FFFFFF"
+            let mainColor = Color(hex: mainHex)
+            let altColor = Color(hex: altHex)
+
+            return altColor.brightness() < 0.1 ? mainColor : altColor
         }
 
-        let teamHex = competitors[teamIndex].team?.color ?? "#FFFFFF"
-        let altHex = competitors[teamIndex].team?.alternateColor ?? "#FFFFFF"
-
-        let mainColor = Color(hex: teamHex)
-        let altColor = Color(hex: altHex)
-
-        let fillColor = altColor.brightness() < 0.1 ? mainColor : altColor
-
-        DispatchQueue.main.async {
-            self.capsuleColor = fillColor
-        }
+        return .white
     }
 
     // Fetch Race Info
@@ -311,11 +303,6 @@ struct Info: View {
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
                                 }.padding(.top, 7)
-                            }
-                        }
-                        .task {
-                            if let _ = notchViewModel.game?.id {
-                                await fetchLatestPlayTeamColor()
                             }
                         }
                         .padding(.top, 10)
