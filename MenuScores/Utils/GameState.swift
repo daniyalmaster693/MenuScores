@@ -10,7 +10,7 @@ func displayText(for game: Event, league: String) -> String {
           let competitors = competition.competitors,
           competitors.count >= 2
     else {
-        return game.shortName
+        return game.shortName ?? game.name
     }
 
     let awayAbbr = competitors[1].team?.abbreviation ?? "-"
@@ -55,7 +55,7 @@ func displayText(for game: Event, league: String) -> String {
 
     if league == "F1", f1State == "pre" {
         return
-            "\(game.shortName) - \(formattedTime(from: game.endDate ?? game.date))"
+            "\(game.shortName ?? game.name) - \(formattedTime(from: game.endDate ?? game.date))"
     }
 
     if league == "F1", f1State == "in" {
@@ -98,7 +98,7 @@ func displayText(for game: Event, league: String) -> String {
 
     switch state {
     case "pre":
-        return "\(game.shortName) - \(formattedTime(from: game.date))"
+        return "\(game.shortName ?? game.name) - \(formattedTime(from: game.date))"
 
     case "in":
         return
@@ -109,6 +109,6 @@ func displayText(for game: Event, league: String) -> String {
             "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    (Final)"
 
     default:
-        return game.shortName
+        return game.shortName ?? game.name
     }
 }

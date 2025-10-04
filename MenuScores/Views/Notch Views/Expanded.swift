@@ -569,7 +569,7 @@ struct Info: View {
                                         }
                                         .padding(.trailing, 3)
 
-                                        Text("\(game.shortName)")
+                                        Text("\(game.shortName ?? game.name)")
                                             .font(.system(size: 18, weight: .medium))
                                     }
                                     .frame(maxWidth: .infinity, alignment: .center)
@@ -749,7 +749,7 @@ struct Info: View {
                                     }
                                     .padding(.trailing, 3)
 
-                                    Text("\(game.shortName)")
+                                    Text("\(game.shortName ?? game.name)")
                                         .font(.system(size: 18, weight: .medium))
                                 }
                                 .frame(maxWidth: .infinity, alignment: .center)
@@ -940,7 +940,7 @@ struct Info: View {
                                         }
                                         .padding(.trailing, 3)
 
-                                        Text("\(game.shortName)")
+                                        Text("\(game.shortName ?? game.name)")
                                             .font(.system(size: 18, weight: .medium))
                                     }
                                     .frame(maxWidth: .infinity, alignment: .center)

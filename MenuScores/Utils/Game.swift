@@ -23,7 +23,7 @@ struct Event: Decodable {
     let date: String
     let endDate: String?
     let name: String
-    let shortName: String
+    let shortName: String?
     let competitions: [Competition]
     let weather: Weather?
     let status: Status
@@ -81,7 +81,7 @@ struct Competitor: Decodable {
 struct Team: Decodable {
     let id: String
     let displayName: String
-    let abbreviation: String
+    let abbreviation: String?
     let name: String
     let logo: String?
     let links: [Links]
