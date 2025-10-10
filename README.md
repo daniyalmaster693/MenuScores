@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/daniyalmaster693/MenuScores/blob/main/MenuScores/Assets.xcassets/TahoeIcon.imageset/MenuScores-Tahoe.png" width="130" height="120">
+<img src="https://github.com/daniyalmaster693/MenuScores/blob/main/MenuScores/Assets.xcassets/TahoeIcon.imageset/MenuScores-Tahoe.png" width="140">
 
   <h1>MenuScores</h1>
   <p>Live Scores - Right From Your Notch</p>
