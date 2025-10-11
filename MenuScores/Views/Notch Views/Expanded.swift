@@ -77,7 +77,7 @@ struct Info: View {
             let mainColor = Color(hex: mainHex)
             let altColor = Color(hex: altHex)
 
-            return altColor.brightness() < 0.1 ? mainColor : altColor
+            return mainColor.brightness() < 0.1 ? altColor : mainColor
         }
 
         return .white
