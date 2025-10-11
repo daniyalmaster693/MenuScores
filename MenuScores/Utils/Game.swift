@@ -130,7 +130,7 @@ struct Situation: Decodable {
 }
 
 struct LastPlay: Decodable {
-    let text: String
+    let text: String?
     let type: PlayType
     let team: TeamID?
 }
