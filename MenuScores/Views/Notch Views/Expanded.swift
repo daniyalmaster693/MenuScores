@@ -597,8 +597,19 @@ struct Info: View {
                                         Text("\(formattedDate(from: game.endDate ?? "Invalid Date"))  @  \(formattedTime(from: game.endDate ?? "-"))")
                                             .font(.system(size: 14, weight: .medium))
                                     }
-                                    .padding(.top, 2)
+                                    .padding(.top, 6)
                                     .frame(maxWidth: .infinity, alignment: .center)
+
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "location.fill")
+                                            .font(.system(size: 12))
+                                            .foregroundColor(.gray)
+
+                                        Text("\(game.circuit?.fullName ?? "-")")
+                                            .font(.system(size: 14, weight: .medium))
+                                            .fixedSize()
+
+                                    }.padding(.top, 2)
                                 }
                             }
                         }
