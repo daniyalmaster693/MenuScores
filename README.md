@@ -110,7 +110,7 @@ brew install --cask menuscores
 - [x] ~Additional Pre Game info~
 - [x] ~Additional Live Game Info~
 - [x] ~Recent plays in the notch component~
-- [ ] Smoother overall notch animations for score updates and game loading
+- [x] ~Smoother overall notch animations for score updates and game loading~
 - [ ] Alerts for in game events (eg: powerplays, timeouts, yellow cards, etc)
 - [ ] App Widgets
 - [ ] Automatically pin games to the notch or menubar (favorite teams feature)
