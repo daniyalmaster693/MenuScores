@@ -689,7 +689,7 @@ struct MenuScoresApp: App {
             if #available(macOS 15.0, *) {
                 SettingsView(updater: updater)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-                    .containerBackground(.ultraThickMaterial, for: .window)
+                    .containerBackground(.thickMaterial, for: .window)
             } else {
                 SettingsView(updater: updater)
             }
