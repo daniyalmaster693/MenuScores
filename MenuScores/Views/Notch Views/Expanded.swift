@@ -342,20 +342,23 @@ struct Info: View {
                             .padding(.top, 10)
                         }
 
-                        HStack(spacing: 6) {
-                            Image(systemName: "location.fill")
-                                .font(.system(size: 12))
-                                .foregroundColor(.gray)
-                            if game.competitions[0].status.type.state == "pre", let weather = game.weather {
-                                Text("\(game.competitions[0].venue?.address?.city ?? "-"), \(game.competitions[0].venue?.address?.state ?? "-")   \(weather.temperature ?? 0)°")
-                                    .font(.system(size: 14, weight: .medium))
-                                    .fixedSize()
-                            } else {
-                                Text("\(game.competitions[0].venue?.fullName ?? "-")")
-                                    .font(.system(size: 14, weight: .medium))
-                                    .fixedSize()
-                            }
-                        }.padding(.top, 3)
+                        if game.competitions[0].status.type.state == "pre" {
+                            HStack(spacing: 6) {
+                                Image(systemName: "location.fill")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.gray)
+
+                                if let weather = game.weather {
+                                    Text("\(game.competitions[0].venue?.address?.city ?? "-"), \(game.competitions[0].venue?.address?.state ?? "-")   \(weather.temperature ?? 0)°")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .fixedSize()
+                                } else {
+                                    Text("\(game.competitions[0].venue?.fullName ?? "-")")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .fixedSize()
+                                }
+                            }.padding(.top, 3)
+                        }
                     }
                 }
                 .contextMenu {
