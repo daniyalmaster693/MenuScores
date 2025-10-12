@@ -346,37 +346,35 @@ struct Info: View {
                             let headline = game.competitions.first?.headlines?.first?.shortLinkText ?? game.competitions.first?.highlights?.first?.headline
                         {
                             GeometryReader { geo in
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(alignment: .center, spacing: 10) {
-                                        Capsule()
-                                            .fill(.white)
-                                            .frame(width: 3, height: 16)
+                                HStack(alignment: .center, spacing: 10) {
+                                    Capsule()
+                                        .fill(.white)
+                                        .frame(width: 3, height: 16)
 
-                                        ZStack {
-                                            let font = NSFont.systemFont(ofSize: 14, weight: .medium)
-                                            let textWidth = (headline as NSString).size(withAttributes: [.font: font]).width
+                                    ZStack {
+                                        let font = NSFont.systemFont(ofSize: 14, weight: .medium)
+                                        let textWidth = (headline as NSString).size(withAttributes: [.font: font]).width
 
-                                            if textWidth < geo.size.width {
-                                                Text(headline)
-                                                    .font(.system(size: 14, weight: .medium))
-                                                    .fixedSize()
-                                            } else {
-                                                MarqueeText($headlineText,
-                                                            font: .system(size: 14, weight: .medium),
-                                                            nsFont: .body,
-                                                            textColor: .white,
-                                                            frameWidth: geo.size.width)
-                                                    .onAppear {
-                                                        headlineText = headline
-                                                    }
-                                                    .onChange(of: headline) { newText in
-                                                        headlineText = newText
-                                                    }
-                                            }
+                                        if textWidth < geo.size.width {
+                                            Text(headline)
+                                                .font(.system(size: 14, weight: .medium))
+                                                .fixedSize()
+                                        } else {
+                                            MarqueeText($headlineText,
+                                                        font: .system(size: 14, weight: .medium),
+                                                        nsFont: .body,
+                                                        textColor: .white,
+                                                        frameWidth: geo.size.width)
+                                                .onAppear {
+                                                    headlineText = headline
+                                                }
+                                                .onChange(of: headline) { newText in
+                                                    headlineText = newText
+                                                }
                                         }
                                     }
-                                    .frame(minWidth: geo.size.width, alignment: .center)
                                 }
+                                .frame(minWidth: geo.size.width, alignment: .center)
                                 .padding(.horizontal, 5)
                                 .frame(height: 22)
                             }
