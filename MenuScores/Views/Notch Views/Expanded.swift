@@ -288,7 +288,7 @@ struct Info: View {
                                                             font: .system(size: 14, weight: .medium),
                                                             nsFont: .body,
                                                             textColor: .white,
-                                                            frameWidth: geo.size.width)
+                                                            frameWidth: geo.size.width - 17)
                                                     .fontWeight(.medium)
                                                     .onAppear {
                                                         playText = text
@@ -364,7 +364,7 @@ struct Info: View {
                                                         font: .system(size: 14, weight: .medium),
                                                         nsFont: .body,
                                                         textColor: .white,
-                                                        frameWidth: geo.size.width)
+                                                        frameWidth: geo.size.width - 17)
                                                 .onAppear {
                                                     headlineText = headline
                                                 }
