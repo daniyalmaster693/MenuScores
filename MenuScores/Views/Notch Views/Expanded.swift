@@ -50,6 +50,8 @@ struct Info: View {
 
     // Recent Play Variables
 
+    @State private var playText: String = "-"
+    @State private var headlineText: String = "-"
     @State private var driverArray: [Driver] = []
     @State private var totalLaps: String? = nil
     @State private var flagColor: String? = nil
@@ -267,18 +269,38 @@ struct Info: View {
                     if sport != "Lacrosse" && sport != "Volleyball" && sport != "Soccer" && game.competitions[0].status.type.state == "in" {
                         VStack(alignment: .center) {
                             GeometryReader { geo in
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(alignment: .center, spacing: 10) {
-                                        Capsule()
-                                            .fill(capsuleColor)
-                                            .frame(width: 3, height: 16)
+                                HStack(alignment: .center, spacing: 10) {
+                                    Capsule()
+                                        .fill(capsuleColor)
+                                        .frame(width: 3, height: 16)
 
-                                        Text("\(game.competitions.first?.situation?.lastPlay?.text ?? "-")")
-                                            .font(.system(size: 14, weight: .medium))
-                                            .fixedSize()
+                                    ZStack {
+                                        if let text = game.competitions.first?.situation?.lastPlay?.text {
+                                            let font = NSFont.systemFont(ofSize: 14, weight: .medium)
+                                            let textWidth = (text as NSString).size(withAttributes: [.font: font]).width
+
+                                            if textWidth < geo.size.width {
+                                                Text(text)
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .fixedSize()
+                                            } else {
+                                                MarqueeText($playText,
+                                                            font: .system(size: 14, weight: .medium),
+                                                            nsFont: .body,
+                                                            textColor: .white,
+                                                            frameWidth: geo.size.width)
+                                                    .fontWeight(.medium)
+                                                    .onAppear {
+                                                        playText = text
+                                                    }
+                                                    .onChange(of: text) { newText in
+                                                        playText = newText
+                                                    }
+                                            }
+                                        }
                                     }
-                                    .frame(minWidth: geo.size.width, alignment: .center)
                                 }
+                                .frame(minWidth: geo.size.width, alignment: .center)
                                 .padding(.horizontal, 5)
                                 .frame(height: 22)
                             }
@@ -329,9 +351,29 @@ struct Info: View {
                                         Capsule()
                                             .fill(.white)
                                             .frame(width: 3, height: 16)
-                                        Text(headline)
-                                            .font(.system(size: 14, weight: .medium))
-                                            .fixedSize()
+
+                                        ZStack {
+                                            let font = NSFont.systemFont(ofSize: 14, weight: .medium)
+                                            let textWidth = (headline as NSString).size(withAttributes: [.font: font]).width
+
+                                            if textWidth < geo.size.width {
+                                                Text(headline)
+                                                    .font(.system(size: 14, weight: .medium))
+                                                    .fixedSize()
+                                            } else {
+                                                MarqueeText($headlineText,
+                                                            font: .system(size: 14, weight: .medium),
+                                                            nsFont: .body,
+                                                            textColor: .white,
+                                                            frameWidth: geo.size.width)
+                                                    .onAppear {
+                                                        headlineText = headline
+                                                    }
+                                                    .onChange(of: headline) { newText in
+                                                        headlineText = newText
+                                                    }
+                                            }
+                                        }
                                     }
                                     .frame(minWidth: geo.size.width, alignment: .center)
                                 }
