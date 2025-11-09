@@ -154,10 +154,6 @@ struct Info: View {
                         HStack(spacing: 4) {
                             VStack {
                                 HStack {
-                                    let mainColor = Color(hex: game.competitions[0].competitors?[1].team?.color ?? "#FFFFFF")
-                                    let altColor = Color(hex: game.competitions[0].competitors?[1].team?.alternateColor ?? "#FFFFFF")
-                                    let shadowColor = mainColor.brightness() < 0.2 ? altColor.opacity(0.7) : mainColor.opacity(0.7)
-
                                     AsyncImage(
                                         url: URL(string: {
                                             if sport == "volleyball" {
@@ -172,7 +168,6 @@ struct Info: View {
                                             .interpolation(.high)
                                             .scaledToFit()
                                             .frame(width: 32, height: 32)
-                                            .shadow(color: shadowColor, radius: 15, x: 0, y: 0)
                                     } placeholder: {
                                         Color.black
                                     }
@@ -229,10 +224,6 @@ struct Info: View {
                         HStack(spacing: 4) {
                             VStack {
                                 HStack {
-                                    let mainColor = Color(hex: game.competitions[0].competitors?[0].team?.color ?? "#FFFFFF")
-                                    let altColor = Color(hex: game.competitions[0].competitors?[0].team?.alternateColor ?? "#FFFFFF")
-                                    let shadowColor = mainColor.brightness() < 0.2 ? altColor.opacity(0.7) : mainColor.opacity(0.7)
-
                                     VStack {
                                         Text("\(game.competitions[0].competitors?[0].score ?? "-")")
                                             .contentTransition(.numericText(countsDown: false))
@@ -256,7 +247,6 @@ struct Info: View {
                                             .interpolation(.high)
                                             .scaledToFit()
                                             .frame(width: 32, height: 32)
-                                            .shadow(color: shadowColor, radius: 15, x: 0, y: 0)
                                     } placeholder: {
                                         Color.black
                                     }
