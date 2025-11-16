@@ -54,98 +54,102 @@ struct FootballMenu: View {
 
             let sortedDates = groupedGames.keys.sorted()
 
-            ForEach(sortedDates, id: \.self) { date in
-                if let gamesForDate = groupedGames[date] {
-                    Menu(date) {
-                        ForEach(gamesForDate, id: \.id) { game in
-                            Menu {
-                                Button {
-                                    currentTitle = displayText(for: game, league: league)
-                                    currentGameID = game.id
-                                    currentGameState = game.status.type.state
-
-                                    pinnedByMenubar = true
-                                    pinnedByNotch = false
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "menubar.rectangle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 20, height: 20)
-                                        Text("Pin Game to Menubar")
-                                    }
-                                }
-
-                                if enableNotch {
+            if sortedDates.isEmpty {
+                Text("No Games Scheduled")
+            } else {
+                ForEach(sortedDates, id: \.self) { date in
+                    if let gamesForDate = groupedGames[date] {
+                        Menu(date) {
+                            ForEach(gamesForDate, id: \.id) { game in
+                                Menu {
                                     Button {
+                                        currentTitle = displayText(for: game, league: league)
                                         currentGameID = game.id
                                         currentGameState = game.status.type.state
 
-                                        pinnedByNotch = true
-                                        pinnedByMenubar = false
-
-                                        notchViewModel.game = game
-
-                                        Task {
-                                            if let existingNotch = NotchViewModel.shared.notch {
-                                                await existingNotch.hide()
-                                                NotchViewModel.shared.game = nil
-                                                NotchViewModel.shared.currentGameID = ""
-                                                NotchViewModel.shared.currentGameState = ""
-                                                NotchViewModel.shared.previousGameState = ""
-                                                NotchViewModel.shared.notch = nil
-                                            }
-
-                                            let newNotch = DynamicNotch(
-                                                hoverBehavior: .all,
-                                                style: .notch
-                                            ) {
-                                                Info(notchViewModel: notchViewModel, sport: "Football", league: "\(league)")
-                                            } compactLeading: {
-                                                CompactLeading(notchViewModel: notchViewModel, sport: "Football")
-                                            } compactTrailing: {
-                                                CompactTrailing(notchViewModel: notchViewModel, sport: "Football")
-                                            }
-
-                                            NotchViewModel.shared.notch = newNotch
-                                            await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-                                        }
+                                        pinnedByMenubar = true
+                                        pinnedByNotch = false
                                     } label: {
                                         HStack {
-                                            Image(systemName: "macbook")
+                                            Image(systemName: "menubar.rectangle")
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 20, height: 20)
-                                            Text("Pin Game to Notch")
+                                            Text("Pin Game to Menubar")
                                         }
                                     }
-                                }
 
-                                Button {
-                                    if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
-                                        NSWorkspace.shared.open(url)
+                                    if enableNotch {
+                                        Button {
+                                            currentGameID = game.id
+                                            currentGameState = game.status.type.state
+
+                                            pinnedByNotch = true
+                                            pinnedByMenubar = false
+
+                                            notchViewModel.game = game
+
+                                            Task {
+                                                if let existingNotch = NotchViewModel.shared.notch {
+                                                    await existingNotch.hide()
+                                                    NotchViewModel.shared.game = nil
+                                                    NotchViewModel.shared.currentGameID = ""
+                                                    NotchViewModel.shared.currentGameState = ""
+                                                    NotchViewModel.shared.previousGameState = ""
+                                                    NotchViewModel.shared.notch = nil
+                                                }
+
+                                                let newNotch = DynamicNotch(
+                                                    hoverBehavior: .all,
+                                                    style: .notch
+                                                ) {
+                                                    Info(notchViewModel: notchViewModel, sport: "Football", league: "\(league)")
+                                                } compactLeading: {
+                                                    CompactLeading(notchViewModel: notchViewModel, sport: "Football")
+                                                } compactTrailing: {
+                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Football")
+                                                }
+
+                                                NotchViewModel.shared.notch = newNotch
+                                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                            }
+                                        } label: {
+                                            HStack {
+                                                Image(systemName: "macbook")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 20, height: 20)
+                                                Text("Pin Game to Notch")
+                                            }
+                                        }
+                                    }
+
+                                    Button {
+                                        if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
+                                            NSWorkspace.shared.open(url)
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "info.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("View Game Details")
+                                        }
                                     }
                                 } label: {
                                     HStack {
-                                        Image(systemName: "info.circle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 20, height: 20)
-                                        Text("View Game Details")
-                                    }
-                                }
-                            } label: {
-                                HStack {
-                                    AsyncImage(
-                                        url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-football.png&h=80&w=80&scale=crop&cquality=40")
-                                    ) { image in
-                                        image.resizable().scaledToFit()
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                    .frame(width: 40, height: 40)
+                                        AsyncImage(
+                                            url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-football.png&h=80&w=80&scale=crop&cquality=40")
+                                        ) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 40, height: 40)
 
-                                    Text(displayText(for: game, league: league))
+                                        Text(displayText(for: game, league: league))
+                                    }
                                 }
                             }
                         }

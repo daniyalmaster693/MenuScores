@@ -49,107 +49,113 @@ struct BaseballMenu: View {
 
     var body: some View {
         Menu(title) {
-            Text(formattedDate(from: viewModel.games.first?.date ?? "Invalid Date"))
-                .font(.headline)
-            Divider().padding(.bottom)
+            let groupedGames = Dictionary(grouping: viewModel.games) { game in
+                formattedDate(from: game.date)
+            }
 
-            if !viewModel.games.isEmpty {
-                ForEach(Array(viewModel.games.enumerated()), id: \.1.id) { _, game in
-                    Menu {
-                        Button {
-                            currentTitle = displayText(for: game, league: league)
-                            currentGameID = game.id
-                            currentGameState = game.status.type.state
+            let sortedDates = groupedGames.keys.sorted()
 
-                            pinnedByMenubar = true
-                            pinnedByNotch = false
-                        } label: {
-                            HStack {
-                                Image(systemName: "menubar.rectangle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Pin Game to Menubar")
-                            }
-                        }
+            if sortedDates.isEmpty {
+                Text("No Games Scheduled")
+            } else {
+                ForEach(sortedDates, id: \.self) { date in
+                    if let gamesForDate = groupedGames[date] {
+                        Menu(date) {
+                            ForEach(gamesForDate, id: \.id) { game in
+                                Menu {
+                                    Button {
+                                        currentTitle = displayText(for: game, league: league)
+                                        currentGameID = game.id
+                                        currentGameState = game.status.type.state
 
-                        if enableNotch {
-                            Button {
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-
-                                pinnedByNotch = true
-                                pinnedByMenubar = false
-
-                                notchViewModel.game = game
-
-                                Task {
-                                    if let existingNotch = NotchViewModel.shared.notch {
-                                        await existingNotch.hide()
-                                        NotchViewModel.shared.game = nil
-                                        NotchViewModel.shared.currentGameID = ""
-                                        NotchViewModel.shared.currentGameState = ""
-                                        NotchViewModel.shared.previousGameState = ""
-                                        NotchViewModel.shared.notch = nil
+                                        pinnedByMenubar = true
+                                        pinnedByNotch = false
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "menubar.rectangle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("Pin Game to Menubar")
+                                        }
                                     }
 
-                                    let newNotch = DynamicNotch(
-                                        hoverBehavior: .all,
-                                        style: .notch
-                                    ) {
-                                        Info(notchViewModel: notchViewModel, sport: "Baseball", league: "\(league)")
-                                    } compactLeading: {
-                                        CompactLeading(notchViewModel: notchViewModel, sport: "Baseball")
-                                    } compactTrailing: {
-                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Baseball")
+                                    if enableNotch {
+                                        Button {
+                                            currentGameID = game.id
+                                            currentGameState = game.status.type.state
+
+                                            pinnedByNotch = true
+                                            pinnedByMenubar = false
+
+                                            notchViewModel.game = game
+
+                                            Task {
+                                                if let existingNotch = NotchViewModel.shared.notch {
+                                                    await existingNotch.hide()
+                                                    NotchViewModel.shared.game = nil
+                                                    NotchViewModel.shared.currentGameID = ""
+                                                    NotchViewModel.shared.currentGameState = ""
+                                                    NotchViewModel.shared.previousGameState = ""
+                                                    NotchViewModel.shared.notch = nil
+                                                }
+
+                                                let newNotch = DynamicNotch(
+                                                    hoverBehavior: .all,
+                                                    style: .notch
+                                                ) {
+                                                    Info(notchViewModel: notchViewModel, sport: "Baseball", league: "\(league)")
+                                                } compactLeading: {
+                                                    CompactLeading(notchViewModel: notchViewModel, sport: "Baseball")
+                                                } compactTrailing: {
+                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Baseball")
+                                                }
+
+                                                NotchViewModel.shared.notch = newNotch
+                                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                            }
+                                        } label: {
+                                            HStack {
+                                                Image(systemName: "macbook")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 20, height: 20)
+                                                Text("Pin Game to Notch")
+                                            }
+                                        }
                                     }
 
-                                    NotchViewModel.shared.notch = newNotch
-                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-                                }
-                            } label: {
-                                HStack {
-                                    Image(systemName: "macbook")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 20, height: 20)
-                                    Text("Pin Game to Notch")
-                                }
-                            }
-                        }
+                                    Button {
+                                        if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
+                                            NSWorkspace.shared.open(url)
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "info.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("View Game Details")
+                                        }
+                                    }
+                                } label: {
+                                    HStack {
+                                        AsyncImage(
+                                            url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-baseball.png&h=80&w=80&scale=crop&cquality=40")
+                                        ) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 40, height: 40)
 
-                        Button {
-                            if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
-                                NSWorkspace.shared.open(url)
+                                        Text(displayText(for: game, league: league))
+                                    }
+                                }
                             }
-                        } label: {
-                            HStack {
-                                Image(systemName: "info.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("View Game Details")
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            AsyncImage(
-                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-baseball.png&h=80&w=80&scale=crop&cquality=40")
-                            ) { image in
-                                image.resizable().scaledToFit()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 40, height: 40)
-
-                            Text(displayText(for: game, league: league))
                         }
                     }
                 }
-            } else {
-                Text("Loading games...")
-                    .foregroundColor(.gray)
-                    .padding()
             }
         }
         .onAppear {

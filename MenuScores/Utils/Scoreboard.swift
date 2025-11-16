@@ -15,24 +15,24 @@ enum Scoreboard {
     enum Urls {
         static let nhl = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let hncaam = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let hncaaf = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/hockey/womens-college-hockey/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/hockey/womens-college-hockey/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
 
         static let nba = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let wnba = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let ncaam = URL(
             string:
@@ -45,7 +45,7 @@ enum Scoreboard {
 
         static let nfl = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let fncaa = URL(
             string:
@@ -54,15 +54,15 @@ enum Scoreboard {
 
         static let mlb = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let bncaa = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let sncaa = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/baseball/college-softball/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/baseball/college-softball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
 
         static let f1 = URL(
@@ -88,11 +88,11 @@ enum Scoreboard {
         )!
         static let pga = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let lpga = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let uefa = URL(
             string:
@@ -137,27 +137,27 @@ enum Scoreboard {
 
         static let nll = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let pll = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/pll/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/pll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let lncaam = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/mens-college-lacrosse/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/mens-college-lacrosse/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let lncaaf = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let vncaam = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
         static let vncaaf = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
     }
 }
