@@ -587,11 +587,6 @@ struct Info: View {
                                     }
                                     .padding(.top, 5)
                                 }
-                                .task {
-                                    if let _ = notchViewModel.game?.id {
-                                        await fetchRaceInfo()
-                                    }
-                                }
                                 .frame(maxHeight: 130)
                                 .padding(.top, 10)
                                 .padding(.bottom, 5)
@@ -636,7 +631,18 @@ struct Info: View {
                             }
                         }
                     }
-                }.contextMenu {
+                }
+                .task {
+                    if let _ = notchViewModel.game?.id {
+                        await fetchRaceInfo()
+                    }
+                }
+                .onChange(of: notchViewModel.game?.id) { _ in
+                    Task {
+                        await fetchRaceInfo()
+                    }
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
