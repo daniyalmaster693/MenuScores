@@ -59,6 +59,9 @@ struct LeagueSettingsView: View {
     @AppStorage("enableAFC") private var enableAFC = false
     @AppStorage("enableOFC") private var enableOFC = false
 
+    @AppStorage("enableATP") private var enableATP = true
+    @AppStorage("enableWTA") private var enableWTA = false
+
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = false
     @AppStorage("enableLNCAAM") private var enableLNCAAM = false

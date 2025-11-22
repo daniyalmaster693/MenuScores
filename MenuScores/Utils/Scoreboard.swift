@@ -185,6 +185,15 @@ enum Scoreboard {
             "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.ofc/scoreboard"
         )!
 
+        static let atp = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/atp/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
+        static let wta = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/wta/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
+
         static let nll = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"

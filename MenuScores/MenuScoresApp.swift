@@ -100,6 +100,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableAFC") private var enableAFC = false
     @AppStorage("enableOFC") private var enableOFC = false
 
+    @AppStorage("enableATP") private var enableATP = true
+    @AppStorage("enableWTA") private var enableWTA = false
+
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = false
     @AppStorage("enableLNCAAM") private var enableLNCAAM = false
@@ -179,6 +182,9 @@ struct MenuScoresApp: App {
     @StateObject private var cafVM = GamesListView()
     @StateObject private var afcVM = GamesListView()
     @StateObject private var ofcVM = GamesListView()
+
+    @StateObject private var atpVM = GamesListView()
+    @StateObject private var wtaVM = GamesListView()
 
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
