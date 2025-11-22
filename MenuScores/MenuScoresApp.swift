@@ -733,6 +733,45 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableATP {
+                TennisMenu(
+                    title: "ATP Tour",
+                    viewModel: atpVM,
+                    league: "ATP",
+                    fetchURL: Scoreboard.Urls.atp,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableWTA {
+                TennisMenu(
+                    title: "WTA Tour",
+                    viewModel: wtaVM,
+                    league: "WTA",
+                    fetchURL: Scoreboard.Urls.wta,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableUFC {
+                UFCMenu(
+                    title: "UFC",
+                    viewModel: ufcVM,
+                    league: "UFC",
+                    fetchURL: Scoreboard.Urls.ufc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             if enableNLL {
                 LacrosseMenu(
                     title: "NLL Games",
