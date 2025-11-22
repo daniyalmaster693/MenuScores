@@ -34,8 +34,12 @@
 - College Baseball
 - College Softball
 - Champions League
+- Europa Champions League
+- Women's Champions League
 - MLS
+- National Women's Soccer League
 - Premier League
+- Women's Super League
 - La Liga
 - Bundesliga
 - Serie A
@@ -43,6 +47,14 @@
 - Ligue 1
 - Eredivisie
 - Primeira Liga
+- FIFA World Cup
+- FIFA Women's World Cup
+- FIFA World Cup UEFA Qualifiers
+- FIFA World Cup CONMEBOL Qualifiers
+- FIFA World Cup CONCACAF Qualifiers
+- FIFA World Cup African Qualifiers
+- FIFA World Cup Asian Qualifiers
+- FIFA World Cup Oceanian Qualifiers
 - F1
 - Nascar Premier
 - Nascar Secondary
