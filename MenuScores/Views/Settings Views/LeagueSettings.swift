@@ -45,6 +45,8 @@ struct LeagueSettingsView: View {
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
+    @AppStorage("enableFFWC") private var enableFFWC = false
+    @AppStorage("enableFFWWC") private var enableFFWWC = false
 
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = false
@@ -299,6 +301,22 @@ struct LeagueSettingsView: View {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.secondary)
                             Text("Primeira Liga")
+                        }
+                    }
+
+                    Toggle(isOn: $enableFFWC) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup")
+                        }
+                    }
+
+                    Toggle(isOn: $enableFFWWC) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("FIFA Women's World Cup")
                         }
                     }
                 }

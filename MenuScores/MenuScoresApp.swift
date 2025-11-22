@@ -86,6 +86,8 @@ struct MenuScoresApp: App {
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
+    @AppStorage("enableFFWC") private var enableFFWC = false
+    @AppStorage("enableFFWWC") private var enableFFWWC = false
 
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = false
@@ -149,11 +151,12 @@ struct MenuScoresApp: App {
     @StateObject private var fraVM = GamesListView()
     @StateObject private var nedVM = GamesListView()
     @StateObject private var porVM = GamesListView()
-
     @StateObject private var eplVM = GamesListView()
     @StateObject private var espVM = GamesListView()
     @StateObject private var gerVM = GamesListView()
     @StateObject private var itaVM = GamesListView()
+    @StateObject private var ffwcVM = GamesListView()
+    @StateObject private var ffwwcVM = GamesListView()
 
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
@@ -444,6 +447,32 @@ struct MenuScoresApp: App {
                     viewModel: porVM,
                     league: "POR",
                     fetchURL: Scoreboard.Urls.por,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableFFWC {
+                SoccerMenu(
+                    title: "FIFA World Cup",
+                    viewModel: ffwcVM,
+                    league: "FFWC",
+                    fetchURL: Scoreboard.Urls.ffwc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableFFWWC {
+                SoccerMenu(
+                    title: "FIFA Women's World Cup",
+                    viewModel: ffwwcVM,
+                    league: "FFWWC",
+                    fetchURL: Scoreboard.Urls.ffwwc,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,

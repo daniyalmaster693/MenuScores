@@ -77,7 +77,6 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-secondary/scoreboard"
         )!
-
         static let nct = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-truck/scoreboard"
@@ -86,6 +85,7 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/racing/irl/scoreboard"
         )!
+
         static let pga = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
@@ -94,6 +94,7 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
+
         static let uefa = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard"
@@ -134,6 +135,14 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/ITA.1/scoreboard"
         )!
+        static let ffwc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
+        )!
+        static let ffwwc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.wwc/scoreboard"
+        )!
 
         static let nll = URL(
             string:
@@ -151,6 +160,7 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
+
         static let vncaam = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
