@@ -45,8 +45,14 @@ struct LeagueSettingsView: View {
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
+
     @AppStorage("enableFFWC") private var enableFFWC = false
-    @AppStorage("enableFFWWC") private var enableFFWWC = false
+    @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
+    @AppStorage("enableCONCACAF") private var enableCONCACAF = false
+    @AppStorage("enableCONMEBOL") private var enableCONMEBOL = false
+    @AppStorage("enableCAF") private var enableCAF = false
+    @AppStorage("enableAFC") private var enableAFC = false
+    @AppStorage("enableOFC") private var enableOFC = false
 
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = false
@@ -303,20 +309,62 @@ struct LeagueSettingsView: View {
                             Text("Primeira Liga")
                         }
                     }
+                }
 
+                Section("FIFA World Cup") {
                     Toggle(isOn: $enableFFWC) {
                         HStack {
-                            Image(systemName: "soccerball")
+                            Image(systemName: "trophy")
                                 .foregroundColor(.secondary)
                             Text("FIFA World Cup")
                         }
                     }
 
-                    Toggle(isOn: $enableFFWWC) {
+                    Toggle(isOn: $enableFFWCQUEFA) {
                         HStack {
-                            Image(systemName: "soccerball")
+                            Image(systemName: "trophy")
                                 .foregroundColor(.secondary)
-                            Text("FIFA Women's World Cup")
+                            Text("FIFA World Cup UEFA Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableCONMEBOL) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup COMEBOL Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableCONCACAF) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup CONCACAF Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableCAF) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup African Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableAFC) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup Asian Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableOFC) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup Oceanian Qualifiers")
                         }
                     }
                 }

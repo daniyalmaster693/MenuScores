@@ -135,13 +135,34 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/ITA.1/scoreboard"
         )!
+
         static let ffwc = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
         )!
-        static let ffwwc = URL(
+        static let ffwcquefa = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.wwc/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.uefa/scoreboard"
+        )!
+        static let concacaf = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.concacaf/scoreboard"
+        )!
+        static let caf = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.caf/scoreboard"
+        )!
+        static let conmebol = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard"
+        )!
+        static let afc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.afc/scoreboard"
+        )!
+        static let ofc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.ofc/scoreboard"
         )!
 
         static let nll = URL(

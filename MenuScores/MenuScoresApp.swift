@@ -86,8 +86,14 @@ struct MenuScoresApp: App {
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
+
     @AppStorage("enableFFWC") private var enableFFWC = false
-    @AppStorage("enableFFWWC") private var enableFFWWC = false
+    @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
+    @AppStorage("enableCONCACAF") private var enableCONCACAF = false
+    @AppStorage("enableCONMEBOL") private var enableCONMEBOL = false
+    @AppStorage("enableCAF") private var enableCAF = false
+    @AppStorage("enableAFC") private var enableAFC = false
+    @AppStorage("enableOFC") private var enableOFC = false
 
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = false
@@ -155,8 +161,14 @@ struct MenuScoresApp: App {
     @StateObject private var espVM = GamesListView()
     @StateObject private var gerVM = GamesListView()
     @StateObject private var itaVM = GamesListView()
+
     @StateObject private var ffwcVM = GamesListView()
-    @StateObject private var ffwwcVM = GamesListView()
+    @StateObject private var ffwcquefaVM = GamesListView()
+    @StateObject private var conmebolVM = GamesListView()
+    @StateObject private var concacafVM = GamesListView()
+    @StateObject private var cafVM = GamesListView()
+    @StateObject private var afcVM = GamesListView()
+    @StateObject private var ofcVM = GamesListView()
 
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
@@ -467,12 +479,77 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableFFWWC {
+            if enableFFWC {
                 SoccerMenu(
-                    title: "FIFA Women's World Cup",
-                    viewModel: ffwwcVM,
-                    league: "FFWWC",
-                    fetchURL: Scoreboard.Urls.ffwwc,
+                    title: "FIFA World Cup UEFA Qualifiers",
+                    viewModel: ffwcquefaVM,
+                    league: "FFWCQUEFA",
+                    fetchURL: Scoreboard.Urls.ffwcquefa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableFFWC {
+                SoccerMenu(
+                    title: "FIFA World Cup CONMEBOL Qualifiers",
+                    viewModel: conmebolVM,
+                    league: "CONMEBOL",
+                    fetchURL: Scoreboard.Urls.conmebol,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableFFWC {
+                SoccerMenu(
+                    title: "FIFA World Cup CONCACAF Qualifiers",
+                    viewModel: concacafVM,
+                    league: "CONCACAF",
+                    fetchURL: Scoreboard.Urls.concacaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableAFC {
+                SoccerMenu(
+                    title: "FIFA World Cup African Qualifiers",
+                    viewModel: cafVM,
+                    league: "CAF",
+                    fetchURL: Scoreboard.Urls.caf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableAFC {
+                SoccerMenu(
+                    title: "FIFA World Cup Asian Qualifiers",
+                    viewModel: afcVM,
+                    league: "AFC",
+                    fetchURL: Scoreboard.Urls.afc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOFC {
+                SoccerMenu(
+                    title: "FIFA World Cup Oceanian Qualifiers",
+                    viewModel: ofcVM,
+                    league: "OFC",
+                    fetchURL: Scoreboard.Urls.ofc,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
