@@ -77,17 +77,22 @@ struct MenuScoresApp: App {
     @AppStorage("enableLPGA") private var enableLPGA = false
 
     @AppStorage("enableMLS") private var enableMLS = true
+    @AppStorage("enableNWSL") private var enableNWSL = false
     @AppStorage("enableUEFA") private var enableUEFA = false
+    @AppStorage("enableEUEFA") private var enableEUEFA = false
+    @AppStorage("enableWUEFA") private var enableWUEFA = false
     @AppStorage("enableMEX") private var enableMEX = false
     @AppStorage("enableFRA") private var enableFRA = false
     @AppStorage("enableNED") private var enableNED = false
     @AppStorage("enablePOR") private var enablePOR = false
     @AppStorage("enableEPL") private var enableEPL = false
+    @AppStorage("enableWEPL") private var enableWEPL = false
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
 
     @AppStorage("enableFFWC") private var enableFFWC = false
+    @AppStorage("enableFFWWC") private var enableFFWWC = false
     @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
     @AppStorage("enableCONCACAF") private var enableCONCACAF = false
     @AppStorage("enableCONMEBOL") private var enableCONMEBOL = false
@@ -152,17 +157,22 @@ struct MenuScoresApp: App {
     @StateObject private var lpgaVM = GamesListView()
 
     @StateObject private var uefaVM = GamesListView()
+    @StateObject private var euefaVM = GamesListView()
+    @StateObject private var wuefaVM = GamesListView()
     @StateObject private var mlsVM = GamesListView()
+    @StateObject private var nwslVM = GamesListView()
     @StateObject private var mexVM = GamesListView()
     @StateObject private var fraVM = GamesListView()
     @StateObject private var nedVM = GamesListView()
     @StateObject private var porVM = GamesListView()
     @StateObject private var eplVM = GamesListView()
+    @StateObject private var weplVM = GamesListView()
     @StateObject private var espVM = GamesListView()
     @StateObject private var gerVM = GamesListView()
     @StateObject private var itaVM = GamesListView()
 
     @StateObject private var ffwcVM = GamesListView()
+    @StateObject private var ffwwcVM = GamesListView()
     @StateObject private var ffwcquefaVM = GamesListView()
     @StateObject private var conmebolVM = GamesListView()
     @StateObject private var concacafVM = GamesListView()
@@ -349,6 +359,19 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableNWSL {
+                SoccerMenu(
+                    title: "NWSL Games",
+                    viewModel: nwslVM,
+                    league: "NWSL",
+                    fetchURL: Scoreboard.Urls.nwsl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             if enableUEFA {
                 SoccerMenu(
                     title: "Champions League",
@@ -362,12 +385,51 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableEUEFA {
+                SoccerMenu(
+                    title: "Europa Champions League",
+                    viewModel: euefaVM,
+                    league: "EUEFA",
+                    fetchURL: Scoreboard.Urls.euefa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableWUEFA {
+                SoccerMenu(
+                    title: "Womans Champions League",
+                    viewModel: wuefaVM,
+                    league: "WUEFA",
+                    fetchURL: Scoreboard.Urls.wuefa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             if enableEPL {
                 SoccerMenu(
                     title: "Premier League",
                     viewModel: eplVM,
                     league: "EPL",
                     fetchURL: Scoreboard.Urls.epl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableWEPL {
+                SoccerMenu(
+                    title: "Women's Super League",
+                    viewModel: weplVM,
+                    league: "wepl",
+                    fetchURL: Scoreboard.Urls.wepl,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
@@ -472,6 +534,19 @@ struct MenuScoresApp: App {
                     viewModel: ffwcVM,
                     league: "FFWC",
                     fetchURL: Scoreboard.Urls.ffwc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableFFWWC {
+                SoccerMenu(
+                    title: "FIFA Women's World Cup",
+                    viewModel: ffwwcVM,
+                    league: "FFWWC",
+                    fetchURL: Scoreboard.Urls.ffwwc,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,

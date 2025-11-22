@@ -36,17 +36,22 @@ struct LeagueSettingsView: View {
     @AppStorage("enableLPGA") private var enableLPGA = false
 
     @AppStorage("enableMLS") private var enableMLS = true
+    @AppStorage("enableNWSL") private var enableNWSL = false
     @AppStorage("enableUEFA") private var enableUEFA = false
+    @AppStorage("enableEUEFA") private var enableEUEFA = false
+    @AppStorage("enableWUEFA") private var enableWUEFA = false
     @AppStorage("enableMEX") private var enableMEX = false
     @AppStorage("enableFRA") private var enableFRA = false
     @AppStorage("enableNED") private var enableNED = false
     @AppStorage("enablePOR") private var enablePOR = false
     @AppStorage("enableEPL") private var enableEPL = false
+    @AppStorage("enableWEPL") private var enableWEPL = false
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
 
     @AppStorage("enableFFWC") private var enableFFWC = false
+    @AppStorage("enableFFWWC") private var enableFFWWC = false
     @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
     @AppStorage("enableCONCACAF") private var enableCONCACAF = false
     @AppStorage("enableCONMEBOL") private var enableCONMEBOL = false
@@ -238,6 +243,14 @@ struct LeagueSettingsView: View {
                         }
                     }
 
+                    Toggle(isOn: $enableNWSL) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("NWSL")
+                        }
+                    }
+
                     Toggle(isOn: $enableUEFA) {
                         HStack {
                             Image(systemName: "soccerball")
@@ -246,11 +259,35 @@ struct LeagueSettingsView: View {
                         }
                     }
 
+                    Toggle(isOn: $enableEUEFA) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Europa Champions League")
+                        }
+                    }
+
+                    Toggle(isOn: $enableWUEFA) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Women's Champions League")
+                        }
+                    }
+
                     Toggle(isOn: $enableEPL) {
                         HStack {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.secondary)
                             Text("Premier League")
+                        }
+                    }
+
+                    Toggle(isOn: $enableWEPL) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.secondary)
+                            Text("Women's Super League")
                         }
                     }
 
@@ -317,6 +354,14 @@ struct LeagueSettingsView: View {
                             Image(systemName: "trophy")
                                 .foregroundColor(.secondary)
                             Text("FIFA World Cup")
+                        }
+                    }
+
+                    Toggle(isOn: $enableFFWWC) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA Women's World Cup")
                         }
                     }
 

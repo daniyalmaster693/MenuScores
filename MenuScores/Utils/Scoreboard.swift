@@ -99,9 +99,21 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard"
         )!
+        static let euefa = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.europa/scoreboard"
+        )!
+        static let wuefa = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.wchampions/scoreboard"
+        )!
         static let mls = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.1/scoreboard"
+        )!
+        static let nwsl = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.NWSL/scoreboard"
         )!
         static let mex = URL(
             string:
@@ -123,6 +135,10 @@ enum Scoreboard {
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/ENG.1/scoreboard"
         )!
+        static let wepl = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.wchampions/scoreboard"
+        )!
         static let esp = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/ESP.1/scoreboard"
@@ -139,6 +155,10 @@ enum Scoreboard {
         static let ffwc = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
+        )!
+        static let ffwwc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.wwc/scoreboard"
         )!
         static let ffwcquefa = URL(
             string:
