@@ -194,6 +194,11 @@ enum Scoreboard {
             "https://site.api.espn.com/apis/site/v2/sports/lacrosse/wta/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
         )!
 
+        static let ufc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
+
         static let nll = URL(
             string:
             "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
