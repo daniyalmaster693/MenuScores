@@ -133,15 +133,30 @@ struct LeagueSettingsView: View {
                                 enablePGA = false
                                 enableLPGA = false
                                 enableUEFA = false
+                                enableEUEFA = false
+                                enableWUEFA = false
                                 enableMLS = false
+                                enableNWSL = false
                                 enableMEX = false
                                 enableFRA = false
                                 enableNED = false
                                 enablePOR = false
                                 enableEPL = false
+                                enableWEPL = false
                                 enableESP = false
                                 enableGER = false
+                                enableFFWC = false
+                                enableFFWWC = false
+                                enableFFWCQUEFA = false
+                                enableCONCACAF = false
+                                enableCONMEBOL = false
+                                enableCAF = false
+                                enableAFC = false
+                                enableOFC = false
                                 enableITA = false
+                                enableATP = false
+                                enableWTA = false
+                                enableUFC = false
                                 enableNLL = false
                                 enablePLL = false
                                 enableLNCAAM = false
@@ -475,6 +490,34 @@ struct LeagueSettingsView: View {
                             Image(systemName: "figure.golf")
                                 .foregroundColor(.secondary)
                             Text("LPGA")
+                        }
+                    }
+                }
+
+                Section("Tennis") {
+                    Toggle(isOn: $enablePGA) {
+                        HStack {
+                            Image(systemName: "tennisball.fill")
+                                .foregroundColor(.secondary)
+                            Text("PGA")
+                        }
+                    }
+
+                    Toggle(isOn: $enableLPGA) {
+                        HStack {
+                            Image(systemName: "tennisball.fill")
+                                .foregroundColor(.secondary)
+                            Text("LPGA")
+                        }
+                    }
+                }
+
+                Section("Fighting") {
+                    Toggle(isOn: $enableUFC) {
+                        HStack {
+                            Image(systemName: "figure.boxing")
+                                .foregroundColor(.secondary)
+                            Text("UFC")
                         }
                     }
                 }
