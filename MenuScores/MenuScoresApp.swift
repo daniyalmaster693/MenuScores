@@ -188,6 +188,8 @@ struct MenuScoresApp: App {
     @StateObject private var atpVM = GamesListView()
     @StateObject private var wtaVM = GamesListView()
 
+    @StateObject private var ufcVM = GamesListView()
+
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
     @StateObject private var lncaamVM = GamesListView()
