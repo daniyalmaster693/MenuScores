@@ -495,19 +495,19 @@ struct LeagueSettingsView: View {
                 }
 
                 Section("Tennis") {
-                    Toggle(isOn: $enablePGA) {
+                    Toggle(isOn: $enableATP) {
                         HStack {
                             Image(systemName: "tennisball.fill")
                                 .foregroundColor(.secondary)
-                            Text("PGA")
+                            Text("ATP Tour")
                         }
                     }
 
-                    Toggle(isOn: $enableLPGA) {
+                    Toggle(isOn: $enableWTA) {
                         HStack {
                             Image(systemName: "tennisball.fill")
                                 .foregroundColor(.secondary)
-                            Text("LPGA")
+                            Text("WTA Tour")
                         }
                     }
                 }
