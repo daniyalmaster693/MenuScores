@@ -171,7 +171,7 @@ struct Info: View {
                                     } placeholder: {
                                         Color.black
                                     }
-                                    .padding(.trailing, 3)
+                                    .padding(.trailing, 7)
 
                                     VStack {
                                         Text("\(game.competitions[0].competitors?[1].score ?? "-")")
@@ -199,8 +199,7 @@ struct Info: View {
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
-                            .padding(.leading, 30)
-                            .padding(.trailing, 30)
+                            .padding(.horizontal, 35)
                         }
 
                         if sport != "Baseball" && sport != "Soccer" {
@@ -217,8 +216,7 @@ struct Info: View {
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
-                            .padding(.leading, 30)
-                            .padding(.trailing, 30)
+                            .padding(.horizontal, 35)
                         }
 
                         HStack(spacing: 4) {
@@ -250,7 +248,7 @@ struct Info: View {
                                     } placeholder: {
                                         Color.black
                                     }
-                                    .padding(.leading, 3)
+                                    .padding(.leading, 7)
                                 }
                             }
                         }
