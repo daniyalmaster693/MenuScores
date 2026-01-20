@@ -52,6 +52,10 @@ struct Info: View {
 
     @State private var playText: String = "-"
     @State private var headlineText: String = "-"
+
+    @State private var majorPlayText: String = "Auston Matthews Goal (25) Backhand, assists: Max Domi (17)"
+    @State private var showMajorPlay: Bool = false
+
     @State private var driverArray: [Driver] = []
     @State private var totalLaps: String? = nil
     @State private var flagColor: String? = nil
@@ -276,7 +280,7 @@ struct Info: View {
                                                             font: .system(size: 14, weight: .medium),
                                                             nsFont: .body,
                                                             textColor: .white,
-                                                            frameWidth: geo.size.width - 17)
+                                                            frameWidth: geo.size.width - 23)
                                                     .fontWeight(.medium)
                                                     .onAppear {
                                                         playText = text
@@ -352,7 +356,7 @@ struct Info: View {
                                                         font: .system(size: 14, weight: .medium),
                                                         nsFont: .body,
                                                         textColor: .white,
-                                                        frameWidth: geo.size.width - 17)
+                                                        frameWidth: geo.size.width - 23)
                                                 .onAppear {
                                                     headlineText = headline
                                                 }
@@ -424,6 +428,25 @@ struct Info: View {
                     }
                     .keyboardShortcut("q")
                 }
+
+                // MARK: Inline View for Major Plays
+
+//                GeometryReader { geo in
+//                    HStack(alignment: .center) {
+//                        Image(systemName: "hockey.puck.fill")
+//                            .font(.system(size: 14))
+//                            .foregroundColor(Color(hex: "#003e7e"))
+//
+//                        MarqueeText($majorPlayText,
+//                                    font: .system(size: 14, weight: .medium),
+//                                    nsFont: .body,
+//                                    textColor: .white,
+//                                    frameWidth: geo.size.width - 23)
+//                    }
+//                }
+//                .padding(.horizontal, 3)
+//                .padding(.top, 3)
+//                .padding(.bottom, 7)
             }
 
             if sport == "F1" {
