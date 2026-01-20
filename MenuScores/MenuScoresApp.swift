@@ -131,8 +131,8 @@ struct MenuScoresApp: App {
 
     // Notch Behaviors
 
-    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @AppStorage("enableNotch") private var enableNotch = true
+    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
     // League Fetching
 
