@@ -187,11 +187,11 @@ enum Scoreboard {
 
         static let atp = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/atp/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard"
         )!
         static let wta = URL(
             string:
-            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/wta/scoreboard"
+            "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard"
         )!
 
         static let ufc = URL(
