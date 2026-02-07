@@ -113,6 +113,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableVNCAAM") private var enableVNCAAM = true
     @AppStorage("enableVNCAAF") private var enableVNCAAF = false
 
+    @AppStorage("enableOMIHC") private var enableOMIHC = true
+    @AppStorage("enableOWIHC") private var enableOWIHC = false
+
     // Notification Settings
 
     @AppStorage("notiGameStart") private var notiGameStart = false
@@ -198,6 +201,9 @@ struct MenuScoresApp: App {
     @StateObject private var vncaamVM = GamesListView()
     @StateObject private var vncaafVM = GamesListView()
 
+    @StateObject private var omihcVM = GamesListView()
+    @StateObject private var owihcVM = GamesListView()
+
     var body: some Scene {
         MenuBarExtra {
             if enableNHL {
@@ -232,6 +238,32 @@ struct MenuScoresApp: App {
                     viewModel: hncaafVM,
                     league: "HNCAAF",
                     fetchURL: Scoreboard.Urls.hncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOMIHC {
+                HockeyMenu(
+                    title: "Men's Olympics Ice Hcokey",
+                    viewModel: omihcVM,
+                    league: "OMIHC",
+                    fetchURL: Scoreboard.Urls.omihc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOWIHC {
+                HockeyMenu(
+                    title: "Women's Olympics Ice Hcokey",
+                    viewModel: owihcVM,
+                    league: "OWIHC",
+                    fetchURL: Scoreboard.Urls.owihc,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,

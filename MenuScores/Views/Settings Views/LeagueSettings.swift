@@ -72,6 +72,9 @@ struct LeagueSettingsView: View {
     @AppStorage("enableVNCAAM") private var enableVNCAAM = true
     @AppStorage("enableVNCAAF") private var enableVNCAAF = false
 
+    @AppStorage("enableOMIHC") private var enableOMIHC = true
+    @AppStorage("enableOWIHC") private var enableOWIHC = false
+
     // League Settings View
 
     var body: some View {
@@ -163,6 +166,8 @@ struct LeagueSettingsView: View {
                                 enableLNCAAF = false
                                 enableVNCAAM = false
                                 enableVNCAAF = false
+                                enableOMIHC = false
+                                enableOWIHC = false
                             }) {
                                 HStack {
                                     Image(systemName: "xmark.circle")
@@ -570,6 +575,24 @@ struct LeagueSettingsView: View {
                             Image(systemName: "volleyball")
                                 .foregroundColor(.secondary)
                             Text("Women's College Volleyball")
+                        }
+                    }
+                }
+
+                Section("Olympics") {
+                    Toggle(isOn: $enableOMIHC) {
+                        HStack {
+                            Image(systemName: "medal")
+                                .foregroundColor(.secondary)
+                            Text("Men's Olympic Ice Hockey")
+                        }
+                    }
+
+                    Toggle(isOn: $enableOWIHC) {
+                        HStack {
+                            Image(systemName: "medal")
+                                .foregroundColor(.secondary)
+                            Text("Women's Olympic Ice Hockey")
                         }
                     }
                 }

@@ -260,14 +260,14 @@ struct Info: View {
 
                     if sport != "Lacrosse" && sport != "Volleyball" && sport != "Soccer" && game.competitions[0].status.type.state == "in" {
                         VStack(alignment: .center) {
-                            GeometryReader { geo in
-                                HStack(alignment: .center, spacing: 10) {
-                                    Capsule()
-                                        .fill(capsuleColor)
-                                        .frame(width: 3, height: 16)
+                            if let text = game.competitions.first?.situation?.lastPlay?.text {
+                                GeometryReader { geo in
+                                    HStack(alignment: .center, spacing: 10) {
+                                        Capsule()
+                                            .fill(capsuleColor)
+                                            .frame(width: 3, height: 16)
 
-                                    ZStack {
-                                        if let text = game.competitions.first?.situation?.lastPlay?.text {
+                                        ZStack {
                                             let font = NSFont.systemFont(ofSize: 14, weight: .medium)
                                             let textWidth = (text as NSString).size(withAttributes: [.font: font]).width
 
@@ -291,12 +291,12 @@ struct Info: View {
                                             }
                                         }
                                     }
+                                    .frame(minWidth: geo.size.width, alignment: .center)
+                                    .padding(.horizontal, 5)
+                                    .frame(height: 22)
                                 }
-                                .frame(minWidth: geo.size.width, alignment: .center)
-                                .padding(.horizontal, 5)
                                 .frame(height: 22)
                             }
-                            .frame(height: 22)
 
                             if sport == "Baseball" {
                                 HStack(alignment: .center, spacing: 20) {
