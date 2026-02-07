@@ -34,10 +34,10 @@ struct Event: Decodable {
 struct Status: Decodable {
     let displayClock: String?
     let period: Int?
-    let type: Type
+    let type: type
 }
 
-struct Type: Decodable {
+struct type: Decodable {
     let state: String
     let completed: Bool
     let detail: String?
