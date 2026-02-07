@@ -51,79 +51,11 @@ struct TennisMenu: View {
             if !viewModel.tennisGames.isEmpty {
                 ForEach(Array(viewModel.tennisGames.enumerated()), id: \.1.id) { _, game in
                     Menu {
-                        Button {
-//                            currentTitle = displayText(for: game, league: league)
-                            currentGameID = game.id
-                            currentGameState = game.status.type.state
-
-                            pinnedByMenubar = true
-                            pinnedByNotch = false
-                        } label: {
-                            HStack {
-                                Image(systemName: "menubar.rectangle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Pin Game to Menubar")
-                            }
-                        }
-
-                        if enableNotch {
-                            Button {
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
-
-                                pinnedByNotch = true
-                                pinnedByMenubar = false
-
-                                notchViewModel.tennisGame = game
-
-                                Task {
-                                    if let existingNotch = NotchViewModel.shared.notch {
-                                        await existingNotch.hide()
-                                        NotchViewModel.shared.game = nil
-                                        NotchViewModel.shared.currentGameID = ""
-                                        NotchViewModel.shared.currentGameState = ""
-                                        NotchViewModel.shared.previousGameState = ""
-                                        NotchViewModel.shared.notch = nil
-                                    }
-
-                                    let newNotch = DynamicNotch(
-                                        hoverBehavior: .all,
-                                        style: .notch
-                                    ) {
-                                        Info(notchViewModel: notchViewModel, sport: "Tennis", league: "\(league)")
-                                    } compactLeading: {
-                                        CompactLeading(notchViewModel: notchViewModel, sport: "Tennis")
-                                    } compactTrailing: {
-                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Tennis")
-                                    }
-
-                                    NotchViewModel.shared.notch = newNotch
-                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                        ForEach(game.groupings, id: \.grouping.id) { group in
+                            Menu(group.grouping.displayName) {
+                                ForEach(group.competitions, id: \.id) { competition in
+                                    Button(competition.id) {}
                                 }
-                            } label: {
-                                HStack {
-                                    Image(systemName: "macbook")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 20, height: 20)
-                                    Text("Pin Game to Notch")
-                                }
-                            }
-                        }
-
-                        Button {
-                            if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
-                                NSWorkspace.shared.open(url)
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "info.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("View Game Details")
                             }
                         }
                     } label: {

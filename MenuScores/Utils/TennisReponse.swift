@@ -29,10 +29,6 @@ struct TennisEvent: Decodable {
     let links: [TennisLinks]?
 }
 
-struct Groupings: Decodable {
-    let competitions: [Competition]
-}
-
 struct TennisLinks: Decodable {
     let language: String?
     let href: String
@@ -40,4 +36,19 @@ struct TennisLinks: Decodable {
     let shortText: String?
     let isExternal: Bool
     let isPremium: Bool
+}
+
+struct Groupings: Decodable {
+    let grouping: Grouping
+    let competitions: [TennisCompetition]
+}
+
+struct Grouping: Decodable {
+    let id: String
+    let displayName: String
+}
+
+struct TennisCompetition: Decodable {
+    let id: String
+    let date: String
 }
