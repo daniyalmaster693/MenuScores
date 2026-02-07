@@ -188,8 +188,8 @@ struct MenuScoresApp: App {
     @StateObject private var afcVM = GamesListView()
     @StateObject private var ofcVM = GamesListView()
 
-    @StateObject private var atpVM = GamesListView()
-    @StateObject private var wtaVM = GamesListView()
+    @StateObject private var atpVM = TennisListView()
+    @StateObject private var wtaVM = TennisListView()
 
     @StateObject private var ufcVM = GamesListView()
 

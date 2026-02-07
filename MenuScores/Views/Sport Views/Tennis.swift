@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TennisMenu: View {
     let title: String
-    @ObservedObject var viewModel: GamesListView
+    @ObservedObject var viewModel: TennisListView
     let league: String
     let fetchURL: URL
 
@@ -48,15 +48,11 @@ struct TennisMenu: View {
 
     var body: some View {
         Menu(title) {
-            Text(viewModel.games.first?.name ?? "")
-                .font(.headline)
-            Divider().padding(.bottom)
-
-            if !viewModel.games.isEmpty {
-                ForEach(Array(viewModel.games.enumerated()), id: \.1.id) { _, game in
+            if !viewModel.tennisGames.isEmpty {
+                ForEach(Array(viewModel.tennisGames.enumerated()), id: \.1.id) { _, game in
                     Menu {
                         Button {
-                            currentTitle = displayText(for: game, league: league)
+//                            currentTitle = displayText(for: game, league: league)
                             currentGameID = game.id
                             currentGameState = game.status.type.state
 
@@ -80,7 +76,7 @@ struct TennisMenu: View {
                                 pinnedByNotch = true
                                 pinnedByMenubar = false
 
-                                notchViewModel.game = game
+                                notchViewModel.tennisGame = game
 
                                 Task {
                                     if let existingNotch = NotchViewModel.shared.notch {
@@ -133,7 +129,7 @@ struct TennisMenu: View {
                     } label: {
                         HStack {
                             AsyncImage(
-                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
+                                url: URL(string: "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
                             ) { image in
                                 image.resizable().scaledToFit()
                             } placeholder: {
@@ -141,7 +137,7 @@ struct TennisMenu: View {
                             }
                             .frame(width: 40, height: 40)
 
-                            Text(displayText(for: game, league: league))
+                            Text(game.shortName ?? "")
                         }
                     }
                 }
@@ -154,38 +150,38 @@ struct TennisMenu: View {
         .onAppear {
             LeagueSelectionModel.shared.currentLeague = league
             Task {
-                await viewModel.populateGames(from: fetchURL)
+                await viewModel.populateTennis(from: fetchURL)
             }
         }
-        .onReceive(
-            Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
-        ) { _ in
-            Task {
-                await viewModel.populateGames(from: fetchURL)
-                if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID }) {
-                    if pinnedByMenubar {
-                        currentTitle = displayText(for: updatedGame, league: league)
-                    } else if pinnedByNotch {
-                        currentTitle = ""
-                    }
-
-                    let newState = updatedGame.status.type.state
-
-                    if notiGameStart && previousGameState != "in" && newState == "in" {
-                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                    }
-                    if notiGameComplete && previousGameState != "post" && newState == "post" {
-                        gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                    }
-
-                    previousGameState = newState
-                    currentGameState = newState
-
-                    if pinnedByNotch {
-                        notchViewModel.game = updatedGame
-                    }
-                }
-            }
-        }
+//        .onReceive(
+//            Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+//        ) { _ in
+//            Task {
+//                await viewModel.populateTennis(from: fetchURL)
+//                if let updatedGame = viewModel.tennisGames.first(where: { $0.id == currentGameID }) {
+//                    if pinnedByMenubar {
+//                        currentTitle = displayText(for: updatedGame, league: league)
+//                    } else if pinnedByNotch {
+//                        currentTitle = ""
+//                    }
+//
+//                    let newState = updatedGame.status.type.state
+//
+//                    if notiGameStart && previousGameState != "in" && newState == "in" {
+//                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+//                    }
+//                    if notiGameComplete && previousGameState != "post" && newState == "post" {
+//                        gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+//                    }
+//
+//                    previousGameState = newState
+//                    currentGameState = newState
+//
+//                    if pinnedByNotch {
+//                        notchViewModel.game = updatedGame
+//                    }
+//                }
+//            }
+//        }
     }
 }

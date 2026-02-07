@@ -18,6 +18,7 @@ class NotchViewModel: ObservableObject {
     var notch: DynamicNotch<Info, CompactLeading, CompactTrailing>? = nil
 
     @Published var game: Event?
+    @Published var tennisGame: TennisEvent?
     var sport: String = ""
     var league: String = ""
 

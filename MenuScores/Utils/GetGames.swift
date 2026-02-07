@@ -16,13 +16,29 @@ class getGames {
         let (data, response) = try await URLSession.shared.data(from: url)
 
         guard let httpResponse = response as? HTTPURLResponse,
-            httpResponse.statusCode == 200
+              httpResponse.statusCode == 200
         else {
             throw NetworkError.invalidResponse
         }
 
         let decoded = try JSONDecoder().decode(
-            ScoreboardResponse.self, from: data)
+            ScoreboardResponse.self, from: data
+        )
+        return decoded.events
+    }
+
+    func getTennisArray(url: URL) async throws -> [TennisEvent] {
+        let (data, response) = try await URLSession.shared.data(from: url)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200
+        else {
+            throw NetworkError.invalidResponse
+        }
+
+        let decoded = try JSONDecoder().decode(
+            TennisResponse.self, from: data
+        )
         return decoded.events
     }
 }
