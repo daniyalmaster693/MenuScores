@@ -245,32 +245,6 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableOMIHC {
-                HockeyMenu(
-                    title: "Men's Olympic Ice Hcokey",
-                    viewModel: omihcVM,
-                    league: "OMIHC",
-                    fetchURL: Scoreboard.Urls.omihc,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableOWIHC {
-                HockeyMenu(
-                    title: "Women's Olympic Ice Hcokey",
-                    viewModel: owihcVM,
-                    league: "OWIHC",
-                    fetchURL: Scoreboard.Urls.owihc,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
             if enableNBA {
                 BasketballMenu(
                     title: "NBA Games",
@@ -875,6 +849,32 @@ struct MenuScoresApp: App {
                     viewModel: vncaafVM,
                     league: "VNCAAF",
                     fetchURL: Scoreboard.Urls.vncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOMIHC {
+                HockeyMenu(
+                    title: "Men's Olympic Ice Hcokey",
+                    viewModel: omihcVM,
+                    league: "OMIHC",
+                    fetchURL: Scoreboard.Urls.omihc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOWIHC {
+                HockeyMenu(
+                    title: "Women's Olympic Ice Hcokey",
+                    viewModel: owihcVM,
+                    league: "OWIHC",
+                    fetchURL: Scoreboard.Urls.owihc,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
