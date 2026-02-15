@@ -53,8 +53,24 @@ struct TennisMenu: View {
                     Menu {
                         ForEach(game.groupings, id: \.grouping.id) { group in
                             Menu(group.grouping.displayName) {
-                                ForEach(group.competitions, id: \.id) { competition in
-                                    Button(competition.id) {}
+                                let groupedGames = Dictionary(grouping: group.competitions) { competition in
+                                    formattedDate(from: competition.date)
+                                }
+
+                                let sortedDates = groupedGames.keys.sorted()
+
+                                if sortedDates.isEmpty {
+                                    Text("No Games Scheduled")
+                                } else {
+                                    ForEach(sortedDates, id: \.self) { date in
+                                        if let gamesForDate = groupedGames[date] {
+                                            Menu(date) {
+                                                ForEach(gamesForDate, id: \.id) { competition in
+                                                    Button("\(competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1") - \(competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2")") {}
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
