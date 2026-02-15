@@ -66,7 +66,20 @@ struct TennisMenu: View {
                                         if let gamesForDate = groupedGames[date] {
                                             Menu(date) {
                                                 ForEach(gamesForDate, id: \.id) { competition in
-                                                    Button("\(competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1") - \(competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2")") {}
+                                                    Menu {} label: {
+                                                        HStack {
+                                                            AsyncImage(
+                                                                url: URL(string: competition.competitors?.first?.athlete?.flag?.href ?? competition.competitors?.first?.roster?.athletes?.first?.flag?.href ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
+                                                            ) { image in
+                                                                image.resizable().scaledToFit()
+                                                            } placeholder: {
+                                                                ProgressView()
+                                                            }
+                                                            .frame(width: 40, height: 40)
+
+                                                            Text("\(competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1") - \(competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2")")
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }

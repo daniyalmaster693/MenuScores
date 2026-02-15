@@ -79,4 +79,12 @@ struct TennisFlag: Decodable {
 struct TennisRoster: Decodable {
     let displayName: String?
     let shortDisplayName: String?
+    let athletes: [TennisAthletes]?
+}
+
+struct TennisAthletes: Decodable {
+    let fullName: String
+    let displayName: String
+    let shortName: String
+    let flag: TennisFlag?
 }
