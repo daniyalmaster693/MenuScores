@@ -53,6 +53,37 @@ struct TennisCompetition: Decodable {
     let date: String
     let startDate: String?
     let competitors: [TennisCompetitor]?
+    let round: TennisRound?
+    let notes: TennisNotes?
+    let venue: TennisVenue?
+    let status: TennisStatus?
+}
+
+struct TennisRound: Decodable {
+    let displayName: String?
+}
+
+struct TennisNotes: Decodable {
+    let type: String?
+    let text: String?
+}
+
+struct TennisVenue: Decodable {
+    let fullName: String?
+    let court: String?
+}
+
+struct TennisStatus: Decodable {
+    let displayClock: String?
+    let period: Int?
+    let type: TennisType
+}
+
+struct TennisType: Decodable {
+    let state: String
+    let completed: Bool
+    let detail: String?
+    let shortDetail: String?
 }
 
 struct TennisCompetitor: Decodable {
