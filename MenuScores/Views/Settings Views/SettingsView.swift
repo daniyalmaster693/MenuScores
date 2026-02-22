@@ -5,14 +5,11 @@
 //  Created by Daniyal Master on 2025-05-11.
 //
 
-import Sparkle
 import SwiftUI
 
 struct SettingsView: View {
     @State private var showingAboutModal = false
-
     @State private var isHovered = false
-    let updater: SPUUpdater
 
     enum Tab: String, CaseIterable, Identifiable {
         case general = "General"
@@ -74,7 +71,7 @@ struct SettingsView: View {
             Group {
                 switch selectedTab {
                 case .general:
-                    GeneralSettingsView(updater: updater)
+                    GeneralSettingsView()
                 case .behavior:
                     BehaviorSettingsView()
                 case .league:

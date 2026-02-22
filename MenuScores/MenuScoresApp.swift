@@ -5,7 +5,6 @@
 //  Created by Daniyal Master on 2025-05-03.
 //
 
-import Sparkle
 import SwiftUI
 
 class LeagueSelectionModel: ObservableObject {
@@ -18,18 +17,6 @@ extension LeagueSelectionModel {
 
 @main
 struct MenuScoresApp: App {
-    // Sparkle Updater Closure
-
-    private let updaterController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
-
-    private var updater: SPUUpdater {
-        updaterController.updater
-    }
-
     // Refresh Interval Settings
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
@@ -115,6 +102,50 @@ struct MenuScoresApp: App {
 
     @AppStorage("enableOMIHC") private var enableOMIHC = true
     @AppStorage("enableOWIHC") private var enableOWIHC = false
+
+    private func refreshAllLeagues() async {
+        if enableNHL { await nhlVM.populateGames(from: Scoreboard.Urls.nhl) }
+
+        if enableHNCAAM { await hncaamVM.populateGames(from: Scoreboard.Urls.hncaam) }
+        if enableHNCAAF { await hncaafVM.populateGames(from: Scoreboard.Urls.hncaaf) }
+
+        if enableNBA { await nbaVM.populateGames(from: Scoreboard.Urls.nba) }
+        if enableWNBA { await wnbaVM.populateGames(from: Scoreboard.Urls.wnba) }
+        if enableNCAAM { await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam) }
+        if enableNCAAF { await ncaafVM.populateGames(from: Scoreboard.Urls.ncaaf) }
+
+        if enableNFL { await nflVM.populateGames(from: Scoreboard.Urls.nfl) }
+        if enableFNCAA { await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa) }
+
+        if enableMLB { await mlbVM.populateGames(from: Scoreboard.Urls.mlb) }
+        if enableBNCAA { await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa) }
+        if enableSNCAA { await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa) }
+
+        if enableF1 { await f1VM.populateGames(from: Scoreboard.Urls.f1) }
+        if enableNC { await ncVM.populateGames(from: Scoreboard.Urls.nc) }
+        if enableNCS { await ncsVM.populateGames(from: Scoreboard.Urls.ncs) }
+        if enableNCT { await nctVM.populateGames(from: Scoreboard.Urls.nct) }
+        if enableIRL { await irlVM.populateGames(from: Scoreboard.Urls.irl) }
+
+        if enablePGA { await pgaVM.populateGames(from: Scoreboard.Urls.pga) }
+        if enableLPGA { await lpgaVM.populateGames(from: Scoreboard.Urls.lpga) }
+
+        if enableATP { await atpVM.populateTennis(from: Scoreboard.Urls.atp) }
+        if enableWTA { await wtaVM.populateTennis(from: Scoreboard.Urls.wta) }
+
+        if enableUFC { await ufcVM.populateGames(from: Scoreboard.Urls.ufc) }
+
+        if enableNLL { await nllVM.populateGames(from: Scoreboard.Urls.nll) }
+        if enablePLL { await pllVM.populateGames(from: Scoreboard.Urls.pll) }
+        if enableLNCAAM { await lncaamVM.populateGames(from: Scoreboard.Urls.lncaam) }
+        if enableLNCAAF { await lncaafVM.populateGames(from: Scoreboard.Urls.lncaaf) }
+
+        if enableVNCAAM { await vncaamVM.populateGames(from: Scoreboard.Urls.vncaam) }
+        if enableVNCAAF { await vncaafVM.populateGames(from: Scoreboard.Urls.vncaaf) }
+
+        if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
+        if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
+    }
 
     // Notification Settings
 
@@ -208,7 +239,7 @@ struct MenuScoresApp: App {
         MenuBarExtra {
             if enableNHL {
                 HockeyMenu(
-                    title: "NHL Games",
+                    title: "NHL",
                     viewModel: nhlVM,
                     league: "NHL",
                     fetchURL: Scoreboard.Urls.nhl,
@@ -247,7 +278,7 @@ struct MenuScoresApp: App {
 
             if enableNBA {
                 BasketballMenu(
-                    title: "NBA Games",
+                    title: "NBA",
                     viewModel: nbaVM,
                     league: "NBA",
                     fetchURL: Scoreboard.Urls.nba,
@@ -260,7 +291,7 @@ struct MenuScoresApp: App {
 
             if enableWNBA {
                 BasketballMenu(
-                    title: "WNBA Games",
+                    title: "WNBA",
                     viewModel: wnbaVM,
                     league: "WNBA",
                     fetchURL: Scoreboard.Urls.wnba,
@@ -299,7 +330,7 @@ struct MenuScoresApp: App {
 
             if enableNFL {
                 FootballMenu(
-                    title: "NFL Games",
+                    title: "NFL",
                     viewModel: nflVM,
                     league: "NFL",
                     fetchURL: Scoreboard.Urls.nfl,
@@ -325,7 +356,7 @@ struct MenuScoresApp: App {
 
             if enableMLB {
                 BaseballMenu(
-                    title: "MLB Games",
+                    title: "MLB",
                     viewModel: mlbVM,
                     league: "MLB",
                     fetchURL: Scoreboard.Urls.mlb,
@@ -364,7 +395,7 @@ struct MenuScoresApp: App {
 
             if enableMLS {
                 SoccerMenu(
-                    title: "MLS Games",
+                    title: "MLS",
                     viewModel: mlsVM,
                     league: "MLS",
                     fetchURL: Scoreboard.Urls.mls,
@@ -377,7 +408,7 @@ struct MenuScoresApp: App {
 
             if enableNWSL {
                 SoccerMenu(
-                    title: "NWSL Games",
+                    title: "NWSL",
                     viewModel: nwslVM,
                     league: "NWSL",
                     fetchURL: Scoreboard.Urls.nwsl,
@@ -544,6 +575,240 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableF1 {
+                F1Menu(
+                    title: "F1",
+                    viewModel: f1VM,
+                    league: "F1",
+                    fetchURL: Scoreboard.Urls.f1,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableNC {
+                RacingMenu(
+                    title: "Nascar Premier",
+                    viewModel: ncVM,
+                    league: "NC",
+                    fetchURL: Scoreboard.Urls.nc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableNCS {
+                RacingMenu(
+                    title: "Nascar Secondary",
+                    viewModel: ncsVM,
+                    league: "NCS",
+                    fetchURL: Scoreboard.Urls.ncs,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableNCT {
+                RacingMenu(
+                    title: "Nascar Truck",
+                    viewModel: nctVM,
+                    league: "NCT",
+                    fetchURL: Scoreboard.Urls.nct,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableIRL {
+                RacingMenu(
+                    title: "IndyCar",
+                    viewModel: irlVM,
+                    league: "IRL",
+                    fetchURL: Scoreboard.Urls.irl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enablePGA {
+                GolfMenu(
+                    title: "PGA",
+                    viewModel: pgaVM,
+                    league: "PGA",
+                    fetchURL: Scoreboard.Urls.pga,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableLPGA {
+                GolfMenu(
+                    title: "LPGA",
+                    viewModel: lpgaVM,
+                    league: "LPGA",
+                    fetchURL: Scoreboard.Urls.lpga,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableATP {
+                TennisMenu(
+                    title: "ATP Tour",
+                    viewModel: atpVM,
+                    league: "ATP",
+                    fetchURL: Scoreboard.Urls.atp,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableWTA {
+                TennisMenu(
+                    title: "WTA Tour",
+                    viewModel: wtaVM,
+                    league: "WTA",
+                    fetchURL: Scoreboard.Urls.wta,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableUFC {
+                UFCMenu(
+                    title: "UFC",
+                    viewModel: ufcVM,
+                    league: "UFC",
+                    fetchURL: Scoreboard.Urls.ufc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableNLL {
+                LacrosseMenu(
+                    title: "NLL",
+                    viewModel: nllVM,
+                    league: "NLL",
+                    fetchURL: Scoreboard.Urls.nll,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enablePLL {
+                LacrosseMenu(
+                    title: "PLL",
+                    viewModel: pllVM,
+                    league: "PLL",
+                    fetchURL: Scoreboard.Urls.pll,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableLNCAAM {
+                LacrosseMenu(
+                    title: "NCAA M Lacrosse",
+                    viewModel: lncaamVM,
+                    league: "LNCAAM",
+                    fetchURL: Scoreboard.Urls.lncaam,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableLNCAAF {
+                LacrosseMenu(
+                    title: "NCAA F Lacrosse",
+                    viewModel: lncaafVM,
+                    league: "LNCAAF",
+                    fetchURL: Scoreboard.Urls.lncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableVNCAAM {
+                VolleyballMenu(
+                    title: "NCAA M Volleyball",
+                    viewModel: vncaamVM,
+                    league: "VNCAAM",
+                    fetchURL: Scoreboard.Urls.vncaam,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableVNCAAF {
+                VolleyballMenu(
+                    title: "NCAA F Volleyball",
+                    viewModel: vncaafVM,
+                    league: "VNCAAF",
+                    fetchURL: Scoreboard.Urls.vncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOMIHC {
+                HockeyMenu(
+                    title: "Men's Olympic Ice Hcokey",
+                    viewModel: omihcVM,
+                    league: "OMIHC",
+                    fetchURL: Scoreboard.Urls.omihc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOWIHC {
+                HockeyMenu(
+                    title: "Women's Olympic Ice Hcokey",
+                    viewModel: owihcVM,
+                    league: "OWIHC",
+                    fetchURL: Scoreboard.Urls.owihc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             if enableFFWC {
                 SoccerMenu(
                     title: "FIFA World Cup",
@@ -648,240 +913,6 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableF1 {
-                F1Menu(
-                    title: "F1 Races",
-                    viewModel: f1VM,
-                    league: "F1",
-                    fetchURL: Scoreboard.Urls.f1,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableNC {
-                RacingMenu(
-                    title: "Nascar Premier",
-                    viewModel: ncVM,
-                    league: "NC",
-                    fetchURL: Scoreboard.Urls.nc,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableNCS {
-                RacingMenu(
-                    title: "Nascar Secondary",
-                    viewModel: ncsVM,
-                    league: "NCS",
-                    fetchURL: Scoreboard.Urls.ncs,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableNCT {
-                RacingMenu(
-                    title: "Nascar Truck",
-                    viewModel: nctVM,
-                    league: "NCT",
-                    fetchURL: Scoreboard.Urls.nct,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableIRL {
-                RacingMenu(
-                    title: "IndyCar",
-                    viewModel: irlVM,
-                    league: "IRL",
-                    fetchURL: Scoreboard.Urls.irl,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enablePGA {
-                GolfMenu(
-                    title: "PGA Golf",
-                    viewModel: pgaVM,
-                    league: "PGA",
-                    fetchURL: Scoreboard.Urls.pga,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableLPGA {
-                GolfMenu(
-                    title: "LPGA Golf",
-                    viewModel: lpgaVM,
-                    league: "LPGA",
-                    fetchURL: Scoreboard.Urls.lpga,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableATP {
-                TennisMenu(
-                    title: "ATP Tour",
-                    viewModel: atpVM,
-                    league: "ATP",
-                    fetchURL: Scoreboard.Urls.atp,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableWTA {
-                TennisMenu(
-                    title: "WTA Tour",
-                    viewModel: wtaVM,
-                    league: "WTA",
-                    fetchURL: Scoreboard.Urls.wta,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableUFC {
-                UFCMenu(
-                    title: "UFC",
-                    viewModel: ufcVM,
-                    league: "UFC",
-                    fetchURL: Scoreboard.Urls.ufc,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableNLL {
-                LacrosseMenu(
-                    title: "NLL Games",
-                    viewModel: nllVM,
-                    league: "NLL",
-                    fetchURL: Scoreboard.Urls.nll,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enablePLL {
-                LacrosseMenu(
-                    title: "PLL Games",
-                    viewModel: pllVM,
-                    league: "PLL",
-                    fetchURL: Scoreboard.Urls.pll,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableLNCAAM {
-                LacrosseMenu(
-                    title: "Men's College Lacrosse",
-                    viewModel: lncaamVM,
-                    league: "LNCAAM",
-                    fetchURL: Scoreboard.Urls.lncaam,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableLNCAAF {
-                LacrosseMenu(
-                    title: "Women's College Lacrosse",
-                    viewModel: lncaafVM,
-                    league: "LNCAAF",
-                    fetchURL: Scoreboard.Urls.lncaaf,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableVNCAAM {
-                VolleyballMenu(
-                    title: "Men's College Volleyball",
-                    viewModel: vncaamVM,
-                    league: "VNCAAM",
-                    fetchURL: Scoreboard.Urls.vncaam,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableVNCAAF {
-                VolleyballMenu(
-                    title: "Women's College Volleyball",
-                    viewModel: vncaafVM,
-                    league: "VNCAAF",
-                    fetchURL: Scoreboard.Urls.vncaaf,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableOMIHC {
-                HockeyMenu(
-                    title: "Men's Olympic Ice Hcokey",
-                    viewModel: omihcVM,
-                    league: "OMIHC",
-                    fetchURL: Scoreboard.Urls.omihc,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
-            if enableOWIHC {
-                HockeyMenu(
-                    title: "Women's Olympic Ice Hcokey",
-                    viewModel: owihcVM,
-                    league: "OWIHC",
-                    fetchURL: Scoreboard.Urls.owihc,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
-
             Divider()
 
             if enableNotch {
@@ -892,6 +923,15 @@ struct MenuScoresApp: App {
                     }
                 }
             }
+
+           Button {
+                Task {
+                    await refreshAllLeagues()
+                }
+            } label: {
+                Text("Refresh")
+            }
+            .keyboardShortcut("r")
 
             Button {
                 currentTitle = ""
@@ -914,6 +954,8 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("c")
 
+            Divider()
+
             if #available(macOS 14, *) {
                 Button {
                     let environment = EnvironmentValues()
@@ -925,14 +967,6 @@ struct MenuScoresApp: App {
                 }
                 .keyboardShortcut(",")
             }
-
-            Button {
-                updater.checkForUpdates()
-            } label: {
-                Text("Check for Updates")
-            }
-            .buttonStyle(.bordered)
-            .keyboardShortcut("u")
 
             Button {
                 NSApplication.shared.terminate(nil)
@@ -949,11 +983,11 @@ struct MenuScoresApp: App {
 
         Settings {
             if #available(macOS 15.0, *) {
-                SettingsView(updater: updater)
+                SettingsView()
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
                     .containerBackground(.thickMaterial, for: .window)
             } else {
-                SettingsView(updater: updater)
+                SettingsView()
             }
         }
 

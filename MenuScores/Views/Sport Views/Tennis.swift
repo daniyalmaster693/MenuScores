@@ -66,6 +66,30 @@ struct TennisMenu: View {
                                         if let gamesForDate = groupedGames[date] {
                                             Menu(date) {
                                                 ForEach(gamesForDate, id: \.id) { competition in
+                                                    let team1 = competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1"
+                                                    let team2 = competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2"
+
+                                                    // MARK: CREATE FOR EACH FOR EVERY SET SCORE
+
+//                                                    let score1 = competition.competitors?.first?.linesscores?.first?.value ?? "0"
+//                                                    let score2 = competition.competitors?.first?.linesscores?.dropFirst().first?.value ?? "0"
+//
+//                                                    let score3 = competition.competitors?.dropFirst().first?.linesscores?.first?.value ?? "0"
+//                                                    let score4 = competition.competitors?.dropFirst().first?.linesscores?.dropfirst().first?.value ?? "0"
+
+//                                                    let state = competition.status.type.state
+//                                                    let round = competition.status?.period
+
+                                                    let tennisTitle = "\(team1) - \(team2)"
+
+//                                                    if state == "in" {
+//                                                        tennisTitle = "\(team1) - \(team2)     \(round)"
+//                                                    }
+
+//                                                    if state == "post" {
+//                                                        tennisTitle = "\(team1) \() - \(team2) \()     (Final)"
+//                                                    }
+
                                                     Menu {} label: {
                                                         HStack {
                                                             AsyncImage(
@@ -77,7 +101,7 @@ struct TennisMenu: View {
                                                             }
                                                             .frame(width: 40, height: 40)
 
-                                                            Text("\(competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1") - \(competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2")")
+                                                            Text("\(tennisTitle)")
                                                         }
                                                     }
                                                 }

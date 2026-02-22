@@ -15,7 +15,7 @@ struct BehaviorSettingsView: View {
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
     @AppStorage("enableNotch") private var enableNotch = true
-    @AppStorage("enableInlineView") private var enableInlineView = true
+//    @AppStorage("enableInlineView") private var enableInlineView = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
@@ -55,13 +55,13 @@ struct BehaviorSettingsView: View {
                         }
                     }
 
-                    Toggle(isOn: $enableInlineView) {
-                        HStack {
-                            Image(systemName: "play.display")
-                                .foregroundColor(.secondary)
-                            Text("Inline View")
-                        }
-                    }.disabled(!enableNotch)
+//                    Toggle(isOn: $enableInlineView) {
+//                        HStack {
+//                            Image(systemName: "play.display")
+//                                .foregroundColor(.secondary)
+//                            Text("Inline View")
+//                        }
+//                    }.disabled(!enableNotch)
 
                     HStack {
                         Label("Notch Display", systemImage: "display")
@@ -74,7 +74,7 @@ struct BehaviorSettingsView: View {
                             }
                         }
                         .pickerStyle(.menu)
-                        .frame(width: 180)
+                        .frame(width: 190)
                         .disabled(!enableNotch)
                     }
 

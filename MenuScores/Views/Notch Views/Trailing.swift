@@ -5,25 +5,12 @@
 //  Created by Daniyal Master on 2025-08-09.
 //
 
-import Sparkle
 import SwiftUI
 
 struct CompactTrailing: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
     var sport: String
-
-    // Sparkle Updater Closure
-
-    private let updaterController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
-
-    private var updater: SPUUpdater {
-        updaterController.updater
-    }
 
     var body: some View {
         if let game = notchViewModel.game {
@@ -71,14 +58,6 @@ struct CompactTrailing: View {
                     }
 
                     Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
-
-                    Button {
                         NSApplication.shared.terminate(nil)
                     } label: {
                         Text("Quit")
@@ -116,14 +95,6 @@ struct CompactTrailing: View {
                         }
                         .keyboardShortcut(",")
                     }
-
-                    Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
 
                     Button {
                         NSApplication.shared.terminate(nil)
@@ -165,14 +136,6 @@ struct CompactTrailing: View {
                     }
 
                     Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
-
-                    Button {
                         NSApplication.shared.terminate(nil)
                     } label: {
                         Text("Quit")
@@ -210,14 +173,6 @@ struct CompactTrailing: View {
                         }
                         .keyboardShortcut(",")
                     }
-
-                    Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
 
                     Button {
                         NSApplication.shared.terminate(nil)

@@ -54,7 +54,7 @@ struct TennisCompetition: Decodable {
     let startDate: String?
     let competitors: [TennisCompetitor]?
     let round: TennisRound?
-    let notes: TennisNotes?
+    let notes: [TennisNotes]?
     let venue: TennisVenue?
     let status: TennisStatus?
 }
@@ -93,6 +93,12 @@ struct TennisCompetitor: Decodable {
     let winner: Bool?
     let athlete: TennisAthlete?
     let roster: TennisRoster?
+    let linesscores: [TennisLinesScores]?
+}
+
+struct TennisLinesScores: Decodable {
+    let winner: Bool?
+    let value: Int?
 }
 
 struct TennisAthlete: Decodable {

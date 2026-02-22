@@ -5,7 +5,6 @@
 //  Created by Daniyal Master on 2025-08-09.
 //
 
-import Sparkle
 import SwiftUI
 
 extension Color {
@@ -136,18 +135,6 @@ struct Info: View {
         default:
             return .gray
         }
-    }
-
-    // Sparkle Updater Closure
-
-    private let updaterController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
-
-    private var updater: SPUUpdater {
-        updaterController.updater
     }
 
     var body: some View {
@@ -414,14 +401,6 @@ struct Info: View {
                     }
 
                     Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
-
-                    Button {
                         NSApplication.shared.terminate(nil)
                     } label: {
                         Text("Quit")
@@ -678,14 +657,6 @@ struct Info: View {
                     }
 
                     Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
-
-                    Button {
                         NSApplication.shared.terminate(nil)
                     } label: {
                         Text("Quit")
@@ -856,14 +827,6 @@ struct Info: View {
                         }
                         .keyboardShortcut(",")
                     }
-
-                    Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
 
                     Button {
                         NSApplication.shared.terminate(nil)
@@ -1048,14 +1011,6 @@ struct Info: View {
                         }
                         .keyboardShortcut(",")
                     }
-
-                    Button {
-                        updater.checkForUpdates()
-                    } label: {
-                        Text("Check for Updates")
-                    }
-                    .buttonStyle(.bordered)
-                    .keyboardShortcut("u")
 
                     Button {
                         NSApplication.shared.terminate(nil)

@@ -373,72 +373,6 @@ struct LeagueSettingsView: View {
                     }
                 }
 
-                Section("FIFA World Cup") {
-                    Toggle(isOn: $enableFFWC) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA World Cup")
-                        }
-                    }
-
-                    Toggle(isOn: $enableFFWWC) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA Women's World Cup")
-                        }
-                    }
-
-                    Toggle(isOn: $enableFFWCQUEFA) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA World Cup UEFA Qualifiers")
-                        }
-                    }
-
-                    Toggle(isOn: $enableCONMEBOL) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA World Cup COMEBOL Qualifiers")
-                        }
-                    }
-
-                    Toggle(isOn: $enableCONCACAF) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA World Cup CONCACAF Qualifiers")
-                        }
-                    }
-
-                    Toggle(isOn: $enableCAF) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA World Cup African Qualifiers")
-                        }
-                    }
-
-                    Toggle(isOn: $enableAFC) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA World Cup Asian Qualifiers")
-                        }
-                    }
-
-                    Toggle(isOn: $enableOFC) {
-                        HStack {
-                            Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
-                            Text("FIFA World Cup Oceanian Qualifiers")
-                        }
-                    }
-                }
-
                 Section("Racing") {
                     Toggle(isOn: $enableF1) {
                         HStack {
@@ -593,6 +527,72 @@ struct LeagueSettingsView: View {
                             Image(systemName: "medal")
                                 .foregroundColor(.secondary)
                             Text("Women's Olympic Ice Hockey")
+                        }
+                    }
+                }
+
+                Section("FIFA World Cup") {
+                    Toggle(isOn: $enableFFWC) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup")
+                        }
+                    }
+
+                    Toggle(isOn: $enableFFWWC) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA Women's World Cup")
+                        }
+                    }
+
+                    Toggle(isOn: $enableFFWCQUEFA) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup UEFA Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableCONMEBOL) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup COMEBOL Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableCONCACAF) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup CONCACAF Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableCAF) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup African Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableAFC) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup Asian Qualifiers")
+                        }
+                    }
+
+                    Toggle(isOn: $enableOFC) {
+                        HStack {
+                            Image(systemName: "trophy")
+                                .foregroundColor(.secondary)
+                            Text("FIFA World Cup Oceanian Qualifiers")
                         }
                     }
                 }
