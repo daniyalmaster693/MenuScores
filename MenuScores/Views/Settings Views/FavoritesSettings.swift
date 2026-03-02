@@ -2,7 +2,6 @@
 //  FavoritesSettings.swift
 //  MenuScores
 //
-//  Created by Claude on 2025-02-24.
 //
 
 import SwiftUI
