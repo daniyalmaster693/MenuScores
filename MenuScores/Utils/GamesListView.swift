@@ -25,7 +25,27 @@ class GamesListView: ObservableObject {
 
     func populateGames(from url: URL) async {
         do {
-            self.games = try await getGames().getGamesArray(url: url)
+            let fetched = try await getGames().getGamesArray(url: url)
+
+            if fetched.isEmpty {
+                // Remove date range and fetch all, then get most recent completed game
+                var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                let filteredItems = components?.queryItems?.filter { $0.name != "dates" }
+                components?.queryItems = filteredItems
+
+                if let baseURL = components?.url {
+                    let allGames = try await getGames().getGamesArray(url: baseURL)
+                    let completedGames = allGames.filter { $0.status.type.state == "post" }
+                    let sortedByDate = completedGames.sorted { sortableDate(from: $0.date) > sortableDate(from: $1.date) }
+
+                    if let mostRecent = sortedByDate.first {
+                        self.games = [mostRecent]
+                        return
+                    }
+                }
+            }
+
+            self.games = fetched
         } catch {
             print("Failed to fetch games:", error)
         }
