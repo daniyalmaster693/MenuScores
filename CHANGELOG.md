@@ -1,5 +1,31 @@
 # MenuScores Changelog & Notes
 
+## Updates (2026-03-02)
+
+### Date Sorting & Display
+- Dates now sort **chronologically** (ascending) instead of alphabetically
+- Date format changed to **dd/MM/yyyy** for display
+- Added `gamesByDate` computed property in `GamesListView` for consistent sorting across all sport views
+
+### Favorite Team Indicator
+- Games involving a favorite team now display a ⭐ prefix in the menu
+- Added `hasFavoriteTeam` parameter to `displayText()` function
+- Baseball.swift updated to use the new `gamesByDate` property and pass favorite status
+
+### Fallback Fetch for Empty Date Ranges
+- If no games found in the current date range, the app now fetches all games and shows the **most recent completed game**
+- This prevents showing "No Games Scheduled" during off-seasons
+
+### Bug Fixes
+- Fixed ESPN API decoding error: `Highlights.headline` and `Highlights.description` are now optional
+- Fixed `GameState.swift` to use `league.uppercased()` instead of invalid `toUpperCased()`
+
+### Code Improvements
+- Refactored `GameState.swift` to use switch statement for league-specific display logic
+- Added `.gitignore` to exclude `xcuserdata/` directories
+
+---
+
 ## Favorite Teams Feature (2025-02-25)
 
 ### Overview
