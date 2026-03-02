@@ -15,9 +15,11 @@ class getGames {
     func getGamesArray(url: URL) async throws -> [Event] {
         let (data, response) = try await URLSession.shared.data(from: url)
 
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200
-        else {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+
+        guard httpResponse.statusCode == 200 else {
             throw NetworkError.invalidResponse
         }
 
@@ -40,5 +42,21 @@ class getGames {
             TennisResponse.self, from: data
         )
         return decoded.events
+    }
+
+    func getTeamsArray(url: URL) async throws -> [TeamInfo] {
+        let (data, response) = try await URLSession.shared.data(from: url)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200
+        else {
+            throw NetworkError.invalidResponse
+        }
+
+        let decoded = try JSONDecoder().decode(
+            TeamsResponse.self, from: data
+        )
+
+        return decoded.sports.first?.leagues.first?.teams.map { $0.team } ?? []
     }
 }

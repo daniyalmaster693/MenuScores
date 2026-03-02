@@ -5,7 +5,7 @@
 //  Created by Daniyal Master on 2025-05-10.
 //
 
-func displayText(for game: Event, league: String) -> String {
+func displayText(for game: Event, league: String, hasFavoriteTeam: Bool = false) -> String {
     guard let competition = game.competitions.first,
           let competitors = competition.competitors,
           competitors.count >= 2
@@ -29,7 +29,7 @@ func displayText(for game: Event, league: String) -> String {
     if league == "MLB" || league == "UEFA" || league == "EPL", state == "in" {
         let detailText = shortDetail
         return
-            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
+        "\(hasFavoriteTeam ? "🌟 " : "")\(game.shortName ?? game.name)\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
     }
 
     // F1 Race States

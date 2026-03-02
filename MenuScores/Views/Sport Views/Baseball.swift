@@ -54,7 +54,7 @@ struct BaseballMenu: View {
             }
 
             let sortedDates = groupedGames.keys.sorted()
-
+ 
             if sortedDates.isEmpty {
                 Text("No Games Scheduled")
             } else {
@@ -64,7 +64,7 @@ struct BaseballMenu: View {
                             ForEach(gamesForDate, id: \.id) { game in
                                 Menu {
                                     Button {
-                                        currentTitle = displayText(for: game, league: league)
+                                        currentTitle = displayText(for: game, league: league, hasFavoriteTeam: FavoritesManager.shared.gameInvolvesFavorite(game))
                                         currentGameID = game.id
                                         currentGameState = game.status.type.state
 
@@ -149,7 +149,7 @@ struct BaseballMenu: View {
                                         }
                                         .frame(width: 40, height: 40)
 
-                                        Text(displayText(for: game, league: league))
+                                        Text(displayText(for: game, league: league, hasFavoriteTeam: FavoritesManager.shared.gameInvolvesFavorite(game)))
                                     }
                                 }
                             }
