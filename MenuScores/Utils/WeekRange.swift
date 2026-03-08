@@ -32,3 +32,8 @@ func getWeekEnd() -> String {
     let endDateString = formatter.string(from: endOfWeek)
     return endDateString
 }
+
+func getCurrentYear() -> String {
+    let currentYear = Calendar.current.component(.year, from: Date())
+    return String(currentYear)
+}

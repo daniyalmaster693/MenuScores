@@ -924,7 +924,7 @@ struct MenuScoresApp: App {
                 }
             }
 
-           Button {
+            Button {
                 Task {
                     await refreshAllLeagues()
                 }
