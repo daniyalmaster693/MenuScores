@@ -7,17 +7,28 @@
 
 import Foundation
 
-func getDynamicRange() -> (start: String, end: String) {
+func getWeekStart() -> String {
     let calendar = Calendar.current
     let today = Date()
-
-    let startDate = calendar.date(byAdding: .day, value: -3, to: today)!
-    let endDate = calendar.date(byAdding: .day, value: 5, to: today)!
+    let weekday = calendar.component(.weekday, from: today)
+    let startOfWeek = calendar.date(byAdding: .day, value: -(weekday - 1), to: today)!
 
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyyMMdd"
-    let startString = formatter.string(from: startDate)
-    let endString = formatter.string(from: endDate)
+    let startDateString = formatter.string(from: startOfWeek)
 
-    return (start: startString, end: endString)
+    return startDateString
+}
+
+func getWeekEnd() -> String {
+    let calendar = Calendar.current
+    let today = Date()
+    let weekday = calendar.component(.weekday, from: today)
+
+    let endOfWeek = calendar.date(byAdding: .day, value: 7 - weekday, to: today)!
+
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyyMMdd"
+    let endDateString = formatter.string(from: endOfWeek)
+    return endDateString
 }
