@@ -150,8 +150,8 @@ struct TeamID: Decodable {
 }
 
 struct Highlights: Decodable {
-    let headline: String
-    let description: String
+    let headline: String?
+    let description: String?
 }
 
 struct Headlines: Decodable {
