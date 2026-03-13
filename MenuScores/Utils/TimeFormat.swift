@@ -21,7 +21,7 @@ func formattedTime(from dateString: String) -> String {
         return outputFormatter.string(from: gameDate)
     }
 
-    return "Invalid Date"
+    return "Invalid Time"
 }
 
 func formattedDateForAPI(from dateString: String) -> String {
