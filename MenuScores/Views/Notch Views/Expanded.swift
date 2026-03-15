@@ -1021,5 +1021,217 @@ struct Info: View {
                 }
             }
         }
+
+        if let tennisGame = notchViewModel.tennisCompetition {
+            let team1 = tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.first?.roster?.shortDisplayName ?? "Player 1"
+            let team2 = tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2"
+
+            if sport == "Tennis" {
+                VStack {
+                    HStack(spacing: 4) {
+                        VStack {
+                            if tennisGame.status?.type.state == "in" || tennisGame.status?.type.state == "post" {
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
+                                        )
+                                    ) { image in
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 18, height: 18)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
+
+                                    Text("\(tennisGame.round?.displayName ?? "Round 0")")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .padding(.trailing, 7)
+
+                                    Spacer()
+
+                                    if tennisGame.status?.type.state == "in" {
+                                        if let set = tennisGame.status?.period {
+                                            Text("S\(set)")
+                                                .contentTransition(.numericText(countsDown: false))
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .padding(.trailing, 15)
+                                        }
+                                    }
+
+                                    if tennisGame.status?.type.state == "post" {
+                                        Text("(Final)")
+                                            .contentTransition(.numericText(countsDown: false))
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 15)
+                                    }
+
+                                    if tennisGame.status?.type.state == "post" {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.system(size: 10))
+                                                .padding(.leading, 10)
+
+                                            Text(
+                                                "\(tennisGame.competitors?.first?.athlete?.shortName ?? "Player 1")"
+                                            )
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 10)
+                                        }
+                                    }
+                                }
+
+                                VStack(spacing: 5) {
+                                    Divider()
+
+                                    ScrollView(.vertical, showsIndicators: true) {
+                                        VStack(spacing: 4) {
+                                            if let competitors = tennisGame.competitors {
+                                                ForEach(competitors) { competitor in
+                                                    HStack {
+                                                        HStack(spacing: 4) {
+                                                            if let flagURLString = competitor.athlete?.flag?.href,
+                                                               let flagURL = URL(string: flagURLString)
+                                                            {
+                                                                AsyncImage(url: flagURL) { image in
+                                                                    image
+                                                                        .resizable()
+                                                                        .interpolation(.high)
+                                                                        .scaledToFit()
+                                                                        .frame(width: 23, height: 23)
+                                                                } placeholder: {
+                                                                    Color.gray.opacity(0.3)
+                                                                }
+                                                                .padding(.trailing, 5)
+                                                            }
+
+                                                            Text(competitor.athlete?.fullName ?? "Player")
+                                                                .font(.system(size: 14, weight: .medium))
+                                                                .lineLimit(1)
+                                                                .truncationMode(.tail)
+                                                        }.frame(width: 200, alignment: .leading)
+
+                                                        if let linescores = competitor.linescores {
+                                                            HStack(spacing: 4) {
+                                                                ForEach(linescores) { linescore in
+                                                                    Text("\(linescore.value ?? 0)  ")
+                                                                }
+                                                            }
+                                                            .font(.system(size: 14, weight: .medium))
+                                                            .contentTransition(.numericText(countsDown: false))
+                                                            .frame(width: 150, alignment: .trailing)
+                                                        }
+                                                    }
+                                                    .padding(.horizontal, 10)
+                                                }.frame(maxWidth: .infinity, alignment: .leading)
+                                            }
+                                        }
+                                    }
+                                }
+                                .frame(maxHeight: 120)
+                                .padding(.top, 10)
+                                .padding(.bottom, 5)
+                            }
+
+                            if tennisGame.status?.type.state == "pre" {
+                                VStack {
+                                    HStack {
+                                        AsyncImage(
+                                            url: URL(
+                                                string:
+                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
+                                            )
+                                        ) { image in
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .frame(width: 28, height: 28)
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .padding(.trailing, 3)
+
+                                        Text("\(tennisGame.competitors?.first?.athlete?.shortName ?? "Player 1") vs \(tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? "Player 2")")
+                                            .font(.system(size: 18, weight: .medium))
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .padding(.leading, 10)
+                                    .padding(.trailing, 10)
+
+                                    HStack {
+                                        Image(systemName: "figure.tennis")
+                                            .font(.system(size: 12))
+
+                                        Text("\(formattedDate(from: tennisGame.date)) @ \(formattedTime(from: tennisGame.date))")
+                                            .font(.system(size: 14, weight: .medium))
+                                    }
+                                    .padding(.top, 2)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                }
+                            }
+                        }
+                    }
+
+//                    HStack {
+//                        AsyncImage(
+//                            url: URL(string: tennisGame.competitors?.first?.athlete?.flag?.href ?? tennisGame.competitors?.first?.roster?.athletes?.first?.flag?.href ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
+//                        ) { image in
+//                            image.resizable().interpolation(.high).scaledToFit().frame(width: 32, height: 32)
+//                        } placeholder: {
+//                            Color.black
+//                        }
+//                        .padding(.trailing, 7)
+//
+//                        Text("\(team1)")
+//                    }
+//                    HStack {
+//                        AsyncImage(
+//                            url: URL(string: tennisGame.competitors?.dropFirst().first?.athlete?.flag?.href ?? tennisGame.competitors?.dropFirst().first?.roster?.athletes?.first?.flag?.href ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
+//                        ) { image in
+//                            image.resizable().interpolation(.high).scaledToFit().frame(width: 32, height: 32)
+//                        } placeholder: {
+//                            Color.black
+//                        }
+//                        .padding(.trailing, 7)
+//
+//                        Text("\(team2)")
+//                    }
+                }
+                .contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    if #available(macOS 14, *) {
+                        Button {
+                            let environment = EnvironmentValues()
+                            environment.openSettings()
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+                    }
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
+                }
+            }
+        }
     }
 }

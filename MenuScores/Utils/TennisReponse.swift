@@ -86,17 +86,18 @@ struct TennisType: Decodable {
     let shortDetail: String?
 }
 
-struct TennisCompetitor: Decodable {
+struct TennisCompetitor: Decodable, Identifiable {
     let id: String
     let score: String?
     let order: Int?
     let winner: Bool?
     let athlete: TennisAthlete?
     let roster: TennisRoster?
-    let linesscores: [TennisLinesScores]?
+    let linescores: [TennisLinesScore]?
 }
 
-struct TennisLinesScores: Decodable {
+struct TennisLinesScore: Decodable, Identifiable {
+    let id = UUID()
     let winner: Bool?
     let value: Int?
 }
