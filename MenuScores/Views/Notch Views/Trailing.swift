@@ -183,5 +183,46 @@ struct CompactTrailing: View {
                 }
             }
         }
+
+        if let tennisGame = notchViewModel.tennisCompetition {
+            if sport == "Tennis" {
+                HStack {
+                    if let set = tennisGame.status?.period {
+                        Text("S\(set)")
+                            .contentTransition(.numericText(countsDown: false))
+                            .font(.system(size: 14, weight: .semibold))
+                    } else {
+                        Text("S -")
+                            .font(.system(size: 14, weight: .semibold))
+                    }
+                }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    if #available(macOS 14, *) {
+                        Button {
+                            let environment = EnvironmentValues()
+                            environment.openSettings()
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+                    }
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
+                }
+            }
+        }
     }
 }

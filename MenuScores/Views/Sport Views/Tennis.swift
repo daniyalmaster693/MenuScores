@@ -69,28 +69,71 @@ struct TennisMenu: View {
                                                     let team1 = competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1"
                                                     let team2 = competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2"
 
-                                                    // MARK: CREATE FOR EACH FOR EVERY SET SCORE
-
-//                                                    let score1 = competition.competitors?.first?.linesscores?.first?.value ?? "0"
-//                                                    let score2 = competition.competitors?.first?.linesscores?.dropFirst().first?.value ?? "0"
-//
-//                                                    let score3 = competition.competitors?.dropFirst().first?.linesscores?.first?.value ?? "0"
-//                                                    let score4 = competition.competitors?.dropFirst().first?.linesscores?.dropfirst().first?.value ?? "0"
-
-//                                                    let state = competition.status.type.state
-//                                                    let round = competition.status?.period
-
                                                     let tennisTitle = "\(team1) - \(team2)"
 
-//                                                    if state == "in" {
-//                                                        tennisTitle = "\(team1) - \(team2)     \(round)"
-//                                                    }
+                                                    Menu {
+                                                        Button {
+                                                            currentTitle = tennisTitle
+                                                            currentGameID = game.id
+                                                            currentGameState = game.status.type.state
 
-//                                                    if state == "post" {
-//                                                        tennisTitle = "\(team1) \() - \(team2) \()     (Final)"
-//                                                    }
+                                                            pinnedByMenubar = true
+                                                            pinnedByNotch = false
+                                                        } label: {
+                                                            HStack {
+                                                                Image(systemName: "menubar.rectangle")
+                                                                    .resizable()
+                                                                    .scaledToFit()
+                                                                    .frame(width: 20, height: 20)
+                                                                Text("Pin Game to Menubar")
+                                                            }
+                                                        }
 
-                                                    Menu {} label: {
+                                                        if enableNotch {
+                                                            Button {
+                                                                currentGameID = game.id
+                                                                currentGameState = game.status.type.state
+
+                                                                pinnedByNotch = true
+                                                                pinnedByMenubar = false
+
+                                                                notchViewModel.tennisCompetition = competition
+
+                                                                Task {
+                                                                    if let existingNotch = NotchViewModel.shared.notch {
+                                                                        await existingNotch.hide()
+                                                                        NotchViewModel.shared.game = nil
+                                                                        NotchViewModel.shared.currentGameID = ""
+                                                                        NotchViewModel.shared.currentGameState = ""
+                                                                        NotchViewModel.shared.previousGameState = ""
+                                                                        NotchViewModel.shared.notch = nil
+                                                                    }
+
+                                                                    let newNotch = DynamicNotch(
+                                                                        hoverBehavior: .all,
+                                                                        style: .notch
+                                                                    ) {
+                                                                        Info(notchViewModel: notchViewModel, sport: "Tennis", league: "\(league)")
+                                                                    } compactLeading: {
+                                                                        CompactLeading(notchViewModel: notchViewModel, sport: "Tennis")
+                                                                    } compactTrailing: {
+                                                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Tennis")
+                                                                    }
+
+                                                                    NotchViewModel.shared.notch = newNotch
+                                                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                                                }
+                                                            } label: {
+                                                                HStack {
+                                                                    Image(systemName: "macbook")
+                                                                        .resizable()
+                                                                        .scaledToFit()
+                                                                        .frame(width: 20, height: 20)
+                                                                    Text("Pin Game to Notch")
+                                                                }
+                                                            }
+                                                        }
+                                                    } label: {
                                                         HStack {
                                                             AsyncImage(
                                                                 url: URL(string: competition.competitors?.first?.athlete?.flag?.href ?? competition.competitors?.first?.roster?.athletes?.first?.flag?.href ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
@@ -138,35 +181,5 @@ struct TennisMenu: View {
                 await viewModel.populateTennis(from: fetchURL)
             }
         }
-//        .onReceive(
-//            Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
-//        ) { _ in
-//            Task {
-//                await viewModel.populateTennis(from: fetchURL)
-//                if let updatedGame = viewModel.tennisGames.first(where: { $0.id == currentGameID }) {
-//                    if pinnedByMenubar {
-//                        currentTitle = displayText(for: updatedGame, league: league)
-//                    } else if pinnedByNotch {
-//                        currentTitle = ""
-//                    }
-//
-//                    let newState = updatedGame.status.type.state
-//
-//                    if notiGameStart && previousGameState != "in" && newState == "in" {
-//                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-//                    }
-//                    if notiGameComplete && previousGameState != "post" && newState == "post" {
-//                        gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-//                    }
-//
-//                    previousGameState = newState
-//                    currentGameState = newState
-//
-//                    if pinnedByNotch {
-//                        notchViewModel.game = updatedGame
-//                    }
-//                }
-//            }
-//        }
     }
 }

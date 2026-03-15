@@ -197,5 +197,50 @@ struct CompactLeading: View {
                 }
             }
         }
+
+        if sport == "Tennis" {
+            HStack {
+                AsyncImage(
+                    url: URL(
+                        string:
+                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
+                    )
+                ) { image in
+                    image
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                } placeholder: {
+                    ProgressView()
+                }
+            }.contextMenu {
+                Picker("Choose Display", selection: $notchScreenIndex) {
+                    ForEach(NSScreen.screens.indices, id: \.self) { index in
+                        Text(NSScreen.screens[index].localizedName)
+                            .tag(index)
+                    }
+                }
+
+                if #available(macOS 14, *) {
+                    Button {
+                        let environment = EnvironmentValues()
+                        environment.openSettings()
+                        NSApp.setActivationPolicy(.regular)
+                        NSApp.activate(ignoringOtherApps: true)
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
+                }
+
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Text("Quit")
+                }
+                .keyboardShortcut("q")
+            }
+        }
     }
 }
