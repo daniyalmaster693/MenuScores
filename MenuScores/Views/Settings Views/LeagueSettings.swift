@@ -451,15 +451,15 @@ struct LeagueSettingsView: View {
                     }
                 }
 
-                Section("Fighting") {
-                    Toggle(isOn: $enableUFC) {
-                        HStack {
-                            Image(systemName: "figure.boxing")
-                                .foregroundColor(.secondary)
-                            Text("UFC")
-                        }
-                    }
-                }
+//                Section("Fighting") {
+//                    Toggle(isOn: $enableUFC) {
+//                        HStack {
+//                            Image(systemName: "figure.boxing")
+//                                .foregroundColor(.secondary)
+//                            Text("UFC")
+//                        }
+//                    }
+//                }
 
                 Section("Lacrosse") {
                     Toggle(isOn: $enableNLL) {

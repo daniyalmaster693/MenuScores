@@ -133,7 +133,7 @@ struct MenuScoresApp: App {
         if enableATP { await atpVM.populateTennis(from: Scoreboard.Urls.atp) }
         if enableWTA { await wtaVM.populateTennis(from: Scoreboard.Urls.wta) }
 
-        if enableUFC { await ufcVM.populateGames(from: Scoreboard.Urls.ufc) }
+//        if enableUFC { await ufcVM.populateGames(from: Scoreboard.Urls.ufc) }
 
         if enableNLL { await nllVM.populateGames(from: Scoreboard.Urls.nll) }
         if enablePLL { await pllVM.populateGames(from: Scoreboard.Urls.pll) }
@@ -222,7 +222,7 @@ struct MenuScoresApp: App {
     @StateObject private var atpVM = TennisListView()
     @StateObject private var wtaVM = TennisListView()
 
-    @StateObject private var ufcVM = GamesListView()
+//    @StateObject private var ufcVM = GamesListView()
 
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
@@ -692,18 +692,18 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableUFC {
-                UFCMenu(
-                    title: "UFC",
-                    viewModel: ufcVM,
-                    league: "UFC",
-                    fetchURL: Scoreboard.Urls.ufc,
-                    currentTitle: $currentTitle,
-                    currentGameID: $currentGameID,
-                    currentGameState: $currentGameState,
-                    previousGameState: $previousGameState
-                )
-            }
+//            if enableUFC {
+//                UFCMenu(
+//                    title: "UFC",
+//                    viewModel: ufcVM,
+//                    league: "UFC",
+//                    fetchURL: Scoreboard.Urls.ufc,
+//                    currentTitle: $currentTitle,
+//                    currentGameID: $currentGameID,
+//                    currentGameState: $currentGameState,
+//                    previousGameState: $previousGameState
+//                )
+//            }
 
             if enableNLL {
                 LacrosseMenu(
