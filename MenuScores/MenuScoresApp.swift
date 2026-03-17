@@ -17,6 +17,7 @@ extension LeagueSelectionModel {
 
 @main
 struct MenuScoresApp: App {
+
     // Refresh Interval Settings
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
@@ -90,7 +91,7 @@ struct MenuScoresApp: App {
     @AppStorage("enableATP") private var enableATP = true
     @AppStorage("enableWTA") private var enableWTA = false
 
-    @AppStorage("enableUFC") private var enableUFC = true
+    @AppStorage("enableUFC") private var enableUFC = false
 
     @AppStorage("enableNLL") private var enableNLL = true
     @AppStorage("enablePLL") private var enablePLL = false
@@ -145,12 +146,121 @@ struct MenuScoresApp: App {
 
         if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
         if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
+
+        // Check favorites for notifications after all leagues refresh
+        checkFavoriteGamesForNotifications()
+    }
+
+    // MARK: - Favorites Notification Logic
+
+    private func collectAllGames() -> [Event] {
+        var allGames: [Event] = []
+
+        // Hockey
+        allGames.append(contentsOf: nhlVM.games)
+        allGames.append(contentsOf: hncaamVM.games)
+        allGames.append(contentsOf: hncaafVM.games)
+        allGames.append(contentsOf: omihcVM.games)
+        allGames.append(contentsOf: owihcVM.games)
+
+        // Basketball
+        allGames.append(contentsOf: nbaVM.games)
+        allGames.append(contentsOf: wnbaVM.games)
+        allGames.append(contentsOf: ncaamVM.games)
+        allGames.append(contentsOf: ncaafVM.games)
+
+        // Football
+        allGames.append(contentsOf: nflVM.games)
+        allGames.append(contentsOf: fncaaVM.games)
+
+        // Baseball
+        allGames.append(contentsOf: mlbVM.games)
+        allGames.append(contentsOf: bncaaVM.games)
+        allGames.append(contentsOf: sncaaVM.games)
+
+        // Soccer
+        allGames.append(contentsOf: mlsVM.games)
+        allGames.append(contentsOf: nwslVM.games)
+        allGames.append(contentsOf: uefaVM.games)
+        allGames.append(contentsOf: euefaVM.games)
+        allGames.append(contentsOf: wuefaVM.games)
+        allGames.append(contentsOf: eplVM.games)
+        allGames.append(contentsOf: weplVM.games)
+        allGames.append(contentsOf: espVM.games)
+        allGames.append(contentsOf: gerVM.games)
+        allGames.append(contentsOf: itaVM.games)
+        allGames.append(contentsOf: mexVM.games)
+        allGames.append(contentsOf: fraVM.games)
+        allGames.append(contentsOf: nedVM.games)
+        allGames.append(contentsOf: porVM.games)
+        allGames.append(contentsOf: ffwcVM.games)
+        allGames.append(contentsOf: ffwwcVM.games)
+        allGames.append(contentsOf: ffwcquefaVM.games)
+        allGames.append(contentsOf: conmebolVM.games)
+        allGames.append(contentsOf: concacafVM.games)
+        allGames.append(contentsOf: cafVM.games)
+        allGames.append(contentsOf: afcVM.games)
+        allGames.append(contentsOf: ofcVM.games)
+
+        // Lacrosse
+        allGames.append(contentsOf: nllVM.games)
+        allGames.append(contentsOf: pllVM.games)
+        allGames.append(contentsOf: lncaamVM.games)
+        allGames.append(contentsOf: lncaafVM.games)
+
+        // Volleyball
+        allGames.append(contentsOf: vncaamVM.games)
+        allGames.append(contentsOf: vncaafVM.games)
+
+        return allGames
+    }
+
+    private func checkFavoriteGamesForNotifications() {
+        let favoritesManager = FavoritesManager.shared
+
+        guard !favoritesManager.favorites.isEmpty else { return }
+
+        let allGames = collectAllGames()
+
+        for game in allGames {
+            guard favoritesManager.gameInvolvesFavorite(game) else { continue }
+
+            let previousState = favoriteGameStates[game.id]
+            let currentState = game.status.type.state
+
+            // Notify on game start
+            if notifyFavoriteGameStart && previousState != "in" && currentState == "in" {
+                let teamName = favoritesManager.getFavoriteTeamName(in: game)
+                favoriteGameStartNotification(teamName: teamName, gameTitle: game.name, gameId: game.id)
+            }
+
+            // Notify on game end
+            if notifyFavoriteGameEnd && previousState != "post" && currentState == "post" {
+                let teamName = favoritesManager.getFavoriteTeamName(in: game)
+                let finalScore = favoritesManager.getScoreString(for: game)
+                favoriteGameCompleteNotification(teamName: teamName, gameTitle: game.name, gameId: game.id, finalScore: finalScore)
+            }
+
+            // Update tracked state
+            favoriteGameStates[game.id] = currentState
+        }
     }
 
     // Notification Settings
 
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
+
+    // Favorites Settings
+
+    @AppStorage("notifyFavoriteGameStart") private var notifyFavoriteGameStart = true
+    @AppStorage("notifyFavoriteGameEnd") private var notifyFavoriteGameEnd = true
+    @AppStorage("autoPinFavorites") private var autoPinFavorites = true
+
+    // Favorites State Tracking
+
+    @State private var favoriteGameStates: [String: String] = [:]
+    @State private var hasLoadedInitialData = false
 
     // Title State Settings
 
@@ -785,7 +895,7 @@ struct MenuScoresApp: App {
 
             if enableOMIHC {
                 HockeyMenu(
-                    title: "Men's Olympic Ice Hcokey",
+                    title: "Men's Olympic Ice Hockey",
                     viewModel: omihcVM,
                     league: "OMIHC",
                     fetchURL: Scoreboard.Urls.omihc,
@@ -798,7 +908,7 @@ struct MenuScoresApp: App {
 
             if enableOWIHC {
                 HockeyMenu(
-                    title: "Women's Olympic Ice Hcokey",
+                    title: "Women's Olympic Ice Hockey",
                     viewModel: owihcVM,
                     league: "OWIHC",
                     fetchURL: Scoreboard.Urls.owihc,
@@ -914,6 +1024,13 @@ struct MenuScoresApp: App {
             }
 
             Divider()
+                .onAppear {
+                    guard !hasLoadedInitialData else { return }
+                    hasLoadedInitialData = true
+                    Task {
+                        await refreshAllLeagues()
+                    }
+                }
 
             if enableNotch {
                 Picker("Choose Display", selection: $notchScreenIndex) {
