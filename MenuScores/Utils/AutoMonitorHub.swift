@@ -14,7 +14,7 @@ final class AutoMonitorHub {
     private var refreshAll: (() async -> Void)?
     private var eventSources: (() -> [(league: String, games: [Event])])?
     private var tennisSources: (() -> [(league: String, games: [TennisEvent])])?
-    private var apply: ((String, String, String, String?) -> Void)?
+    private var apply: ((String, String, String) -> Void)?
 
     private init() {}
 
@@ -24,7 +24,7 @@ final class AutoMonitorHub {
         refreshAll: @escaping () async -> Void,
         eventSources: @escaping () -> [(league: String, games: [Event])],
         tennisSources: @escaping () -> [(league: String, games: [TennisEvent])],
-        apply: @escaping (String, String, String, String?) -> Void
+        apply: @escaping (String, String, String) -> Void
     ) {
         self.isEnabled = isEnabled
         self.favoriteRaw = favoriteRaw
@@ -51,7 +51,6 @@ final class AutoMonitorHub {
                 apply?(
                     displayText(for: found.game, league: found.league),
                     found.game.id,
-                    newState,
                     newState
                 )
                 return
@@ -68,7 +67,6 @@ final class AutoMonitorHub {
             apply?(
                 tennis.title,
                 tennis.game.id,
-                newState,
                 newState
             )
         }

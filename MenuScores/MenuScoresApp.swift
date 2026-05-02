@@ -208,7 +208,7 @@ struct MenuScoresApp: App {
         if enableEUEFA { rows.append(("EUEFA", euefaVM.games)) }
         if enableWUEFA { rows.append(("WUEFA", wuefaVM.games)) }
         if enableEPL { rows.append(("EPL", eplVM.games)) }
-        if enableWEPL { rows.append(("wepl", weplVM.games)) }
+        if enableWEPL { rows.append(("WEPL", weplVM.games)) }
         if enableESP { rows.append(("ESP", espVM.games)) }
         if enableGER { rows.append(("GER", gerVM.games)) }
         if enableITA { rows.append(("ITA", itaVM.games)) }
@@ -337,26 +337,6 @@ struct MenuScoresApp: App {
 
     var body: some Scene {
         MenuBarExtra {
-            Color.clear
-                .frame(width: 0, height: 0)
-                .accessibilityHidden(true)
-                .onAppear {
-                    AutoMonitorHub.shared.configure(
-                        isEnabled: { autoMonitorEnabled },
-                        favoriteRaw: { autoMonitorFavorite },
-                        refreshAll: { await refreshAllLeagues() },
-                        eventSources: { buildScoreboardEventSources() },
-                        tennisSources: { buildTennisSources() },
-                        apply: { title, id, state, prev in
-                            currentTitle = title
-                            currentGameID = id
-                            currentGameState = state
-                            previousGameState = prev
-                        }
-                    )
-                    Task { await AutoMonitorHub.shared.tick() }
-                }
-
             if enableNHL {
                 HockeyMenu(
                     title: "NHL",
@@ -595,7 +575,7 @@ struct MenuScoresApp: App {
                 SoccerMenu(
                     title: "Women's Super League",
                     viewModel: weplVM,
-                    league: "wepl",
+                    league: "WEPL",
                     fetchURL: Scoreboard.Urls.wepl,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
@@ -1098,6 +1078,23 @@ struct MenuScoresApp: App {
             HStack {
                 Image(systemName: "dot.radiowaves.left.and.right")
                 Text(currentTitle)
+            }
+            .onAppear {
+                AutoMonitorHub.shared.configure(
+                    isEnabled: { autoMonitorEnabled },
+                    favoriteRaw: { autoMonitorFavorite },
+                    refreshAll: { await refreshAllLeagues() },
+                    eventSources: { buildScoreboardEventSources() },
+                    tennisSources: { buildTennisSources() },
+                    apply: { title, id, state in
+                        let priorForTransition = (currentGameID == id) ? currentGameState : nil
+                        currentTitle = title
+                        currentGameID = id
+                        currentGameState = state
+                        previousGameState = priorForTransition
+                    }
+                )
+                Task { await AutoMonitorHub.shared.tick() }
             }
             .onReceive(
                 Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
