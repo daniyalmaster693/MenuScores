@@ -1119,7 +1119,7 @@ struct Info: View {
 
                                                         if let linescores = competitor.linescores {
                                                             HStack(spacing: 4) {
-                                                                ForEach(linescores) { linescore in
+                                                                ForEach(Array(linescores.enumerated()), id: \.offset) { _, linescore in
                                                                     Text("\(linescore.value ?? 0)  ")
                                                                 }
                                                             }

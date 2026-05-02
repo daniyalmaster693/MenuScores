@@ -103,6 +103,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableOMIHC") private var enableOMIHC = true
     @AppStorage("enableOWIHC") private var enableOWIHC = false
 
+    @AppStorage("autoMonitorEnabled") private var autoMonitorEnabled = false
+    @AppStorage("autoMonitorFavorite") private var autoMonitorFavorite = ""
+
     private func refreshAllLeagues() async {
         if enableNHL { await nhlVM.populateGames(from: Scoreboard.Urls.nhl) }
 
@@ -130,6 +133,30 @@ struct MenuScoresApp: App {
         if enablePGA { await pgaVM.populateGames(from: Scoreboard.Urls.pga) }
         if enableLPGA { await lpgaVM.populateGames(from: Scoreboard.Urls.lpga) }
 
+        if enableMLS { await mlsVM.populateGames(from: Scoreboard.Urls.mls) }
+        if enableNWSL { await nwslVM.populateGames(from: Scoreboard.Urls.nwsl) }
+        if enableUEFA { await uefaVM.populateGames(from: Scoreboard.Urls.uefa) }
+        if enableEUEFA { await euefaVM.populateGames(from: Scoreboard.Urls.euefa) }
+        if enableWUEFA { await wuefaVM.populateGames(from: Scoreboard.Urls.wuefa) }
+        if enableEPL { await eplVM.populateGames(from: Scoreboard.Urls.epl) }
+        if enableWEPL { await weplVM.populateGames(from: Scoreboard.Urls.wepl) }
+        if enableESP { await espVM.populateGames(from: Scoreboard.Urls.esp) }
+        if enableGER { await gerVM.populateGames(from: Scoreboard.Urls.ger) }
+        if enableITA { await itaVM.populateGames(from: Scoreboard.Urls.ita) }
+        if enableMEX { await mexVM.populateGames(from: Scoreboard.Urls.mex) }
+        if enableFRA { await fraVM.populateGames(from: Scoreboard.Urls.fra) }
+        if enableNED { await nedVM.populateGames(from: Scoreboard.Urls.ned) }
+        if enablePOR { await porVM.populateGames(from: Scoreboard.Urls.por) }
+
+        if enableFFWC { await ffwcVM.populateGames(from: Scoreboard.Urls.ffwc) }
+        if enableFFWWC { await ffwwcVM.populateGames(from: Scoreboard.Urls.ffwwc) }
+        if enableFFWCQUEFA { await ffwcquefaVM.populateGames(from: Scoreboard.Urls.ffwcquefa) }
+        if enableCONMEBOL { await conmebolVM.populateGames(from: Scoreboard.Urls.conmebol) }
+        if enableCONCACAF { await concacafVM.populateGames(from: Scoreboard.Urls.concacaf) }
+        if enableCAF { await cafVM.populateGames(from: Scoreboard.Urls.caf) }
+        if enableAFC { await afcVM.populateGames(from: Scoreboard.Urls.afc) }
+        if enableOFC { await ofcVM.populateGames(from: Scoreboard.Urls.ofc) }
+
         if enableATP { await atpVM.populateTennis(from: Scoreboard.Urls.atp) }
         if enableWTA { await wtaVM.populateTennis(from: Scoreboard.Urls.wta) }
 
@@ -145,6 +172,79 @@ struct MenuScoresApp: App {
 
         if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
         if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
+    }
+
+    @MainActor
+    private func buildScoreboardEventSources() -> [(league: String, games: [Event])] {
+        var rows: [(String, [Event])] = []
+        if enableNHL { rows.append(("NHL", nhlVM.games)) }
+        if enableHNCAAM { rows.append(("HNCAAM", hncaamVM.games)) }
+        if enableHNCAAF { rows.append(("HNCAAF", hncaafVM.games)) }
+
+        if enableNBA { rows.append(("NBA", nbaVM.games)) }
+        if enableWNBA { rows.append(("WNBA", wnbaVM.games)) }
+        if enableNCAAM { rows.append(("NCAA M", ncaamVM.games)) }
+        if enableNCAAF { rows.append(("NCAA F", ncaafVM.games)) }
+
+        if enableNFL { rows.append(("NFL", nflVM.games)) }
+        if enableFNCAA { rows.append(("FNCAA", fncaaVM.games)) }
+
+        if enableMLB { rows.append(("MLB", mlbVM.games)) }
+        if enableBNCAA { rows.append(("BNCAA", bncaaVM.games)) }
+        if enableSNCAA { rows.append(("SNCAA", sncaaVM.games)) }
+
+        if enableF1 { rows.append(("F1", f1VM.games)) }
+        if enableNC { rows.append(("NC", ncVM.games)) }
+        if enableNCS { rows.append(("NCS", ncsVM.games)) }
+        if enableNCT { rows.append(("NCT", nctVM.games)) }
+        if enableIRL { rows.append(("IRL", irlVM.games)) }
+
+        if enablePGA { rows.append(("PGA", pgaVM.games)) }
+        if enableLPGA { rows.append(("LPGA", lpgaVM.games)) }
+
+        if enableMLS { rows.append(("MLS", mlsVM.games)) }
+        if enableNWSL { rows.append(("NWSL", nwslVM.games)) }
+        if enableUEFA { rows.append(("UEFA", uefaVM.games)) }
+        if enableEUEFA { rows.append(("EUEFA", euefaVM.games)) }
+        if enableWUEFA { rows.append(("WUEFA", wuefaVM.games)) }
+        if enableEPL { rows.append(("EPL", eplVM.games)) }
+        if enableWEPL { rows.append(("wepl", weplVM.games)) }
+        if enableESP { rows.append(("ESP", espVM.games)) }
+        if enableGER { rows.append(("GER", gerVM.games)) }
+        if enableITA { rows.append(("ITA", itaVM.games)) }
+        if enableMEX { rows.append(("MEX", mexVM.games)) }
+        if enableFRA { rows.append(("FRA", fraVM.games)) }
+        if enableNED { rows.append(("NED", nedVM.games)) }
+        if enablePOR { rows.append(("POR", porVM.games)) }
+
+        if enableFFWC { rows.append(("FFWC", ffwcVM.games)) }
+        if enableFFWWC { rows.append(("FFWWC", ffwwcVM.games)) }
+        if enableFFWCQUEFA { rows.append(("FFWCQUEFA", ffwcquefaVM.games)) }
+        if enableCONMEBOL { rows.append(("CONMEBOL", conmebolVM.games)) }
+        if enableCONCACAF { rows.append(("CONCACAF", concacafVM.games)) }
+        if enableCAF { rows.append(("CAF", cafVM.games)) }
+        if enableAFC { rows.append(("AFC", afcVM.games)) }
+        if enableOFC { rows.append(("OFC", ofcVM.games)) }
+
+        if enableNLL { rows.append(("NLL", nllVM.games)) }
+        if enablePLL { rows.append(("PLL", pllVM.games)) }
+        if enableLNCAAM { rows.append(("LNCAAM", lncaamVM.games)) }
+        if enableLNCAAF { rows.append(("LNCAAF", lncaafVM.games)) }
+
+        if enableVNCAAM { rows.append(("VNCAAM", vncaamVM.games)) }
+        if enableVNCAAF { rows.append(("VNCAAF", vncaafVM.games)) }
+
+        if enableOMIHC { rows.append(("OMIHC", omihcVM.games)) }
+        if enableOWIHC { rows.append(("OWIHC", owihcVM.games)) }
+        return rows
+    }
+
+    @MainActor
+    private func buildTennisSources() -> [(league: String, games: [TennisEvent])] {
+        var rows: [(String, [TennisEvent])] = []
+        if enableATP { rows.append(("ATP", atpVM.tennisGames)) }
+        if enableWTA { rows.append(("WTA", wtaVM.tennisGames)) }
+        return rows
     }
 
     // Notification Settings
@@ -237,6 +337,26 @@ struct MenuScoresApp: App {
 
     var body: some Scene {
         MenuBarExtra {
+            Color.clear
+                .frame(width: 0, height: 0)
+                .accessibilityHidden(true)
+                .onAppear {
+                    AutoMonitorHub.shared.configure(
+                        isEnabled: { autoMonitorEnabled },
+                        favoriteRaw: { autoMonitorFavorite },
+                        refreshAll: { await refreshAllLeagues() },
+                        eventSources: { buildScoreboardEventSources() },
+                        tennisSources: { buildTennisSources() },
+                        apply: { title, id, state, prev in
+                            currentTitle = title
+                            currentGameID = id
+                            currentGameState = state
+                            previousGameState = prev
+                        }
+                    )
+                    Task { await AutoMonitorHub.shared.tick() }
+                }
+
             if enableNHL {
                 HockeyMenu(
                     title: "NHL",
@@ -978,6 +1098,11 @@ struct MenuScoresApp: App {
             HStack {
                 Image(systemName: "dot.radiowaves.left.and.right")
                 Text(currentTitle)
+            }
+            .onReceive(
+                Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+            ) { _ in
+                Task { await AutoMonitorHub.shared.tick() }
             }
         }
 

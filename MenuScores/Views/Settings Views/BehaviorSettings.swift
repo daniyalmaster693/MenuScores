@@ -14,6 +14,9 @@ struct BehaviorSettingsView: View {
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
+    @AppStorage("autoMonitorEnabled") private var autoMonitorEnabled = false
+    @AppStorage("autoMonitorFavorite") private var autoMonitorFavorite = ""
+
     @AppStorage("enableNotch") private var enableNotch = true
 //    @AppStorage("enableInlineView") private var enableInlineView = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
@@ -103,6 +106,32 @@ struct BehaviorSettingsView: View {
                             .frame(width: 150)
                         }
                     }
+                }
+
+                Section {
+                    Toggle(isOn: $autoMonitorEnabled) {
+                        HStack {
+                            Image(systemName: "star.circle")
+                                .foregroundColor(.secondary)
+                            Text("Auto-Monitor")
+                        }
+                    }
+
+                    TextField("Team or competitor", text: $autoMonitorFavorite)
+                        .textFieldStyle(.roundedBorder)
+                        .disabled(!autoMonitorEnabled)
+                        .help(
+                            "Abbreviation or name (e.g. TOR, Lakers, Verstappen). Shows live games in any enabled league; for today's calendar day also shows pregame and final for that favorite."
+                        )
+
+                    Text(
+                        "Matches enabled leagues only. Uses the same refresh interval as score updates."
+                    )
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                } header: {
+                    Text("Favorite")
                 }
 
                 Section {
