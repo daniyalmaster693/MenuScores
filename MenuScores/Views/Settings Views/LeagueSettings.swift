@@ -75,6 +75,9 @@ struct LeagueSettingsView: View {
     @AppStorage("enableOMIHC") private var enableOMIHC = true
     @AppStorage("enableOWIHC") private var enableOWIHC = false
 
+    @AppStorage("enableIPL") private var enableIPL = true
+    @AppStorage("enableICC") private var enableICC = false
+
     // League Settings View
 
     var body: some View {
@@ -168,6 +171,8 @@ struct LeagueSettingsView: View {
                                 enableVNCAAF = false
                                 enableOMIHC = false
                                 enableOWIHC = false
+                                enableIPL = false
+                                enableICC = false
                             }) {
                                 HStack {
                                     Image(systemName: "xmark.circle")
@@ -527,6 +532,24 @@ struct LeagueSettingsView: View {
                             Image(systemName: "medal")
                                 .foregroundColor(.secondary)
                             Text("Women's Olympic Ice Hockey")
+                        }
+                    }
+                }
+
+                Section("Cricket") {
+                    Toggle(isOn: $enableIPL) {
+                        HStack {
+                            Image(systemName: "cricket.ball.fill")
+                                .foregroundColor(.secondary)
+                            Text("IPL")
+                        }
+                    }
+
+                    Toggle(isOn: $enableICC) {
+                        HStack {
+                            Image(systemName: "cricket.ball.fill")
+                                .foregroundColor(.secondary)
+                            Text("ICC International")
                         }
                     }
                 }

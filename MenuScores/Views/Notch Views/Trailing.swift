@@ -184,6 +184,21 @@ struct CompactTrailing: View {
             }
         }
 
+        if sport == "Cricket", let match = notchViewModel.cricketMatch {
+            HStack(spacing: 3) {
+                if match.hasScores {
+                    Text(match.score2Compact)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.85))
+                        .contentTransition(.numericText(countsDown: false))
+                }
+
+                Text(match.team2Short)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(.white)
+            }
+        }
+
         if let tennisGame = notchViewModel.tennisCompetition {
             if sport == "Tennis" {
                 HStack {

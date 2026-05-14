@@ -103,6 +103,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableOMIHC") private var enableOMIHC = true
     @AppStorage("enableOWIHC") private var enableOWIHC = false
 
+    @AppStorage("enableIPL") private var enableIPL = true
+    @AppStorage("enableICC") private var enableICC = false
+
     private func refreshAllLeagues() async {
         if enableNHL { await nhlVM.populateGames(from: Scoreboard.Urls.nhl) }
 
@@ -145,6 +148,9 @@ struct MenuScoresApp: App {
 
         if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
         if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
+
+        if enableIPL { await iplVM.forceRefresh() }
+        if enableICC { await iccVM.forceRefresh() }
     }
 
     // Notification Settings
@@ -234,6 +240,9 @@ struct MenuScoresApp: App {
 
     @StateObject private var omihcVM = GamesListView()
     @StateObject private var owihcVM = GamesListView()
+
+    @StateObject private var iplVM = CricketScheduleListView(seriesFilter: "Indian Premier League")
+    @StateObject private var iccVM = CricketScheduleListView(seriesFilter: nil)
 
     var body: some Scene {
         MenuBarExtra {
@@ -913,6 +922,32 @@ struct MenuScoresApp: App {
                 )
             }
 
+            if enableIPL {
+                CricketMenu(
+                    title: "IPL",
+                    viewModel: iplVM,
+                    league: "IPL",
+                    seriesFilter: "Indian Premier League",
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableICC {
+                CricketMenu(
+                    title: "ICC International",
+                    viewModel: iccVM,
+                    league: "ICC",
+                    seriesFilter: nil,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
             Divider()
 
             if enableNotch {
@@ -978,6 +1013,9 @@ struct MenuScoresApp: App {
             HStack {
                 Image(systemName: "dot.radiowaves.left.and.right")
                 Text(currentTitle)
+            }
+            .task {
+                await refreshAllLeagues()
             }
         }
 

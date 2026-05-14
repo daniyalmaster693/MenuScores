@@ -176,7 +176,7 @@ struct Info: View {
                             }
                         }
 
-                        if sport == "Baseball" || sport == "Soccer" {
+                        if sport == "Baseball" || sport == "Soccer" || sport == "Cricket" {
                             HStack(spacing: 4) {
                                 if game.status.type.state == "post" {
                                     Text("Final")
@@ -193,7 +193,7 @@ struct Info: View {
                             .padding(.horizontal, 35)
                         }
 
-                        if sport != "Baseball" && sport != "Soccer" {
+                        if sport != "Baseball" && sport != "Soccer" && sport != "Cricket" {
                             HStack(spacing: 4) {
                                 if game.status.type.state == "post" {
                                     Text("Final")
@@ -1022,10 +1022,99 @@ struct Info: View {
             }
         }
 
-        if let tennisGame = notchViewModel.tennisCompetition {
-            let team1 = tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.first?.roster?.shortDisplayName ?? "Player 1"
-            let team2 = tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2"
+        if sport == "Cricket", let match = notchViewModel.cricketMatch {
+            VStack(spacing: 0) {
+                // Header
+                HStack {
+                    Text(match.name)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(.white.opacity(0.6))
+                        .lineLimit(1)
+                    Spacer()
+                    if match.isLive, let status = match.status {
+                        Text(status)
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundColor(.green)
+                            .lineLimit(1)
+                    } else {
+                        Text(match.startDateFormatted)
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                }
+                .padding(.horizontal, 14)
+                .padding(.top, 8)
 
+                Divider().padding(.vertical, 8)
+
+                // Team 1 row
+                HStack {
+                    AsyncImage(url: match.team1Logo) { img in
+                        img.resizable().scaledToFit().frame(width: 24, height: 24)
+                    } placeholder: { Color.clear.frame(width: 24, height: 24) }
+
+                    Text(match.team1Name)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text(match.score1Text)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                        .contentTransition(.numericText(countsDown: false))
+                }
+                .padding(.horizontal, 14)
+
+                // Team 2 row
+                HStack {
+                    AsyncImage(url: match.team2Logo) { img in
+                        img.resizable().scaledToFit().frame(width: 24, height: 24)
+                    } placeholder: { Color.clear.frame(width: 24, height: 24) }
+
+                    Text(match.team2Name)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text(match.score2Text)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                        .contentTransition(.numericText(countsDown: false))
+                }
+                .padding(.horizontal, 14)
+                .padding(.top, 6)
+                .padding(.bottom, 10)
+            }
+            .contextMenu {
+                Picker("Choose Display", selection: $notchScreenIndex) {
+                    ForEach(NSScreen.screens.indices, id: \.self) { index in
+                        Text(NSScreen.screens[index].localizedName)
+                            .tag(index)
+                    }
+                }
+
+                if #available(macOS 14, *) {
+                    Button {
+                        let environment = EnvironmentValues()
+                        environment.openSettings()
+                        NSApp.setActivationPolicy(.regular)
+                        NSApp.activate(ignoringOtherApps: true)
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
+                }
+
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Text("Quit")
+                }
+                .keyboardShortcut("q")
+            }
+        }
+
+        if let tennisGame = notchViewModel.tennisCompetition {
             if sport == "Tennis" {
                 VStack {
                     HStack(spacing: 4) {

@@ -198,6 +198,21 @@ struct CompactLeading: View {
             }
         }
 
+        if sport == "Cricket", let match = notchViewModel.cricketMatch {
+            HStack(spacing: 3) {
+                Text(match.team1Short)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(.white)
+
+                if match.hasScores {
+                    Text(match.score1Compact)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(.white.opacity(0.85))
+                        .contentTransition(.numericText(countsDown: false))
+                }
+            }
+        }
+
         if sport == "Tennis" {
             HStack {
                 AsyncImage(
