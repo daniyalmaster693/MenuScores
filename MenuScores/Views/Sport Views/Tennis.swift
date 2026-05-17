@@ -76,6 +76,7 @@ struct TennisMenu: View {
                                                             currentTitle = tennisTitle
                                                             currentGameID = game.id
                                                             currentGameState = game.status.type.state
+                                                            LeagueSelectionModel.shared.setPinnedDetailURL(from: game)
 
                                                             pinnedByMenubar = true
                                                             pinnedByNotch = false

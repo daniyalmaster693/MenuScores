@@ -5,10 +5,20 @@
 //  Created by Daniyal Master on 2025-05-03.
 //
 
+import AppKit
 import SwiftUI
 
 class LeagueSelectionModel: ObservableObject {
     @Published var currentLeague: String = ""
+    @Published var currentGameDetailURL: String = ""
+
+    func setPinnedDetailURL(from event: Event) {
+        currentGameDetailURL = event.links?.first?.href ?? ""
+    }
+
+    func setPinnedDetailURL(from event: TennisEvent) {
+        currentGameDetailURL = event.links?.first?.href ?? ""
+    }
 }
 
 extension LeagueSelectionModel {
@@ -247,6 +257,40 @@ struct MenuScoresApp: App {
         return rows
     }
 
+    @MainActor
+    private func resolveDetailsURL(for gameID: String) -> URL? {
+        eventDetailsURL(for: gameID, in: buildScoreboardEventSources())
+            ?? tennisDetailsURL(for: gameID, in: buildTennisSources())
+    }
+
+    @MainActor
+    private func syncCurrentGameDetailURL() {
+        let model = LeagueSelectionModel.shared
+        if model.currentGameDetailURL.isEmpty,
+           let resolved = resolveDetailsURL(for: currentGameID)
+        {
+            model.currentGameDetailURL = resolved.absoluteString
+        }
+    }
+
+    @MainActor
+    private func openSetGameDetails() {
+        guard !currentTitle.isEmpty else { return }
+
+        let model = LeagueSelectionModel.shared
+        let urlString = model.currentGameDetailURL.isEmpty
+            ? resolveDetailsURL(for: currentGameID)?.absoluteString
+            : model.currentGameDetailURL
+
+        guard let urlString, !urlString.isEmpty, let url = URL(string: urlString) else { return }
+
+        if model.currentGameDetailURL.isEmpty {
+            model.currentGameDetailURL = urlString
+        }
+
+        NSWorkspace.shared.open(url)
+    }
+
     // Notification Settings
 
     @AppStorage("notiGameStart") private var notiGameStart = false
@@ -337,6 +381,19 @@ struct MenuScoresApp: App {
 
     var body: some Scene {
         MenuBarExtra {
+            if !currentTitle.isEmpty {
+                Button {
+                    openSetGameDetails()
+                } label: {
+                    HStack {
+                        Image(systemName: "info.circle")
+                        Text("Open Set Game Details")
+                    }
+                }
+
+                Divider()
+            }
+
             if enableNHL {
                 HockeyMenu(
                     title: "NHL",
@@ -1037,6 +1094,7 @@ struct MenuScoresApp: App {
                 currentTitle = ""
                 currentGameID = ""
                 currentGameState = ""
+                LeagueSelectionModel.shared.currentGameDetailURL = ""
                 previousGameState = nil
 
                 Task {
@@ -1079,6 +1137,9 @@ struct MenuScoresApp: App {
                 Image(systemName: "dot.radiowaves.left.and.right")
                 Text(currentTitle)
             }
+            .onChange(of: currentGameID) { _ in
+                syncCurrentGameDetailURL()
+            }
             .onAppear {
                 AutoMonitorHub.shared.configure(
                     isEnabled: { autoMonitorEnabled },
@@ -1092,6 +1153,7 @@ struct MenuScoresApp: App {
                         currentGameID = id
                         currentGameState = state
                         previousGameState = priorForTransition
+                        syncCurrentGameDetailURL()
                     }
                 )
                 Task { await AutoMonitorHub.shared.tick() }

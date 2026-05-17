@@ -60,6 +60,7 @@ struct F1Menu: View {
                                     currentTitle = displayText(for: game, league: league)
                                     currentGameID = game.id
                                     currentGameState = game.status.type.state
+                                    LeagueSelectionModel.shared.setPinnedDetailURL(from: game)
 
                                     pinnedByMenubar = true
                                     pinnedByNotch = false
