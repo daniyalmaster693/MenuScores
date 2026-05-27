@@ -96,8 +96,7 @@ struct TennisCompetitor: Decodable, Identifiable {
     let linescores: [TennisLinesScore]?
 }
 
-struct TennisLinesScore: Decodable, Identifiable {
-    let id = UUID()
+struct TennisLinesScore: Decodable {
     let winner: Bool?
     let value: Int?
 }

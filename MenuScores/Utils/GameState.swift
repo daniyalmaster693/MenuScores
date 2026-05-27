@@ -5,6 +5,32 @@
 //  Created by Daniyal Master on 2025-05-10.
 //
 
+import Foundation
+
+func eventDetailsURL(for gameID: String, in sources: [(league: String, games: [Event])]) -> URL? {
+    guard !gameID.isEmpty, gameID != "0" else { return nil }
+    for source in sources {
+        if let game = source.games.first(where: { $0.id == gameID }),
+           let href = game.links?.first?.href
+        {
+            return URL(string: href)
+        }
+    }
+    return nil
+}
+
+func tennisDetailsURL(for gameID: String, in sources: [(league: String, games: [TennisEvent])]) -> URL? {
+    guard !gameID.isEmpty, gameID != "0" else { return nil }
+    for source in sources {
+        if let game = source.games.first(where: { $0.id == gameID }),
+           let href = game.links?.first?.href
+        {
+            return URL(string: href)
+        }
+    }
+    return nil
+}
+
 func displayText(for game: Event, league: String) -> String {
     guard let competition = game.competitions.first,
           let competitors = competition.competitors,

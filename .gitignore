@@ -1,0 +1,4 @@
+build/
+.cursor/*.log
+MenuScores.xcodeproj/project.xcworkspace/xcuserdata/billylo.xcuserdatad/UserInterfaceState.xcuserstate
+.DS_Store

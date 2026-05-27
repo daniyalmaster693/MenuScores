@@ -5,10 +5,20 @@
 //  Created by Daniyal Master on 2025-05-03.
 //
 
+import AppKit
 import SwiftUI
 
 class LeagueSelectionModel: ObservableObject {
     @Published var currentLeague: String = ""
+    @Published var currentGameDetailURL: String = ""
+
+    func setPinnedDetailURL(from event: Event) {
+        currentGameDetailURL = event.links?.first?.href ?? ""
+    }
+
+    func setPinnedDetailURL(from event: TennisEvent) {
+        currentGameDetailURL = event.links?.first?.href ?? ""
+    }
 }
 
 extension LeagueSelectionModel {
@@ -22,18 +32,7 @@ struct MenuScoresApp: App {
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
     private var refreshInterval: TimeInterval {
-        switch selectedOption {
-        case "10 seconds": return 10
-        case "15 seconds": return 15
-        case "20 seconds": return 20
-        case "30 seconds": return 30
-        case "40 seconds": return 40
-        case "50 seconds": return 50
-        case "1 minute": return 60
-        case "2 minutes": return 120
-        case "5 minutes": return 300
-        default: return 15
-        }
+        RefreshInterval.timeInterval(for: selectedOption)
     }
 
     // Toggled League Settings
@@ -103,48 +102,234 @@ struct MenuScoresApp: App {
     @AppStorage("enableOMIHC") private var enableOMIHC = true
     @AppStorage("enableOWIHC") private var enableOWIHC = false
 
+    @AppStorage("autoMonitorEnabled") private var autoMonitorEnabled = false
+    @AppStorage("autoMonitorFavorite") private var autoMonitorFavorite = ""
+
+    @MainActor
+    private func enabledLeagueCodes() -> [String] {
+        buildScoreboardEventSources().map(\.league) + buildTennisSources().map(\.league)
+    }
+
     private func refreshAllLeagues() async {
-        if enableNHL { await nhlVM.populateGames(from: Scoreboard.Urls.nhl) }
+        for code in enabledLeagueCodes() {
+            await refreshLeague(code)
+        }
+    }
 
-        if enableHNCAAM { await hncaamVM.populateGames(from: Scoreboard.Urls.hncaam) }
-        if enableHNCAAF { await hncaafVM.populateGames(from: Scoreboard.Urls.hncaaf) }
+    @MainActor
+    private func refreshLeague(_ code: String) async {
+        switch code {
+        case "NHL": await nhlVM.populateGames(from: Scoreboard.Urls.nhl)
+        case "HNCAAM": await hncaamVM.populateGames(from: Scoreboard.Urls.hncaam)
+        case "HNCAAF": await hncaafVM.populateGames(from: Scoreboard.Urls.hncaaf)
+        case "NBA": await nbaVM.populateGames(from: Scoreboard.Urls.nba)
+        case "WNBA": await wnbaVM.populateGames(from: Scoreboard.Urls.wnba)
+        case "NCAA M": await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam)
+        case "NCAA F": await ncaafVM.populateGames(from: Scoreboard.Urls.ncaaf)
+        case "NFL": await nflVM.populateGames(from: Scoreboard.Urls.nfl)
+        case "FNCAA": await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa)
+        case "MLB": await mlbVM.populateGames(from: Scoreboard.Urls.mlb)
+        case "BNCAA": await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa)
+        case "SNCAA": await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa)
+        case "F1": await f1VM.populateGames(from: Scoreboard.Urls.f1)
+        case "NC": await ncVM.populateGames(from: Scoreboard.Urls.nc)
+        case "NCS": await ncsVM.populateGames(from: Scoreboard.Urls.ncs)
+        case "NCT": await nctVM.populateGames(from: Scoreboard.Urls.nct)
+        case "IRL": await irlVM.populateGames(from: Scoreboard.Urls.irl)
+        case "PGA": await pgaVM.populateGames(from: Scoreboard.Urls.pga)
+        case "LPGA": await lpgaVM.populateGames(from: Scoreboard.Urls.lpga)
+        case "MLS": await mlsVM.populateGames(from: Scoreboard.Urls.mls)
+        case "NWSL": await nwslVM.populateGames(from: Scoreboard.Urls.nwsl)
+        case "UEFA": await uefaVM.populateGames(from: Scoreboard.Urls.uefa)
+        case "EUEFA": await euefaVM.populateGames(from: Scoreboard.Urls.euefa)
+        case "WUEFA": await wuefaVM.populateGames(from: Scoreboard.Urls.wuefa)
+        case "EPL": await eplVM.populateGames(from: Scoreboard.Urls.epl)
+        case "WEPL": await weplVM.populateGames(from: Scoreboard.Urls.wepl)
+        case "ESP": await espVM.populateGames(from: Scoreboard.Urls.esp)
+        case "GER": await gerVM.populateGames(from: Scoreboard.Urls.ger)
+        case "ITA": await itaVM.populateGames(from: Scoreboard.Urls.ita)
+        case "MEX": await mexVM.populateGames(from: Scoreboard.Urls.mex)
+        case "FRA": await fraVM.populateGames(from: Scoreboard.Urls.fra)
+        case "NED": await nedVM.populateGames(from: Scoreboard.Urls.ned)
+        case "POR": await porVM.populateGames(from: Scoreboard.Urls.por)
+        case "FFWC": await ffwcVM.populateGames(from: Scoreboard.Urls.ffwc)
+        case "FFWWC": await ffwwcVM.populateGames(from: Scoreboard.Urls.ffwwc)
+        case "FFWCQUEFA": await ffwcquefaVM.populateGames(from: Scoreboard.Urls.ffwcquefa)
+        case "CONMEBOL": await conmebolVM.populateGames(from: Scoreboard.Urls.conmebol)
+        case "CONCACAF": await concacafVM.populateGames(from: Scoreboard.Urls.concacaf)
+        case "CAF": await cafVM.populateGames(from: Scoreboard.Urls.caf)
+        case "AFC": await afcVM.populateGames(from: Scoreboard.Urls.afc)
+        case "OFC": await ofcVM.populateGames(from: Scoreboard.Urls.ofc)
+        case "ATP": await atpVM.populateTennis(from: Scoreboard.Urls.atp)
+        case "WTA": await wtaVM.populateTennis(from: Scoreboard.Urls.wta)
+        case "NLL": await nllVM.populateGames(from: Scoreboard.Urls.nll)
+        case "PLL": await pllVM.populateGames(from: Scoreboard.Urls.pll)
+        case "LNCAAM": await lncaamVM.populateGames(from: Scoreboard.Urls.lncaam)
+        case "LNCAAF": await lncaafVM.populateGames(from: Scoreboard.Urls.lncaaf)
+        case "VNCAAM": await vncaamVM.populateGames(from: Scoreboard.Urls.vncaam)
+        case "VNCAAF": await vncaafVM.populateGames(from: Scoreboard.Urls.vncaaf)
+        case "OMIHC": await omihcVM.populateGames(from: Scoreboard.Urls.omihc)
+        case "OWIHC": await owihcVM.populateGames(from: Scoreboard.Urls.owihc)
+        default: break
+        }
+    }
 
-        if enableNBA { await nbaVM.populateGames(from: Scoreboard.Urls.nba) }
-        if enableWNBA { await wnbaVM.populateGames(from: Scoreboard.Urls.wnba) }
-        if enableNCAAM { await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam) }
-        if enableNCAAF { await ncaafVM.populateGames(from: Scoreboard.Urls.ncaaf) }
+    private var hasPinnedOrActiveNotch: Bool {
+        let hasPinnedGame = !currentGameID.isEmpty && currentGameID != "0"
+        return hasPinnedGame || NotchViewModel.shared.notch != nil
+    }
 
-        if enableNFL { await nflVM.populateGames(from: Scoreboard.Urls.nfl) }
-        if enableFNCAA { await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa) }
+    @MainActor
+    private func reconcileBackgroundRefresh() {
+        let favoriteActive = autoMonitorEnabled
+            && !AutoMonitorFavorite.normalizedQuery(autoMonitorFavorite).isEmpty
+        RefreshCoordinator.shared.setShouldRun(favoriteActive || hasPinnedOrActiveNotch)
+    }
 
-        if enableMLB { await mlbVM.populateGames(from: Scoreboard.Urls.mlb) }
-        if enableBNCAA { await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa) }
-        if enableSNCAA { await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa) }
+    @MainActor
+    private func backgroundRefreshTick() async {
+        var leaguesToRefresh = Set<String>()
 
-        if enableF1 { await f1VM.populateGames(from: Scoreboard.Urls.f1) }
-        if enableNC { await ncVM.populateGames(from: Scoreboard.Urls.nc) }
-        if enableNCS { await ncsVM.populateGames(from: Scoreboard.Urls.ncs) }
-        if enableNCT { await nctVM.populateGames(from: Scoreboard.Urls.nct) }
-        if enableIRL { await irlVM.populateGames(from: Scoreboard.Urls.irl) }
+        if autoMonitorEnabled {
+            leaguesToRefresh.formUnion(AutoMonitorHub.shared.leaguesToRefreshThisTick())
+        }
 
-        if enablePGA { await pgaVM.populateGames(from: Scoreboard.Urls.pga) }
-        if enableLPGA { await lpgaVM.populateGames(from: Scoreboard.Urls.lpga) }
+        if hasPinnedOrActiveNotch {
+            let league = LeagueSelectionModel.shared.currentLeague
+            if !league.isEmpty {
+                leaguesToRefresh.insert(league)
+            }
+        }
 
-        if enableATP { await atpVM.populateTennis(from: Scoreboard.Urls.atp) }
-        if enableWTA { await wtaVM.populateTennis(from: Scoreboard.Urls.wta) }
+        for league in leaguesToRefresh {
+            await refreshLeague(league)
+        }
 
-//        if enableUFC { await ufcVM.populateGames(from: Scoreboard.Urls.ufc) }
+        if autoMonitorEnabled {
+            AutoMonitorHub.shared.scanAndApply()
+        }
 
-        if enableNLL { await nllVM.populateGames(from: Scoreboard.Urls.nll) }
-        if enablePLL { await pllVM.populateGames(from: Scoreboard.Urls.pll) }
-        if enableLNCAAM { await lncaamVM.populateGames(from: Scoreboard.Urls.lncaam) }
-        if enableLNCAAF { await lncaafVM.populateGames(from: Scoreboard.Urls.lncaaf) }
+        if hasPinnedOrActiveNotch {
+            let league = LeagueSelectionModel.shared.currentLeague
+            guard !league.isEmpty else { return }
+            PinnedGameSync.syncStandardEvent(
+                gameID: currentGameID,
+                league: league,
+                eventSources: buildScoreboardEventSources(),
+                currentTitle: &currentTitle,
+                currentGameState: &currentGameState,
+                previousGameState: &previousGameState,
+                notiGameStart: notiGameStart,
+                notiGameComplete: notiGameComplete
+            )
+        }
+    }
 
-        if enableVNCAAM { await vncaamVM.populateGames(from: Scoreboard.Urls.vncaam) }
-        if enableVNCAAF { await vncaafVM.populateGames(from: Scoreboard.Urls.vncaaf) }
+    @MainActor
+    private func buildScoreboardEventSources() -> [(league: String, games: [Event])] {
+        var rows: [(String, [Event])] = []
+        if enableNHL { rows.append(("NHL", nhlVM.games)) }
+        if enableHNCAAM { rows.append(("HNCAAM", hncaamVM.games)) }
+        if enableHNCAAF { rows.append(("HNCAAF", hncaafVM.games)) }
 
-        if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
-        if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
+        if enableNBA { rows.append(("NBA", nbaVM.games)) }
+        if enableWNBA { rows.append(("WNBA", wnbaVM.games)) }
+        if enableNCAAM { rows.append(("NCAA M", ncaamVM.games)) }
+        if enableNCAAF { rows.append(("NCAA F", ncaafVM.games)) }
+
+        if enableNFL { rows.append(("NFL", nflVM.games)) }
+        if enableFNCAA { rows.append(("FNCAA", fncaaVM.games)) }
+
+        if enableMLB { rows.append(("MLB", mlbVM.games)) }
+        if enableBNCAA { rows.append(("BNCAA", bncaaVM.games)) }
+        if enableSNCAA { rows.append(("SNCAA", sncaaVM.games)) }
+
+        if enableF1 { rows.append(("F1", f1VM.games)) }
+        if enableNC { rows.append(("NC", ncVM.games)) }
+        if enableNCS { rows.append(("NCS", ncsVM.games)) }
+        if enableNCT { rows.append(("NCT", nctVM.games)) }
+        if enableIRL { rows.append(("IRL", irlVM.games)) }
+
+        if enablePGA { rows.append(("PGA", pgaVM.games)) }
+        if enableLPGA { rows.append(("LPGA", lpgaVM.games)) }
+
+        if enableMLS { rows.append(("MLS", mlsVM.games)) }
+        if enableNWSL { rows.append(("NWSL", nwslVM.games)) }
+        if enableUEFA { rows.append(("UEFA", uefaVM.games)) }
+        if enableEUEFA { rows.append(("EUEFA", euefaVM.games)) }
+        if enableWUEFA { rows.append(("WUEFA", wuefaVM.games)) }
+        if enableEPL { rows.append(("EPL", eplVM.games)) }
+        if enableWEPL { rows.append(("WEPL", weplVM.games)) }
+        if enableESP { rows.append(("ESP", espVM.games)) }
+        if enableGER { rows.append(("GER", gerVM.games)) }
+        if enableITA { rows.append(("ITA", itaVM.games)) }
+        if enableMEX { rows.append(("MEX", mexVM.games)) }
+        if enableFRA { rows.append(("FRA", fraVM.games)) }
+        if enableNED { rows.append(("NED", nedVM.games)) }
+        if enablePOR { rows.append(("POR", porVM.games)) }
+
+        if enableFFWC { rows.append(("FFWC", ffwcVM.games)) }
+        if enableFFWWC { rows.append(("FFWWC", ffwwcVM.games)) }
+        if enableFFWCQUEFA { rows.append(("FFWCQUEFA", ffwcquefaVM.games)) }
+        if enableCONMEBOL { rows.append(("CONMEBOL", conmebolVM.games)) }
+        if enableCONCACAF { rows.append(("CONCACAF", concacafVM.games)) }
+        if enableCAF { rows.append(("CAF", cafVM.games)) }
+        if enableAFC { rows.append(("AFC", afcVM.games)) }
+        if enableOFC { rows.append(("OFC", ofcVM.games)) }
+
+        if enableNLL { rows.append(("NLL", nllVM.games)) }
+        if enablePLL { rows.append(("PLL", pllVM.games)) }
+        if enableLNCAAM { rows.append(("LNCAAM", lncaamVM.games)) }
+        if enableLNCAAF { rows.append(("LNCAAF", lncaafVM.games)) }
+
+        if enableVNCAAM { rows.append(("VNCAAM", vncaamVM.games)) }
+        if enableVNCAAF { rows.append(("VNCAAF", vncaafVM.games)) }
+
+        if enableOMIHC { rows.append(("OMIHC", omihcVM.games)) }
+        if enableOWIHC { rows.append(("OWIHC", owihcVM.games)) }
+        return rows
+    }
+
+    @MainActor
+    private func buildTennisSources() -> [(league: String, games: [TennisEvent])] {
+        var rows: [(String, [TennisEvent])] = []
+        if enableATP { rows.append(("ATP", atpVM.tennisGames)) }
+        if enableWTA { rows.append(("WTA", wtaVM.tennisGames)) }
+        return rows
+    }
+
+    @MainActor
+    private func resolveDetailsURL(for gameID: String) -> URL? {
+        eventDetailsURL(for: gameID, in: buildScoreboardEventSources())
+            ?? tennisDetailsURL(for: gameID, in: buildTennisSources())
+    }
+
+    @MainActor
+    private func syncCurrentGameDetailURL() {
+        let model = LeagueSelectionModel.shared
+        if model.currentGameDetailURL.isEmpty,
+           let resolved = resolveDetailsURL(for: currentGameID)
+        {
+            model.currentGameDetailURL = resolved.absoluteString
+        }
+    }
+
+    @MainActor
+    private func openSetGameDetails() {
+        guard !currentTitle.isEmpty else { return }
+
+        let model = LeagueSelectionModel.shared
+        let urlString = model.currentGameDetailURL.isEmpty
+            ? resolveDetailsURL(for: currentGameID)?.absoluteString
+            : model.currentGameDetailURL
+
+        guard let urlString, !urlString.isEmpty, let url = URL(string: urlString) else { return }
+
+        if model.currentGameDetailURL.isEmpty {
+            model.currentGameDetailURL = urlString
+        }
+
+        NSWorkspace.shared.open(url)
     }
 
     // Notification Settings
@@ -237,6 +422,20 @@ struct MenuScoresApp: App {
 
     var body: some Scene {
         MenuBarExtra {
+            Button {
+                openSetGameDetails()
+            } label: {
+                HStack {
+                    Image(systemName: "info.circle")
+                    Text("Open Set Game Details")
+                }
+            }
+            .disabled(currentTitle.isEmpty)
+            .stableMenuBarItem("menu-open-details")
+
+            Divider()
+                .stableMenuBarItem("menu-divider-open-details")
+
             if enableNHL {
                 HockeyMenu(
                     title: "NHL",
@@ -475,7 +674,7 @@ struct MenuScoresApp: App {
                 SoccerMenu(
                     title: "Women's Super League",
                     viewModel: weplVM,
-                    league: "wepl",
+                    league: "WEPL",
                     fetchURL: Scoreboard.Urls.wepl,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
@@ -914,6 +1113,7 @@ struct MenuScoresApp: App {
             }
 
             Divider()
+                .stableMenuBarItem("menu-divider-footer")
 
             if enableNotch {
                 Picker("Choose Display", selection: $notchScreenIndex) {
@@ -922,6 +1122,7 @@ struct MenuScoresApp: App {
                             .tag(index)
                     }
                 }
+                .stableMenuBarItem("menu-picker-display")
             }
 
             Button {
@@ -932,11 +1133,13 @@ struct MenuScoresApp: App {
                 Text("Refresh")
             }
             .keyboardShortcut("r")
+            .stableMenuBarItem("menu-refresh")
 
             Button {
                 currentTitle = ""
                 currentGameID = ""
                 currentGameState = ""
+                LeagueSelectionModel.shared.currentGameDetailURL = ""
                 previousGameState = nil
 
                 Task {
@@ -948,13 +1151,16 @@ struct MenuScoresApp: App {
                     NotchViewModel.shared.currentGameState = ""
                     NotchViewModel.shared.previousGameState = ""
                     NotchViewModel.shared.notch = nil
+                    reconcileBackgroundRefresh()
                 }
             } label: {
                 Text("Clear Set Game")
             }
             .keyboardShortcut("c")
+            .stableMenuBarItem("menu-clear-game")
 
             Divider()
+                .stableMenuBarItem("menu-divider-settings")
 
             if #available(macOS 14, *) {
                 Button {
@@ -966,6 +1172,7 @@ struct MenuScoresApp: App {
                     Text("Preferences")
                 }
                 .keyboardShortcut(",")
+                .stableMenuBarItem("menu-preferences")
             }
 
             Button {
@@ -974,10 +1181,43 @@ struct MenuScoresApp: App {
                 Text("Quit")
             }
             .keyboardShortcut("q")
+            .stableMenuBarItem("menu-quit")
         } label: {
             HStack {
                 Image(systemName: "dot.radiowaves.left.and.right")
                 Text(currentTitle)
+            }
+            .onChange(of: currentGameID) { _ in
+                syncCurrentGameDetailURL()
+                reconcileBackgroundRefresh()
+            }
+            .onChange(of: autoMonitorEnabled) { _ in reconcileBackgroundRefresh() }
+            .onChange(of: autoMonitorFavorite) { _ in reconcileBackgroundRefresh() }
+            .onChange(of: selectedOption) { _ in
+                RefreshCoordinator.shared.setInterval(refreshInterval)
+            }
+            .onAppear {
+                AutoMonitorHub.shared.configure(
+                    isEnabled: { autoMonitorEnabled },
+                    favoriteRaw: { autoMonitorFavorite },
+                    enabledLeagues: { enabledLeagueCodes() },
+                    eventSources: { buildScoreboardEventSources() },
+                    tennisSources: { buildTennisSources() },
+                    apply: { title, id, state, league in
+                        let priorForTransition = (currentGameID == id) ? currentGameState : nil
+                        currentTitle = title
+                        currentGameID = id
+                        currentGameState = state
+                        previousGameState = priorForTransition
+                        LeagueSelectionModel.shared.currentLeague = league
+                        syncCurrentGameDetailURL()
+                    }
+                )
+                RefreshCoordinator.shared.configure(interval: refreshInterval) {
+                    await backgroundRefreshTick()
+                }
+                reconcileBackgroundRefresh()
+                Task { await backgroundRefreshTick() }
             }
         }
 
