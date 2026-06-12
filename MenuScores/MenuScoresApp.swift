@@ -105,7 +105,6 @@ struct MenuScoresApp: App {
 
     private func refreshAllLeagues() async {
         if enableNHL { await nhlVM.populateGames(from: Scoreboard.Urls.nhl) }
-
         if enableHNCAAM { await hncaamVM.populateGames(from: Scoreboard.Urls.hncaam) }
         if enableHNCAAF { await hncaafVM.populateGames(from: Scoreboard.Urls.hncaaf) }
 
@@ -145,6 +144,14 @@ struct MenuScoresApp: App {
 
         if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
         if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
+
+        if enableFFWC { await ffwcVM.populateGames(from: Scoreboard.Urls.ffwc) }
+        if enableFFWWC { await ffwwcVM.populateGames(from: Scoreboard.Urls.ffwwc) }
+        if enableFFWCQUEFA { await ffwcquefaVM.populateGames(from: Scoreboard.Urls.ffwcquefa) }
+        if enableCONCACAF { await concacafVM.populateGames(from: Scoreboard.Urls.concacaf) }
+        if enableCAF { await cafVM.populateGames(from: Scoreboard.Urls.caf) }
+        if enableAFC { await afcVM.populateGames(from: Scoreboard.Urls.afc) }
+        if enableOFC { await ofcVM.populateGames(from: Scoreboard.Urls.ofc) }
     }
 
     // Notification Settings

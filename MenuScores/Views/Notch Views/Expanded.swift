@@ -1023,8 +1023,8 @@ struct Info: View {
         }
 
         if let tennisGame = notchViewModel.tennisCompetition {
-            let team1 = tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.first?.roster?.shortDisplayName ?? "Player 1"
-            let team2 = tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2"
+            let team1 = tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.first?.roster?.displayName ?? "Player 1"
+            let team2 = tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.displayName ?? "Player 2"
 
             if sport == "Tennis" {
                 VStack {
