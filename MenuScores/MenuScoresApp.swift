@@ -842,7 +842,7 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableFFWC {
+            if enableFFWCQUEFA {
                 SoccerMenu(
                     title: "FIFA World Cup UEFA Qualifiers",
                     viewModel: ffwcquefaVM,
@@ -855,7 +855,7 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableFFWC {
+            if enableCONMEBOL {
                 SoccerMenu(
                     title: "FIFA World Cup CONMEBOL Qualifiers",
                     viewModel: conmebolVM,
@@ -868,7 +868,7 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableFFWC {
+            if enableCONCACAF {
                 SoccerMenu(
                     title: "FIFA World Cup CONCACAF Qualifiers",
                     viewModel: concacafVM,
@@ -881,7 +881,7 @@ struct MenuScoresApp: App {
                 )
             }
 
-            if enableAFC {
+            if enableCAF {
                 SoccerMenu(
                     title: "FIFA World Cup African Qualifiers",
                     viewModel: cafVM,
