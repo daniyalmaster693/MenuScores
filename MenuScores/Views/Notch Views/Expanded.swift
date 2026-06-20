@@ -1030,156 +1030,166 @@ struct Info: View {
                 VStack {
                     HStack(spacing: 4) {
                         VStack {
-                            if tennisGame.status?.type.state == "in" || tennisGame.status?.type.state == "post" {
-                                HStack {
-                                    AsyncImage(
-                                        url: URL(
-                                            string:
-                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
-                                        )
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 18, height: 18)
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                    .padding(.trailing, 3)
-                                    .padding(.leading, 10)
+                            HStack {
+                                AsyncImage(
+                                    url: URL(
+                                        string:
+                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
+                                    )
+                                ) { image in
+                                    image
+                                        .resizable()
+                                        .interpolation(.high)
+                                        .scaledToFit()
+                                        .frame(width: 18, height: 18)
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .padding(.trailing, 3)
+                                .padding(.leading, 10)
 
-                                    Text("\(tennisGame.round?.displayName ?? "Round 0")")
-                                        .font(.system(size: 14, weight: .medium))
-                                        .padding(.trailing, 7)
+                                Text("\(tennisGame.round?.displayName ?? "Round 0")")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .padding(.trailing, 7)
 
-                                    Spacer()
+                                Spacer()
 
-                                    if tennisGame.status?.type.state == "in" {
-                                        if let set = tennisGame.status?.period {
-                                            Text("S\(set)")
-                                                .contentTransition(.numericText(countsDown: false))
-                                                .font(.system(size: 14, weight: .semibold))
-                                                .padding(.trailing, 15)
-                                        }
-                                    }
+                                if tennisGame.status?.type.state == "pre" {
+                                    Text("\(formattedDate(from: tennisGame.date))")
+                                        .contentTransition(.numericText(countsDown: false))
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .padding(.trailing, 15)
+                                }
 
-                                    if tennisGame.status?.type.state == "post" {
-                                        Text("(Final)")
+                                if tennisGame.status?.type.state == "in" {
+                                    if let set = tennisGame.status?.period {
+                                        Text("S\(set)")
                                             .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 15)
                                     }
-
-                                    if tennisGame.status?.type.state == "post" {
-                                        HStack {
-                                            Image(systemName: "trophy.fill")
-                                                .foregroundColor(.yellow)
-                                                .font(.system(size: 10))
-                                                .padding(.leading, 10)
-
-                                            Text(
-                                                "\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 1")"
-                                            )
-                                            .lineLimit(1)
-                                            .font(.system(size: 14, weight: .semibold))
-                                            .padding(.trailing, 10)
-                                        }
-                                    }
                                 }
 
-                                VStack(spacing: 5) {
-                                    Divider()
+                                if tennisGame.status?.type.state == "post" {
+                                    Text("(Final)")
+                                        .contentTransition(.numericText(countsDown: false))
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .padding(.trailing, 15)
+                                }
 
-                                    ScrollView(.vertical, showsIndicators: true) {
-                                        VStack(spacing: 4) {
-                                            if let competitors = tennisGame.competitors {
-                                                ForEach(competitors) { competitor in
-                                                    HStack {
-                                                        HStack(spacing: 4) {
-                                                            if let flagURLString = competitor.athlete?.flag?.href ?? competitor.roster?.athletes?.first?.flag?.href,
-                                                               let flagURL = URL(string: flagURLString)
-                                                            {
-                                                                AsyncImage(url: flagURL) { image in
-                                                                    image
-                                                                        .resizable()
-                                                                        .interpolation(.high)
-                                                                        .scaledToFit()
-                                                                        .frame(width: 23, height: 23)
-                                                                } placeholder: {
-                                                                    Color.gray.opacity(0.3)
-                                                                }
-                                                                .padding(.trailing, 5)
+                                if tennisGame.status?.type.state == "post" {
+                                    HStack {
+                                        Image(systemName: "trophy.fill")
+                                            .foregroundColor(.yellow)
+                                            .font(.system(size: 10))
+                                            .padding(.leading, 10)
+
+                                        Text(
+                                            "\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 1")"
+                                        )
+                                        .lineLimit(1)
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .padding(.trailing, 10)
+                                    }
+                                }
+                            }
+
+                            VStack(spacing: 5) {
+                                Divider()
+
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    VStack(spacing: 4) {
+                                        if let competitors = tennisGame.competitors {
+                                            ForEach(competitors) { competitor in
+                                                HStack {
+                                                    HStack(spacing: 4) {
+                                                        if let flagURLString = competitor.athlete?.flag?.href ?? competitor.roster?.athletes?.first?.flag?.href,
+                                                           let flagURL = URL(string: flagURLString)
+                                                        {
+                                                            AsyncImage(url: flagURL) { image in
+                                                                image
+                                                                    .resizable()
+                                                                    .interpolation(.high)
+                                                                    .scaledToFit()
+                                                                    .frame(width: 23, height: 23)
+                                                            } placeholder: {
+                                                                Color.gray.opacity(0.3)
                                                             }
-
-                                                            Text(competitor.athlete?.fullName ?? competitor.roster?.shortDisplayName ?? "Player")
-                                                                .font(.system(size: 14, weight: .medium))
-                                                                .lineLimit(1)
-                                                                .truncationMode(.tail)
+                                                            .padding(.trailing, 5)
                                                         }
 
-                                                        Spacer()
+                                                        Text(competitor.athlete?.fullName ?? competitor.roster?.shortDisplayName ?? "Player")
+                                                            .font(.system(size: 14, weight: .medium))
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                    }
 
-                                                        if let linescores = competitor.linescores {
-                                                            HStack(spacing: 4) {
-                                                                ForEach(linescores) { linescore in
-                                                                    Text("\(linescore.value ?? 0)  ")
-                                                                        .frame(minWidth: 20)
-                                                                }
+                                                    Spacer()
+
+                                                    if let linescores = competitor.linescores {
+                                                        HStack(spacing: 4) {
+                                                            ForEach(linescores) { linescore in
+                                                                Text("\(linescore.value ?? 0)  ")
+                                                                    .frame(minWidth: 20)
                                                             }
+                                                        }
+                                                        .font(.system(size: 14, weight: .medium))
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                    } else {
+                                                        Text("0  ")
+                                                            .frame(minWidth: 20)
                                                             .font(.system(size: 14, weight: .medium))
                                                             .contentTransition(.numericText(countsDown: false))
-                                                        }
                                                     }
-                                                    .padding(.horizontal, 10)
-                                                }.frame(maxWidth: .infinity, alignment: .leading)
-                                            }
+                                                }
+                                                .padding(.horizontal, 10)
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                 }
-                                .frame(maxHeight: 120)
-                                .padding(.top, 10)
-                                .padding(.bottom, 5)
                             }
-
-                            if tennisGame.status?.type.state == "pre" {
-                                VStack {
-                                    HStack {
-                                        AsyncImage(
-                                            url: URL(
-                                                string:
-                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
-                                            )
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .interpolation(.high)
-                                                .scaledToFit()
-                                                .frame(width: 23, height: 23)
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
-                                        .padding(.trailing, 3)
-
-                                        Text("\(tennisGame.competitors?.first?.athlete?.shortName ?? "Player 1") vs \(tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? "Player 2")")
-                                            .font(.system(size: 18, weight: .medium))
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .padding(.leading, 10)
-                                    .padding(.trailing, 10)
-
-                                    HStack {
-                                        Image(systemName: "figure.tennis")
-                                            .font(.system(size: 12))
-
-                                        Text("\(formattedDate(from: tennisGame.date)) @ \(formattedTime(from: tennisGame.date))")
-                                            .font(.system(size: 14, weight: .medium))
-                                    }
-                                    .padding(.top, 6)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                }
-                            }
+                            .frame(maxHeight: 120)
+                            .padding(.top, 10)
+                            .padding(.bottom, 5)
                         }
+
+//                            if tennisGame.status?.type.state == "pre" {
+//                                VStack {
+//                                    HStack {
+//                                        AsyncImage(
+//                                            url: URL(
+//                                                string:
+//                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
+//                                            )
+//                                        ) { image in
+//                                            image
+//                                                .resizable()
+//                                                .interpolation(.high)
+//                                                .scaledToFit()
+//                                                .frame(width: 23, height: 23)
+//                                        } placeholder: {
+//                                            ProgressView()
+//                                        }
+//                                        .padding(.trailing, 3)
+//
+//                                        Text("\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.first?.roster?.displayName ?? "Player 1") vs \(tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.displayName ?? "Player 2")")
+//                                            .font(.system(size: 18, weight: .medium))
+//                                    }
+//                                    .frame(maxWidth: .infinity, alignment: .center)
+//                                    .padding(.leading, 10)
+//                                    .padding(.trailing, 10)
+//
+//                                    HStack {
+//                                        Image(systemName: "figure.tennis")
+//                                            .font(.system(size: 12))
+//
+//                                        Text("\(formattedDate(from: tennisGame.date)) @ \(formattedTime(from: tennisGame.date))")
+//                                            .font(.system(size: 14, weight: .medium))
+//                                    }
+//                                    .padding(.top, 6)
+//                                    .frame(maxWidth: .infinity, alignment: .center)
+//                                }
+//                            }
                     }
                 }
                 .contextMenu {
