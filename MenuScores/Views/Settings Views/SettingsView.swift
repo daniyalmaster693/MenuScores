@@ -13,6 +13,7 @@ struct SettingsView: View {
 
     enum Tab: String, CaseIterable, Identifiable {
         case general = "General"
+        case favorites = "Favorites"
         case behavior = "Behavior"
         case league = "Leagues"
 
@@ -72,6 +73,8 @@ struct SettingsView: View {
                 switch selectedTab {
                 case .general:
                     GeneralSettingsView()
+                case .favorites:
+                    FavoriteSettingsView()
                 case .behavior:
                     BehaviorSettingsView()
                 case .league:
@@ -99,6 +102,7 @@ private extension SettingsView.Tab {
     var iconName: String {
         switch self {
         case .general: return "gearshape"
+        case .favorites: return "star"
         case .behavior: return "slider.horizontal.3"
         case .league: return "sportscourt"
         }
