@@ -1079,7 +1079,7 @@ struct Info: View {
                                                 .padding(.leading, 10)
 
                                             Text(
-                                                "\(tennisGame.competitors?.first?.athlete?.shortName ?? "Player 1")"
+                                                "\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 1")"
                                             )
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 10)
@@ -1096,7 +1096,7 @@ struct Info: View {
                                                 ForEach(competitors) { competitor in
                                                     HStack {
                                                         HStack(spacing: 4) {
-                                                            if let flagURLString = competitor.athlete?.flag?.href,
+                                                            if let flagURLString = competitor.athlete?.flag?.href ?? competitor.roster?.athletes?.first?.flag?.href,
                                                                let flagURL = URL(string: flagURLString)
                                                             {
                                                                 AsyncImage(url: flagURL) { image in
@@ -1111,21 +1111,23 @@ struct Info: View {
                                                                 .padding(.trailing, 5)
                                                             }
 
-                                                            Text(competitor.athlete?.fullName ?? "Player")
+                                                            Text(competitor.athlete?.fullName ?? competitor.roster?.shortDisplayName ?? "Player")
                                                                 .font(.system(size: 14, weight: .medium))
                                                                 .lineLimit(1)
                                                                 .truncationMode(.tail)
-                                                        }.frame(width: 200, alignment: .leading)
+                                                        }
+
+                                                        Spacer()
 
                                                         if let linescores = competitor.linescores {
                                                             HStack(spacing: 4) {
                                                                 ForEach(linescores) { linescore in
                                                                     Text("\(linescore.value ?? 0)  ")
+                                                                        .frame(minWidth: 20)
                                                                 }
                                                             }
                                                             .font(.system(size: 14, weight: .medium))
                                                             .contentTransition(.numericText(countsDown: false))
-                                                            .frame(width: 150, alignment: .trailing)
                                                         }
                                                     }
                                                     .padding(.horizontal, 10)
