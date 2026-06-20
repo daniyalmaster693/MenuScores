@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct FavoriteSettingsView: View {
+    // Notification Settings
+
+    @State private var favoriteNotificationMessage: String?
+
     @AppStorage("notifyFavoriteGameStart") private var notifyFavoriteGameStart = false
-    @AppStorage("notifyFavoriteGameEnd") private var notifyFavoriteGameEnd = false
+    @AppStorage("notifyFavoriteGameEnd") private var notifyFavoriteGameComplete = false
     @AppStorage("autoPinFavorites") private var autoPinFavorites = true
 
     // Leagues
@@ -88,6 +93,29 @@ struct FavoriteSettingsView: View {
             Text("Favorites")
                 .font(.title2)
                 .bold()
+
+            Form {
+                Section("Notifications Settings") {
+                    Toggle(isOn: $notifyFavoriteGameStart) {
+                        HStack {
+                            Image(systemName: "bell")
+                                .foregroundColor(.secondary)
+                            Text("Notify when a favorite team's game starts")
+                        }
+                    }
+
+                    Toggle(isOn: $notifyFavoriteGameComplete) {
+                        HStack {
+                            Image(systemName: "bell.badge")
+                                .foregroundColor(.secondary)
+                            Text("Notify when a favorite team's game ends")
+                        }
+                    }
+                }
+
+                Section {}
+            }
+            .formStyle(.grouped)
         }
     }
 }

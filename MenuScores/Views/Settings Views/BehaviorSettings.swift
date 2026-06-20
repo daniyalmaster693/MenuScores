@@ -110,7 +110,7 @@ struct BehaviorSettingsView: View {
                         HStack {
                             Image(systemName: "bell")
                                 .foregroundColor(.secondary)
-                            Text("Enable notifications for game start")
+                            Text("Notify when a pinned game starts")
                         }
                     }
 
@@ -118,7 +118,7 @@ struct BehaviorSettingsView: View {
                         HStack {
                             Image(systemName: "bell.badge")
                                 .foregroundColor(.secondary)
-                            Text("Enable notifications upon game completion")
+                            Text("Notify when a pinned game ends")
                         }
                     }
                 } header: {
