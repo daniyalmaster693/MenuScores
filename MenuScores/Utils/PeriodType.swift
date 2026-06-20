@@ -61,22 +61,6 @@ func periodPrefix(for league: String) -> String {
         return ""
     case "POR":
         return ""
-    case "FFWC":
-        return ""
-    case "FFWWC":
-        return ""
-    case "FFWCQUEFA":
-        return ""
-    case "CONMEBOL":
-        return ""
-    case "CONCACAF":
-        return ""
-    case "CAF":
-        return ""
-    case "AFC":
-        return ""
-    case "OFC":
-        return ""
     case "F1":
         return "L"
     case "NC":
@@ -113,6 +97,26 @@ func periodPrefix(for league: String) -> String {
         return "P"
     case "OWIHC":
         return "P"
+    case "OMB":
+        return "Q"
+    case "OWB":
+        return "Q"
+    case "FFWC":
+        return ""
+    case "FFWWC":
+        return ""
+    case "FFWCQUEFA":
+        return ""
+    case "CONMEBOL":
+        return ""
+    case "CONCACAF":
+        return ""
+    case "CAF":
+        return ""
+    case "AFC":
+        return ""
+    case "OFC":
+        return ""
     default:
         return ""
     }

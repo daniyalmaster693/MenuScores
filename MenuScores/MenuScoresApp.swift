@@ -102,6 +102,8 @@ struct MenuScoresApp: App {
 
     @AppStorage("enableOMIHC") private var enableOMIHC = true
     @AppStorage("enableOWIHC") private var enableOWIHC = false
+    @AppStorage("enableOMB") private var enableOMB = false
+    @AppStorage("enableOWB") private var enableOWB = false
 
     private func refreshAllLeagues() async {
         if enableNHL { await nhlVM.populateGames(from: Scoreboard.Urls.nhl) }
@@ -144,6 +146,8 @@ struct MenuScoresApp: App {
 
         if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
         if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
+        if enableOMB { await ombVM.populateGames(from: Scoreboard.Urls.omb) }
+        if enableOWB { await owbVM.populateGames(from: Scoreboard.Urls.owb) }
 
         if enableFFWC { await ffwcVM.populateGames(from: Scoreboard.Urls.ffwc) }
         if enableFFWWC { await ffwwcVM.populateGames(from: Scoreboard.Urls.ffwwc) }
@@ -217,15 +221,6 @@ struct MenuScoresApp: App {
     @StateObject private var gerVM = GamesListView()
     @StateObject private var itaVM = GamesListView()
 
-    @StateObject private var ffwcVM = GamesListView()
-    @StateObject private var ffwwcVM = GamesListView()
-    @StateObject private var ffwcquefaVM = GamesListView()
-    @StateObject private var conmebolVM = GamesListView()
-    @StateObject private var concacafVM = GamesListView()
-    @StateObject private var cafVM = GamesListView()
-    @StateObject private var afcVM = GamesListView()
-    @StateObject private var ofcVM = GamesListView()
-
     @StateObject private var atpVM = TennisListView()
     @StateObject private var wtaVM = TennisListView()
 
@@ -241,6 +236,17 @@ struct MenuScoresApp: App {
 
     @StateObject private var omihcVM = GamesListView()
     @StateObject private var owihcVM = GamesListView()
+    @StateObject private var ombVM = GamesListView()
+    @StateObject private var owbVM = GamesListView()
+
+    @StateObject private var ffwcVM = GamesListView()
+    @StateObject private var ffwwcVM = GamesListView()
+    @StateObject private var ffwcquefaVM = GamesListView()
+    @StateObject private var conmebolVM = GamesListView()
+    @StateObject private var concacafVM = GamesListView()
+    @StateObject private var cafVM = GamesListView()
+    @StateObject private var afcVM = GamesListView()
+    @StateObject private var ofcVM = GamesListView()
 
     var body: some Scene {
         MenuBarExtra {
@@ -809,6 +815,32 @@ struct MenuScoresApp: App {
                     viewModel: owihcVM,
                     league: "OWIHC",
                     fetchURL: Scoreboard.Urls.owihc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOMB {
+                HockeyMenu(
+                    title: "Men's Olympic Basketball",
+                    viewModel: ombVM,
+                    league: "OMB",
+                    fetchURL: Scoreboard.Urls.omb,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableOWB {
+                HockeyMenu(
+                    title: "Women's Olympic Basketball",
+                    viewModel: owbVM,
+                    league: "OWB",
+                    fetchURL: Scoreboard.Urls.owb,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,

@@ -50,15 +50,6 @@ struct LeagueSettingsView: View {
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
 
-    @AppStorage("enableFFWC") private var enableFFWC = false
-    @AppStorage("enableFFWWC") private var enableFFWWC = false
-    @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
-    @AppStorage("enableCONCACAF") private var enableCONCACAF = false
-    @AppStorage("enableCONMEBOL") private var enableCONMEBOL = false
-    @AppStorage("enableCAF") private var enableCAF = false
-    @AppStorage("enableAFC") private var enableAFC = false
-    @AppStorage("enableOFC") private var enableOFC = false
-
     @AppStorage("enableATP") private var enableATP = true
     @AppStorage("enableWTA") private var enableWTA = false
 
@@ -74,6 +65,17 @@ struct LeagueSettingsView: View {
 
     @AppStorage("enableOMIHC") private var enableOMIHC = true
     @AppStorage("enableOWIHC") private var enableOWIHC = false
+    @AppStorage("enableOMB") private var enableOMB = false
+    @AppStorage("enableOWB") private var enableOWB = false
+
+    @AppStorage("enableFFWC") private var enableFFWC = false
+    @AppStorage("enableFFWWC") private var enableFFWWC = false
+    @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
+    @AppStorage("enableCONCACAF") private var enableCONCACAF = false
+    @AppStorage("enableCONMEBOL") private var enableCONMEBOL = false
+    @AppStorage("enableCAF") private var enableCAF = false
+    @AppStorage("enableAFC") private var enableAFC = false
+    @AppStorage("enableOFC") private var enableOFC = false
 
     // League Settings View
 
@@ -148,14 +150,6 @@ struct LeagueSettingsView: View {
                                 enableWEPL = false
                                 enableESP = false
                                 enableGER = false
-                                enableFFWC = false
-                                enableFFWWC = false
-                                enableFFWCQUEFA = false
-                                enableCONCACAF = false
-                                enableCONMEBOL = false
-                                enableCAF = false
-                                enableAFC = false
-                                enableOFC = false
                                 enableITA = false
                                 enableATP = false
                                 enableWTA = false
@@ -168,6 +162,16 @@ struct LeagueSettingsView: View {
                                 enableVNCAAF = false
                                 enableOMIHC = false
                                 enableOWIHC = false
+                                enableOMB = false
+                                enableOWB = false
+                                enableFFWC = false
+                                enableFFWWC = false
+                                enableFFWCQUEFA = false
+                                enableCONCACAF = false
+                                enableCONMEBOL = false
+                                enableCAF = false
+                                enableAFC = false
+                                enableOFC = false
                             }) {
                                 HStack {
                                     Image(systemName: "xmark.circle")
@@ -527,6 +531,22 @@ struct LeagueSettingsView: View {
                             Image(systemName: "medal")
                                 .foregroundColor(.secondary)
                             Text("Women's Olympic Ice Hockey")
+                        }
+                    }
+
+                    Toggle(isOn: $enableOMB) {
+                        HStack {
+                            Image(systemName: "medal")
+                                .foregroundColor(.secondary)
+                            Text("Men's Olympic Basketball")
+                        }
+                    }
+
+                    Toggle(isOn: $enableOWB) {
+                        HStack {
+                            Image(systemName: "medal")
+                                .foregroundColor(.secondary)
+                            Text("Women's Olympic Basketball")
                         }
                     }
                 }
