@@ -196,75 +196,55 @@ enum Scoreboard {
 //            "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard"
 //        )!
 
-        static var nll: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static let nll = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var pll: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/pll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static let pll = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/pll/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var lncaam: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/mens-college-lacrosse/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static let lncaam = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/mens-college-lacrosse/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var lncaaf: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static let lncaaf = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var vncaam: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static let vncaam = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var vncaaf: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static let vncaaf = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var omihc: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-mens-ice-hockey/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static var omihc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-mens-ice-hockey/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var owihc: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-womens-ice-hockey/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
-            )!
-        }
+        static let owihc = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-womens-ice-hockey/scoreboard?dates=\(getWeekStart())-\(getWeekEnd())"
+        )!
 
-        static var omb: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
-            )!
-        }
+        static let omb = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
+        )!
 
-        static var owb: URL {
-            URL(
-                string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
-            )!
-        }
+        static let owb = URL(
+            string:
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
+        )!
 
         static let ffwc = URL(
             string:

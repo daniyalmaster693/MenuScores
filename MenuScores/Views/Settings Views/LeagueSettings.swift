@@ -53,17 +53,17 @@ struct LeagueSettingsView: View {
     @AppStorage("enableATP") private var enableATP = true
     @AppStorage("enableWTA") private var enableWTA = false
 
-    @AppStorage("enableUFC") private var enableUFC = true
+//    @AppStorage("enableUFC") private var enableUFC = true
 
-    @AppStorage("enableNLL") private var enableNLL = true
+    @AppStorage("enableNLL") private var enableNLL = false
     @AppStorage("enablePLL") private var enablePLL = false
     @AppStorage("enableLNCAAM") private var enableLNCAAM = false
     @AppStorage("enableLNCAAF") private var enableLNCAAF = false
 
-    @AppStorage("enableVNCAAM") private var enableVNCAAM = true
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = false
     @AppStorage("enableVNCAAF") private var enableVNCAAF = false
 
-    @AppStorage("enableOMIHC") private var enableOMIHC = true
+    @AppStorage("enableOMIHC") private var enableOMIHC = false
     @AppStorage("enableOWIHC") private var enableOWIHC = false
     @AppStorage("enableOMB") private var enableOMB = false
     @AppStorage("enableOWB") private var enableOWB = false
@@ -153,7 +153,7 @@ struct LeagueSettingsView: View {
                                 enableITA = false
                                 enableATP = false
                                 enableWTA = false
-                                enableUFC = false
+//                                enableUFC = false
                                 enableNLL = false
                                 enablePLL = false
                                 enableLNCAAM = false
