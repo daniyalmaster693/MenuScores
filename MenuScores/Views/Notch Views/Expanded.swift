@@ -1152,44 +1152,6 @@ struct Info: View {
                             .padding(.top, 10)
                             .padding(.bottom, 5)
                         }
-
-//                            if tennisGame.status?.type.state == "pre" {
-//                                VStack {
-//                                    HStack {
-//                                        AsyncImage(
-//                                            url: URL(
-//                                                string:
-//                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
-//                                            )
-//                                        ) { image in
-//                                            image
-//                                                .resizable()
-//                                                .interpolation(.high)
-//                                                .scaledToFit()
-//                                                .frame(width: 23, height: 23)
-//                                        } placeholder: {
-//                                            ProgressView()
-//                                        }
-//                                        .padding(.trailing, 3)
-//
-//                                        Text("\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.first?.roster?.displayName ?? "Player 1") vs \(tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.displayName ?? "Player 2")")
-//                                            .font(.system(size: 18, weight: .medium))
-//                                    }
-//                                    .frame(maxWidth: .infinity, alignment: .center)
-//                                    .padding(.leading, 10)
-//                                    .padding(.trailing, 10)
-//
-//                                    HStack {
-//                                        Image(systemName: "figure.tennis")
-//                                            .font(.system(size: 12))
-//
-//                                        Text("\(formattedDate(from: tennisGame.date)) @ \(formattedTime(from: tennisGame.date))")
-//                                            .font(.system(size: 14, weight: .medium))
-//                                    }
-//                                    .padding(.top, 6)
-//                                    .frame(maxWidth: .infinity, alignment: .center)
-//                                }
-//                            }
                     }
                 }
                 .contextMenu {
