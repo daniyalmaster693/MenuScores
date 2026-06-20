@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct FavoriteSettingsView: View {
+    @AppStorage("notifyFavoriteGameStart") private var notifyFavoriteGameStart = false
+    @AppStorage("notifyFavoriteGameEnd") private var notifyFavoriteGameEnd = false
+    @AppStorage("autoPinFavorites") private var autoPinFavorites = true
+
     // Leagues
 
     @AppStorage("enableNHL") private var enableNHL = true
