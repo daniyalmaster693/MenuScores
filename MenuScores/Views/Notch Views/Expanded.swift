@@ -1152,7 +1152,7 @@ struct Info: View {
                                                 .resizable()
                                                 .interpolation(.high)
                                                 .scaledToFit()
-                                                .frame(width: 28, height: 28)
+                                                .frame(width: 23, height: 23)
                                         } placeholder: {
                                             ProgressView()
                                         }
@@ -1172,7 +1172,7 @@ struct Info: View {
                                         Text("\(formattedDate(from: tennisGame.date)) @ \(formattedTime(from: tennisGame.date))")
                                             .font(.system(size: 14, weight: .medium))
                                     }
-                                    .padding(.top, 2)
+                                    .padding(.top, 6)
                                     .frame(maxWidth: .infinity, alignment: .center)
                                 }
                             }
