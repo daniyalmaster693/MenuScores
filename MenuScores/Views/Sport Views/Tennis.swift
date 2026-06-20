@@ -147,6 +147,20 @@ struct TennisMenu: View {
                                                                 }
                                                             }
                                                         }
+
+                                                        Button {
+                                                            if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
+                                                                NSWorkspace.shared.open(url)
+                                                            }
+                                                        } label: {
+                                                            HStack {
+                                                                Image(systemName: "info.circle")
+                                                                    .resizable()
+                                                                    .scaledToFit()
+                                                                    .frame(width: 20, height: 20)
+                                                                Text("View Tournament Details")
+                                                            }
+                                                        }
                                                     } label: {
                                                         HStack {
                                                             AsyncImage(
