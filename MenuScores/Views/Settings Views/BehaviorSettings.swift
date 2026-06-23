@@ -15,8 +15,10 @@ struct BehaviorSettingsView: View {
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
     @AppStorage("enableNotch") private var enableNotch = true
-//    @AppStorage("enableInlineView") private var enableInlineView = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
+
+    @AppStorage("playAlerts") private var enablePlayAlerts = false
+    @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
     let refreshOptions = [
@@ -55,14 +57,6 @@ struct BehaviorSettingsView: View {
                         }
                     }
 
-//                    Toggle(isOn: $enableInlineView) {
-//                        HStack {
-//                            Image(systemName: "play.display")
-//                                .foregroundColor(.secondary)
-//                            Text("Inline View")
-//                        }
-//                    }.disabled(!enableNotch)
-
                     HStack {
                         Label("Notch Display", systemImage: "display")
                             .foregroundColor(.primary)
@@ -85,6 +79,33 @@ struct BehaviorSettingsView: View {
                         KeyboardShortcuts.Recorder(for: .notchActivation)
                             .frame(width: 130)
                             .disabled(enableNotch == false)
+                    }
+                }
+
+                Section("Play Alerts") {
+                    Toggle(isOn: $enablePlayAlerts) {
+                        HStack {
+                            Image(systemName: "play.display")
+                                .foregroundColor(.secondary)
+                            Text("Expand notch automatically for major plays")
+                        }
+                    }.disabled(!enableNotch)
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "timer")
+                                .foregroundColor(.secondary)
+                            Text("Alerts Timer: \(String(format: "%.1f", self.alertsTimer))s")
+                        }
+
+                        Text("Controls how long play alerts remain visible")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+
+                        Slider(value: self.$alertsTimer, in: 2 ... 12.0, step: 0.5)
+                            .disabled(!enablePlayAlerts || !enableNotch)
                     }
                 }
 

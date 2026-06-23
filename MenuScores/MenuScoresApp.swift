@@ -993,6 +993,12 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("c")
 
+            Button {
+                NotchViewModel.shared.triggerAlert()
+            } label: {
+                Text("Test Alert")
+            }.keyboardShortcut("t")
+
             Divider()
 
             if #available(macOS 14, *) {

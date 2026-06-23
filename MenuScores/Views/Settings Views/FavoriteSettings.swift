@@ -95,7 +95,7 @@ struct FavoriteSettingsView: View {
                 .bold()
 
             Form {
-                Section("Notifications Settings") {
+                Section("Notifications") {
                     Toggle(isOn: $notifyFavoriteGameStart) {
                         HStack {
                             Image(systemName: "bell")
