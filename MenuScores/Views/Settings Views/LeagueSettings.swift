@@ -50,7 +50,7 @@ struct LeagueSettingsView: View {
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
 
-    @AppStorage("enableATP") private var enableATP = true
+    @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
 
 //    @AppStorage("enableUFC") private var enableUFC = true

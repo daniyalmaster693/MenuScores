@@ -87,7 +87,7 @@ struct MenuScoresApp: App {
     @AppStorage("enableAFC") private var enableAFC = false
     @AppStorage("enableOFC") private var enableOFC = false
 
-    @AppStorage("enableATP") private var enableATP = true
+    @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
 
     @AppStorage("enableUFC") private var enableUFC = true
