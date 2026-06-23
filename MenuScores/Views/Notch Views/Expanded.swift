@@ -50,6 +50,7 @@ struct Info: View {
     // Recent Play Variables
 
     @State private var playText: String = "-"
+    @State private var soccerText: String = "-"
     @State private var headlineText: String = "-"
 
     @State private var driverArray: [Driver] = []
@@ -316,9 +317,51 @@ struct Info: View {
                         .padding(.top, 10)
                     }
 
+                    if sport == "Soccer" && game.competitions[0].status.type.state == "in" {
+                        VStack(alignment: .center) {
+                            let athletesInvolved = game.competitions.first?.details?.last?.athletesInvolved.first?.displayName ?? ""
+                            let playType = game.competitions.first?.details?.last?.type.text ?? ""
+                            let playClock = game.competitions.first?.details?.last?.clock.displayValue ?? ""
+
+                            let soccerText = "\(athletesInvolved) - \(playType)    \(playClock)"
+
+                            GeometryReader { geo in
+                                HStack(alignment: .center, spacing: 10) {
+                                    Capsule()
+                                        .fill(capsuleColor)
+                                        .frame(width: 3, height: 16)
+
+                                    ZStack {
+                                        let font = NSFont.systemFont(ofSize: 14, weight: .medium)
+                                        let textWidth = (soccerText as NSString).size(withAttributes: [.font: font]).width
+
+                                        if textWidth < geo.size.width {
+                                            Text(soccerText)
+                                                .font(.system(size: 14, weight: .medium))
+                                                .fixedSize()
+                                        } else {
+                                            MarqueeText($soccerText,
+                                                        font: .system(size: 14, weight: .medium),
+                                                        nsFont: .body,
+                                                        textColor: .white,
+                                                        frameWidth: geo.size.width - 23)
+                                                .fontWeight(.medium)
+                                        }
+                                    }
+                                }
+                                .frame(minWidth: geo.size.width, alignment: .center)
+                                .padding(.horizontal, 5)
+                                .frame(height: 22)
+                            }
+                            .frame(height: 22)
+                        }
+                        .padding(.top, 10)
+                    }
+
                     VStack(alignment: .center) {
                         if sport != "Lacrosse" && sport != "Volleyball" &&
                             (game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post"),
+
                             let headline = game.competitions.first?.headlines?.first?.shortLinkText ?? game.competitions.first?.notes?.first?.headline ?? game.competitions.first?.highlights?.first?.headline ?? game.competitions.first?.altGameNote
                         {
                             GeometryReader { geo in

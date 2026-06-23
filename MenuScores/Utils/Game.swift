@@ -55,6 +55,7 @@ struct Competition: Decodable {
     let situation: Situation?
     let highlights: [Highlights]?
     let headlines: [Headlines]?
+    let details: [Details]?
     let venue: Venue?
     let notes: [Notes]?
     let altGameNote: String?
@@ -158,4 +159,24 @@ struct Highlights: Decodable {
 struct Headlines: Decodable {
     let shortLinkText: String?
     let description: String?
+}
+
+struct Details: Decodable {
+    let type: SoccerType
+    let athletesInvolved: [AthletesInvolved]
+    let clock: SoccerClock
+}
+
+struct SoccerType: Decodable {
+    let text: String
+}
+
+struct SoccerClock: Decodable {
+    let displayValue: String
+}
+
+struct AthletesInvolved: Decodable {
+    let displayName: String
+    let shortName: String
+    let fullName: String
 }
