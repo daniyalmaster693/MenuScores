@@ -1052,8 +1052,6 @@ struct Info: View {
                                     .font(.system(size: 14, weight: .medium))
                                     .padding(.trailing, 7)
 
-                                Spacer()
-
                                 if tennisGame.status?.type.state == "pre" {
                                     Text("\(formattedDate(from: tennisGame.date))")
                                         .contentTransition(.numericText(countsDown: false))
