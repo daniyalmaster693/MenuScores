@@ -94,7 +94,9 @@ You can also install MenuScores using Homebrew:
 
 ```bash
 brew tap daniyalmaster693/casks
+brew trust --cask daniyalmaster693/casks/menuscores
 brew install --cask menuscores
+xattr -dr com.apple.quarantine /Applications/MenuScores.app
 ```
 
 **Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
