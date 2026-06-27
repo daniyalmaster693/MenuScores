@@ -323,7 +323,7 @@ struct Info: View {
                             let playType = game.competitions.first?.details?.last?.type.text ?? ""
                             let playClock = game.competitions.first?.details?.last?.clock.displayValue ?? ""
 
-                            let soccerText = "\(athletesInvolved) - \(playType)    \(playClock)"
+                            let currentSoccerText = "\(athletesInvolved) - \(playType)    \(playClock)"
 
                             GeometryReader { geo in
                                 HStack(alignment: .center, spacing: 10) {
@@ -333,19 +333,23 @@ struct Info: View {
 
                                     ZStack {
                                         let font = NSFont.systemFont(ofSize: 14, weight: .medium)
-                                        let textWidth = (soccerText as NSString).size(withAttributes: [.font: font]).width
+                                        let textWidth = (currentSoccerText as NSString)
+                                            .size(withAttributes: [.font: font])
+                                            .width
 
                                         if textWidth < geo.size.width {
-                                            Text(soccerText)
+                                            Text(currentSoccerText)
                                                 .font(.system(size: 14, weight: .medium))
                                                 .fixedSize()
                                         } else {
-                                            MarqueeText($soccerText,
-                                                        font: .system(size: 14, weight: .medium),
-                                                        nsFont: .body,
-                                                        textColor: .white,
-                                                        frameWidth: geo.size.width - 23)
-                                                .fontWeight(.medium)
+                                            MarqueeText(
+                                                $soccerText,
+                                                font: .system(size: 14, weight: .medium),
+                                                nsFont: .body,
+                                                textColor: .white,
+                                                frameWidth: geo.size.width - 23
+                                            )
+                                            .fontWeight(.medium)
                                         }
                                     }
                                 }
@@ -354,6 +358,12 @@ struct Info: View {
                                 .frame(height: 22)
                             }
                             .frame(height: 22)
+                            .onAppear {
+                                soccerText = currentSoccerText
+                            }
+                            .onChange(of: currentSoccerText) { newValue in
+                                soccerText = newValue
+                            }
                         }
                         .padding(.top, 10)
                     }
