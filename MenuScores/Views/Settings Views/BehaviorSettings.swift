@@ -63,7 +63,7 @@ struct BehaviorSettingsView: View {
 
                     HStack {
                         Label("Notch Display", systemImage: "display")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.secondary)
                         Spacer()
                         Picker("", selection: $notchScreenIndex) {
                             ForEach(NSScreen.screens.indices, id: \.self) { index in
@@ -78,7 +78,7 @@ struct BehaviorSettingsView: View {
 
                     HStack {
                         Label("Expand Notch", systemImage: "keyboard")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.secondary)
                         Spacer()
                         KeyboardShortcuts.Recorder(for: .notchActivation)
                             .frame(width: 130)
@@ -117,7 +117,7 @@ struct BehaviorSettingsView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         HStack {
                             Label("Refresh Interval", systemImage: "timer")
-                                .foregroundColor(.primary)
+                                .foregroundColor(.secondary)
                             Spacer()
                             Picker("", selection: $selectedOption) {
                                 ForEach(refreshOptions, id: \.self) { option in

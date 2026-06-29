@@ -163,6 +163,9 @@ struct MenuScoresApp: App {
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
+    @AppStorage("notifyFavoriteGameStart") private var notifyFavoriteGameStart = false
+    @AppStorage("notifyFavoriteGameEnd") private var notifyFavoriteGameEnd = false
+
     // Title State Settings
 
     @State var currentTitle: String = ""

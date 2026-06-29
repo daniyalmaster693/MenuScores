@@ -93,14 +93,14 @@ struct FavoritesSettingsView: View {
                     Toggle(isOn: $autoPinFavorites) {
                         HStack {
                             Image(systemName: "pin")
-                                .foregroundColor(.primary)
+                                .foregroundColor(.secondary)
                             Text("Auto-pin favorite team games")
                         }
                     }
 
                     HStack {
-                        Label("Favorite League", systemImage: "sportscourt")
-                            .foregroundColor(.primary)
+                        Label("Select League", systemImage: "sportscourt")
+                            .foregroundColor(.secondary)
                         Spacer()
                         Picker("", selection: $selectedLeague) {
                             ForEach(FavoriteTeams.supportedLeagueKeys, id: \.self) { league in
