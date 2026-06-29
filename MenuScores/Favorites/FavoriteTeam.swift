@@ -45,8 +45,8 @@ struct TeamDetails: Decodable {
 
 struct TeamInfo: Decodable, Identifiable {
     let id: String
-    let color: String
-    let alternateColor: String
+    let color: String?
+    let alternateColor: String?
     let displayName: String
     let abbreviation: String
     let logos: [TeamLogo]?

@@ -11,7 +11,62 @@ struct FavoritesSettingsView: View {
     @StateObject private var favoritesManager = FavoritesManager.shared
     @AppStorage("autoPinFavorites") private var autoPinFavorites = false
 
-    @State private var selectedLeague = "nhl"
+    // Leagues
+
+    @AppStorage("enableNHL") private var enableNHL = true
+    @AppStorage("enableHNCAAM") private var enableHNCAAM = false
+    @AppStorage("enableHNCAAF") private var enableHNCAAF = false
+
+    @AppStorage("enableNBA") private var enableNBA = true
+    @AppStorage("enableWNBA") private var enableWNBA = false
+    @AppStorage("enableNCAAM") private var enableNCAAM = false
+    @AppStorage("enableNCAAF") private var enableNCAAF = false
+
+    @AppStorage("enableNFL") private var enableNFL = true
+    @AppStorage("enableFNCAA") private var enableFNCAA = false
+
+    @AppStorage("enableMLB") private var enableMLB = true
+    @AppStorage("enableBNCAA") private var enableBNCAA = false
+    @AppStorage("enableSNCAA") private var enableSNCAA = false
+
+    @AppStorage("enableMLS") private var enableMLS = true
+    @AppStorage("enableNWSL") private var enableNWSL = false
+    @AppStorage("enableUEFA") private var enableUEFA = false
+    @AppStorage("enableEUEFA") private var enableEUEFA = false
+    @AppStorage("enableWUEFA") private var enableWUEFA = false
+    @AppStorage("enableMEX") private var enableMEX = false
+    @AppStorage("enableFRA") private var enableFRA = false
+    @AppStorage("enableNED") private var enableNED = false
+    @AppStorage("enablePOR") private var enablePOR = false
+    @AppStorage("enableEPL") private var enableEPL = false
+    @AppStorage("enableWEPL") private var enableWEPL = false
+    @AppStorage("enableESP") private var enableESP = false
+    @AppStorage("enableGER") private var enableGER = false
+    @AppStorage("enableITA") private var enableITA = false
+
+    @AppStorage("enableNLL") private var enableNLL = false
+    @AppStorage("enablePLL") private var enablePLL = false
+    @AppStorage("enableLNCAAM") private var enableLNCAAM = false
+    @AppStorage("enableLNCAAF") private var enableLNCAAF = false
+
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = false
+    @AppStorage("enableVNCAAF") private var enableVNCAAF = false
+
+    @AppStorage("enableOMIHC") private var enableOMIHC = false
+    @AppStorage("enableOWIHC") private var enableOWIHC = false
+    @AppStorage("enableOMB") private var enableOMB = false
+    @AppStorage("enableOWB") private var enableOWB = false
+
+    @AppStorage("enableFFWC") private var enableFFWC = false
+    @AppStorage("enableFFWWC") private var enableFFWWC = false
+    @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
+    @AppStorage("enableCONCACAF") private var enableCONCACAF = false
+    @AppStorage("enableCONMEBOL") private var enableCONMEBOL = false
+    @AppStorage("enableCAF") private var enableCAF = false
+    @AppStorage("enableAFC") private var enableAFC = false
+    @AppStorage("enableOFC") private var enableOFC = false
+
+    @State private var selectedLeague = "NHL"
     @State private var searchText = ""
 
     private var filteredTeams: [TeamInfo] {
@@ -48,7 +103,10 @@ struct FavoritesSettingsView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         Picker("", selection: $selectedLeague) {
-                            Text("NHL").tag("nhl")
+                            ForEach(FavoriteTeams.supportedLeagueKeys, id: \.self) { league in
+                                Text(FavoriteTeams.displayName(for: league))
+                                    .tag(league)
+                            }
                         }
                         .pickerStyle(.menu)
                         .frame(width: 190)
@@ -57,22 +115,38 @@ struct FavoritesSettingsView: View {
                 }
 
                 Section("Favorite Teams") {
-                    let leagueFavorites = favoritesManager.favorites.filter {
-                        $0.leagueKey == selectedLeague
-                    }
-
-                    if leagueFavorites.isEmpty {
+                    if favoritesManager.favorites.isEmpty {
                         Text("No favorite teams selected.")
                             .foregroundStyle(.secondary)
                     } else {
-                        ForEach(leagueFavorites) { favorite in
-                            if let team = favoritesManager.availableTeams[selectedLeague]?
-                                .first(where: { $0.id == favorite.id })
-                            {
-                                FavoriteTeamRow(
-                                    team: team,
-                                    leagueKey: selectedLeague
-                                )
+                        ForEach(favoritesManager.favorites) { favorite in
+                            HStack {
+                                AsyncImage(url: favorite.logo.flatMap { URL(string: $0) }) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Color.clear
+                                }
+                                .frame(width: 18, height: 18)
+
+                                VStack(alignment: .leading) {
+                                    Text(favorite.displayName)
+
+                                    Text(FavoriteTeams.displayName(for: favorite.leagueKey))
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+
+                                Spacer()
+
+                                Button {
+                                    favoritesManager.favorites.removeAll {
+                                        $0.id == favorite.id && $0.leagueKey == favorite.leagueKey
+                                    }
+                                    favoritesManager.saveFavorites()
+                                } label: {
+                                    Image(systemName: "star.fill")
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
@@ -81,12 +155,6 @@ struct FavoritesSettingsView: View {
                 Section("Teams") {
                     TextField("Search teams...", text: $searchText)
                         .textFieldStyle(.roundedBorder)
-
-                    let teams = favoritesManager.availableTeams[selectedLeague] ?? []
-                    let filteredTeams = searchText.isEmpty ? teams : teams.filter {
-                        $0.displayName.localizedCaseInsensitiveContains(searchText) ||
-                            $0.abbreviation.localizedCaseInsensitiveContains(searchText)
-                    }
 
                     if favoritesManager.isLoadingTeams {
                         ProgressView()
@@ -110,11 +178,13 @@ struct FavoritesSettingsView: View {
                         .frame(height: 230)
                     }
                 }
-                .task {
-                    await favoritesManager.loadTeams(
-                        for: selectedLeague,
-                        url: FavoriteTeams.teamsURL
-                    )
+                .task(id: selectedLeague) {
+                    if let url = FavoriteTeams.teamsUrl(for: selectedLeague) {
+                        await favoritesManager.loadTeams(
+                            for: selectedLeague,
+                            url: url
+                        )
+                    }
                 }
             }
             .formStyle(.grouped)
@@ -130,7 +200,7 @@ struct FavoriteTeamRow: View {
 
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: team.primaryLogo ?? "")) { image in
+            AsyncImage(url: team.primaryLogo.flatMap { URL(string: $0) }) { image in
                 image.resizable()
             } placeholder: {
                 Color.clear
