@@ -122,11 +122,15 @@ struct FavoritesSettingsView: View {
                         ForEach(favoritesManager.favorites) { favorite in
                             HStack {
                                 AsyncImage(url: favorite.logo.flatMap { URL(string: $0) }) { image in
-                                    image.resizable()
+                                    image
+                                        .resizable()
+                                        .interpolation(.high)
+                                        .scaledToFit()
+                                        .frame(width: 18, height: 18)
+
                                 } placeholder: {
                                     Color.clear
                                 }
-                                .frame(width: 18, height: 18)
 
                                 VStack(alignment: .leading) {
                                     Text(favorite.displayName)
@@ -201,7 +205,11 @@ struct FavoriteTeamRow: View {
     var body: some View {
         HStack {
             AsyncImage(url: team.primaryLogo.flatMap { URL(string: $0) }) { image in
-                image.resizable()
+                image
+                    .resizable()
+                    .interpolation(.high)
+                    .scaledToFit()
+                    .frame(width: 18, height: 18)
             } placeholder: {
                 Color.clear
             }

@@ -118,11 +118,14 @@ struct CompactLeading: View {
                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
                         )
                     ) { image in
-                        image.resizable().scaledToFit()
+                        image
+                            .resizable()
+                            .interpolation(.high)
+                            .scaledToFit()
+                            .frame(width: 18, height: 18)
                     } placeholder: {
                         ProgressView()
                     }
-                    .frame(width: 18, height: 18)
                 }.contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
