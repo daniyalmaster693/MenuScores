@@ -270,9 +270,6 @@ struct Info: View {
                                                     .onAppear {
                                                         playText = text
                                                     }
-                                                    .onChange(of: text) { newText in
-                                                        playText = newText
-                                                    }
                                             }
                                         }
                                     }
