@@ -40,6 +40,8 @@ class FavoritesManager: ObservableObject {
         }
     }
 
+    // Favorites Management
+
     func loadFavorites() {
         guard let data = UserDefaults.standard.data(forKey: favoritesKey) else {
             favorites = []
@@ -68,6 +70,8 @@ class FavoritesManager: ObservableObject {
             $0.id == team.id && $0.leagueKey == leagueKey
         }
     }
+
+    // Favorites Actions
 
     func toggleFavorite(_ team: TeamInfo, leagueKey: String) {
         if let index = favorites.firstIndex(where: {
