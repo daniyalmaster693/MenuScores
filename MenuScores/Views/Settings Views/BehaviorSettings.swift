@@ -56,14 +56,14 @@ struct BehaviorSettingsView: View {
                     Toggle(isOn: $enableNotch) {
                         HStack {
                             Image(systemName: "macbook")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Notch Integration")
                         }
                     }
 
                     HStack {
                         Label("Notch Display", systemImage: "display")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
                         Spacer()
                         Picker("", selection: $notchScreenIndex) {
                             ForEach(NSScreen.screens.indices, id: \.self) { index in
@@ -78,7 +78,7 @@ struct BehaviorSettingsView: View {
 
                     HStack {
                         Label("Expand Notch", systemImage: "keyboard")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
                         Spacer()
                         KeyboardShortcuts.Recorder(for: .notchActivation)
                             .frame(width: 130)
@@ -90,7 +90,7 @@ struct BehaviorSettingsView: View {
                     Toggle(isOn: $enablePlayAlerts) {
                         HStack {
                             Image(systemName: "play.display")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Expand notch automatically for major plays")
                         }
                     }.disabled(!enableNotch)
@@ -98,7 +98,7 @@ struct BehaviorSettingsView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "timer")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Alerts Timer: \(String(format: "%.1f", self.alertsTimer))s")
                         }
 
@@ -117,7 +117,7 @@ struct BehaviorSettingsView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         HStack {
                             Label("Refresh Interval", systemImage: "timer")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Spacer()
                             Picker("", selection: $selectedOption) {
                                 ForEach(refreshOptions, id: \.self) { option in
@@ -134,7 +134,7 @@ struct BehaviorSettingsView: View {
                     Toggle(isOn: $notiGameStart) {
                         HStack {
                             Image(systemName: "bell")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Notify when a pinned game starts")
                         }
                     }
@@ -142,7 +142,7 @@ struct BehaviorSettingsView: View {
                     Toggle(isOn: $notiGameComplete) {
                         HStack {
                             Image(systemName: "bell.badge")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Notify when a pinned game ends")
                         }
                     }
@@ -189,7 +189,7 @@ struct BehaviorSettingsView: View {
                     Toggle(isOn: $notifyFavoriteGameStart) {
                         HStack {
                             Image(systemName: "bell")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Notify when favorite team's game starts")
                         }
                     }
@@ -197,7 +197,7 @@ struct BehaviorSettingsView: View {
                     Toggle(isOn: $notifyFavoriteGameEnd) {
                         HStack {
                             Image(systemName: "bell.badge")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Notify when favorite team's game ends")
                         }
                     }

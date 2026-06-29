@@ -90,7 +90,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNHL) {
                         HStack {
                             Image(systemName: "hockey.puck")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("NHL")
                         }
                     }
@@ -98,7 +98,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableHNCAAM) {
                         HStack {
                             Image(systemName: "hockey.puck")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Men's College Hockey")
                         }
                     }
@@ -106,7 +106,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableHNCAAF) {
                         HStack {
                             Image(systemName: "hockey.puck")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's College Hockey")
                         }
                     }
@@ -189,7 +189,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNBA) {
                         HStack {
                             Image(systemName: "basketball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("NBA")
                         }
                     }
@@ -197,7 +197,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableWNBA) {
                         HStack {
                             Image(systemName: "basketball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("WNBA")
                         }
                     }
@@ -205,7 +205,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNCAAM) {
                         HStack {
                             Image(systemName: "basketball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Men's College Basketball")
                         }
                     }
@@ -213,7 +213,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNCAAF) {
                         HStack {
                             Image(systemName: "basketball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's College Basketball")
                         }
                     }
@@ -223,7 +223,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNFL) {
                         HStack {
                             Image(systemName: "football")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("NFL")
                         }
                     }
@@ -231,7 +231,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableFNCAA) {
                         HStack {
                             Image(systemName: "football")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("College Football")
                         }
                     }
@@ -241,7 +241,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableMLB) {
                         HStack {
                             Image(systemName: "baseball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("MLB")
                         }
                     }
@@ -249,7 +249,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableBNCAA) {
                         HStack {
                             Image(systemName: "baseball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("College Baseball")
                         }
                     }
@@ -257,7 +257,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableSNCAA) {
                         HStack {
                             Image(systemName: "baseball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("College Softball")
                         }
                     }
@@ -267,7 +267,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableMLS) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("MLS")
                         }
                     }
@@ -275,7 +275,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNWSL) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("NWSL")
                         }
                     }
@@ -283,7 +283,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableUEFA) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Champions League")
                         }
                     }
@@ -291,7 +291,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableEUEFA) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Europa Champions League")
                         }
                     }
@@ -299,7 +299,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableWUEFA) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's Champions League")
                         }
                     }
@@ -307,7 +307,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableEPL) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Premier League")
                         }
                     }
@@ -315,7 +315,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableWEPL) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's Super League")
                         }
                     }
@@ -323,7 +323,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableESP) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("La Liga")
                         }
                     }
@@ -331,7 +331,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableGER) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Bundesliga")
                         }
                     }
@@ -339,7 +339,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableITA) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Serie A")
                         }
                     }
@@ -347,7 +347,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableMEX) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Liga MX")
                         }
                     }
@@ -355,7 +355,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableFRA) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Ligue 1")
                         }
                     }
@@ -363,7 +363,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNED) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Eredivisie")
                         }
                     }
@@ -371,7 +371,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enablePOR) {
                         HStack {
                             Image(systemName: "soccerball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Primeira Liga")
                         }
                     }
@@ -381,7 +381,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableF1) {
                         HStack {
                             Image(systemName: "flag.checkered")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("F1")
                         }
                     }
@@ -389,7 +389,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNC) {
                         HStack {
                             Image(systemName: "flag.checkered")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Nascar Premier")
                         }
                     }
@@ -397,15 +397,15 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNCS) {
                         HStack {
                             Image(systemName: "flag.checkered")
-                                .foregroundColor(.secondary)
-                            Text("Nascar Secondary")
+                                .foregroundColor(.primary)
+                            Text("Nascar primary")
                         }
                     }
 
                     Toggle(isOn: $enableNCT) {
                         HStack {
                             Image(systemName: "flag.checkered")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Nascar Truck")
                         }
                     }
@@ -413,7 +413,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableIRL) {
                         HStack {
                             Image(systemName: "flag.checkered")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("IndyCar")
                         }
                     }
@@ -423,7 +423,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enablePGA) {
                         HStack {
                             Image(systemName: "figure.golf")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("PGA")
                         }
                     }
@@ -431,7 +431,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableLPGA) {
                         HStack {
                             Image(systemName: "figure.golf")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("LPGA")
                         }
                     }
@@ -441,7 +441,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableATP) {
                         HStack {
                             Image(systemName: "tennisball.fill")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("ATP Tour")
                         }
                     }
@@ -449,7 +449,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableWTA) {
                         HStack {
                             Image(systemName: "tennisball.fill")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("WTA Tour")
                         }
                     }
@@ -459,7 +459,7 @@ struct LeagueSettingsView: View {
 //                    Toggle(isOn: $enableUFC) {
 //                        HStack {
 //                            Image(systemName: "figure.boxing")
-//                                .foregroundColor(.secondary)
+//                                .foregroundColor(.primary)
 //                            Text("UFC")
 //                        }
 //                    }
@@ -469,7 +469,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableNLL) {
                         HStack {
                             Image(systemName: "figure.lacrosse")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("NLL")
                         }
                     }
@@ -477,7 +477,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enablePLL) {
                         HStack {
                             Image(systemName: "figure.lacrosse")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("PLL")
                         }
                     }
@@ -485,7 +485,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableLNCAAM) {
                         HStack {
                             Image(systemName: "figure.lacrosse")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Men's College Lacrosse")
                         }
                     }
@@ -493,7 +493,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableLNCAAF) {
                         HStack {
                             Image(systemName: "figure.lacrosse")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's College Lacrosse")
                         }
                     }
@@ -503,7 +503,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableVNCAAM) {
                         HStack {
                             Image(systemName: "volleyball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Men's College Volleyball")
                         }
                     }
@@ -511,7 +511,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableVNCAAF) {
                         HStack {
                             Image(systemName: "volleyball")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's College Volleyball")
                         }
                     }
@@ -521,7 +521,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableOMIHC) {
                         HStack {
                             Image(systemName: "medal")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Men's Olympic Ice Hockey")
                         }
                     }
@@ -529,7 +529,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableOWIHC) {
                         HStack {
                             Image(systemName: "medal")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's Olympic Ice Hockey")
                         }
                     }
@@ -537,7 +537,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableOMB) {
                         HStack {
                             Image(systemName: "medal")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Men's Olympic Basketball")
                         }
                     }
@@ -545,7 +545,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableOWB) {
                         HStack {
                             Image(systemName: "medal")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Women's Olympic Basketball")
                         }
                     }
@@ -555,7 +555,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableFFWC) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA World Cup")
                         }
                     }
@@ -563,7 +563,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableFFWWC) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA Women's World Cup")
                         }
                     }
@@ -571,7 +571,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableFFWCQUEFA) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA World Cup UEFA Qualifiers")
                         }
                     }
@@ -579,7 +579,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableCONMEBOL) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA World Cup COMEBOL Qualifiers")
                         }
                     }
@@ -587,7 +587,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableCONCACAF) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA World Cup CONCACAF Qualifiers")
                         }
                     }
@@ -595,7 +595,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableCAF) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA World Cup African Qualifiers")
                         }
                     }
@@ -603,7 +603,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableAFC) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA World Cup Asian Qualifiers")
                         }
                     }
@@ -611,7 +611,7 @@ struct LeagueSettingsView: View {
                     Toggle(isOn: $enableOFC) {
                         HStack {
                             Image(systemName: "trophy")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("FIFA World Cup Oceanian Qualifiers")
                         }
                     }

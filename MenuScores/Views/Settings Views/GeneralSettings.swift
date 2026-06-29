@@ -29,7 +29,7 @@ struct GeneralSettingsView: View {
                 Section {
                     HStack {
                         Image(systemName: "person.crop.circle")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
                         LaunchAtLogin.Toggle()
                     }
 
@@ -37,7 +37,7 @@ struct GeneralSettingsView: View {
                         Toggle(isOn: $showInDock) {
                             HStack {
                                 Image(systemName: "dock.rectangle")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                 Text("Show in Dock")
                             }
                         }

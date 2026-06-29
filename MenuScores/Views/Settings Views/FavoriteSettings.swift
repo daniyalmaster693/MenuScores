@@ -93,14 +93,14 @@ struct FavoritesSettingsView: View {
                     Toggle(isOn: $autoPinFavorites) {
                         HStack {
                             Image(systemName: "pin")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Auto-pin favorite team games")
                         }
                     }
 
                     HStack {
                         Label("Select League", systemImage: "sportscourt")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
                         Spacer()
                         Picker("", selection: $selectedLeague) {
                             ForEach(FavoriteTeams.supportedLeagueKeys, id: \.self) { league in
@@ -117,7 +117,7 @@ struct FavoritesSettingsView: View {
                 Section("Favorite Teams") {
                     if favoritesManager.favorites.isEmpty {
                         Text("No favorite teams selected.")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.primary)
                     } else {
                         ForEach(favoritesManager.favorites) { favorite in
                             HStack {
@@ -133,7 +133,7 @@ struct FavoritesSettingsView: View {
 
                                     Text(FavoriteTeams.displayName(for: favorite.leagueKey))
                                         .font(.caption)
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(.primary)
                                 }
 
                                 Spacer()
