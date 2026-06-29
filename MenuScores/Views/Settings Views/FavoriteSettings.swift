@@ -12,6 +12,20 @@ struct FavoritesSettingsView: View {
     @AppStorage("autoPinFavorites") private var autoPinFavorites = false
 
     @State private var selectedLeague = "nhl"
+    @State private var searchText = ""
+
+    private var filteredTeams: [TeamInfo] {
+        let teams = favoritesManager.availableTeams[selectedLeague] ?? []
+
+        if searchText.isEmpty {
+            return teams
+        }
+
+        return teams.filter {
+            $0.displayName.localizedCaseInsensitiveContains(searchText) ||
+                $0.abbreviation.localizedCaseInsensitiveContains(searchText)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 4) {
@@ -65,20 +79,29 @@ struct FavoritesSettingsView: View {
                 }
 
                 Section("Teams") {
+                    TextField("Search teams...", text: $searchText)
+                        .textFieldStyle(.roundedBorder)
+
+                    let teams = favoritesManager.availableTeams[selectedLeague] ?? []
+                    let filteredTeams = searchText.isEmpty ? teams : teams.filter {
+                        $0.displayName.localizedCaseInsensitiveContains(searchText) ||
+                            $0.abbreviation.localizedCaseInsensitiveContains(searchText)
+                    }
+
                     if favoritesManager.isLoadingTeams {
                         ProgressView()
                     } else {
                         VStack {
                             ScrollView {
-                                ForEach(Array(favoritesManager.availableTeams[selectedLeague] ?? []).indices, id: \.self) { index in
-                                    let team = (favoritesManager.availableTeams[selectedLeague] ?? [])[index]
+                                ForEach(Array(filteredTeams.indices), id: \.self) { index in
+                                    let team = filteredTeams[index]
 
                                     FavoriteTeamRow(
                                         team: team,
                                         leagueKey: selectedLeague
                                     )
 
-                                    if index != (favoritesManager.availableTeams[selectedLeague]?.count ?? 0) - 1 {
+                                    if index != filteredTeams.count - 1 {
                                         Divider()
                                     }
                                 }
