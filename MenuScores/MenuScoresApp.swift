@@ -1175,7 +1175,7 @@ extension MenuScoresApp {
 }
 
 extension MenuScoresApp {
-    private func findBestGame(in games: [Event], favorites: [FavoriteTeam]) -> Event? {
+    private func findGame(in games: [Event], favorites: [FavoriteTeam]) -> Event? {
         let now = Date()
         let formatter = ISO8601DateFormatter()
 
@@ -1219,7 +1219,7 @@ extension MenuScoresApp {
         let rawSport = FavoriteTeams.mappings[league]?.sport ?? "Hockey"
         let sportName = rawSport.prefix(1).uppercased() + rawSport.dropFirst().lowercased()
 
-        if let bestGame = findBestGame(in: vm.games, favorites: favorites) {
+        if let bestGame = findGame(in: vm.games, favorites: favorites) {
             if currentGameID != bestGame.id {
                 Task { @MainActor in
                     if selectedPinType == .notch {

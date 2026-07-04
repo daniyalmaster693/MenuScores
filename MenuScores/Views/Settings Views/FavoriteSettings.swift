@@ -75,7 +75,7 @@ struct FavoritesSettingsView: View {
     @AppStorage("enableAFC") private var enableAFC = false
     @AppStorage("enableOFC") private var enableOFC = false
 
-    @State private var selectedLeague = "NHL"
+    @AppStorage("selectedFavoriteLeague") private var selectedLeague = "NHL"
     @State private var searchText = ""
 
     private var filteredTeams: [TeamInfo] {
