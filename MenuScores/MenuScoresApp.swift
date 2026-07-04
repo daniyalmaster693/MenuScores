@@ -1175,6 +1175,33 @@ extension MenuScoresApp {
 }
 
 extension MenuScoresApp {
+    private func findBestGame(in games: [Event], favorites: [FavoriteTeam]) -> Event? {
+        let now = Date()
+        let formatter = ISO8601DateFormatter()
+
+        let favoriteGames = games.filter { game in
+            game.competitions.first?.competitors?.contains { comp in
+                favorites.contains { $0.id == comp.team?.id }
+            } ?? false
+        }
+
+        return favoriteGames.sorted(by: { (gameA: Event, gameB: Event) -> Bool in
+            let dateA = formatter.date(from: gameA.date) ?? Date.distantPast
+            let dateB = formatter.date(from: gameB.date) ?? Date.distantPast
+
+            let isAInProgress = gameA.status.type.state == "in"
+            let isBInProgress = gameB.status.type.state == "in"
+
+            if isAInProgress != isBInProgress {
+                return isAInProgress
+            }
+
+            return abs(dateA.timeIntervalSince(now)) < abs(dateB.timeIntervalSince(now))
+        }).first
+    }
+}
+
+extension MenuScoresApp {
     private func checkForFavoriteGames(in vm: GamesListView, league: String) {
         @AppStorage("autoPinFavorites") var autoPinFavorites = false
         @AppStorage("selectedPinType") var selectedPinType: PinType = .notch
@@ -1192,20 +1219,15 @@ extension MenuScoresApp {
         let rawSport = FavoriteTeams.mappings[league]?.sport ?? "Hockey"
         let sportName = rawSport.prefix(1).uppercased() + rawSport.dropFirst().lowercased()
 
-        for game in vm.games {
-            let isFavoritePlaying = game.competitions.first?.competitors?.contains { comp in
-                favorites.contains { $0.id == comp.team?.id }
-            } ?? false
-
-            if isFavoritePlaying, currentGameID != game.id {
+        if let bestGame = findBestGame(in: vm.games, favorites: favorites) {
+            if currentGameID != bestGame.id {
                 Task { @MainActor in
                     if selectedPinType == .notch {
-                        await updateNotch(for: game, sport: sportName, league: league)
+                        await updateNotch(for: bestGame, sport: sportName, league: league)
                     } else {
-                        await updateMenuBar(for: game, league: league)
+                        await updateMenuBar(for: bestGame, league: league)
                     }
                 }
-                return
             }
         }
     }
