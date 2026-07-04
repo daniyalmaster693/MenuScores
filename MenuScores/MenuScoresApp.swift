@@ -1179,28 +1179,13 @@ extension MenuScoresApp {
         let now = Date()
         let formatter = ISO8601DateFormatter()
 
-        func getPriorityIndex(for game: Event) -> Int {
-            let competitorIDs = game.competitions.first?.competitors?.compactMap { $0.team?.id } ?? []
-
-            let indices = competitorIDs.compactMap { id in
-                favorites.firstIndex(where: { $0.id == id })
-            }
-
-            return indices.min() ?? Int.max
-        }
-
         let favoriteGames = games.filter { game in
-            getPriorityIndex(for: game) != Int.max
+            game.competitions.first?.competitors?.contains { comp in
+                favorites.contains { $0.id == comp.team?.id }
+            } ?? false
         }
 
         return favoriteGames.sorted(by: { (gameA: Event, gameB: Event) -> Bool in
-            let priorityA = getPriorityIndex(for: gameA)
-            let priorityB = getPriorityIndex(for: gameB)
-
-            if priorityA != priorityB {
-                return priorityA < priorityB
-            }
-
             let dateA = formatter.date(from: gameA.date) ?? Date.distantPast
             let dateB = formatter.date(from: gameB.date) ?? Date.distantPast
 
