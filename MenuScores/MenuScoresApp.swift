@@ -158,7 +158,57 @@ struct MenuScoresApp: App {
         if enableAFC { await afcVM.populateGames(from: Scoreboard.Urls.afc) }
         if enableOFC { await ofcVM.populateGames(from: Scoreboard.Urls.ofc) }
 
+        checkForFavoriteGames(in: nhlVM, league: "NHL")
+        checkForFavoriteGames(in: hncaamVM, league: "HNCAAM")
+        checkForFavoriteGames(in: hncaafVM, league: "HNCAAF")
+        checkForFavoriteGames(in: omihcVM, league: "OMIHC")
+        checkForFavoriteGames(in: owihcVM, league: "OWIHC")
+
+        checkForFavoriteGames(in: nbaVM, league: "NBA")
+        checkForFavoriteGames(in: wnbaVM, league: "WNBA")
+        checkForFavoriteGames(in: ncaamVM, league: "NCAA M")
+        checkForFavoriteGames(in: ncaafVM, league: "NCAA F")
+
+        checkForFavoriteGames(in: nflVM, league: "NFL")
+        checkForFavoriteGames(in: fncaaVM, league: "FNCAA")
+
+        checkForFavoriteGames(in: mlbVM, league: "MLB")
+        checkForFavoriteGames(in: bncaaVM, league: "BNCAA")
+        checkForFavoriteGames(in: sncaaVM, league: "SNCAA")
+
+        checkForFavoriteGames(in: mlsVM, league: "MLS")
+        checkForFavoriteGames(in: nwslVM, league: "NWSL")
+
+        checkForFavoriteGames(in: uefaVM, league: "UEFA")
+        checkForFavoriteGames(in: euefaVM, league: "EUEFA")
+        checkForFavoriteGames(in: wuefaVM, league: "WUEFA")
+
+        checkForFavoriteGames(in: eplVM, league: "EPL")
+        checkForFavoriteGames(in: weplVM, league: "WEPL")
+        checkForFavoriteGames(in: espVM, league: "ESP")
+        checkForFavoriteGames(in: gerVM, league: "GER")
+        checkForFavoriteGames(in: itaVM, league: "ITA")
+        checkForFavoriteGames(in: fraVM, league: "FRA 1")
+        checkForFavoriteGames(in: nedVM, league: "NED")
+        checkForFavoriteGames(in: porVM, league: "POR")
+        checkForFavoriteGames(in: mexVM, league: "MEX")
+
         checkForFavoriteGames(in: ffwcVM, league: "FFWC")
+        checkForFavoriteGames(in: ffwwcVM, league: "FFWWC")
+        checkForFavoriteGames(in: ffwcquefaVM, league: "FFWCQUEFA")
+        checkForFavoriteGames(in: conmebolVM, league: "CONMEBOL")
+        checkForFavoriteGames(in: concacafVM, league: "CONCACAF")
+        checkForFavoriteGames(in: cafVM, league: "CAF")
+        checkForFavoriteGames(in: afcVM, league: "AFC")
+        checkForFavoriteGames(in: ofcVM, league: "OFC")
+
+        checkForFavoriteGames(in: nllVM, league: "NLL")
+        checkForFavoriteGames(in: pllVM, league: "PLL")
+        checkForFavoriteGames(in: lncaamVM, league: "LNCAAM")
+        checkForFavoriteGames(in: lncaafVM, league: "LNCAAF")
+
+        checkForFavoriteGames(in: vncaamVM, league: "VNCAAM")
+        checkForFavoriteGames(in: vncaafVM, league: "VNCAAF")
     }
 
     // Notification Settings

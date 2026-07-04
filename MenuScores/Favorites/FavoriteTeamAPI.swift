@@ -41,7 +41,7 @@ enum FavoriteTeams {
         "WUEFA": LeagueInfo(sport: "soccer", league: "uefa.wchampions", displayName: "Women's Champions League"),
 
         "EPL": LeagueInfo(sport: "soccer", league: "eng.1", displayName: "Premier League"),
-        "wepl": LeagueInfo(sport: "soccer", league: "eng.w.1", displayName: "Women's Super League"),
+        "WEPL": LeagueInfo(sport: "soccer", league: "eng.w.1", displayName: "Women's Super League"),
         "ESP": LeagueInfo(sport: "soccer", league: "esp.1", displayName: "La Liga"),
         "GER": LeagueInfo(sport: "soccer", league: "ger.1", displayName: "Bundesliga"),
         "ITA": LeagueInfo(sport: "soccer", league: "ita.1", displayName: "Serie A"),
