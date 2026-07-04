@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2025-05-03.
 //
 
+import DynamicNotchKit
 import SwiftUI
 
 class LeagueSelectionModel: ObservableObject {
@@ -156,6 +157,8 @@ struct MenuScoresApp: App {
         if enableCAF { await cafVM.populateGames(from: Scoreboard.Urls.caf) }
         if enableAFC { await afcVM.populateGames(from: Scoreboard.Urls.afc) }
         if enableOFC { await ofcVM.populateGames(from: Scoreboard.Urls.ofc) }
+
+        checkForFavoriteGames(in: ffwcVM, league: "FFWC")
     }
 
     // Notification Settings
@@ -176,6 +179,11 @@ struct MenuScoresApp: App {
     // Notch Data
 
     @StateObject private var notchViewModel = NotchViewModel()
+
+    // Pin Data
+
+    @State private var pinnedByNotch = false
+    @State private var pinnedByMenubar = false
 
     // Notch Behaviors
 
@@ -1066,6 +1074,88 @@ struct MenuScoresApp: App {
                         NSWorkspace.shared.open(url)
                     }
                 }
+            }
+        }
+    }
+}
+
+extension MenuScoresApp {
+    @MainActor
+    private func updateNotch(for game: Event, sport: String, league: String) async {
+        currentGameID = game.id
+        currentGameState = game.status.type.state
+
+        pinnedByNotch = true
+        pinnedByMenubar = false
+
+        notchViewModel.game = game
+
+        if let existingNotch = NotchViewModel.shared.notch {
+            await existingNotch.hide()
+            NotchViewModel.shared.game = nil
+            NotchViewModel.shared.currentGameID = ""
+            NotchViewModel.shared.currentGameState = ""
+            NotchViewModel.shared.previousGameState = ""
+            NotchViewModel.shared.notch = nil
+        }
+
+        let newNotch = DynamicNotch(
+            hoverBehavior: .all,
+            style: .notch
+        ) {
+            Info(notchViewModel: notchViewModel, sport: sport, league: league)
+        } compactLeading: {
+            CompactLeading(notchViewModel: notchViewModel, sport: sport)
+        } compactTrailing: {
+            CompactTrailing(notchViewModel: notchViewModel, sport: sport)
+        }
+
+        NotchViewModel.shared.notch = newNotch
+        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+    }
+
+    private func updateMenuBar(for game: Event, league: String) async {
+        currentTitle = displayText(for: game, league: league)
+        currentGameID = game.id
+        currentGameState = game.status.type.state
+
+        pinnedByMenubar = true
+        pinnedByNotch = false
+    }
+}
+
+extension MenuScoresApp {
+    private func checkForFavoriteGames(in vm: GamesListView, league: String) {
+        @AppStorage("autoPinFavorites") var autoPinFavorites = false
+        @AppStorage("selectedPinType") var selectedPinType: PinType = .notch
+
+        enum PinType: String, CaseIterable, Identifiable {
+            case menubar = "Menubar"
+            case notch = "Notch"
+
+            var id: String { rawValue }
+        }
+
+        guard autoPinFavorites else { return }
+
+        let favorites = FavoritesManager.shared.favorites
+        let rawSport = FavoriteTeams.mappings[league]?.sport ?? "Hockey"
+        let sportName = rawSport.prefix(1).uppercased() + rawSport.dropFirst().lowercased()
+
+        for game in vm.games {
+            let isFavoritePlaying = game.competitions.first?.competitors?.contains { comp in
+                favorites.contains { $0.id == comp.team?.id }
+            } ?? false
+
+            if isFavoritePlaying, currentGameID != game.id {
+                Task { @MainActor in
+                    if selectedPinType == .notch {
+                        await updateNotch(for: game, sport: sportName, league: league)
+                    } else {
+                        await updateMenuBar(for: game, league: league)
+                    }
+                }
+                return
             }
         }
     }

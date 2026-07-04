@@ -11,6 +11,15 @@ struct FavoritesSettingsView: View {
     @StateObject private var favoritesManager = FavoritesManager.shared
     @AppStorage("autoPinFavorites") private var autoPinFavorites = false
 
+    @AppStorage("selectedPinType") private var selectedPinType: PinType = .notch
+
+    enum PinType: String, CaseIterable, Identifiable {
+        case menubar = "Menubar"
+        case notch = "Notch"
+
+        var id: String { rawValue }
+    }
+
     // Leagues
 
     @AppStorage("enableNHL") private var enableNHL = true
@@ -96,6 +105,20 @@ struct FavoritesSettingsView: View {
                                 .foregroundColor(.primary)
                             Text("Auto-pin favorite team games")
                         }
+                    }
+
+                    HStack {
+                        Label("Auto Pin Preference", systemImage: "square.grid.2x2")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$selectedPinType) {
+                            ForEach(PinType.allCases) { key in
+                                Text(key.rawValue).tag(key)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .disabled(!self.autoPinFavorites)
+                        .frame(width: 150)
                     }
 
                     HStack {
