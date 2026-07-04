@@ -108,7 +108,7 @@ struct FavoritesSettingsView: View {
                     }
 
                     HStack {
-                        Label("Auto Pin Preference", systemImage: "square.grid.2x2")
+                        Label("Auto Pin Preference", systemImage: "display")
                             .foregroundColor(.primary)
                         Spacer()
                         Picker("", selection: self.$selectedPinType) {
