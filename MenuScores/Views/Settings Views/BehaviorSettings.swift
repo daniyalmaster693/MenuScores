@@ -86,32 +86,32 @@ struct BehaviorSettingsView: View {
                     }
                 }
 
-                Section("Play Alerts") {
-                    Toggle(isOn: $enablePlayAlerts) {
-                        HStack {
-                            Image(systemName: "play.display")
-                                .foregroundColor(.primary)
-                            Text("Expand notch automatically for major plays")
-                        }
-                    }.disabled(!enableNotch)
-
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Image(systemName: "timer")
-                                .foregroundColor(.primary)
-                            Text("Alerts Timer: \(String(format: "%.1f", self.alertsTimer))s")
-                        }
-
-                        Text("Controls how long play alerts remain visible")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.leading, 25)
-                            .padding(.bottom, 10)
-
-                        Slider(value: self.$alertsTimer, in: 2 ... 12.0, step: 0.5)
-                            .disabled(!enablePlayAlerts || !enableNotch)
-                    }
-                }
+//                Section("Play Alerts") {
+//                    Toggle(isOn: $enablePlayAlerts) {
+//                        HStack {
+//                            Image(systemName: "play.display")
+//                                .foregroundColor(.primary)
+//                            Text("Expand notch automatically for major plays")
+//                        }
+//                    }.disabled(!enableNotch)
+//
+//                    VStack(alignment: .leading, spacing: 6) {
+//                        HStack {
+//                            Image(systemName: "timer")
+//                                .foregroundColor(.primary)
+//                            Text("Alerts Timer: \(String(format: "%.1f", self.alertsTimer))s")
+//                        }
+//
+//                        Text("Controls how long play alerts remain visible")
+//                            .font(.caption)
+//                            .foregroundColor(.secondary)
+//                            .padding(.leading, 25)
+//                            .padding(.bottom, 10)
+//
+//                        Slider(value: self.$alertsTimer, in: 2 ... 12.0, step: 0.5)
+//                            .disabled(!enablePlayAlerts || !enableNotch)
+//                    }
+//                }
 
                 Section("Score Updates") {
                     VStack(alignment: .leading, spacing: 2) {
