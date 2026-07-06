@@ -15,9 +15,6 @@ struct BehaviorSettingsView: View {
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
-    @AppStorage("notifyFavoriteGameStart") private var notifyFavoriteGameStart = false
-    @AppStorage("notifyFavoriteGameEnd") private var notifyFavoriteGameEnd = false
-
     @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
@@ -181,24 +178,6 @@ struct BehaviorSettingsView: View {
                             .buttonStyle(.plain)
                             .foregroundColor(.secondary)
                             .help("Request notification permissions")
-                        }
-                    }
-                }
-
-                Section {
-                    Toggle(isOn: $notifyFavoriteGameStart) {
-                        HStack {
-                            Image(systemName: "bell")
-                                .foregroundColor(.primary)
-                            Text("Notify when favorite team's game starts")
-                        }
-                    }
-
-                    Toggle(isOn: $notifyFavoriteGameEnd) {
-                        HStack {
-                            Image(systemName: "bell.badge")
-                                .foregroundColor(.primary)
-                            Text("Notify when favorite team's game ends")
                         }
                     }
                 }

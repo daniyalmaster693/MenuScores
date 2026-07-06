@@ -159,7 +159,9 @@ struct MenuScoresApp: App {
         if enableCAF { await cafVM.populateGames(from: Scoreboard.Urls.caf) }
         if enableAFC { await afcVM.populateGames(from: Scoreboard.Urls.afc) }
         if enableOFC { await ofcVM.populateGames(from: Scoreboard.Urls.ofc) }
+    }
 
+    private func checkFavorites() async {
         checkForFavoriteGames(in: nhlVM, league: "NHL")
         checkForFavoriteGames(in: hncaamVM, league: "HNCAAM")
         checkForFavoriteGames(in: hncaafVM, league: "HNCAAF")
