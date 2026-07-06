@@ -30,16 +30,16 @@ class NotchViewModel: ObservableObject {
     
     @Published var showingAlert: Bool = false
     
-    func triggerAlert() {
-        Task { @MainActor in
-            let screens = NSScreen.screens
-            if screens.indices.contains(self.notchScreenIndex) {
-                await NotchViewModel.shared.notch?.expand(on: screens[self.notchScreenIndex])
-                try? await Task.sleep(for: .seconds(self.alertsTimer))
-                await NotchViewModel.shared.notch?.compact(on: screens[self.notchScreenIndex])
-            }
-        }
-    }
+//    func triggerAlert() {
+//        Task { @MainActor in
+//            let screens = NSScreen.screens
+//            if screens.indices.contains(self.notchScreenIndex) {
+//                await NotchViewModel.shared.notch?.expand(on: screens[self.notchScreenIndex])
+//                try? await Task.sleep(for: .seconds(self.alertsTimer))
+//                await NotchViewModel.shared.notch?.compact(on: screens[self.notchScreenIndex])
+//            }
+//        }
+//    }
     
     init(currentGameID: String = "", currentGameState: String = "", previousGameState: String? = nil) {
         self.currentGameID = currentGameID
