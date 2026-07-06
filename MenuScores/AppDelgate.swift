@@ -23,9 +23,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             tour.present(
                 pages: [
                     TourPage(imageName: "tour-welcome", title: "Welcome to MenuScores", description: "Live scores - Right From Your Notch"),
-                    TourPage(imageName: "tour-compact", title: "Sleek and Minimal", description: "Stay effortlessly updated."),
+                    TourPage(imageName: "tour-compact", title: "Sleek and Minimal Display", description: "Stay effortlessly updated from the Menubar or Notch."),
                     TourPage(imageName: "tour-views", title: "Know the Matchup", description: "View relveant details before games to stay up to date."),
-                    TourPage(imageName: "tour-favorites", title: "Track your Favorites", description: "Choose your favorite team and we'll handle the pinning for you."),
+                    TourPage(imageName: "tour-favorites", title: "Track your Favorite Teams", description: "Choose your favorite teams and we'll handle the pinning for you."),
                     TourPage(imageName: "tour-leagues", title: "48+ Leagues to Choose From", description: "Track over 48 different leagues across 12 different sports."),
 
                 ],
