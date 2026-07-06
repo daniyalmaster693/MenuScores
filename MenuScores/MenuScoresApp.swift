@@ -18,6 +18,8 @@ extension LeagueSelectionModel {
 
 @main
 struct MenuScoresApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
     // Refresh Interval Settings
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"

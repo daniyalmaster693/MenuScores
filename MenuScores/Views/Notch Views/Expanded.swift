@@ -427,17 +427,17 @@ struct Info: View {
                         }
                     }
                 }
-                .onChange(of: game.competitions.first?.situation?.lastPlay?.text) { newValue in
-                    let triggerTypes = ["goal", "assists", "unassisted", "empty net", "start of", "end of", "tripping", "slashing", "boarding", "high sticking", "elbowing", "charging", "interference", "cross checking", "hooking", "holding", "delay of game", "too many", "served by", "game misconduct", "fighting", "foul", "free throw", "timeout", "jump ball", "challenge", "field goal", "touchdown", "fumble", "scored", "homered", "play result", "major", "double minor", "minor"]
-
-                    if let unwrappedValue = newValue {
-                        let lowercasedValue = unwrappedValue.lowercased()
-
-                        if triggerTypes.contains(where: { lowercasedValue.contains($0) }) {
-                            notchViewModel.triggerAlert()
-                        }
-                    }
-                }
+//                .onChange(of: game.competitions.first?.situation?.lastPlay?.text) { newValue in
+//                    let triggerTypes = ["goal", "assists", "unassisted", "empty net", "start of", "end of", "tripping", "slashing", "boarding", "high sticking", "elbowing", "charging", "interference", "cross checking", "hooking", "holding", "delay of game", "too many", "served by", "game misconduct", "fighting", "foul", "free throw", "timeout", "jump ball", "challenge", "field goal", "touchdown", "fumble", "scored", "homered", "play result", "major", "double minor", "minor"]
+//
+//                    if let unwrappedValue = newValue {
+//                        let lowercasedValue = unwrappedValue.lowercased()
+//
+//                        if triggerTypes.contains(where: { lowercasedValue.contains($0) }) {
+//                            notchViewModel.triggerAlert()
+//                        }
+//                    }
+//                }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
