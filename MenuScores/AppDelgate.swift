@@ -23,13 +23,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         tour.present(
             pages: [
                 TourPage(imageName: "tour-welcome", title: "Welcome to MenuScores", description: "Live scores - Right From Your Notch"),
-                TourPage(imageName: "tour-compact", title: "Sleek and Minimal", description: "Track games with minimal distraction."),
-                TourPage(imageName: "tour-views", title: "Pre Game Info", description: "View key details before games."),
-                TourPage(imageName: "tour-live", title: "Live Game Info", description: "View releveant info during games."),
+                TourPage(imageName: "tour-compact", title: "Sleek and Minimal", description: "Stay effortlessly updated."),
+                TourPage(imageName: "tour-views", title: "Know the Matchup", description: "View relveant details before games to stay up to date."),
+                TourPage(imageName: "tour-favorites", title: "Track your Favorites", description: "Choose your favorite team and we'll handle the pinning for you."),
                 TourPage(imageName: "tour-leagues", title: "48+ Leagues to Choose From", description: "Track over 48 different leagues across 12 different sports."),
 
             ],
-            width: 800,
+            width: 660,
             continueButtonTitle: "Continue",
             finishButtonTitle: "Get Started",
             onFinish: {
