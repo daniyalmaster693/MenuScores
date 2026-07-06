@@ -1054,11 +1054,11 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("c")
 
-            Button {
-                NotchViewModel.shared.triggerAlert()
-            } label: {
-                Text("Test Alert")
-            }.keyboardShortcut("t")
+//            Button {
+//                NotchViewModel.shared.triggerAlert()
+//            } label: {
+//                Text("Test Alert")
+//            }.keyboardShortcut("t")
 
             Divider()
 
