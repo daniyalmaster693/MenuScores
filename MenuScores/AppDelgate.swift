@@ -33,6 +33,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 continueButtonTitle: "Continue",
                 finishButtonTitle: "Get Started",
                 onFinish: {
+                    if #available(macOS 14, *) {
+                        let environment = EnvironmentValues()
+                        environment.openSettings()
+                        NSApp.setActivationPolicy(.regular)
+                        NSApp.activate(ignoringOtherApps: true)
+                    }
+
                     UserDefaults.standard.set(true, forKey: "hasShownTour")
                     NSApp.setActivationPolicy(.accessory)
                 },
