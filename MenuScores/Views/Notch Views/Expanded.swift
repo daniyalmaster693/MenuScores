@@ -316,7 +316,7 @@ struct Info: View {
 
                     if sport == "Soccer" && game.competitions[0].status.type.state == "in" {
                         VStack(alignment: .center) {
-                            let athletesInvolved = game.competitions.first?.details?.last?.athletesInvolved.first?.displayName ?? ""
+                            let athletesInvolved = game.competitions.first?.details?.last?.athletesInvolved?.first?.displayName ?? ""
                             let playType = game.competitions.first?.details?.last?.type.text ?? ""
                             let playClock = game.competitions.first?.details?.last?.clock.displayValue ?? ""
 

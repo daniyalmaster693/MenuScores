@@ -163,7 +163,7 @@ struct Headlines: Decodable {
 
 struct Details: Decodable {
     let type: SoccerType
-    let athletesInvolved: [AthletesInvolved]
+    let athletesInvolved: [AthletesInvolved]?
     let clock: SoccerClock
 }
 
