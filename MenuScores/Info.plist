@@ -4,7 +4,5 @@
 <dict>
 	<key>NSUserNotificationUsageDescription</key>
 	<string>Used to notify you about game start and completion updates</string>
-	<key>SUFeedURL</key>
-	<string>https://daniyalmaster693.github.io/MenuScores/appcast.xml</string>
 </dict>
 </plist>
