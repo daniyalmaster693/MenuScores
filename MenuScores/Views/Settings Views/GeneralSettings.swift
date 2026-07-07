@@ -10,6 +10,7 @@ import LaunchAtLogin
 import SwiftUI
 
 struct GeneralSettingsView: View {
+    @StateObject private var updateManager = UpdateManager()
     @AppStorage("showInDock") private var showInDock = false
 
     func updateActivationPolicy() {
@@ -52,6 +53,18 @@ struct GeneralSettingsView: View {
                                 NSApp.setActivationPolicy(.accessory)
                             }
                         }
+                    }
+                }
+
+                Section {
+                    HStack {
+                        Label("Updates", systemImage: "arrow.2.circlepath")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Check for Updates") {
+                            updateManager.getUpdateData()
+                        }
+                        .buttonStyle(.bordered)
                     }
                 }
             }
