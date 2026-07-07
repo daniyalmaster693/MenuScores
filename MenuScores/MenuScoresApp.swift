@@ -19,6 +19,7 @@ extension LeagueSelectionModel {
 @main
 struct MenuScoresApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @StateObject private var updateManager = UpdateManager()
 
     // Refresh Interval Settings
 
@@ -1065,6 +1066,13 @@ struct MenuScoresApp: App {
 //            }.keyboardShortcut("t")
 
             Divider()
+
+            Button {
+                updateManager.checkForUpdates()
+            } label: {
+                Text("Check for Updates")
+            }
+            .keyboardShortcut("u")
 
             if #available(macOS 14, *) {
                 Button {
