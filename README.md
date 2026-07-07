@@ -134,9 +134,9 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 ## Dependencies
 
 - [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
+- [TourKit](https://github.com/rampatra/TourKit)
 - [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
 - [Keyboard Shortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
-- [Sparkle](https://github.com/sparkle-project/Sparkle)
 
 ## Contributions
 
