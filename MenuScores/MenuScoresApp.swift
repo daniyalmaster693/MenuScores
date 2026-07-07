@@ -1068,7 +1068,7 @@ struct MenuScoresApp: App {
             Divider()
 
             Button {
-                updateManager.checkForUpdates()
+                updateManager.getUpdateData()
             } label: {
                 Text("Check for Updates")
             }
