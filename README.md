@@ -120,11 +120,12 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 - [x] ~~Notch Display for Games~~
 - [x] ~~Links to more game info~~
 - [x] ~~Entire year race schedule for F1~~
-- [x] ~Additional F1 Driver Info~
-- [x] ~Additional Pre Game info~
-- [x] ~Additional Live Game Info~
-- [x] ~Recent plays in the notch component~
-- [x] ~Smoother overall notch animations for score updates and game loading~
+- [x] ~Detailed Leaderboards for F1~
+- [x] ~Recent plays in the notch~
+- [x] ~Headline features for pre game and post game matchups~
+- [x] ~Additional live game info (outs, strikes, down placements, weather info, arena info)~
+- [x] ~Animated score updates and game loading~
+- [x] ~Higher quality icons for notch views~
 - [ ] Automatically pin games to the notch or menubar (favorite teams feature)
 - [ ] Automatic notch expansion for game events (goals, penalties, and key moments)
 - [ ] UFC Integration
