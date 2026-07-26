@@ -1119,14 +1119,14 @@ struct MenuScoresApp: App {
                 Text("Clear Set Game")
             }
             .keyboardShortcut("c")
-            .onReceive(
-                Timer.publish(every: 90, on: .main, in: .common).autoconnect()
-
-            ) { _ in
-                Task {
-                    await checkFavorites()
-                }
-            }
+//            .onReceive(
+//                Timer.publish(every: 90, on: .main, in: .common).autoconnect()
+//
+//            ) { _ in
+//                Task {
+//                    await checkFavorites()
+//                }
+//            }
 
 //            Button {
 //                NotchViewModel.shared.triggerAlert()
@@ -1149,14 +1149,14 @@ struct MenuScoresApp: App {
                 Text("Check for Updates")
             }
             .keyboardShortcut("u")
-            .onReceive(
-                Timer.publish(every: 43200, on: .main, in: .common).autoconnect()
-
-            ) { _ in
-                Task {
-                    updateManager.getUpdateData()
-                }
-            }
+//            .onReceive(
+//                Timer.publish(every: 43200, on: .main, in: .common).autoconnect()
+//
+//            ) { _ in
+//                Task {
+//                    updateManager.getUpdateData()
+//                }
+//            }
 
             if #available(macOS 14, *) {
                 Button {
