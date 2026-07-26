@@ -289,8 +289,10 @@ struct MenuScoresApp: App {
 
     // Title State Settings
 
+    @State private var dismissedGameID: String = ""
+
     @State var currentTitle: String = ""
-    @State var currentGameID: String = "0"
+    @State var currentGameID: String = ""
     @State var currentGameState: String = "pre"
     @State private var previousGameState: String? = nil
 
@@ -1099,6 +1101,8 @@ struct MenuScoresApp: App {
                 currentGameState = ""
 
                 dismissedPin = true
+                dismissedGameID = currentGameID
+
                 previousGameState = nil
 
                 Task {
@@ -1298,7 +1302,10 @@ extension MenuScoresApp {
         }
 
         guard autoPinFavorites else { return }
-        guard !dismissedPin else { return }
+
+        if dismissedPin, currentGameID == dismissedGameID {
+            return
+        }
 
         let favorites = FavoritesManager.shared.favorites
         let rawSport = FavoriteTeams.mappings[league]?.sport ?? "Hockey"
