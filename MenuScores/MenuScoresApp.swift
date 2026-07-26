@@ -109,58 +109,174 @@ struct MenuScoresApp: App {
     @AppStorage("enableOMB") private var enableOMB = false
     @AppStorage("enableOWB") private var enableOWB = false
 
-    private func checkFavorites() async {
-        checkForFavoriteGames(in: nhlVM, league: "NHL")
-        checkForFavoriteGames(in: hncaamVM, league: "HNCAAM")
-        checkForFavoriteGames(in: hncaafVM, league: "HNCAAF")
-        checkForFavoriteGames(in: omihcVM, league: "OMIHC")
-        checkForFavoriteGames(in: owihcVM, league: "OWIHC")
+    func checkFavorites() async {
+        if enableNHL {
+            checkForFavoriteGames(in: nhlVM, league: "NHL")
+        }
 
-        checkForFavoriteGames(in: nbaVM, league: "NBA")
-        checkForFavoriteGames(in: wnbaVM, league: "WNBA")
-        checkForFavoriteGames(in: ncaamVM, league: "NCAA M")
-        checkForFavoriteGames(in: ncaafVM, league: "NCAA F")
+        if enableHNCAAM {
+            checkForFavoriteGames(in: hncaamVM, league: "HNCAAM")
+        }
 
-        checkForFavoriteGames(in: nflVM, league: "NFL")
-        checkForFavoriteGames(in: fncaaVM, league: "FNCAA")
+        if enableHNCAAF {
+            checkForFavoriteGames(in: hncaafVM, league: "HNCAAF")
+        }
 
-        checkForFavoriteGames(in: mlbVM, league: "MLB")
-        checkForFavoriteGames(in: bncaaVM, league: "BNCAA")
-        checkForFavoriteGames(in: sncaaVM, league: "SNCAA")
+        if enableOMIHC {
+            checkForFavoriteGames(in: omihcVM, league: "OMIHC")
+        }
 
-        checkForFavoriteGames(in: mlsVM, league: "MLS")
-        checkForFavoriteGames(in: nwslVM, league: "NWSL")
+        if enableOWIHC {
+            checkForFavoriteGames(in: owihcVM, league: "OWIHC")
+        }
 
-        checkForFavoriteGames(in: uefaVM, league: "UEFA")
-        checkForFavoriteGames(in: euefaVM, league: "EUEFA")
-        checkForFavoriteGames(in: wuefaVM, league: "WUEFA")
+        if enableNBA {
+            checkForFavoriteGames(in: nbaVM, league: "NBA")
+        }
 
-        checkForFavoriteGames(in: eplVM, league: "EPL")
-        checkForFavoriteGames(in: weplVM, league: "WEPL")
-        checkForFavoriteGames(in: espVM, league: "ESP")
-        checkForFavoriteGames(in: gerVM, league: "GER")
-        checkForFavoriteGames(in: itaVM, league: "ITA")
-        checkForFavoriteGames(in: fraVM, league: "FRA 1")
-        checkForFavoriteGames(in: nedVM, league: "NED")
-        checkForFavoriteGames(in: porVM, league: "POR")
-        checkForFavoriteGames(in: mexVM, league: "MEX")
+        if enableWNBA {
+            checkForFavoriteGames(in: wnbaVM, league: "WNBA")
+        }
 
-        checkForFavoriteGames(in: ffwcVM, league: "FFWC")
-        checkForFavoriteGames(in: ffwwcVM, league: "FFWWC")
-        checkForFavoriteGames(in: ffwcquefaVM, league: "FFWCQUEFA")
-        checkForFavoriteGames(in: conmebolVM, league: "CONMEBOL")
-        checkForFavoriteGames(in: concacafVM, league: "CONCACAF")
-        checkForFavoriteGames(in: cafVM, league: "CAF")
-        checkForFavoriteGames(in: afcVM, league: "AFC")
-        checkForFavoriteGames(in: ofcVM, league: "OFC")
+        if enableNCAAM {
+            checkForFavoriteGames(in: ncaamVM, league: "NCAA M")
+        }
 
-        checkForFavoriteGames(in: nllVM, league: "NLL")
-        checkForFavoriteGames(in: pllVM, league: "PLL")
-        checkForFavoriteGames(in: lncaamVM, league: "LNCAAM")
-        checkForFavoriteGames(in: lncaafVM, league: "LNCAAF")
+        if enableNCAAF {
+            checkForFavoriteGames(in: ncaafVM, league: "NCAA F")
+        }
 
-        checkForFavoriteGames(in: vncaamVM, league: "VNCAAM")
-        checkForFavoriteGames(in: vncaafVM, league: "VNCAAF")
+        if enableNFL {
+            checkForFavoriteGames(in: nflVM, league: "NFL")
+        }
+
+        if enableFNCAA {
+            checkForFavoriteGames(in: fncaaVM, league: "FNCAA")
+        }
+
+        if enableMLB {
+            checkForFavoriteGames(in: mlbVM, league: "MLB")
+        }
+
+        if enableBNCAA {
+            checkForFavoriteGames(in: bncaaVM, league: "BNCAA")
+        }
+
+        if enableSNCAA {
+            checkForFavoriteGames(in: sncaaVM, league: "SNCAA")
+        }
+
+        if enableMLS {
+            checkForFavoriteGames(in: mlsVM, league: "MLS")
+        }
+
+        if enableNWSL {
+            checkForFavoriteGames(in: nwslVM, league: "NWSL")
+        }
+
+        if enableUEFA {
+            checkForFavoriteGames(in: uefaVM, league: "UEFA")
+        }
+
+        if enableEUEFA {
+            checkForFavoriteGames(in: euefaVM, league: "EUEFA")
+        }
+
+        if enableWUEFA {
+            checkForFavoriteGames(in: wuefaVM, league: "WUEFA")
+        }
+
+        if enableEPL {
+            checkForFavoriteGames(in: eplVM, league: "EPL")
+        }
+
+        if enableWEPL {
+            checkForFavoriteGames(in: weplVM, league: "WEPL")
+        }
+
+        if enableESP {
+            checkForFavoriteGames(in: espVM, league: "ESP")
+        }
+
+        if enableGER {
+            checkForFavoriteGames(in: gerVM, league: "GER")
+        }
+
+        if enableITA {
+            checkForFavoriteGames(in: itaVM, league: "ITA")
+        }
+
+        if enableFRA {
+            checkForFavoriteGames(in: fraVM, league: "FRA 1")
+        }
+
+        if enableNED {
+            checkForFavoriteGames(in: nedVM, league: "NED")
+        }
+
+        if enablePOR {
+            checkForFavoriteGames(in: porVM, league: "POR")
+        }
+
+        if enableMEX {
+            checkForFavoriteGames(in: mexVM, league: "MEX")
+        }
+
+        if enableFFWC {
+            checkForFavoriteGames(in: ffwcVM, league: "FFWC")
+        }
+
+        if enableFFWWC {
+            checkForFavoriteGames(in: ffwwcVM, league: "FFWWC")
+        }
+
+        if enableFFWCQUEFA {
+            checkForFavoriteGames(in: ffwcquefaVM, league: "FFWCQUEFA")
+        }
+
+        if enableCONMEBOL {
+            checkForFavoriteGames(in: conmebolVM, league: "CONMEBOL")
+        }
+
+        if enableCONCACAF {
+            checkForFavoriteGames(in: concacafVM, league: "CONCACAF")
+        }
+
+        if enableCAF {
+            checkForFavoriteGames(in: cafVM, league: "CAF")
+        }
+
+        if enableAFC {
+            checkForFavoriteGames(in: afcVM, league: "AFC")
+        }
+
+        if enableOFC {
+            checkForFavoriteGames(in: ofcVM, league: "OFC")
+        }
+
+        if enableNLL {
+            checkForFavoriteGames(in: nllVM, league: "NLL")
+        }
+
+        if enablePLL {
+            checkForFavoriteGames(in: pllVM, league: "PLL")
+        }
+
+        if enableLNCAAM {
+            checkForFavoriteGames(in: lncaamVM, league: "LNCAAM")
+        }
+
+        if enableLNCAAF {
+            checkForFavoriteGames(in: lncaafVM, league: "LNCAAF")
+        }
+
+        if enableVNCAAM {
+            checkForFavoriteGames(in: vncaamVM, league: "VNCAAM")
+        }
+
+        if enableVNCAAF {
+            checkForFavoriteGames(in: vncaafVM, league: "VNCAAF")
+        }
     }
 
     // Notification Settings
@@ -996,6 +1112,14 @@ struct MenuScoresApp: App {
                 Text("Clear Set Game")
             }
             .keyboardShortcut("c")
+            .onReceive(
+                Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+
+            ) { _ in
+                Task {
+                    await checkFavorites()
+                }
+            }
 
 //            Button {
 //                NotchViewModel.shared.triggerAlert()
@@ -1003,12 +1127,12 @@ struct MenuScoresApp: App {
 //                Text("Test Alert")
 //            }.keyboardShortcut("t")
 
-            Button {
-                checkForFavoriteGames(in: mlbVM, league: "MLB")
-            } label: {
-                Text("Test Pin")
-            }
-            .keyboardShortcut("p")
+//            Button {
+//                checkForFavoriteGames(in: mlbVM, league: "MLB")
+//            } label: {
+//                Text("Test Pin")
+//            }
+//            .keyboardShortcut("p")
 
             Divider()
 
@@ -1159,7 +1283,7 @@ extension MenuScoresApp {
 }
 
 extension MenuScoresApp {
-    private func checkForFavoriteGames(in vm: GamesListView, league: String) {
+    func checkForFavoriteGames(in vm: GamesListView, league: String) {
         @AppStorage("autoPinFavorites") var autoPinFavorites = false
         @AppStorage("selectedPinType") var selectedPinType: PinType = .notch
 
@@ -1175,6 +1299,20 @@ extension MenuScoresApp {
         let favorites = FavoritesManager.shared.favorites
         let rawSport = FavoriteTeams.mappings[league]?.sport ?? "Hockey"
         let sportName = rawSport.prefix(1).uppercased() + rawSport.dropFirst().lowercased()
+
+        if let updatedGame = vm.games.first(where: { $0.id == currentGameID }) {
+            currentGameState = updatedGame.status.type.state
+
+            if selectedPinType == .menubar {
+                currentTitle = displayText(for: updatedGame, league: league)
+            }
+
+            if selectedPinType == .notch {
+                notchViewModel.game = updatedGame
+            }
+
+            return
+        }
 
         if let bestGame = findGame(in: vm.games, favorites: favorites) {
             if currentGameID != bestGame.id {
