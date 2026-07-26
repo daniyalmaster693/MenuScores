@@ -84,9 +84,11 @@
 
 ### Manual Installation
 
-1. Download the latest release.
+1. Download the latest release .zip file from the Releases page.
 2. Move the app to your **Applications folder**.
 3. Run the app and grant necessary permissions when prompted.
+
+**Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
 
 ### Homebrew
 
@@ -99,19 +101,17 @@ brew install --cask menuscores
 xattr -dr com.apple.quarantine /Applications/MenuScores.app
 ```
 
-**Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
-
 ## Usage
 
-- **In order to use the notifications feature**, you must grant permission for MenuScores to send notification. An option will be presented to do so in the walkthrough screen.
+- **In order to use the notifications feature**, you must grant permission for MenuScores to send notifications. An option will be presented to do so in the settings window under the behavior tab.
 
-1. Clicking on the menubar title will show a list available leagues.
+1. Clicking on the radio waves icon will show a list available leagues.
 2. Hovering over a league will show a dropdown of all the games for the day in that league.
-3. Hovering over a game will allow you to choose from pinning the game to your menubar, notch, or viewing it in your browser.
+3. Hovering over a game will allow you to choose from pinning the game to your menubar, notch, or viewing it in your browser on ESPN.
 
 **Note: the notch feature works best on Macbooks with a notch. It will still work on non notched devices, but hovering over it will not open the expanded view.**
 
-4. You can use the clear set game option, or pin a different game to clear the menubar or notch.
+4. You can use the clear set game option to remove a game, or pin a different game to clear the menubar or notch.
 5. When a game is pinned to the notch, expanding it will reveal different info depending on the game state and league.
 6. You can quit the app directly from the menubar, or open the preferences window to configure app behaviors, or update the app.
 
@@ -125,9 +125,13 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 - [x] ~Additional Live Game Info~
 - [x] ~Recent plays in the notch component~
 - [x] ~Smoother overall notch animations for score updates and game loading~
-- [ ] Alerts for in game events (eg: powerplays, timeouts, yellow cards, etc)
-- [ ] App Widgets
 - [ ] Automatically pin games to the notch or menubar (favorite teams feature)
+- [ ] Automatic notch expansion for game events (goals, penalties, and key moments)
+- [ ] UFC Integration
+- [ ] Cricket Integration
+- [ ] Updated Menubar control view
+- [ ] Custom Menubar Score Component
+- [ ] App Widgets
 
 ...and more to come...
 
