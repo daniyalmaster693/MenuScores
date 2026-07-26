@@ -1120,7 +1120,7 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("c")
             .onReceive(
-                Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+                Timer.publish(every: 90, on: .main, in: .common).autoconnect()
 
             ) { _ in
                 Task {
@@ -1150,7 +1150,7 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("u")
             .onReceive(
-                Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+                Timer.publish(every: 43200, on: .main, in: .common).autoconnect()
 
             ) { _ in
                 Task {
