@@ -109,59 +109,6 @@ struct MenuScoresApp: App {
     @AppStorage("enableOMB") private var enableOMB = false
     @AppStorage("enableOWB") private var enableOWB = false
 
-    private func refreshAllLeagues() async {
-        if enableNHL { await nhlVM.populateGames(from: Scoreboard.Urls.nhl) }
-        if enableHNCAAM { await hncaamVM.populateGames(from: Scoreboard.Urls.hncaam) }
-        if enableHNCAAF { await hncaafVM.populateGames(from: Scoreboard.Urls.hncaaf) }
-
-        if enableNBA { await nbaVM.populateGames(from: Scoreboard.Urls.nba) }
-        if enableWNBA { await wnbaVM.populateGames(from: Scoreboard.Urls.wnba) }
-        if enableNCAAM { await ncaamVM.populateGames(from: Scoreboard.Urls.ncaam) }
-        if enableNCAAF { await ncaafVM.populateGames(from: Scoreboard.Urls.ncaaf) }
-
-        if enableNFL { await nflVM.populateGames(from: Scoreboard.Urls.nfl) }
-        if enableFNCAA { await fncaaVM.populateGames(from: Scoreboard.Urls.fncaa) }
-
-        if enableMLB { await mlbVM.populateGames(from: Scoreboard.Urls.mlb) }
-        if enableBNCAA { await bncaaVM.populateGames(from: Scoreboard.Urls.bncaa) }
-        if enableSNCAA { await sncaaVM.populateGames(from: Scoreboard.Urls.sncaa) }
-
-        if enableF1 { await f1VM.populateGames(from: Scoreboard.Urls.f1) }
-        if enableNC { await ncVM.populateGames(from: Scoreboard.Urls.nc) }
-        if enableNCS { await ncsVM.populateGames(from: Scoreboard.Urls.ncs) }
-        if enableNCT { await nctVM.populateGames(from: Scoreboard.Urls.nct) }
-        if enableIRL { await irlVM.populateGames(from: Scoreboard.Urls.irl) }
-
-        if enablePGA { await pgaVM.populateGames(from: Scoreboard.Urls.pga) }
-        if enableLPGA { await lpgaVM.populateGames(from: Scoreboard.Urls.lpga) }
-
-        if enableATP { await atpVM.populateTennis(from: Scoreboard.Urls.atp) }
-        if enableWTA { await wtaVM.populateTennis(from: Scoreboard.Urls.wta) }
-
-//        if enableUFC { await ufcVM.populateGames(from: Scoreboard.Urls.ufc) }
-
-        if enableNLL { await nllVM.populateGames(from: Scoreboard.Urls.nll) }
-        if enablePLL { await pllVM.populateGames(from: Scoreboard.Urls.pll) }
-        if enableLNCAAM { await lncaamVM.populateGames(from: Scoreboard.Urls.lncaam) }
-        if enableLNCAAF { await lncaafVM.populateGames(from: Scoreboard.Urls.lncaaf) }
-
-        if enableVNCAAM { await vncaamVM.populateGames(from: Scoreboard.Urls.vncaam) }
-        if enableVNCAAF { await vncaafVM.populateGames(from: Scoreboard.Urls.vncaaf) }
-
-        if enableOMIHC { await omihcVM.populateGames(from: Scoreboard.Urls.omihc) }
-        if enableOWIHC { await owihcVM.populateGames(from: Scoreboard.Urls.owihc) }
-        if enableOMB { await ombVM.populateGames(from: Scoreboard.Urls.omb) }
-        if enableOWB { await owbVM.populateGames(from: Scoreboard.Urls.owb) }
-
-        if enableFFWC { await ffwcVM.populateGames(from: Scoreboard.Urls.ffwc) }
-        if enableFFWWC { await ffwwcVM.populateGames(from: Scoreboard.Urls.ffwwc) }
-        if enableFFWCQUEFA { await ffwcquefaVM.populateGames(from: Scoreboard.Urls.ffwcquefa) }
-        if enableCONCACAF { await concacafVM.populateGames(from: Scoreboard.Urls.concacaf) }
-        if enableCAF { await cafVM.populateGames(from: Scoreboard.Urls.caf) }
-        if enableAFC { await afcVM.populateGames(from: Scoreboard.Urls.afc) }
-        if enableOFC { await ofcVM.populateGames(from: Scoreboard.Urls.ofc) }
-    }
-
     private func checkFavorites() async {
         checkForFavoriteGames(in: nhlVM, league: "NHL")
         checkForFavoriteGames(in: hncaamVM, league: "HNCAAM")
@@ -1028,15 +975,6 @@ struct MenuScoresApp: App {
                     }
                 }
             }
-
-            Button {
-                Task {
-                    await refreshAllLeagues()
-                }
-            } label: {
-                Text("Refresh")
-            }
-            .keyboardShortcut("r")
 
             Button {
                 currentTitle = ""
