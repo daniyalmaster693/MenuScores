@@ -37,3 +37,12 @@ func getCurrentYear() -> String {
     let currentYear = Calendar.current.component(.year, from: Date())
     return String(currentYear)
 }
+
+func getCurrentDate() -> String {
+    let today = Date()
+
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyyMMdd"
+    let dateString = formatter.string(from: today)
+    return dateString
+}
