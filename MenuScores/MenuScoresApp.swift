@@ -302,6 +302,7 @@ struct MenuScoresApp: App {
 
     @State private var pinnedByNotch = false
     @State private var pinnedByMenubar = false
+    @State private var dismissedPin = false
 
     // Notch Behaviors
 
@@ -1096,6 +1097,8 @@ struct MenuScoresApp: App {
                 currentTitle = ""
                 currentGameID = ""
                 currentGameState = ""
+
+                dismissedPin = true
                 previousGameState = nil
 
                 Task {
@@ -1295,6 +1298,7 @@ extension MenuScoresApp {
         }
 
         guard autoPinFavorites else { return }
+        guard !dismissedPin else { return }
 
         let favorites = FavoritesManager.shared.favorites
         let rawSport = FavoriteTeams.mappings[league]?.sport ?? "Hockey"
