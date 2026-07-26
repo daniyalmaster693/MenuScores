@@ -1065,6 +1065,13 @@ struct MenuScoresApp: App {
 //                Text("Test Alert")
 //            }.keyboardShortcut("t")
 
+            Button {
+                checkForFavoriteGames(in: mlbVM, league: "MLB")
+            } label: {
+                Text("Test Pin")
+            }
+            .keyboardShortcut("p")
+
             Divider()
 
             Button {
