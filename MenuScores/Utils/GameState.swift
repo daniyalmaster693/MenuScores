@@ -112,3 +112,29 @@ func displayText(for game: Event, league: String) -> String {
         return game.shortName ?? game.name
     }
 }
+
+func displayTennisText(for competition: TennisCompetition) -> String {
+    let team1 = competition.competitors?.first?.athlete?.shortName
+        ?? competition.competitors?.first?.athlete?.displayName
+        ?? "Player 1"
+
+    let team2 = competition.competitors?.dropFirst().first?.athlete?.shortName
+        ?? competition.competitors?.dropFirst().first?.athlete?.displayName
+        ?? "Player 2"
+
+    let status = competition.status?.type.state ?? "pre"
+    let set = competition.status?.period ?? 0
+
+    let statusSuffix: String = {
+        switch status {
+        case "in":
+            return "S\(set)"
+        case "post":
+            return "(Final)"
+        default:
+            return ""
+        }
+    }()
+
+    return "\(team1) - \(team2)     \(statusSuffix)"
+}

@@ -89,9 +89,9 @@ struct TennisMenu: View {
 
                                         Menu {
                                             Button {
-                                                currentTitle = tennisTitle
-                                                currentGameID = game.id
-                                                currentGameState = game.status.type.state
+                                                currentTitle = displayTennisText(for: competition)
+                                                currentGameID = competition.id
+                                                currentGameState = competition.status?.type.state ?? "pre"
 
                                                 pinnedByMenubar = true
                                                 pinnedByNotch = false
@@ -107,8 +107,8 @@ struct TennisMenu: View {
 
                                             if enableNotch {
                                                 Button {
-                                                    currentGameID = game.id
-                                                    currentGameState = game.status.type.state
+                                                    currentGameID = competition.id
+                                                    currentGameState = competition.status?.type.state ?? "pre"
 
                                                     pinnedByNotch = true
                                                     pinnedByMenubar = false
@@ -206,6 +206,41 @@ struct TennisMenu: View {
             LeagueSelectionModel.shared.currentLeague = league
             Task {
                 await viewModel.populateTennis(from: fetchURL)
+            }
+        }
+        .onReceive(
+            Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+        ) { _ in
+            Task {
+                await viewModel.populateTennis(from: fetchURL)
+
+                if let updatedCompetition = viewModel.tennisGames
+                    .flatMap({ $0.groupings })
+                    .flatMap({ $0.competitions })
+                    .first(where: { $0.id == currentGameID })
+                {
+                    if pinnedByMenubar {
+                        currentTitle = displayTennisText(for: updatedCompetition)
+                    } else if pinnedByNotch {
+                        currentTitle = ""
+                    }
+
+                    let newState = updatedCompetition.status?.type.state ?? "pre"
+
+                    if notiGameStart && previousGameState != "in" && newState == "in" {
+                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                    }
+                    if notiGameComplete && previousGameState != "post" && newState == "post" {
+                        gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
+                    }
+
+                    previousGameState = newState
+                    currentGameState = newState
+
+                    if pinnedByNotch {
+                        notchViewModel.tennisCompetition = updatedCompetition
+                    }
+                }
             }
         }
     }
