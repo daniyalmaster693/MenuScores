@@ -56,9 +56,13 @@ struct TennisMenu: View {
                                 let currentDate = getCurrentDate()
 
                                 let sortedDates = group.competitions.filter { competition in
-                                    let competitionDate = competition.date.replacingOccurrences(of: "-", with: "").prefix(8)
+                                    let competitionDate = competition.date.prefix(10)
                                     return competitionDate == currentDate
                                 }
+
+                                Text(currentDate)
+                                    .font(.headline)
+                                Divider().padding(.bottom)
 
                                 if sortedDates.isEmpty {
                                     Text("No Games Scheduled")

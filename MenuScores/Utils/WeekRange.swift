@@ -42,7 +42,7 @@ func getCurrentDate() -> String {
     let today = Date()
 
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyyMMdd"
+    formatter.dateFormat = "yyyy-MM-dd"
     let dateString = formatter.string(from: today)
     return dateString
 }
