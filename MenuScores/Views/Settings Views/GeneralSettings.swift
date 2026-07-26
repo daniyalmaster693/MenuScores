@@ -62,7 +62,7 @@ struct GeneralSettingsView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         Button("Check for Updates") {
-                            updateManager.getUpdateData()
+                            updateManager.getUpdateData(manualCheck: true)
                         }
                         .buttonStyle(.bordered)
                     }

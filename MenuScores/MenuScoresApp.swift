@@ -1144,11 +1144,19 @@ struct MenuScoresApp: App {
             Divider()
 
             Button {
-                updateManager.getUpdateData()
+                updateManager.getUpdateData(manualCheck: true)
             } label: {
                 Text("Check for Updates")
             }
             .keyboardShortcut("u")
+            .onReceive(
+                Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+
+            ) { _ in
+                Task {
+                    updateManager.getUpdateData()
+                }
+            }
 
             if #available(macOS 14, *) {
                 Button {

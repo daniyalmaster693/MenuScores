@@ -14,8 +14,10 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
     @Published var latestRelease: String = ""
 
     private var currentElement = ""
+    private var isManualCheck = false
 
-    func getUpdateData() {
+    func getUpdateData(manualCheck: Bool = false) {
+        isManualCheck = manualCheck
         guard let url = URL(string: "https://daniyalmaster693.github.io/MenuScores/appcast.xml") else { return }
 
         URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
@@ -94,7 +96,9 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
                     NSWorkspace.shared.open(url)
                 }
             }
-        } else {
+        }
+
+        if isManualCheck && !updateAvailable {
             alert.messageText = "Up to Date!"
             alert.informativeText = "Your on the latest version of MenuScores."
             alert.addButton(withTitle: "Done")
