@@ -1134,12 +1134,12 @@ struct MenuScoresApp: App {
 //                Text("Test Alert")
 //            }.keyboardShortcut("t")
 
-//            Button {
-//                checkForFavoriteGames(in: mlbVM, league: "MLB")
-//            } label: {
-//                Text("Test Pin")
-//            }
-//            .keyboardShortcut("p")
+            Button {
+                checkForFavoriteGames(in: mlbVM, league: "MLB")
+            } label: {
+                Text("Test Pin")
+            }
+            .keyboardShortcut("p")
 
             Divider()
 
@@ -1272,28 +1272,13 @@ extension MenuScoresApp {
 
 extension MenuScoresApp {
     private func findGame(in games: [Event], favorites: [FavoriteTeam]) -> Event? {
-        let now = Date()
-        let formatter = ISO8601DateFormatter()
-
         let favoriteGames = games.filter { game in
-            game.competitions.first?.competitors?.contains { comp in
-                favorites.contains { $0.id == comp.team?.id }
+            game.competitions.first?.competitors?.contains { competior in
+                favorites.contains { $0.id == competior.team?.id }
             } ?? false
         }
 
-        return favoriteGames.sorted(by: { (gameA: Event, gameB: Event) -> Bool in
-            let dateA = formatter.date(from: gameA.date) ?? Date.distantPast
-            let dateB = formatter.date(from: gameB.date) ?? Date.distantPast
-
-            let isAInProgress = gameA.status.type.state == "in"
-            let isBInProgress = gameB.status.type.state == "in"
-
-            if isAInProgress != isBInProgress {
-                return isAInProgress
-            }
-
-            return abs(dateA.timeIntervalSince(now)) < abs(dateB.timeIntervalSince(now))
-        }).first
+        return favoriteGames.first(where: { $0.status.type.state == "in" })
     }
 }
 
