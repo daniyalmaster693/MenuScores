@@ -78,7 +78,42 @@ enum FavoriteTeams {
     }
 
     static var supportedLeagueKeys: [String] {
-        Array(mappings.keys).sorted()
+        let defaults = UserDefaults.standard
+
+        return mappings.keys.filter { league in
+            switch league {
+            case "NHL": return defaults.bool(forKey: "enableNHL")
+            case "HNCAAM": return defaults.bool(forKey: "enableHNCAAM")
+            case "HNCAAF": return defaults.bool(forKey: "enableHNCAAF")
+            case "NBA": return defaults.bool(forKey: "enableNBA")
+            case "WNBA": return defaults.bool(forKey: "enableWNBA")
+            case "NCAAM": return defaults.bool(forKey: "enableNCAAM")
+            case "NCAAF": return defaults.bool(forKey: "enableNCAAF")
+            case "NFL": return defaults.bool(forKey: "enableNFL")
+            case "FNCAA": return defaults.bool(forKey: "enableFNCAA")
+            case "MLB": return defaults.bool(forKey: "enableMLB")
+            case "BNCAA": return defaults.bool(forKey: "enableBNCAA")
+            case "SNCAA": return defaults.bool(forKey: "enableSNCAA")
+            case "MLS": return defaults.bool(forKey: "enableMLS")
+            case "NWSL": return defaults.bool(forKey: "enableNWSL")
+            case "UEFA": return defaults.bool(forKey: "enableUEFA")
+            case "EUEFA": return defaults.bool(forKey: "enableEUEFA")
+            case "WUEFA": return defaults.bool(forKey: "enableWUEFA")
+            case "EPL": return defaults.bool(forKey: "enableEPL")
+            case "WEPL": return defaults.bool(forKey: "enableWEPL")
+            case "ESP": return defaults.bool(forKey: "enableESP")
+            case "GER": return defaults.bool(forKey: "enableGER")
+            case "ITA": return defaults.bool(forKey: "enableITA")
+            case "FRA": return defaults.bool(forKey: "enableFRA")
+            case "NED": return defaults.bool(forKey: "enableNED")
+            case "POR": return defaults.bool(forKey: "enablePOR")
+            case "MEX": return defaults.bool(forKey: "enableMEX")
+            case "NLL": return defaults.bool(forKey: "enableNLL")
+            case "PLL": return defaults.bool(forKey: "enablePLL")
+            default: return false
+            }
+        }
+        .sorted()
     }
 
     static func supportsTeams(_ leagueKey: String) -> Bool {

@@ -10,8 +10,6 @@ import SwiftUI
 import UserNotifications
 
 struct BehaviorSettingsView: View {
-    @State private var notificationStatusMessage: String?
-
     @AppStorage("notiGameStart") private var notiGameStart = false
     @AppStorage("notiGameComplete") private var notiGameComplete = false
 
@@ -20,6 +18,8 @@ struct BehaviorSettingsView: View {
 
     @AppStorage("playAlerts") private var enablePlayAlerts = false
     @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
+
+    @State private var notificationStatusMessage: String?
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
     let refreshOptions = [

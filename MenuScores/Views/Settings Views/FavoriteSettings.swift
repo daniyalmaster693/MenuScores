@@ -13,6 +13,8 @@ struct FavoritesSettingsView: View {
 
     @AppStorage("selectedPinType") private var selectedPinType: PinType = .notch
 
+    @State private var favoriteTeamMessage: String?
+
     enum PinType: String, CaseIterable, Identifiable {
         case menubar = "Menubar"
         case notch = "Notch"
@@ -137,7 +139,7 @@ struct FavoritesSettingsView: View {
                     }
                 }
 
-                Section("Favorite Teams") {
+                Section {
                     if favoritesManager.favorites.isEmpty {
                         Text("No favorite teams selected.")
                             .foregroundStyle(.primary)
@@ -175,6 +177,29 @@ struct FavoritesSettingsView: View {
                                 }
                                 .buttonStyle(.plain)
                             }
+                        }
+                    }
+                } header: {
+                    HStack(spacing: 4) {
+                        HStack {
+                            Text("Favorite Teams")
+                                .font(.headline)
+                            Spacer()
+
+                            if let message = favoriteTeamMessage {
+                                Text(message)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                            Button(action: {
+                                favoriteTeamMessage = "Remove favorite teams before disabling their league."
+                            }) {
+                                Image(systemName: "exclamationmark.circle")
+                            }
+                            .controlSize(.small)
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
                         }
                     }
                 }
