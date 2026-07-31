@@ -162,6 +162,7 @@ struct BaseballMenu: View {
             LeagueSelectionModel.shared.currentLeague = league
             Task {
                 await viewModel.populateGames(from: fetchURL)
+                FavoritesManager.shared.checkForFavoriteGames(in: viewModel, league: "MLB")
             }
         }
         .onReceive(
@@ -169,6 +170,8 @@ struct BaseballMenu: View {
         ) { _ in
             Task {
                 await viewModel.populateGames(from: fetchURL)
+                FavoritesManager.shared.checkForFavoriteGames(in: viewModel, league: "MLB")
+
                 if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID }) {
                     if pinnedByMenubar {
                         currentTitle = displayText(for: updatedGame, league: league)
