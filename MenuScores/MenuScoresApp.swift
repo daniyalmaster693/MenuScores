@@ -1271,14 +1271,26 @@ extension MenuScoresApp {
 }
 
 extension MenuScoresApp {
-    private func findGame(in games: [Event], favorites: [FavoriteTeam]) -> Event? {
-        let favoriteGames = games.filter { game in
-            game.competitions.first?.competitors?.contains { competior in
-                favorites.contains { $0.id == competior.team?.id }
-            } ?? false
+    private func findGame(in games: [Event], favorites: [FavoriteTeam], league: String) -> Event? {
+        let leagueFavorites = favorites.filter { $0.leagueKey == league }
+
+        for favorite in leagueFavorites {
+            let teamGames = games.filter { game in
+                game.competitions.first?.competitors?.contains {
+                    $0.team?.id == favorite.id
+
+                } ?? false
+            }
+
+            if let liveGame = teamGames.first(where: {
+                $0.status.type.state == "pre"
+
+            }) {
+                return liveGame
+            }
         }
 
-        return favoriteGames.first(where: { $0.status.type.state == "in" })
+        return nil
     }
 }
 
@@ -1318,7 +1330,7 @@ extension MenuScoresApp {
             return
         }
 
-        if let bestGame = findGame(in: vm.games, favorites: favorites) {
+        if let bestGame = findGame(in: vm.games, favorites: favorites, league: league) {
             if currentGameID != bestGame.id {
                 Task { @MainActor in
                     if selectedPinType == .notch {
