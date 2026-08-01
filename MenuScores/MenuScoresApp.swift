@@ -1026,7 +1026,7 @@ struct MenuScoresApp: App {
         .commands {
             CommandGroup(replacing: .help) {
                 Button("MenuScores Help") {
-                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores#usage") {
                         NSWorkspace.shared.open(url)
                     }
                 }
