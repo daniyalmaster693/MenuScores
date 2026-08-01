@@ -16,7 +16,13 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
     private var currentElement = ""
     private var isManualCheck = false
 
+    var timer: Timer?
+
+    // Update Check System
+
     func getUpdateData(manualCheck: Bool = false) {
+        print("Checking for updates at \(Date())")
+
         isManualCheck = manualCheck
         guard let url = URL(string: "https://daniyalmaster693.github.io/MenuScores/appcast.xml") else { return }
 
@@ -106,5 +112,32 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
             alert.addButton(withTitle: "Done")
             alert.runModal()
         }
+    }
+
+    // Auto Update System
+
+    func startTimer(action: @escaping () -> Void) {
+        timer = Timer.scheduledTimer(withTimeInterval: 28800, repeats: true) { _ in
+            action()
+        }
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+
+    override init() {
+        super.init()
+
+        getUpdateData(manualCheck: false)
+
+        startTimer { [weak self] in
+            self?.getUpdateData(manualCheck: false)
+        }
+    }
+
+    deinit {
+        stopTimer()
     }
 }
