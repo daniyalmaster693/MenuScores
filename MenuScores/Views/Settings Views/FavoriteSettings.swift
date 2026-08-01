@@ -95,10 +95,6 @@ struct FavoritesSettingsView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            Text("Favorites")
-                .font(.title2)
-                .bold()
-
             Form {
                 Section {
                     Toggle(isOn: $autoPinFavorites) {

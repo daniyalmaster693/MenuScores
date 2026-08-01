@@ -8,103 +8,74 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var showingAboutModal = false
-    @State private var isHovered = false
-
-    enum Tab: String, CaseIterable, Identifiable {
-        case general = "General"
-        case behavior = "Behavior"
-        case favorites = "Favorites"
-        case league = "Leagues"
-
-        var id: String { rawValue }
-    }
-
-    @State private var selectedTab: Tab? = .general
+    @State private var selectedItem: String? = "general"
 
     var body: some View {
         NavigationSplitView {
-            VStack(alignment: .leading, spacing: 8) {
-                List(Tab.allCases, selection: $selectedTab) { tab in
-                    Label(tab.rawValue, systemImage: tab.iconName)
-                        .tag(tab)
+            VStack {
+                List(selection: $selectedItem) {
+                    HStack {
+                        Image(systemName: "gearshape")
+                            .frame(width: 18, height: 18)
+                        Text("General")
+                    }
+                    .tag("general")
+
+                    HStack {
+                        Image(systemName: "slider.horizontal.3")
+                            .frame(width: 18, height: 18)
+                        Text("Behavior")
+                    }
+                    .tag("behavior")
+
+                    HStack {
+                        Image(systemName: "star")
+                            .frame(width: 18, height: 18)
+                        Text("Favorites")
+                    }
+                    .tag("favorites")
+
+                    HStack {
+                        Image(systemName: "sportscourt")
+                            .frame(width: 18, height: 18)
+                        Text("Leagues")
+                    }
+                    .tag("leagues")
+
+                    HStack {
+                        Image(systemName: "info.circle")
+                            .frame(width: 18, height: 18)
+                        Text("About")
+                    }
+                    .tag("about")
                 }
                 .listStyle(.sidebar)
-
-                Spacer()
-
-                Button {
-                    showingAboutModal = true
-                } label: {
-                    HStack(spacing: 8) {
-                        Image("TahoeIcon")
-                            .resizable()
-                            .frame(width: 28, height: 28)
-                            .cornerRadius(4)
-                            .padding(.trailing, 3)
-
-                        VStack(alignment: .leading) {
-                            Text("MenuScores")
-                                .font(.footnote)
-                                .bold()
-
-                            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                                Text("Version (\(version))")
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    .padding()
-                    .frame(maxWidth: 150, alignment: .center)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
-                    )
-                }
-                .buttonStyle(.plain)
-                .onHover { hovering in
-                    isHovered = hovering
-                }
+                .padding(.top, 7)
             }
-            .frame(minWidth: 150)
+            .frame(minWidth: 175)
         } detail: {
             Group {
-                switch selectedTab {
-                case .general:
+                switch selectedItem {
+                case "general":
                     GeneralSettingsView()
-                case .behavior:
+                        .navigationTitle("General")
+                case "behavior":
                     BehaviorSettingsView()
-                case .favorites:
+                        .navigationTitle("Behavior")
+                case "favorites":
                     FavoritesSettingsView()
-                case .league:
+                        .navigationTitle("Favorites")
+                case "leagues":
                     LeagueSettingsView()
+                        .navigationTitle("Leagues")
+                case "about":
+                    AboutSettingsView()
+                        .navigationTitle("About")
                 default:
-                    Text("Select a tab")
+                    Text("No item selected")
                 }
             }
-            .frame(
-                maxWidth: .infinity, maxHeight: .infinity,
-                alignment: .topLeading
-            )
-            .padding()
-            .navigationTitle("")
-            .toolbar(.hidden)
         }
-        .frame(minWidth: 700, idealWidth: 700, maxWidth: 700)
-        .sheet(isPresented: $showingAboutModal) {
-            AppLinksView()
-        }
-    }
-}
-
-private extension SettingsView.Tab {
-    var iconName: String {
-        switch self {
-        case .general: return "gearshape"
-        case .behavior: return "slider.horizontal.3"
-        case .favorites: return "star"
-        case .league: return "sportscourt"
-        }
+        .frame(minWidth: 800, minHeight: 400)
     }
 }

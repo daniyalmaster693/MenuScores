@@ -81,10 +81,6 @@ struct LeagueSettingsView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            Text("Leagues")
-                .font(.title2)
-                .bold()
-
             Form {
                 Section {
                     Toggle(isOn: $enableNHL) {

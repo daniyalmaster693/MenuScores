@@ -44,10 +44,6 @@ struct BehaviorSettingsView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            Text("Behavior")
-                .font(.title2)
-                .bold()
-
             Form {
                 Section("Notch") {
                     Toggle(isOn: $enableNotch) {

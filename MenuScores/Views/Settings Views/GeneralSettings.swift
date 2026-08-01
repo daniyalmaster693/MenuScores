@@ -22,10 +22,6 @@ struct GeneralSettingsView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            Text("General")
-                .font(.title2)
-                .bold()
-
             Form {
                 Section {
                     HStack {

@@ -990,10 +990,7 @@ struct MenuScoresApp: App {
 
             if #available(macOS 14, *) {
                 Button {
-                    let environment = EnvironmentValues()
-                    environment.openSettings()
-                    NSApp.setActivationPolicy(.regular)
-                    NSApp.activate(ignoringOtherApps: true)
+                    SettingsWindowController.shared.showWindow()
                 } label: {
                     Text("Preferences")
                 }
@@ -1013,18 +1010,24 @@ struct MenuScoresApp: App {
             }
         }
 
-        Settings {
-            if #available(macOS 15.0, *) {
-                SettingsView()
-                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-                    .containerBackground(.thickMaterial, for: .window)
-            } else {
-                SettingsView()
-            }
-        }
+//        Settings {
+//            if #available(macOS 15.0, *) {
+//                SettingsView()
+//                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+//                    .containerBackground(.thickMaterial, for: .window)
+//            } else {
+//                SettingsView()
+//            }
+//        }
 
         .commands {
             CommandGroup(after: .appInfo) {
+                Button {
+                    SettingsWindowController.shared.showWindow()
+                } label: {
+                    Label("Preferences", systemImage: "gear")
+                }
+
                 Button {
                     updateManager.getUpdateData(manualCheck: true)
                 } label: {
