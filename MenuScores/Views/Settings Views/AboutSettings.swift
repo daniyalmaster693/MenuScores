@@ -36,7 +36,7 @@ struct AboutSettingsView: View {
                         ("Feedback", "https://github.com/daniyalmaster693/MenuScores/issues/new"),
                         ("Changelog", "https://github.com/daniyalmaster693/MenuScores/releases"),
                         ("Website", "https://menuscores.vercel.app"),
-                        ("License", "https://github.com/daniyalmaster693/MenuScores/blob/main/License")
+                        ("Repository", "https://github.com/daniyalmaster693/MenuScores")
                     ]
 
                     ForEach(links, id: \.0) { link in

@@ -1021,8 +1021,8 @@ struct MenuScoresApp: App {
                     }
                 }
 
-                Button("License") {
-                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores/blob/main/License") {
+                Button("Repository") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores") {
                         NSWorkspace.shared.open(url)
                     }
                 }
