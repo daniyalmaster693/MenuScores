@@ -1070,63 +1070,62 @@ struct Info: View {
                     HStack(spacing: 4) {
                         VStack {
                             HStack {
-                                AsyncImage(
-                                    url: URL(
-                                        string:
-                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
-                                    )
-                                ) { image in
-                                    image
-                                        .resizable()
-                                        .interpolation(.high)
-                                        .scaledToFit()
-                                        .frame(width: 18, height: 18)
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .padding(.trailing, 3)
-                                .padding(.leading, 10)
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
+                                        )
+                                    ) { image in
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .frame(width: 18, height: 18)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
 
-                                Text("\(tennisGame.round?.displayName ?? "Round 0")")
-                                    .font(.system(size: 14, weight: .medium))
-                                    .padding(.trailing, 7)
-
-                                if tennisGame.status?.type.state == "pre" {
-                                    Text("\(formattedDate(from: tennisGame.date))")
-                                        .contentTransition(.numericText(countsDown: false))
-                                        .font(.system(size: 14, weight: .semibold))
-                                        .padding(.trailing, 15)
+                                    Text("\(tennisGame.round?.displayName ?? "Round 0")")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .padding(.trailing, 7)
                                 }
 
-                                if tennisGame.status?.type.state == "in" {
-                                    if let set = tennisGame.status?.period {
-                                        Text("S\(set)")
+                                Spacer()
+
+                                HStack {
+                                    if tennisGame.status?.type.state == "pre" {
+                                        Text("\(formattedDate(from: tennisGame.date))")
                                             .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 15)
                                     }
-                                }
 
-                                if tennisGame.status?.type.state == "post" {
-                                    Text("(Final)")
-                                        .contentTransition(.numericText(countsDown: false))
-                                        .font(.system(size: 14, weight: .semibold))
-                                        .padding(.trailing, 15)
-                                }
+                                    if tennisGame.status?.type.state == "in" {
+                                        if let set = tennisGame.status?.period {
+                                            Text("S\(set)")
+                                                .contentTransition(.numericText(countsDown: false))
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .padding(.trailing, 15)
+                                        }
+                                    }
 
-                                if tennisGame.status?.type.state == "post" {
-                                    HStack {
-                                        Image(systemName: "trophy.fill")
-                                            .foregroundColor(.yellow)
-                                            .font(.system(size: 10))
-                                            .padding(.leading, 10)
+                                    if tennisGame.status?.type.state == "post" {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.system(size: 10))
+                                                .padding(.leading, 10)
 
-                                        Text(
-                                            "\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 1")"
-                                        )
-                                        .lineLimit(1)
-                                        .font(.system(size: 14, weight: .semibold))
-                                        .padding(.trailing, 10)
+                                            Text(
+                                                "\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 1")"
+                                            )
+                                            .lineLimit(1)
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 10)
+                                        }
                                     }
                                 }
                             }
