@@ -115,12 +115,20 @@ func displayText(for game: Event, league: String) -> String {
 
 func displayTennisText(for competition: TennisCompetition) -> String {
     let team1 = competition.competitors?.first?.athlete?.shortName
-        ?? competition.competitors?.first?.athlete?.displayName
+        ?? competition.competitors?.first?.athlete?.displayName ?? competition.competitors?.first?.roster?.athletes?.first?.shortName ?? competition.competitors?.first?.roster?.athletes?.first?.displayName
         ?? "Player 1"
 
     let team2 = competition.competitors?.dropFirst().first?.athlete?.shortName
-        ?? competition.competitors?.dropFirst().first?.athlete?.displayName
+        ?? competition.competitors?.dropFirst().first?.athlete?.displayName ?? competition.competitors?.dropFirst().first?.roster?.athletes?.first?.shortName ?? competition.competitors?.dropFirst().first?.roster?.athletes?.first?.displayName
         ?? "Player 2"
+
+    let team1Scores = competition.competitors?.first?.linescores?
+        .map { "\($0.value ?? 0)" }
+        .joined(separator: " ") ?? ""
+
+    let team2Scores = competition.competitors?.dropFirst().first?.linescores?
+        .map { "\($0.value ?? 0)" }
+        .joined(separator: " ") ?? ""
 
     let status = competition.status?.type.state ?? "pre"
     let set = competition.status?.period ?? 0
@@ -136,5 +144,5 @@ func displayTennisText(for competition: TennisCompetition) -> String {
         }
     }()
 
-    return "\(team1) - \(team2)     \(statusSuffix)"
+    return "\(team1)  \(team1Scores) - \(team2Scores)  \(team2)     \(statusSuffix)"
 }
