@@ -111,13 +111,8 @@ struct FavoritesSettingsView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         Picker("", selection: self.$selectedPinType) {
-                            ForEach(PinType.allCases.filter { $0 != .notch || enableNotch }) { key in
+                            ForEach(PinType.allCases) { key in
                                 Text(key.rawValue).tag(key)
-                            }
-                        }
-                        .onChange(of: enableNotch) { newValue in
-                            if !newValue && selectedPinType == .notch {
-                                selectedPinType = .menubar
                             }
                         }
                         .pickerStyle(.menu)
