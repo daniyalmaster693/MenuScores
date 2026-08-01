@@ -87,11 +87,11 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
     }
 
     func showUpdateAlert() {
-        NSApp.activate(ignoringOtherApps: true)
-
         let alert = NSAlert()
 
         if updateAvailable {
+            NSApp.activate(ignoringOtherApps: true)
+
             alert.messageText = "Update Available"
             alert.informativeText = "A new version of MenuScores is available. Click the download button to open the newest release."
             alert.addButton(withTitle: "Download")
@@ -105,6 +105,8 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
         }
 
         if isManualCheck && !updateAvailable {
+            NSApp.activate(ignoringOtherApps: true)
+
             alert.messageText = "Up to Date!"
             alert.informativeText = "Your on the latest version of MenuScores."
             alert.addButton(withTitle: "Done")
