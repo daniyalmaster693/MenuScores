@@ -83,6 +83,8 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
     }
 
     func showUpdateAlert() {
+        NSApp.activate(ignoringOtherApps: true)
+
         let alert = NSAlert()
 
         if updateAvailable {
