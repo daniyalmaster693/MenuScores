@@ -35,6 +35,7 @@ struct AboutSettingsView: View {
                         ("MenuScores Help", "https://github.com/daniyalmaster693/MenuScores#usage"),
                         ("Feedback", "https://github.com/daniyalmaster693/MenuScores/issues/new"),
                         ("Changelog", "https://github.com/daniyalmaster693/MenuScores/releases"),
+                        ("Website", "https://menuscores.vercel.app"),
                         ("License", "https://github.com/daniyalmaster693/MenuScores/blob/main/License")
                     ]
 

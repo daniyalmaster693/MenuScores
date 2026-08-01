@@ -1017,6 +1017,12 @@ struct MenuScoresApp: App {
                     }
                 }
 
+                Button("Website") {
+                    if let url = URL(string: "https://menuscores.vercel.app") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+
                 Button("License") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores/blob/main/License") {
                         NSWorkspace.shared.open(url)
