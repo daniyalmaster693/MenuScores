@@ -314,7 +314,7 @@ struct Info: View {
                         .padding(.top, 10)
                     }
 
-                    if sport == "Soccer" && game.competitions[0].status.type.state == "in" {
+                    if sport == "Soccer" && game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
                         VStack(alignment: .center) {
                             let athletesInvolved = game.competitions.first?.details?.last?.athletesInvolved?.first?.displayName ?? ""
                             let playType = game.competitions.first?.details?.last?.type.text ?? ""
@@ -366,8 +366,8 @@ struct Info: View {
                     }
 
                     VStack(alignment: .center) {
-                        if sport != "Lacrosse" && sport != "Volleyball" &&
-                            (game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post"),
+                        if sport != "Lacrosse" && sport != "Volleyball" && sport != "Soccer" &&
+                            game.competitions[0].status.type.state == "pre" || game.competitions[0].status.type.state == "post",
 
                             let headline = game.competitions.first?.headlines?.first?.shortLinkText ?? game.competitions.first?.notes?.first?.headline ?? game.competitions.first?.highlights?.first?.headline
                         {
