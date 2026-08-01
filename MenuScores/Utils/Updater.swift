@@ -21,8 +21,6 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
     // Update Check System
 
     func getUpdateData(manualCheck: Bool = false) {
-        print("Checking for updates at \(Date())")
-
         isManualCheck = manualCheck
         guard let url = URL(string: "https://daniyalmaster693.github.io/MenuScores/appcast.xml") else { return }
 
