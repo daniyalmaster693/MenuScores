@@ -1024,6 +1024,14 @@ struct MenuScoresApp: App {
         }
 
         .commands {
+            CommandGroup(after: .appInfo) {
+                Button {
+                    updateManager.getUpdateData(manualCheck: true)
+                } label: {
+                    Label("Check for Updates", systemImage: "gear.badge")
+                }
+            }
+
             CommandGroup(replacing: .help) {
                 Button("MenuScores Help") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/MenuScores#usage") {
