@@ -132,6 +132,7 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 - [ ] Cricket Integration
 - [ ] Updated Menubar control view
 - [ ] Custom Menubar Score Component
+- [ ] Lock Screen Widgets
 - [ ] App Widgets
 
 ...and more to come...
