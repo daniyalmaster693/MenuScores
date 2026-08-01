@@ -949,27 +949,6 @@ struct MenuScoresApp: App {
                 Text("Clear Set Game")
             }
             .keyboardShortcut("c")
-//            .onReceive(
-//                Timer.publish(every: 90, on: .main, in: .common).autoconnect()
-//
-//            ) { _ in
-//                Task {
-//                    await checkFavorites()
-//                }
-//            }
-
-//            Button {
-//                NotchViewModel.shared.triggerAlert()
-//            } label: {
-//                Text("Test Alert")
-//            }.keyboardShortcut("t")
-
-            Button {
-                FavoritesManager.shared.checkForFavoriteGames(in: mlbVM, league: "MLB")
-            } label: {
-                Text("Test Pin")
-            }
-            .keyboardShortcut("p")
 
             Divider()
 
@@ -979,14 +958,6 @@ struct MenuScoresApp: App {
                 Text("Check for Updates")
             }
             .keyboardShortcut("u")
-//            .onReceive(
-//                Timer.publish(every: 43200, on: .main, in: .common).autoconnect()
-//
-//            ) { _ in
-//                Task {
-//                    updateManager.getUpdateData()
-//                }
-//            }
 
             if #available(macOS 14, *) {
                 Button {
@@ -1009,16 +980,6 @@ struct MenuScoresApp: App {
                 Text(currentTitle)
             }
         }
-
-//        Settings {
-//            if #available(macOS 15.0, *) {
-//                SettingsView()
-//                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-//                    .containerBackground(.thickMaterial, for: .window)
-//            } else {
-//                SettingsView()
-//            }
-//        }
 
         .commands {
             CommandGroup(after: .appInfo) {
