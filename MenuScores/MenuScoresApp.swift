@@ -959,14 +959,12 @@ struct MenuScoresApp: App {
             }
             .keyboardShortcut("u")
 
-            if #available(macOS 14, *) {
-                Button {
-                    SettingsWindowController.shared.showWindow()
-                } label: {
-                    Text("Preferences")
-                }
-                .keyboardShortcut(",")
+            Button {
+                SettingsWindowController.shared.showWindow()
+            } label: {
+                Text("Preferences")
             }
+            .keyboardShortcut(",")
 
             Button {
                 NSApplication.shared.terminate(nil)
