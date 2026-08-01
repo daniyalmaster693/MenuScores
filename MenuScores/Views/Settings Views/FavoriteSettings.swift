@@ -96,7 +96,7 @@ struct FavoritesSettingsView: View {
     var body: some View {
         VStack(spacing: 4) {
             Form {
-                Section {
+                Section("Auto Pin") {
                     Toggle(isOn: $autoPinFavorites) {
                         HStack {
                             Image(systemName: "pin")
