@@ -128,7 +128,9 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
     override init() {
         super.init()
 
-        getUpdateData(manualCheck: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            self?.getUpdateData(manualCheck: false)
+        }
 
         startTimer { [weak self] in
             self?.getUpdateData(manualCheck: false)
