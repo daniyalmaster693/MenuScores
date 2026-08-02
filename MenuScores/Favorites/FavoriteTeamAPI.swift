@@ -18,13 +18,9 @@ enum FavoriteTeams {
         "NHL": LeagueInfo(sport: "hockey", league: "nhl", displayName: "NHL"),
         "HNCAAM": LeagueInfo(sport: "hockey", league: "mens-college-hockey", displayName: "NCAA M Hockey"),
         "HNCAAF": LeagueInfo(sport: "hockey", league: "womens-college-hockey", displayName: "NCAA F Hockey"),
-        "OMIHC": LeagueInfo(sport: "hockey", league: "olympics-mens-ice-hockey", displayName: "Men's Olympic Hockey"),
-        "OWIHC": LeagueInfo(sport: "hockey", league: "olympics-womens-ice-hockey", displayName: "Women's Olympic Hockey"),
 
         "NBA": LeagueInfo(sport: "basketball", league: "nba", displayName: "NBA"),
         "WNBA": LeagueInfo(sport: "basketball", league: "wnba", displayName: "WNBA"),
-        "NCAA M": LeagueInfo(sport: "basketball", league: "mens-college-basketball", displayName: "NCAA M Basketball"),
-        "NCAA F": LeagueInfo(sport: "basketball", league: "womens-college-basketball", displayName: "NCAA F Basketball"),
 
         "NFL": LeagueInfo(sport: "football", league: "nfl", displayName: "NFL"),
         "FNCAA": LeagueInfo(sport: "football", league: "college-football", displayName: "NCAA Football"),
@@ -35,11 +31,9 @@ enum FavoriteTeams {
 
         "MLS": LeagueInfo(sport: "soccer", league: "usa.1", displayName: "MLS"),
         "NWSL": LeagueInfo(sport: "soccer", league: "usa.nwsl", displayName: "NWSL"),
-
         "UEFA": LeagueInfo(sport: "soccer", league: "uefa.champions", displayName: "Champions League"),
         "EUEFA": LeagueInfo(sport: "soccer", league: "uefa.europa", displayName: "Europa League"),
         "WUEFA": LeagueInfo(sport: "soccer", league: "uefa.wchampions", displayName: "Women's Champions League"),
-
         "EPL": LeagueInfo(sport: "soccer", league: "eng.1", displayName: "Premier League"),
         "WEPL": LeagueInfo(sport: "soccer", league: "eng.w.1", displayName: "Women's Super League"),
         "ESP": LeagueInfo(sport: "soccer", league: "esp.1", displayName: "La Liga"),
@@ -50,14 +44,7 @@ enum FavoriteTeams {
         "POR": LeagueInfo(sport: "soccer", league: "por.1", displayName: "Primeira Liga"),
         "MEX": LeagueInfo(sport: "soccer", league: "mex.1", displayName: "Liga MX"),
 
-        "FFWC": LeagueInfo(sport: "soccer", league: "fifa.world", displayName: "FIFA World Cup"),
-        "FFWWC": LeagueInfo(sport: "soccer", league: "fifa.wwc", displayName: "FIFA Women's World Cup"),
-        "FFWCQUEFA": LeagueInfo(sport: "soccer", league: "fifa.worldq.uefa", displayName: "FIFA WC UEFA Qualifiers"),
-        "CONMEBOL": LeagueInfo(sport: "soccer", league: "fifa.worldq.conmebol", displayName: "FIFA WC CONMEBOL Qualifiers"),
-        "CONCACAF": LeagueInfo(sport: "soccer", league: "fifa.worldq.concacaf", displayName: "FIFA WC CONCACAF Qualifiers"),
-        "CAF": LeagueInfo(sport: "soccer", league: "fifa.worldq.caf", displayName: "FIFA WC African Qualifiers"),
-        "AFC": LeagueInfo(sport: "soccer", league: "fifa.worldq.afc", displayName: "FIFA WC Asian Qualifiers"),
-        "OFC": LeagueInfo(sport: "soccer", league: "fifa.worldq.ofc", displayName: "FIFA WC Oceanian Qualifiers"),
+//        "F1": LeagueInfo(sport: "racing", league: "f1", displayName: "F1"),
 
         "NLL": LeagueInfo(sport: "lacrosse", league: "nll", displayName: "NLL"),
         "PLL": LeagueInfo(sport: "lacrosse", league: "pll", displayName: "PLL"),
@@ -66,6 +53,20 @@ enum FavoriteTeams {
 
         "VNCAAM": LeagueInfo(sport: "volleyball", league: "mens-college-volleyball", displayName: "NCAA M Volleyball"),
         "VNCAAF": LeagueInfo(sport: "volleyball", league: "womens-college-volleyball", displayName: "NCAA F Volleyball"),
+
+        "OMIHC": LeagueInfo(sport: "hockey", league: "olympics-mens-ice-hockey", displayName: "Men's Olympic Hockey"),
+        "OWIHC": LeagueInfo(sport: "hockey", league: "olympics-womens-ice-hockey", displayName: "Women's Olympic Hockey"),
+        "NCAA M": LeagueInfo(sport: "basketball", league: "mens-college-basketball", displayName: "NCAA M Basketball"),
+        "NCAA F": LeagueInfo(sport: "basketball", league: "womens-college-basketball", displayName: "NCAA F Basketball"),
+
+        "FFWC": LeagueInfo(sport: "soccer", league: "fifa.world", displayName: "FIFA World Cup"),
+        "FFWWC": LeagueInfo(sport: "soccer", league: "fifa.wwc", displayName: "FIFA Women's World Cup"),
+        "FFWCQUEFA": LeagueInfo(sport: "soccer", league: "fifa.worldq.uefa", displayName: "FIFA WC UEFA Qualifiers"),
+        "CONMEBOL": LeagueInfo(sport: "soccer", league: "fifa.worldq.conmebol", displayName: "FIFA WC CONMEBOL Qualifiers"),
+        "CONCACAF": LeagueInfo(sport: "soccer", league: "fifa.worldq.concacaf", displayName: "FIFA WC CONCACAF Qualifiers"),
+        "CAF": LeagueInfo(sport: "soccer", league: "fifa.worldq.caf", displayName: "FIFA WC African Qualifiers"),
+        "AFC": LeagueInfo(sport: "soccer", league: "fifa.worldq.afc", displayName: "FIFA WC Asian Qualifiers"),
+        "OFC": LeagueInfo(sport: "soccer", league: "fifa.worldq.ofc", displayName: "FIFA WC Oceanian Qualifiers"),
     ]
 
     static func teamsUrl(for leagueKey: String) -> URL? {
@@ -87,8 +88,6 @@ enum FavoriteTeams {
             case "HNCAAF": return defaults.bool(forKey: "enableHNCAAF")
             case "NBA": return defaults.bool(forKey: "enableNBA")
             case "WNBA": return defaults.bool(forKey: "enableWNBA")
-            case "NCAAM": return defaults.bool(forKey: "enableNCAAM")
-            case "NCAAF": return defaults.bool(forKey: "enableNCAAF")
             case "NFL": return defaults.bool(forKey: "enableNFL")
             case "FNCAA": return defaults.bool(forKey: "enableFNCAA")
             case "MLB": return defaults.bool(forKey: "enableMLB")
@@ -108,8 +107,25 @@ enum FavoriteTeams {
             case "NED": return defaults.bool(forKey: "enableNED")
             case "POR": return defaults.bool(forKey: "enablePOR")
             case "MEX": return defaults.bool(forKey: "enableMEX")
+//            case "F1": return defaults.bool(forKey: "enableF1")
             case "NLL": return defaults.bool(forKey: "enableNLL")
             case "PLL": return defaults.bool(forKey: "enablePLL")
+            case "LNCAAM": return defaults.bool(forKey: "enableLNCAAM")
+            case "LNCAAF": return defaults.bool(forKey: "enableLNCAAF")
+            case "VNCAAM": return defaults.bool(forKey: "enableVNCAAM")
+            case "VNCAAF": return defaults.bool(forKey: "enableVNCAAF")
+            case "OMIHC": return defaults.bool(forKey: "enableOMIHC")
+            case "OWIHC": return defaults.bool(forKey: "enableOWIHC")
+            case "NCAA M": return defaults.bool(forKey: "enableNCAAM")
+            case "NCAA F": return defaults.bool(forKey: "enableNCAAF")
+            case "FFWC": return defaults.bool(forKey: "enableFFWC")
+            case "FFWWC": return defaults.bool(forKey: "enableFFWWC")
+            case "FFWCQUEFA": return defaults.bool(forKey: "enableFFWCQUEFA")
+            case "CONMEBOL": return defaults.bool(forKey: "enableCONMEBOL")
+            case "CONCACAF": return defaults.bool(forKey: "enableCONCACAF")
+            case "CAF": return defaults.bool(forKey: "enableCAF")
+            case "AFC": return defaults.bool(forKey: "enableAFC")
+            case "OFC": return defaults.bool(forKey: "enableOFC")
             default: return false
             }
         }
