@@ -110,13 +110,22 @@ class FavoritesManager: ObservableObject {
         }) {
             favorites.remove(at: index)
         } else {
+            let sport = FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey"
+            var fallbackLogo = "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport).png&h=80&w=80&scale=crop&cquality=40"
+
+            if sport == "racing" {
+                fallbackLogo = "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+            } else if sport == "volleyball" {
+                fallbackLogo = "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+            }
+
             favorites.append(
                 FavoriteTeam(
                     id: team.id,
                     leagueKey: leagueKey,
                     displayName: team.displayName,
                     abbreviation: team.abbreviation ?? "",
-                    logo: team.primaryLogo
+                    logo: team.logos?.first?.href ?? fallbackLogo
                 )
             )
         }

@@ -50,14 +50,10 @@ struct TeamInfo: Decodable, Identifiable {
     let displayName: String
     let abbreviation: String?
     let logos: [TeamLogo]?
-
-    var primaryLogo: String? {
-        logos?.first?.href
-    }
 }
 
 struct TeamLogo: Decodable {
-    let href: String
+    let href: String?
     let width: Int?
     let height: Int?
 }

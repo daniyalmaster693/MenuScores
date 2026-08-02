@@ -81,6 +81,17 @@ struct FavoritesSettingsView: View {
     @AppStorage("selectedFavoriteLeague") private var selectedLeague = "NHL"
     @State private var searchText = ""
 
+    private func fallbackLogo(for leagueKey: String) -> String {
+        let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
+        if sport == "f1" {
+            return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+        } else if sport == "volleyball" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+        } else {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport).png&h=80&w=80&scale=crop&cquality=40"
+        }
+    }
+
     private var filteredTeams: [TeamInfo] {
         let teams = favoritesManager.availableTeams[selectedLeague] ?? []
 
@@ -142,7 +153,7 @@ struct FavoritesSettingsView: View {
                     } else {
                         ForEach(favoritesManager.favorites) { favorite in
                             HStack {
-                                AsyncImage(url: favorite.logo.flatMap { URL(string: $0) }) { image in
+                                AsyncImage(url: URL(string: favorite.logo ?? fallbackLogo(for: favorite.leagueKey))) { image in
                                     image
                                         .resizable()
                                         .interpolation(.high)
@@ -246,9 +257,20 @@ struct FavoriteTeamRow: View {
 
     @ObservedObject var favorites = FavoritesManager.shared
 
+    private var fallbackLogo: String {
+        let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
+        if sport == "racing" {
+            return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+        } else if sport == "volleyball" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+        } else {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport).png&h=80&w=80&scale=crop&cquality=40"
+        }
+    }
+
     var body: some View {
         HStack {
-            AsyncImage(url: team.primaryLogo.flatMap { URL(string: $0) }) { image in
+            AsyncImage(url: URL(string: team.logos?.first?.href ?? fallbackLogo)) { image in
                 image
                     .resizable()
                     .interpolation(.high)
@@ -257,7 +279,6 @@ struct FavoriteTeamRow: View {
             } placeholder: {
                 Color.clear
             }
-            .frame(width: 18, height: 18)
 
             VStack(alignment: .leading) {
                 Text(team.displayName)
