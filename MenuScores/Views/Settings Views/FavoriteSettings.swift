@@ -88,10 +88,9 @@ struct FavoritesSettingsView: View {
             return teams
         }
 
-        return teams.filter { team in
-            let matchesName = team.displayName.localizedCaseInsensitiveContains(searchText)
-            let matchesAbbr = team.abbreviation?.localizedCaseInsensitiveContains(searchText) ?? false
-            return matchesName || matchesAbbr
+        return teams.filter {
+            $0.displayName.localizedCaseInsensitiveContains(searchText) ||
+                $0.abbreviation.localizedCaseInsensitiveContains(searchText)
         }
     }
 
