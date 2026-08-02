@@ -83,7 +83,7 @@ struct FavoritesSettingsView: View {
 
     private func fallbackLogo(for leagueKey: String) -> String {
         let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
-        if sport == "f1" {
+        if sport == "racing" {
             return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
         } else if sport == "volleyball" {
             return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
