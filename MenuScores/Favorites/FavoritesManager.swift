@@ -216,13 +216,34 @@ class FavoritesManager: ObservableObject {
     }
 
     @MainActor
+    func clearFinishedGame(
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        currentTitle.wrappedValue = ""
+        currentGameID.wrappedValue = ""
+        currentGameState.wrappedValue = ""
+
+        if let notch = NotchViewModel.shared.notch {
+            await notch.hide()
+        }
+
+        NotchViewModel.shared.game = nil
+        NotchViewModel.shared.currentGameID = ""
+        NotchViewModel.shared.currentGameState = ""
+        NotchViewModel.shared.previousGameState = ""
+        NotchViewModel.shared.notch = nil
+    }
+
+    @MainActor
     func checkForFavoriteGames(
         in vm: GamesListView,
         league: String,
         currentGameID: Binding<String>,
         currentGameState: Binding<String>,
         currentTitle: Binding<String>
-    ) {
+    ) async {
         @AppStorage("autoPinFavorites") var autoPinFavorites = false
         @AppStorage("selectedPinType") var selectedPinType: PinType = .notch
 
@@ -251,20 +272,11 @@ class FavoritesManager: ObservableObject {
             }
 
             if currentGameState.wrappedValue == "post" {
-                currentTitle.wrappedValue = ""
-                currentGameID.wrappedValue = ""
-                currentGameState.wrappedValue = ""
-
-                Task {
-                    if let notch = NotchViewModel.shared.notch {
-                        await notch.hide()
-                    }
-                    NotchViewModel.shared.game = nil
-                    NotchViewModel.shared.currentGameID = ""
-                    NotchViewModel.shared.currentGameState = ""
-                    NotchViewModel.shared.previousGameState = ""
-                    NotchViewModel.shared.notch = nil
-                }
+                await clearFinishedGame(
+                    currentGameID: currentGameID,
+                    currentGameState: currentGameState,
+                    currentTitle: currentTitle
+                )
             }
         }
 

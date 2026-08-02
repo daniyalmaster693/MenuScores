@@ -162,7 +162,7 @@ struct BaseballMenu: View {
             LeagueSelectionModel.shared.currentLeague = league
             Task {
                 await viewModel.populateGames(from: fetchURL)
-                FavoritesManager.shared.checkForFavoriteGames(
+                await FavoritesManager.shared.checkForFavoriteGames(
                     in: viewModel,
                     league: "MLB",
                     currentGameID: $currentGameID,
@@ -176,7 +176,7 @@ struct BaseballMenu: View {
         ) { _ in
             Task {
                 await viewModel.populateGames(from: fetchURL)
-                FavoritesManager.shared.checkForFavoriteGames(
+                await FavoritesManager.shared.checkForFavoriteGames(
                     in: viewModel,
                     league: "MLB",
                     currentGameID: $currentGameID,
