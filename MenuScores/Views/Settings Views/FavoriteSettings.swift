@@ -153,15 +153,19 @@ struct FavoritesSettingsView: View {
                     } else {
                         ForEach(favoritesManager.favorites) { favorite in
                             HStack {
-                                AsyncImage(url: URL(string: favorite.logo ?? fallbackLogo(for: favorite.leagueKey))) { image in
-                                    image
-                                        .resizable()
-                                        .interpolation(.high)
-                                        .scaledToFit()
-                                        .frame(width: 18, height: 18)
-
-                                } placeholder: {
-                                    Color.clear
+                                AsyncImage(url: URL(string: favorite.logo ?? fallbackLogo(for: favorite.leagueKey))) { phase in
+                                    if let image = phase.image {
+                                        image
+                                            .resizable()
+                                            .interpolation(.high)
+                                            .scaledToFit()
+                                            .transition(.opacity)
+                                            .frame(width: 18, height: 18)
+                                    } else {
+                                        Color.clear
+                                            .transition(.opacity)
+                                            .frame(width: 18, height: 18)
+                                    }
                                 }
 
                                 VStack(alignment: .leading) {
@@ -275,19 +279,22 @@ struct FavoriteTeamRow: View {
 
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: team.logos?.first?.href ?? fallbackLogo)) { image in
-                image
-                    .resizable()
-                    .interpolation(.high)
-                    .scaledToFit()
-                    .frame(width: 18, height: 18)
-            } placeholder: {
-                Color.clear
+            AsyncImage(url: URL(string: team.logos?.first?.href ?? fallbackLogo)) { phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                        .interpolation(.high)
+                        .scaledToFit()
+                        .transition(.opacity)
+                        .frame(width: 18, height: 18)
+                } else {
+                    Color.clear
+                        .transition(.opacity)
+                        .frame(width: 18, height: 18)
+                }
             }
 
-            VStack(alignment: .leading) {
-                Text(team.displayName)
-            }
+            Text(team.displayName)
 
             Spacer()
 
