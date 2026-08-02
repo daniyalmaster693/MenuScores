@@ -28,14 +28,19 @@ struct CompactTrailing: View {
                                 return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
                             }
                         }())
-                    ) { image in
-                        image
-                            .resizable()
-                            .interpolation(.high)
-                            .scaledToFit()
-                            .frame(width: 18, height: 18)
-                    } placeholder: {
-                        Color.black
+                    ) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .interpolation(.high)
+                                .scaledToFit()
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        } else {
+                            Color.clear
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        }
                     }
                 }.contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {

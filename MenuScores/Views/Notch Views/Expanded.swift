@@ -151,14 +151,19 @@ struct Info: View {
                                                 return game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
                                             }
                                         }())
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 32, height: 32)
-                                    } placeholder: {
-                                        Color.black
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 32, height: 32)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 32, height: 32)
+                                        }
                                     }
                                     .padding(.trailing, 7)
 
@@ -228,14 +233,19 @@ struct Info: View {
                                                 return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
                                             }
                                         }())
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 32, height: 32)
-                                    } placeholder: {
-                                        Color.black
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 32, height: 32)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 32, height: 32)
+                                        }
                                     }
                                     .padding(.leading, 7)
                                 }
@@ -427,17 +437,6 @@ struct Info: View {
                         }
                     }
                 }
-//                .onChange(of: game.competitions.first?.situation?.lastPlay?.text) { newValue in
-//                    let triggerTypes = ["goal", "assists", "unassisted", "empty net", "start of", "end of", "tripping", "slashing", "boarding", "high sticking", "elbowing", "charging", "interference", "cross checking", "hooking", "holding", "delay of game", "too many", "served by", "game misconduct", "fighting", "foul", "free throw", "timeout", "jump ball", "challenge", "field goal", "touchdown", "fumble", "scored", "homered", "play result", "major", "double minor", "minor"]
-//
-//                    if let unwrappedValue = newValue {
-//                        let lowercasedValue = unwrappedValue.lowercased()
-//
-//                        if triggerTypes.contains(where: { lowercasedValue.contains($0) }) {
-//                            notchViewModel.triggerAlert()
-//                        }
-//                    }
-//                }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
@@ -483,14 +482,19 @@ struct Info: View {
                                             string:
                                             "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
                                         )
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 25, height: 25)
-                                    } placeholder: {
-                                        ProgressView()
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 25, height: 25)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 25, height: 25)
+                                        }
                                     }
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
@@ -569,14 +573,19 @@ struct Info: View {
 
                                                     HStack(spacing: 4) {
                                                         if let logoURL = URL(string: driver.logo) {
-                                                            AsyncImage(url: logoURL) { image in
-                                                                image
-                                                                    .resizable()
-                                                                    .interpolation(.high)
-                                                                    .scaledToFit()
-                                                                    .frame(width: 16, height: 16)
-                                                            } placeholder: {
-                                                                Color.gray.opacity(0.3)
+                                                            AsyncImage(url: logoURL) { phase in
+                                                                if let image = phase.image {
+                                                                    image
+                                                                        .resizable()
+                                                                        .interpolation(.high)
+                                                                        .scaledToFit()
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                } else {
+                                                                    Color.clear
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                }
                                                             }
                                                             .padding(.trailing, 5)
                                                         }
@@ -649,14 +658,19 @@ struct Info: View {
                                                 string:
                                                 "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
                                             )
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .interpolation(.high)
-                                                .scaledToFit()
-                                                .frame(width: 28, height: 28)
-                                        } placeholder: {
-                                            ProgressView()
+                                        ) { phase in
+                                            if let image = phase.image {
+                                                image
+                                                    .resizable()
+                                                    .interpolation(.high)
+                                                    .scaledToFit()
+                                                    .transition(.opacity)
+                                                    .frame(width: 28, height: 28)
+                                            } else {
+                                                Color.clear
+                                                    .transition(.opacity)
+                                                    .frame(width: 28, height: 28)
+                                            }
                                         }
                                         .padding(.trailing, 3)
 
@@ -721,14 +735,19 @@ struct Info: View {
                                             string:
                                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
                                         )
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 18, height: 18)
-                                    } placeholder: {
-                                        ProgressView()
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        }
                                     }
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
@@ -788,12 +807,19 @@ struct Info: View {
                                                         if let flagURLString = competitor.athlete?.flag?.href,
                                                            let flagURL = URL(string: flagURLString)
                                                         {
-                                                            AsyncImage(url: flagURL) { image in
-                                                                image.resizable().scaledToFit()
-                                                            } placeholder: {
-                                                                Color.gray.opacity(0.3)
+                                                            AsyncImage(url: flagURL) { phase in
+                                                                if let image = phase.image {
+                                                                    image
+                                                                        .resizable()
+                                                                        .scaledToFit()
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                } else {
+                                                                    Color.clear
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                }
                                                             }
-                                                            .frame(width: 16, height: 16)
                                                             .padding(.trailing, 5)
                                                         }
 
@@ -822,14 +848,19 @@ struct Info: View {
                                             string:
                                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
                                         )
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 28, height: 28)
-                                    } placeholder: {
-                                        ProgressView()
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 28, height: 28)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 28, height: 28)
+                                        }
                                     }
                                     .padding(.trailing, 3)
 
@@ -893,14 +924,19 @@ struct Info: View {
                                             string:
                                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                         )
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 18, height: 18)
-                                    } placeholder: {
-                                        ProgressView()
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        }
                                     }
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
@@ -965,14 +1001,19 @@ struct Info: View {
                                                         if let flagURLString = competitor.athlete?.flag?.href,
                                                            let flagURL = URL(string: flagURLString)
                                                         {
-                                                            AsyncImage(url: flagURL) { image in
-                                                                image
-                                                                    .resizable()
-                                                                    .interpolation(.high)
-                                                                    .scaledToFit()
-                                                                    .frame(width: 16, height: 16)
-                                                            } placeholder: {
-                                                                Color.gray.opacity(0.3)
+                                                            AsyncImage(url: flagURL) { phase in
+                                                                if let image = phase.image {
+                                                                    image
+                                                                        .resizable()
+                                                                        .interpolation(.high)
+                                                                        .scaledToFit()
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                } else {
+                                                                    Color.clear
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                }
                                                             }
                                                             .padding(.trailing, 5)
                                                         }
@@ -1005,14 +1046,19 @@ struct Info: View {
                                                 string:
                                                 "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                             )
-                                        ) { image in
-                                            image
-                                                .resizable()
-                                                .interpolation(.high)
-                                                .scaledToFit()
-                                                .frame(width: 28, height: 28)
-                                        } placeholder: {
-                                            ProgressView()
+                                        ) { phase in
+                                            if let image = phase.image {
+                                                image
+                                                    .resizable()
+                                                    .interpolation(.high)
+                                                    .scaledToFit()
+                                                    .transition(.opacity)
+                                                    .frame(width: 28, height: 28)
+                                            } else {
+                                                Color.clear
+                                                    .transition(.opacity)
+                                                    .frame(width: 28, height: 28)
+                                            }
                                         }
                                         .padding(.trailing, 3)
 
@@ -1082,14 +1128,19 @@ struct Info: View {
                                             string:
                                             "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
                                         )
-                                    ) { image in
-                                        image
-                                            .resizable()
-                                            .interpolation(.high)
-                                            .scaledToFit()
-                                            .frame(width: 18, height: 18)
-                                    } placeholder: {
-                                        ProgressView()
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        }
                                     }
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
@@ -1148,14 +1199,19 @@ struct Info: View {
                                                         if let flagURLString = competitor.athlete?.flag?.href ?? competitor.roster?.athletes?.first?.flag?.href,
                                                            let flagURL = URL(string: flagURLString)
                                                         {
-                                                            AsyncImage(url: flagURL) { image in
-                                                                image
-                                                                    .resizable()
-                                                                    .interpolation(.high)
-                                                                    .scaledToFit()
-                                                                    .frame(width: 23, height: 23)
-                                                            } placeholder: {
-                                                                Color.gray.opacity(0.3)
+                                                            AsyncImage(url: flagURL) { phase in
+                                                                if let image = phase.image {
+                                                                    image
+                                                                        .resizable()
+                                                                        .interpolation(.high)
+                                                                        .scaledToFit()
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 23, height: 23)
+                                                                } else {
+                                                                    Color.clear
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 23, height: 23)
+                                                                }
                                                             }
                                                             .padding(.trailing, 5)
                                                         }
