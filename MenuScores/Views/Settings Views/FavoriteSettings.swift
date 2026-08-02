@@ -219,16 +219,18 @@ struct FavoritesSettingsView: View {
                         ProgressView()
                     } else {
                         ScrollView {
-                            ForEach(Array(filteredTeams.indices), id: \.self) { index in
-                                let team = filteredTeams[index]
+                            LazyVStack {
+                                ForEach(Array(filteredTeams.indices), id: \.self) { index in
+                                    let team = filteredTeams[index]
 
-                                FavoriteTeamRow(
-                                    team: team,
-                                    leagueKey: selectedLeague
-                                )
+                                    FavoriteTeamRow(
+                                        team: team,
+                                        leagueKey: selectedLeague
+                                    )
 
-                                if index != filteredTeams.count - 1 {
-                                    Divider()
+                                    if index != filteredTeams.count - 1 {
+                                        Divider()
+                                    }
                                 }
                             }
                         }
