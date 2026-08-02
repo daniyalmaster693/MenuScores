@@ -234,6 +234,25 @@ class FavoritesManager: ObservableObject {
                 notchViewModel.game = updatedGame
             }
 
+            if currentGameState == "post" {
+                currentTitle = ""
+                currentGameID = ""
+                currentGameState = ""
+
+                previousGameState = nil
+
+                Task {
+                    if let notch = NotchViewModel.shared.notch {
+                        await notch.hide()
+                    }
+                    NotchViewModel.shared.game = nil
+                    NotchViewModel.shared.currentGameID = ""
+                    NotchViewModel.shared.currentGameState = ""
+                    NotchViewModel.shared.previousGameState = ""
+                    NotchViewModel.shared.notch = nil
+                }
+            }
+
             return
         }
 
