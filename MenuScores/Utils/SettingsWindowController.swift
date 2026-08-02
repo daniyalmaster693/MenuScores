@@ -39,6 +39,8 @@ class SettingsWindowController: NSWindowController {
         window.collectionBehavior = [.managed, .participatesInCycle, .fullScreenAuxiliary]
         window.hidesOnDeactivate = false
         window.isRestorable = true
+        window.standardWindowButton(.miniaturizeButton)?.isEnabled = false
+        window.standardWindowButton(.zoomButton)?.isEnabled = false
         window.identifier = NSUserInterfaceItemIdentifier("MenuScoresSettingsWindow")
         
         let hostingView = NSHostingView(rootView: SettingsView())
