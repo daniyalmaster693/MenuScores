@@ -218,23 +218,20 @@ struct FavoritesSettingsView: View {
                     if favoritesManager.isLoadingTeams {
                         ProgressView()
                     } else {
-                        VStack {
-                            ScrollView {
-                                ForEach(Array(filteredTeams.indices), id: \.self) { index in
-                                    let team = filteredTeams[index]
+                        ScrollView {
+                            ForEach(Array(filteredTeams.indices), id: \.self) { index in
+                                let team = filteredTeams[index]
 
-                                    FavoriteTeamRow(
-                                        team: team,
-                                        leagueKey: selectedLeague
-                                    )
+                                FavoriteTeamRow(
+                                    team: team,
+                                    leagueKey: selectedLeague
+                                )
 
-                                    if index != filteredTeams.count - 1 {
-                                        Divider()
-                                    }
+                                if index != filteredTeams.count - 1 {
+                                    Divider()
                                 }
                             }
                         }
-                        .frame(height: 230)
                     }
                 }
                 .task(id: selectedLeague) {
