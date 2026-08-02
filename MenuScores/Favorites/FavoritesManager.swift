@@ -242,6 +242,9 @@ class FavoritesManager: ObservableObject {
                     self.currentGameID = ""
                     self.currentGameState = ""
 
+                    self.dismissedPin = true
+                    self.dismissedGameID = currentGameID
+
                     self.previousGameState = nil
 
                     Task {
