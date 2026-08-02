@@ -235,31 +235,25 @@ class FavoritesManager: ObservableObject {
             }
 
             if currentGameState == "post" {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 60) { [weak self] in
-                    guard let self = self else { return }
+                currentTitle = ""
+                currentGameID = ""
+                currentGameState = ""
 
-                    self.currentTitle = ""
-                    self.currentGameID = ""
-                    self.currentGameState = ""
+                dismissedPin = true
+                dismissedGameID = currentGameID
 
-                    self.dismissedPin = true
-                    self.dismissedGameID = currentGameID
+                previousGameState = nil
 
-                    self.previousGameState = nil
-
-                    Task {
-                        if let notch = NotchViewModel.shared.notch {
-                            await notch.hide()
-                        }
-                        NotchViewModel.shared.game = nil
-                        NotchViewModel.shared.currentGameID = ""
-                        NotchViewModel.shared.currentGameState = ""
-                        NotchViewModel.shared.previousGameState = ""
-                        NotchViewModel.shared.notch = nil
+                Task {
+                    if let notch = NotchViewModel.shared.notch {
+                        await notch.hide()
                     }
+                    NotchViewModel.shared.game = nil
+                    NotchViewModel.shared.currentGameID = ""
+                    NotchViewModel.shared.currentGameState = ""
+                    NotchViewModel.shared.previousGameState = ""
+                    NotchViewModel.shared.notch = nil
                 }
-
-                return
             }
         }
 
