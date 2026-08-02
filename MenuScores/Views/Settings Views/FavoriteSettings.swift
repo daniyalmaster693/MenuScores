@@ -89,8 +89,7 @@ struct FavoritesSettingsView: View {
         }
 
         return teams.filter {
-            $0.displayName.localizedCaseInsensitiveContains(searchText) ||
-                $0.abbreviation.localizedCaseInsensitiveContains(searchText)
+            $0.displayName.localizedCaseInsensitiveContains(searchText)
         }
     }
 

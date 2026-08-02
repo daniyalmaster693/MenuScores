@@ -115,7 +115,7 @@ class FavoritesManager: ObservableObject {
                     id: team.id,
                     leagueKey: leagueKey,
                     displayName: team.displayName,
-                    abbreviation: team.abbreviation,
+                    abbreviation: team.abbreviation ?? "",
                     logo: team.primaryLogo
                 )
             )
