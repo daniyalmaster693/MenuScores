@@ -119,8 +119,6 @@ struct MenuScoresApp: App {
 
     // Title State Settings
 
-    @State private var dismissedGameID: String = ""
-
     @State var currentTitle: String = ""
     @State var currentGameID: String = ""
     @State var currentGameState: String = "pre"
@@ -129,12 +127,6 @@ struct MenuScoresApp: App {
     // Notch Data
 
     @StateObject private var notchViewModel = NotchViewModel()
-
-    // Pin Data
-
-    @State private var pinnedByNotch = false
-    @State private var pinnedByMenubar = false
-    @State private var dismissedPin = false
 
     // Notch Behaviors
 
@@ -926,12 +918,11 @@ struct MenuScoresApp: App {
             }
 
             Button {
+                FavoritesManager.shared.dismissAutoPinnedGame(currentGameID)
+
                 currentTitle = ""
                 currentGameID = ""
                 currentGameState = ""
-
-                dismissedPin = true
-                dismissedGameID = currentGameID
 
                 previousGameState = nil
 
