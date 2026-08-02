@@ -44,7 +44,7 @@ enum FavoriteTeams {
         "POR": LeagueInfo(sport: "soccer", league: "por.1", displayName: "Primeira Liga"),
         "MEX": LeagueInfo(sport: "soccer", league: "mex.1", displayName: "Liga MX"),
 
-//        "F1": LeagueInfo(sport: "racing", league: "f1", displayName: "F1"),
+        "F1": LeagueInfo(sport: "racing", league: "f1", displayName: "F1"),
 
         "NLL": LeagueInfo(sport: "lacrosse", league: "nll", displayName: "NLL"),
         "PLL": LeagueInfo(sport: "lacrosse", league: "pll", displayName: "PLL"),
@@ -107,7 +107,7 @@ enum FavoriteTeams {
             case "NED": return defaults.bool(forKey: "enableNED")
             case "POR": return defaults.bool(forKey: "enablePOR")
             case "MEX": return defaults.bool(forKey: "enableMEX")
-//            case "F1": return defaults.bool(forKey: "enableF1")
+            case "F1": return defaults.bool(forKey: "enableF1")
             case "NLL": return defaults.bool(forKey: "enableNLL")
             case "PLL": return defaults.bool(forKey: "enablePLL")
             case "LNCAAM": return defaults.bool(forKey: "enableLNCAAM")
