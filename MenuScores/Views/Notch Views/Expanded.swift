@@ -445,17 +445,12 @@ struct Info: View {
                         }
                     }
 
-                    if #available(macOS 14, *) {
-                        Button {
-                            let environment = EnvironmentValues()
-                            environment.openSettings()
-                            NSApp.setActivationPolicy(.regular)
-                            NSApp.activate(ignoringOtherApps: true)
-                        } label: {
-                            Text("Preferences")
-                        }
-                        .keyboardShortcut(",")
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
                     }
+                    .keyboardShortcut(",")
 
                     Button {
                         NSApplication.shared.terminate(nil)
@@ -703,17 +698,12 @@ struct Info: View {
                         }
                     }
 
-                    if #available(macOS 14, *) {
-                        Button {
-                            let environment = EnvironmentValues()
-                            environment.openSettings()
-                            NSApp.setActivationPolicy(.regular)
-                            NSApp.activate(ignoringOtherApps: true)
-                        } label: {
-                            Text("Preferences")
-                        }
-                        .keyboardShortcut(",")
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
                     }
+                    .keyboardShortcut(",")
 
                     Button {
                         NSApplication.shared.terminate(nil)
@@ -892,17 +882,12 @@ struct Info: View {
                         }
                     }
 
-                    if #available(macOS 14, *) {
-                        Button {
-                            let environment = EnvironmentValues()
-                            environment.openSettings()
-                            NSApp.setActivationPolicy(.regular)
-                            NSApp.activate(ignoringOtherApps: true)
-                        } label: {
-                            Text("Preferences")
-                        }
-                        .keyboardShortcut(",")
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
                     }
+                    .keyboardShortcut(",")
 
                     Button {
                         NSApplication.shared.terminate(nil)
@@ -1091,17 +1076,12 @@ struct Info: View {
                         }
                     }
 
-                    if #available(macOS 14, *) {
-                        Button {
-                            let environment = EnvironmentValues()
-                            environment.openSettings()
-                            NSApp.setActivationPolicy(.regular)
-                            NSApp.activate(ignoringOtherApps: true)
-                        } label: {
-                            Text("Preferences")
-                        }
-                        .keyboardShortcut(",")
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
                     }
+                    .keyboardShortcut(",")
 
                     Button {
                         NSApplication.shared.terminate(nil)
@@ -1260,17 +1240,12 @@ struct Info: View {
                         }
                     }
 
-                    if #available(macOS 14, *) {
-                        Button {
-                            let environment = EnvironmentValues()
-                            environment.openSettings()
-                            NSApp.setActivationPolicy(.regular)
-                            NSApp.activate(ignoringOtherApps: true)
-                        } label: {
-                            Text("Preferences")
-                        }
-                        .keyboardShortcut(",")
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
                     }
+                    .keyboardShortcut(",")
 
                     Button {
                         NSApplication.shared.terminate(nil)
