@@ -215,26 +215,32 @@ struct FavoritesSettingsView: View {
                     TextField("Search teams...", text: $searchText)
                         .textFieldStyle(.roundedBorder)
 
-                    if favoritesManager.isLoadingTeams {
-                        ProgressView()
-                    } else {
-                        ScrollView {
-                            LazyVStack {
-                                ForEach(Array(filteredTeams.indices), id: \.self) { index in
-                                    let team = filteredTeams[index]
+                    ZStack {
+                        if favoritesManager.isLoadingTeams {
+                            ProgressView()
+                                .transition(.opacity)
 
-                                    FavoriteTeamRow(
-                                        team: team,
-                                        leagueKey: selectedLeague
-                                    )
+                        } else {
+                            ScrollView {
+                                LazyVStack {
+                                    ForEach(Array(filteredTeams.indices), id: \.self) { index in
+                                        let team = filteredTeams[index]
 
-                                    if index != filteredTeams.count - 1 {
-                                        Divider()
+                                        FavoriteTeamRow(
+                                            team: team,
+                                            leagueKey: selectedLeague
+                                        )
+
+                                        if index != filteredTeams.count - 1 {
+                                            Divider()
+                                        }
                                     }
                                 }
                             }
+                            .transition(.opacity)
                         }
                     }
+                    .animation(.easeInOut(duration: 0.2), value: favoritesManager.isLoadingTeams || favoritesManager.availableTeams[selectedLeague] == nil)
                 }
                 .task(id: selectedLeague) {
                     if let url = FavoriteTeams.teamsUrl(for: selectedLeague) {
