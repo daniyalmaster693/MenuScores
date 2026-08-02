@@ -67,8 +67,15 @@ struct CompactTrailing: View {
             }
 
             if sport == "F1" {
+                let f1Index = game.competitions.indices.contains(4) ? 4 : (game.competitions.isEmpty ? nil : game.competitions.count - 1)
+
+                let lapValue: Int? = {
+                    guard let index = f1Index, game.competitions.indices.contains(index) else { return nil }
+                    return game.competitions[index].status.period
+                }()
+
                 HStack {
-                    if let lap = game.competitions[4].status.period {
+                    if let lap = lapValue {
                         Text("L\(lap)")
                             .contentTransition(.numericText(countsDown: false))
                             .font(.system(size: 14, weight: .semibold))

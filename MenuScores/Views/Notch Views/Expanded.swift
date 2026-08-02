@@ -468,10 +468,15 @@ struct Info: View {
             }
 
             if sport == "F1" {
+                let f1Index = game.competitions.indices.contains(4) ? 4 : (game.competitions.isEmpty ? nil : game.competitions.count - 1)
+
+                let currentCompetition = f1Index.flatMap { game.competitions.indices.contains($0) ? game.competitions[$0] : nil }
+                let f1State = currentCompetition?.status.type.state ?? "pre"
+
                 VStack {
                     HStack(spacing: 4) {
                         VStack {
-                            if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
+                            if f1State == "in" || f1State == "post" {
                                 HStack {
                                     AsyncImage(
                                         url: URL(
@@ -495,8 +500,8 @@ struct Info: View {
 
                                     Spacer()
 
-                                    if game.competitions[4].status.type.state == "in" {
-                                        if let lap = game.competitions[4].status.period {
+                                    if f1State == "in" {
+                                        if let lap = currentCompetition?.status.period {
                                             HStack {
                                                 Image(systemName: "flag.checkered")
                                                     .foregroundColor(mapFlagColor(flagColor))
@@ -510,14 +515,14 @@ struct Info: View {
                                         }
                                     }
 
-                                    if game.competitions[4].status.type.state == "post" {
+                                    if f1State == "post" {
                                         HStack {
                                             Image(systemName: "trophy.fill")
                                                 .foregroundColor(.yellow)
                                                 .font(.system(size: 12))
 
                                             Text(
-                                                "\(game.competitions[4].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
+                                                "\(currentCompetition?.competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
                                             )
                                             .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 14, weight: .semibold))
@@ -534,7 +539,7 @@ struct Info: View {
                                         Text("Driver")
                                             .frame(width: 130, alignment: .leading)
 
-                                        if game.competitions[4].status.type.state == "post" {
+                                        if f1State == "post" {
                                             Text("Race Time")
                                                 .frame(width: 100, alignment: .trailing)
                                         } else {
@@ -582,7 +587,7 @@ struct Info: View {
                                                     }
                                                     .frame(width: 130, alignment: .leading)
 
-                                                    if game.competitions[4].status.type.state == "post" {
+                                                    if f1State == "post" {
                                                         if driver.order == 1 {
                                                             Text(
                                                                 "\(driver.time ?? "-")"
@@ -636,7 +641,7 @@ struct Info: View {
                                 .padding(.bottom, 5)
                             }
 
-                            if game.competitions[4].status.type.state == "pre" {
+                            if f1State == "pre" {
                                 VStack {
                                     HStack {
                                         AsyncImage(
@@ -675,7 +680,8 @@ struct Info: View {
                             }
                         }
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)

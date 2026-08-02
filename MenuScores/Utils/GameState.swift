@@ -34,9 +34,12 @@ func displayText(for game: Event, league: String) -> String {
 
     // F1 Race States
 
+    let f1Index = game.competitions.indices.contains(4) ? 4 : (game.competitions.isEmpty ? nil : game.competitions.count - 1)
+
     let driverName: String
-    if game.competitions.count > 4,
-       let f1Competitors = game.competitions[4].competitors,
+    if let index = f1Index,
+       game.competitions.indices.contains(index),
+       let f1Competitors = game.competitions[index].competitors,
        !f1Competitors.isEmpty
     {
         driverName = f1Competitors.first(where: { $0.order == 1 })?.athlete?.displayName ?? "-"
@@ -47,9 +50,11 @@ func displayText(for game: Event, league: String) -> String {
     var f1Period: Int?
     var f1State = "-"
 
-    if game.competitions.count > 4 {
-        f1Period = game.competitions[4].status.period
-        f1State = game.competitions[4].status.type.state
+    if let index = f1Index,
+       game.competitions.indices.contains(index)
+    {
+        f1Period = game.competitions[index].status.period
+        f1State = game.competitions[index].status.type.state
     }
     let f1PeriodText = f1Period.map { "\(prefix)\($0)" } ?? "-"
 

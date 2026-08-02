@@ -120,9 +120,13 @@ struct F1Menu: View {
 
                                 Divider()
 
-                                if game.competitions[4].status.type.state == "in" || game.competitions[4].status.type.state == "post" {
+                                let f1Index = game.competitions.indices.contains(4) ? 4 : (game.competitions.indices.count - 1)
+
+                                if game.competitions.indices.contains(f1Index),
+                                   game.competitions[f1Index].status.type.state == "in" || game.competitions[f1Index].status.type.state == "post"
+                                {
                                     Menu {
-                                        let competitors = game.competitions[4].competitors ?? []
+                                        let competitors = game.competitions[f1Index].competitors ?? []
 
                                         ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
                                             Button {} label: {
