@@ -324,4 +324,87 @@ class FavoritesManager: ObservableObject {
         dismissedPin = true
         dismissedGameID = gameID
     }
+
+    @MainActor
+    func checkForFavoriteGames(
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        @AppStorage("autoPinFavorites") var autoPinFavorites = false
+        @AppStorage("selectedPinType") var selectedPinType: PinType = .notch
+
+        enum PinType: String, CaseIterable, Identifiable {
+            case menubar = "Menubar"
+            case notch = "Notch"
+
+            var id: String { rawValue }
+        }
+
+        guard autoPinFavorites else { return }
+
+        var activeGame: Event? = nil
+        var activeLeagueKey = ""
+
+        for (leagueKey, vmAny) in leagueVMs {
+            if let vm = vmAny as? GamesListView,
+               let found = vm.games.first(where: { $0.id == currentGameID.wrappedValue })
+            {
+                activeGame = found
+                activeLeagueKey = leagueKey
+                break
+            }
+        }
+
+        if let updatedGame = activeGame {
+            currentGameState.wrappedValue = updatedGame.status.type.state
+
+            if selectedPinType == .menubar {
+                currentTitle.wrappedValue = displayText(for: updatedGame, league: activeLeagueKey)
+            }
+
+            if selectedPinType == .notch {
+                notchViewModel.game = updatedGame
+            }
+
+            if currentGameState.wrappedValue == "post" {
+                await clearFinishedGame(
+                    currentGameID: currentGameID,
+                    currentGameState: currentGameState,
+                    currentTitle: currentTitle
+                )
+            }
+        }
+
+        if let result = findGame() {
+            let bestGame = result.game
+            let bestLeague = result.leagueKey
+
+            if !dismissedPin || dismissedGameID != bestGame.id {
+                let rawSport = FavoriteTeams.mappings[bestLeague]?.sport ?? "hockey"
+                let sportName = rawSport.prefix(1).uppercased() + rawSport.dropFirst().lowercased()
+
+                Task { @MainActor in
+                    if selectedPinType == .notch {
+                        await updateNotch(
+                            for: bestGame,
+                            sport: sportName,
+                            league: bestLeague,
+                            currentGameID: currentGameID,
+                            currentGameState: currentGameState,
+                            currentTitle: currentTitle
+                        )
+                    } else {
+                        await updateMenuBar(
+                            for: bestGame,
+                            league: bestLeague,
+                            currentGameID: currentGameID,
+                            currentGameState: currentGameState,
+                            currentTitle: currentTitle
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
