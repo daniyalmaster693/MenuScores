@@ -69,9 +69,7 @@ class RefreshManager: NSObject, ObservableObject {
 
         notchViewModel: NotchViewModel
     ) async {
-        print("RefreshManager [\(league)]: Starting standard data fetch from URL...")
         await viewModel.populateGames(from: fetchURL)
-        print("RefreshManager [\(league)]: Fetched \(viewModel.games.count) game(s).")
 
         if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID.wrappedValue }) {
             if pinnedByMenubar.wrappedValue {
@@ -114,9 +112,7 @@ class RefreshManager: NSObject, ObservableObject {
 
         notchViewModel: NotchViewModel
     ) async {
-        print("RefreshManager [\(league)]: Starting tennis data fetch...")
         await viewModel.populateTennis(from: fetchURL)
-        print("RefreshManager [\(league)]: Fetched \(viewModel.tennisGames.count) game(s).")
 
         if let updatedCompetition = viewModel.tennisGames
             .flatMap({ $0.groupings })
@@ -205,15 +201,12 @@ class RefreshManager: NSObject, ObservableObject {
     @MainActor
     func startTimer() {
         timer?.invalidate()
-        print("RefreshManager: Global timer started with interval: \(currentInterval)s")
 
         timer = Timer.scheduledTimer(
             withTimeInterval: currentInterval,
             repeats: true
         ) { [weak self] _ in
             Task { @MainActor in
-                print("RefreshManager: Timer ticked. Executing \(self?.refreshActions.count ?? 0) registered action(s)...")
-
                 self?.refreshActions.values.forEach { action in
                     action()
                 }
@@ -223,8 +216,6 @@ class RefreshManager: NSObject, ObservableObject {
 
     @MainActor
     func registerRefreshAction(for league: String, action: @escaping () -> Void) {
-        print("RefreshManager: Registered refresh action for league -> \(league)")
-
         refreshActions[league] = action
 
         Task {
@@ -246,8 +237,6 @@ class RefreshManager: NSObject, ObservableObject {
         pinnedByMenubar: Binding<Bool>,
         pinnedByNotch: Binding<Bool>
     ) {
-        print("RefreshManager: Unregistered refresh action for league -> \(league)")
-
         currentTitle.wrappedValue = ""
         currentGameID.wrappedValue = ""
         currentGameState.wrappedValue = ""
