@@ -951,7 +951,7 @@ struct MenuScoresApp: App {
 
             Button {
                 FavoritesManager.shared.getSearchTargets()
-//                FavoritesManager.shared.findGame()
+                FavoritesManager.shared.findGame()
             } label: {
                 Text("Test Pin")
             }

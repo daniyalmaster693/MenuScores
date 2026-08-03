@@ -154,6 +154,41 @@ class FavoritesManager: ObservableObject {
         return targets
     }
 
+    @MainActor
+    func findGame() -> (game: Event, leagueKey: String)? {
+        let targets = getSearchTargets()
+
+        for target in targets {
+            let games: [Event]
+
+            switch target.leagueKey.uppercased() {
+                case "NHL":
+                    guard let vm = leagueVMs["NHL"] as? GamesListView else { continue }
+                    games = vm.games
+
+                case "MLB":
+                    guard let vm = leagueVMs["MLB"] as? GamesListView else { continue }
+                    games = vm.games
+
+                default:
+                    continue
+            }
+
+            let matchingGames = games.filter { game in
+                game.competitions.first?.competitors?.contains { competitor in
+                    competitor.team?.id == target.teamID
+                } ?? false
+            }
+
+            if let liveGame = matchingGames.first(where: { $0.status.type.state == "pre" }) {
+                print("Found live game: \(liveGame.id) for league: \(target.leagueKey)")
+                return (game: liveGame, leagueKey: target.leagueKey)
+            }
+        }
+
+        return nil
+    }
+
     // Auto Pin Methods
 
     @MainActor
