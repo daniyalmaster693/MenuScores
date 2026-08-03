@@ -315,7 +315,7 @@ class FavoritesManager: ObservableObject {
                 } ?? false
             }
 
-            if let liveGame = matchingGames.first(where: { $0.status.type.state == "in" }) {
+            if let liveGame = matchingGames.first(where: { $0.status.type.state == "pre" }) {
                 return (game: liveGame, leagueKey: target.leagueKey)
             }
         }
@@ -340,67 +340,52 @@ class FavoritesManager: ObservableObject {
         }
 
         guard autoPinFavorites else { return }
+        guard let result = findGame() else { return }
 
-        var currentGame: Event? = nil
-        var currentLeague = ""
+        let currentGame = result.game
+        let currentLeague = result.leagueKey
 
-        for (leagueKey, vmKey) in leagueVMs {
-            if let vm = vmKey as? GamesListView,
-               let matchedGame = vm.games.first(where: { $0.id == currentGameID.wrappedValue })
-            {
-                currentGame = matchedGame
-                currentLeague = leagueKey
-                break
-            }
+        let newGameState = currentGame.status.type.state
+        currentGameState.wrappedValue = newGameState
+
+        if selectedPinType == .menubar {
+            currentTitle.wrappedValue = displayText(for: currentGame, league: currentLeague)
         }
 
-        if let updatedGame = currentGame {
-            currentGameState.wrappedValue = updatedGame.status.type.state
-
-            if selectedPinType == .menubar {
-                currentTitle.wrappedValue = displayText(for: updatedGame, league: currentLeague)
-            }
-
-            if selectedPinType == .notch {
-                notchViewModel.game = updatedGame
-            }
-
-            if currentGameState.wrappedValue == "post" {
-                await clearFinishedGame(
-                    currentGameID: currentGameID,
-                    currentGameState: currentGameState,
-                    currentTitle: currentTitle
-                )
-            }
+        if selectedPinType == .notch {
+            notchViewModel.game = currentGame
         }
 
-        if let result = findGame() {
-            let bestGame = result.game
-            let bestLeague = result.leagueKey
+        if currentGameState.wrappedValue == "post" {
+            await clearFinishedGame(
+                currentGameID: currentGameID,
+                currentGameState: currentGameState,
+                currentTitle: currentTitle
+            )
+        }
 
-            if !dismissedPin || dismissedGameID != bestGame.id {
-                let rawSport = FavoriteTeams.mappings[bestLeague]?.sport ?? "hockey"
-                let sportName = rawSport.prefix(1).uppercased() + rawSport.dropFirst().lowercased()
+        if !dismissedPin || dismissedGameID != currentGame.id {
+            let sport = FavoriteTeams.mappings[currentLeague]?.sport ?? "hockey"
+            let sportName = sport.prefix(1).uppercased() + sport.dropFirst().lowercased()
 
-                Task { @MainActor in
-                    if selectedPinType == .notch {
-                        await updateNotch(
-                            for: bestGame,
-                            sport: sportName,
-                            league: bestLeague,
-                            currentGameID: currentGameID,
-                            currentGameState: currentGameState,
-                            currentTitle: currentTitle
-                        )
-                    } else {
-                        await updateMenuBar(
-                            for: bestGame,
-                            league: bestLeague,
-                            currentGameID: currentGameID,
-                            currentGameState: currentGameState,
-                            currentTitle: currentTitle
-                        )
-                    }
+            Task { @MainActor in
+                if selectedPinType == .notch {
+                    await updateNotch(
+                        for: currentGame,
+                        sport: sportName,
+                        league: currentLeague,
+                        currentGameID: currentGameID,
+                        currentGameState: currentGameState,
+                        currentTitle: currentTitle
+                    )
+                } else {
+                    await updateMenuBar(
+                        for: currentGame,
+                        league: currentLeague,
+                        currentGameID: currentGameID,
+                        currentGameState: currentGameState,
+                        currentTitle: currentTitle
+                    )
                 }
             }
         }
