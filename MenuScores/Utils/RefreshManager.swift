@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2026-08-03.
 //
 
+import DynamicNotchKit
 import SwiftUI
 
 @MainActor
@@ -71,14 +72,6 @@ class RefreshManager: NSObject, ObservableObject {
         print("RefreshManager [\(league)]: Starting standard data fetch from URL...")
         await viewModel.populateGames(from: fetchURL)
         print("RefreshManager [\(league)]: Fetched \(viewModel.games.count) game(s).")
-
-        await FavoritesManager.shared.checkForFavoriteGames(
-            in: viewModel,
-            league: league,
-            currentGameID: currentGameID,
-            currentGameState: currentGameState,
-            currentTitle: currentTitle
-        )
 
         if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID.wrappedValue }) {
             if pinnedByMenubar.wrappedValue {
@@ -244,7 +237,37 @@ class RefreshManager: NSObject, ObservableObject {
     }
 
     @MainActor
-    func unregisterRefreshAction(for league: String) {
+    func unregisterRefreshAction(
+        for league: String,
+        currentTitle: Binding<String>,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        previousGameState: Binding<String?>,
+        pinnedByMenubar: Binding<Bool>,
+        pinnedByNotch: Binding<Bool>
+    ) {
+        print("RefreshManager: Unregistered refresh action for league -> \(league)")
+
+        currentTitle.wrappedValue = ""
+        currentGameID.wrappedValue = ""
+        currentGameState.wrappedValue = ""
+
+        previousGameState.wrappedValue = nil
+
+        pinnedByMenubar.wrappedValue = false
+        pinnedByNotch.wrappedValue = false
+
+        Task {
+            if let notch = NotchViewModel.shared.notch {
+                await notch.hide()
+            }
+            NotchViewModel.shared.game = nil
+            NotchViewModel.shared.currentGameID = ""
+            NotchViewModel.shared.currentGameState = ""
+            NotchViewModel.shared.previousGameState = ""
+            NotchViewModel.shared.notch = nil
+        }
+
         refreshActions.removeValue(forKey: league)
         if refreshActions.isEmpty {
             timer?.invalidate()

@@ -178,7 +178,15 @@ struct BaseballMenu: View {
             }
         }
         .onDisappear {
-            RefreshManager.shared.unregisterRefreshAction(for: league)
+            RefreshManager.shared.unregisterRefreshAction(
+                for: league,
+                currentTitle: $currentTitle,
+                currentGameID: $currentGameID,
+                currentGameState: $currentGameState,
+                previousGameState: $previousGameState,
+                pinnedByMenubar: $pinnedByMenubar,
+                pinnedByNotch: $pinnedByNotch
+            )
         }
     }
 }
