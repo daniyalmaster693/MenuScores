@@ -315,7 +315,7 @@ class FavoritesManager: ObservableObject {
                 } ?? false
             }
 
-            if let liveGame = matchingGames.first(where: { $0.status.type.state == "pre" }) {
+            if let liveGame = matchingGames.first(where: { $0.status.type.state == "in" }) {
                 return (game: liveGame, leagueKey: target.leagueKey)
             }
         }
@@ -324,7 +324,7 @@ class FavoritesManager: ObservableObject {
     }
 
     @MainActor
-    func checkForFavoriteGames(
+    func checkForFavorites(
         _ currentGameID: Binding<String>,
         _ currentGameState: Binding<String>,
         _ currentTitle: Binding<String>
@@ -339,14 +339,12 @@ class FavoritesManager: ObservableObject {
             var id: String { rawValue }
         }
 
-        guard autoPinFavorites else { return }
         guard let result = findGame() else { return }
 
         let currentGame = result.game
         let currentLeague = result.leagueKey
 
-        let newGameState = currentGame.status.type.state
-        currentGameState.wrappedValue = newGameState
+        currentGameState.wrappedValue = currentGame.status.type.state
 
         if selectedPinType == .menubar {
             currentTitle.wrappedValue = displayText(for: currentGame, league: currentLeague)

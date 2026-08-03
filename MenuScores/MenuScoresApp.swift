@@ -1000,7 +1000,7 @@ struct MenuScoresApp: App {
 
             Button {
                 Task {
-                    await FavoritesManager.shared.checkForFavoriteGames($currentGameID, $currentGameState, $currentTitle)
+                    await FavoritesManager.shared.checkForFavorites($currentGameID, $currentGameState, $currentTitle)
                 }
             } label: {
                 Text("Test Pin")
