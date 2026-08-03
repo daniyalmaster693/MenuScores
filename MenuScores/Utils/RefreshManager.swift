@@ -11,9 +11,9 @@ import SwiftUI
 class RefreshManager: NSObject, ObservableObject {
     static let shared = RefreshManager()
 
-    var timer: Timer?
-
     // Refresh Interval Settings
+
+    var timer: Timer?
 
     private var selectedOption: String {
         UserDefaults.standard.string(forKey: "refreshInterval") ?? "15 seconds"
@@ -34,37 +34,117 @@ class RefreshManager: NSObject, ObservableObject {
         }
     }
 
+    // Notification Settings
+
+    private var notiGameStart: Bool {
+        UserDefaults.standard.bool(forKey: "notiGameStart")
+    }
+
+    private var notiGameComplete: Bool {
+        UserDefaults.standard.bool(forKey: "notiGameComplete")
+    }
+
+    // Refresh Helpers
+
+    @MainActor
+    func standardRefresh(
+        viewModel: GamesListView,
+        league: String,
+        fetchURL: URL,
+        currentTitle: Binding<String>,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        previousGameState: Binding<String?>,
+        pinnedByMenubar: Bool,
+        pinnedByNotch: Bool,
+        notchViewModel: NotchViewModel
+    ) async {
+        await viewModel.populateGames(from: fetchURL)
+        await FavoritesManager.shared.checkForFavoriteGames(
+            in: viewModel,
+            league: league,
+            currentGameID: currentGameID,
+            currentGameState: currentGameState,
+            currentTitle: currentTitle
+        )
+
+        if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID.wrappedValue }) {
+            if pinnedByMenubar {
+                currentTitle.wrappedValue = displayText(for: updatedGame, league: league)
+            } else if pinnedByNotch {
+                currentTitle.wrappedValue = ""
+            }
+
+            let newState = updatedGame.status.type.state
+
+            if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+            }
+            if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+            }
+
+            previousGameState.wrappedValue = newState
+            currentGameState.wrappedValue = newState
+
+            if pinnedByNotch {
+                notchViewModel.game = updatedGame
+            }
+        }
+    }
+
+    @MainActor
+    func tennisRefresh(
+        viewModel: TennisListView,
+        league: String,
+        fetchURL: URL,
+        currentTitle: Binding<String>,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        previousGameState: Binding<String?>,
+        pinnedByMenubar: Bool,
+        pinnedByNotch: Bool,
+        notchViewModel: NotchViewModel
+    ) async {
+        await viewModel.populateTennis(from: fetchURL)
+
+        if let updatedCompetition = viewModel.tennisGames
+            .flatMap({ $0.groupings })
+            .flatMap({ $0.competitions })
+            .first(where: { $0.id == currentGameID.wrappedValue })
+        {
+            if pinnedByMenubar {
+                currentTitle.wrappedValue = displayTennisText(for: updatedCompetition)
+            } else if pinnedByNotch {
+                currentTitle.wrappedValue = ""
+            }
+
+            let newState = updatedCompetition.status?.type.state ?? "pre"
+
+            if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+            }
+            if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+            }
+
+            previousGameState.wrappedValue = newState
+            currentGameState.wrappedValue = newState
+
+            if pinnedByNotch {
+                notchViewModel.tennisCompetition = updatedCompetition
+            }
+        }
+    }
+
     // Refresh System
 
     @MainActor
     func performRefesh() async {}
 
-    // Auto Refresh System
-
     func startTimer(action: @escaping () -> Void) {
         timer = Timer.scheduledTimer(withTimeInterval: currentInterval, repeats: true) { _ in
             action()
         }
-    }
-
-    override init() {
-        super.init()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-            Task { @MainActor in
-                await self?.performRefesh()
-            }
-        }
-
-        startTimer { [weak self] in
-            Task { @MainActor in
-                await self?.performRefesh()
-            }
-        }
-    }
-
-    deinit {
-        timer?.invalidate()
-        timer = nil
     }
 }
