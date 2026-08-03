@@ -46,6 +46,11 @@ class RefreshManager: NSObject, ObservableObject {
 
     // Refresh Helpers
 
+    enum RefreshType {
+        case standard
+        case tennis
+    }
+
     @MainActor
     func standardRefresh(
         viewModel: GamesListView,
@@ -98,12 +103,15 @@ class RefreshManager: NSObject, ObservableObject {
         viewModel: TennisListView,
         league: String,
         fetchURL: URL,
+
         currentTitle: Binding<String>,
         currentGameID: Binding<String>,
         currentGameState: Binding<String>,
         previousGameState: Binding<String?>,
+
         pinnedByMenubar: Bool,
         pinnedByNotch: Bool,
+
         notchViewModel: NotchViewModel
     ) async {
         await viewModel.populateTennis(from: fetchURL)
@@ -140,7 +148,57 @@ class RefreshManager: NSObject, ObservableObject {
     // Refresh System
 
     @MainActor
-    func performRefesh() async {}
+    func performRefesh(
+        viewModel: GamesListView? = nil,
+        tennisViewModel: TennisListView? = nil,
+        league: String,
+        fetchURL: URL,
+
+        currentTitle: Binding<String>,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        previousGameState: Binding<String?>,
+
+        type: RefreshType,
+        pinnedByMenubar: Bool,
+        pinnedByNotch: Bool,
+
+        notchViewModel: NotchViewModel
+    ) async {
+        switch type {
+        case .standard:
+            if let viewModel {
+                await standardRefresh(
+                    viewModel: viewModel,
+                    league: league,
+                    fetchURL: fetchURL,
+                    currentTitle: currentTitle,
+                    currentGameID: currentGameID,
+                    currentGameState: currentGameState,
+                    previousGameState: previousGameState,
+                    pinnedByMenubar: pinnedByMenubar,
+                    pinnedByNotch: pinnedByNotch,
+                    notchViewModel: notchViewModel
+                )
+            }
+
+        case .tennis:
+            if let tennisViewModel {
+                await tennisRefresh(
+                    viewModel: tennisViewModel,
+                    league: league,
+                    fetchURL: fetchURL,
+                    currentTitle: currentTitle,
+                    currentGameID: currentGameID,
+                    currentGameState: currentGameState,
+                    previousGameState: previousGameState,
+                    pinnedByMenubar: pinnedByMenubar,
+                    pinnedByNotch: pinnedByNotch,
+                    notchViewModel: notchViewModel
+                )
+            }
+        }
+    }
 
     func startTimer(action: @escaping () -> Void) {
         timer = Timer.scheduledTimer(withTimeInterval: currentInterval, repeats: true) { _ in
