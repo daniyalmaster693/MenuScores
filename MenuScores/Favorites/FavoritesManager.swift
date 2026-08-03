@@ -128,6 +128,89 @@ class FavoritesManager: ObservableObject {
         saveFavorites()
     }
 
+    // Auto Pin Methods
+
+    @MainActor
+    func updateNotch(
+        for game: Event,
+        sport: String,
+        league: String,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        currentGameID.wrappedValue = game.id
+        currentGameState.wrappedValue = game.status.type.state
+        currentTitle.wrappedValue = ""
+
+        notchViewModel.game = game
+
+        if let existingNotch = NotchViewModel.shared.notch {
+            await existingNotch.hide()
+            NotchViewModel.shared.game = nil
+            NotchViewModel.shared.currentGameID = ""
+            NotchViewModel.shared.currentGameState = ""
+            NotchViewModel.shared.previousGameState = ""
+            NotchViewModel.shared.notch = nil
+        }
+
+        let newNotch = DynamicNotch(
+            hoverBehavior: .all,
+            style: .notch
+        ) {
+            Info(notchViewModel: self.notchViewModel, sport: sport, league: league)
+        } compactLeading: {
+            CompactLeading(notchViewModel: self.notchViewModel, sport: sport)
+        } compactTrailing: {
+            CompactTrailing(notchViewModel: self.notchViewModel, sport: sport)
+        }
+
+        NotchViewModel.shared.notch = newNotch
+        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+    }
+
+    @MainActor
+    func updateMenuBar(
+        for game: Event,
+        league: String,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        currentTitle.wrappedValue = displayText(for: game, league: league)
+        currentGameID.wrappedValue = game.id
+        currentGameState.wrappedValue = game.status.type.state
+    }
+
+    @MainActor
+    func clearFinishedGame(
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        currentTitle.wrappedValue = ""
+        currentGameID.wrappedValue = ""
+        currentGameState.wrappedValue = ""
+
+        if let notch = NotchViewModel.shared.notch {
+            await notch.hide()
+        }
+
+        NotchViewModel.shared.game = nil
+        NotchViewModel.shared.currentGameID = ""
+        NotchViewModel.shared.currentGameState = ""
+        NotchViewModel.shared.previousGameState = ""
+        NotchViewModel.shared.notch = nil
+    }
+
+    @MainActor
+    func dismissAutoPinnedGame(_ gameID: String) {
+        guard !gameID.isEmpty else { return }
+
+        dismissedPin = true
+        dismissedGameID = gameID
+    }
+
     // Auto Pin Functionality
 
     @MainActor
@@ -214,7 +297,6 @@ class FavoritesManager: ObservableObject {
             }
         }
 
-        print(targets)
         return targets
     }
 
@@ -234,7 +316,6 @@ class FavoritesManager: ObservableObject {
             }
 
             if let liveGame = matchingGames.first(where: { $0.status.type.state == "pre" }) {
-                print("Found live game: \(liveGame.id) for league: \(target.leagueKey)")
                 return (game: liveGame, leagueKey: target.leagueKey)
             }
         }
@@ -242,94 +323,11 @@ class FavoritesManager: ObservableObject {
         return nil
     }
 
-    // Auto Pin Methods
-
-    @MainActor
-    func updateNotch(
-        for game: Event,
-        sport: String,
-        league: String,
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        currentTitle: Binding<String>
-    ) async {
-        currentGameID.wrappedValue = game.id
-        currentGameState.wrappedValue = game.status.type.state
-        currentTitle.wrappedValue = ""
-
-        notchViewModel.game = game
-
-        if let existingNotch = NotchViewModel.shared.notch {
-            await existingNotch.hide()
-            NotchViewModel.shared.game = nil
-            NotchViewModel.shared.currentGameID = ""
-            NotchViewModel.shared.currentGameState = ""
-            NotchViewModel.shared.previousGameState = ""
-            NotchViewModel.shared.notch = nil
-        }
-
-        let newNotch = DynamicNotch(
-            hoverBehavior: .all,
-            style: .notch
-        ) {
-            Info(notchViewModel: self.notchViewModel, sport: sport, league: league)
-        } compactLeading: {
-            CompactLeading(notchViewModel: self.notchViewModel, sport: sport)
-        } compactTrailing: {
-            CompactTrailing(notchViewModel: self.notchViewModel, sport: sport)
-        }
-
-        NotchViewModel.shared.notch = newNotch
-        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-    }
-
-    @MainActor
-    func updateMenuBar(
-        for game: Event,
-        league: String,
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        currentTitle: Binding<String>
-    ) async {
-        currentTitle.wrappedValue = displayText(for: game, league: league)
-        currentGameID.wrappedValue = game.id
-        currentGameState.wrappedValue = game.status.type.state
-    }
-
-    @MainActor
-    func clearFinishedGame(
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        currentTitle: Binding<String>
-    ) async {
-        currentTitle.wrappedValue = ""
-        currentGameID.wrappedValue = ""
-        currentGameState.wrappedValue = ""
-
-        if let notch = NotchViewModel.shared.notch {
-            await notch.hide()
-        }
-
-        NotchViewModel.shared.game = nil
-        NotchViewModel.shared.currentGameID = ""
-        NotchViewModel.shared.currentGameState = ""
-        NotchViewModel.shared.previousGameState = ""
-        NotchViewModel.shared.notch = nil
-    }
-
-    @MainActor
-    func dismissAutoPinnedGame(_ gameID: String) {
-        guard !gameID.isEmpty else { return }
-
-        dismissedPin = true
-        dismissedGameID = gameID
-    }
-
     @MainActor
     func checkForFavoriteGames(
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        currentTitle: Binding<String>
+        _ currentGameID: Binding<String>,
+        _ currentGameState: Binding<String>,
+        _ currentTitle: Binding<String>
     ) async {
         @AppStorage("autoPinFavorites") var autoPinFavorites = false
         @AppStorage("selectedPinType") var selectedPinType: PinType = .notch

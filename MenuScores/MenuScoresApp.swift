@@ -999,8 +999,9 @@ struct MenuScoresApp: App {
             Divider()
 
             Button {
-                FavoritesManager.shared.getSearchTargets()
-                FavoritesManager.shared.findGame()
+                Task {
+                    await FavoritesManager.shared.checkForFavoriteGames($currentGameID, $currentGameState, $currentTitle)
+                }
             } label: {
                 Text("Test Pin")
             }
