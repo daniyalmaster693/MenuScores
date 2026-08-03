@@ -258,7 +258,8 @@ class FavoritesManager: ObservableObject {
         await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
     }
 
-    private func updateMenuBar(
+    @MainActor
+    func updateMenuBar(
         for game: Event,
         league: String,
         currentGameID: Binding<String>,
