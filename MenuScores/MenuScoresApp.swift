@@ -999,15 +999,6 @@ struct MenuScoresApp: App {
             Divider()
 
             Button {
-                Task {
-                    await FavoritesManager.shared.checkForFavorites($currentGameID, $currentGameState, $currentTitle)
-                }
-            } label: {
-                Text("Test Pin")
-            }
-            .keyboardShortcut("p")
-
-            Button {
                 updateManager.getUpdateData(manualCheck: true)
             } label: {
                 Text("Check for Updates")

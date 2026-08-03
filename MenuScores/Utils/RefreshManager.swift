@@ -199,7 +199,11 @@ class RefreshManager: NSObject, ObservableObject {
     // Refresh System
 
     @MainActor
-    func startTimer() {
+    func startTimer(
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) {
         timer?.invalidate()
 
         timer = Timer.scheduledTimer(
@@ -210,20 +214,42 @@ class RefreshManager: NSObject, ObservableObject {
                 self?.refreshActions.values.forEach { action in
                     action()
                 }
+
+                await FavoritesManager.shared.checkForFavorites(
+                    currentGameID,
+                    currentGameState,
+                    currentTitle
+                )
             }
         }
     }
 
     @MainActor
-    func registerRefreshAction(for league: String, action: @escaping () -> Void) {
+    func registerRefreshAction(
+        for league: String,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>,
+        action: @escaping () -> Void
+    ) {
         refreshActions[league] = action
 
         Task {
             action()
+
+            await FavoritesManager.shared.checkForFavorites(
+                currentGameID,
+                currentGameState,
+                currentTitle
+            )
         }
 
         if timer == nil {
-            startTimer()
+            startTimer(
+                currentGameID: currentGameID,
+                currentGameState: currentGameState,
+                currentTitle: currentTitle
+            )
         }
     }
 

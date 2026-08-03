@@ -145,7 +145,12 @@ struct VolleyballMenu: View {
             }
         }
         .onAppear {
-            RefreshManager.shared.registerRefreshAction(for: league) {
+            RefreshManager.shared.registerRefreshAction(
+                for: league,
+                currentGameID: $currentGameID,
+                currentGameState: $currentGameState,
+                currentTitle: $currentTitle
+            ) {
                 Task {
                     await RefreshManager.shared.performRefresh(
                         viewModel: viewModel,

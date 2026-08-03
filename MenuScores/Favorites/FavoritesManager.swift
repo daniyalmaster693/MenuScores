@@ -339,27 +339,31 @@ class FavoritesManager: ObservableObject {
             var id: String { rawValue }
         }
 
+        guard autoPinFavorites else { return }
         guard let result = findGame() else { return }
 
         let currentGame = result.game
         let currentLeague = result.leagueKey
+        let currentState = currentGame.status.type.state
 
-        currentGameState.wrappedValue = currentGame.status.type.state
+        if currentGameID.wrappedValue == currentGame.id {
+            currentGameState.wrappedValue = currentState
 
-        if selectedPinType == .menubar {
-            currentTitle.wrappedValue = displayText(for: currentGame, league: currentLeague)
-        }
+            if selectedPinType == .menubar {
+                currentTitle.wrappedValue = displayText(for: currentGame, league: currentLeague)
+            } else if selectedPinType == .notch {
+                notchViewModel.game = currentGame
+            }
 
-        if selectedPinType == .notch {
-            notchViewModel.game = currentGame
-        }
+            if currentGameState.wrappedValue == "post" {
+                await clearFinishedGame(
+                    currentGameID: currentGameID,
+                    currentGameState: currentGameState,
+                    currentTitle: currentTitle
+                )
+            }
 
-        if currentGameState.wrappedValue == "post" {
-            await clearFinishedGame(
-                currentGameID: currentGameID,
-                currentGameState: currentGameState,
-                currentTitle: currentTitle
-            )
+            return
         }
 
         if !dismissedPin || dismissedGameID != currentGame.id {
