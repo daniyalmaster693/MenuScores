@@ -196,52 +196,29 @@ struct TennisMenu: View {
                         }
                     }
                 }
-            } else {
-                Text("Loading games...")
-                    .foregroundColor(.gray)
-                    .padding()
             }
         }
         .onAppear {
-            LeagueSelectionModel.shared.currentLeague = league
-            Task {
-                await viewModel.populateTennis(from: fetchURL)
-            }
-        }
-        .onReceive(
-            Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
-        ) { _ in
-            Task {
-                await viewModel.populateTennis(from: fetchURL)
-
-                if let updatedCompetition = viewModel.tennisGames
-                    .flatMap({ $0.groupings })
-                    .flatMap({ $0.competitions })
-                    .first(where: { $0.id == currentGameID })
-                {
-                    if pinnedByMenubar {
-                        currentTitle = displayTennisText(for: updatedCompetition)
-                    } else if pinnedByNotch {
-                        currentTitle = ""
-                    }
-
-                    let newState = updatedCompetition.status?.type.state ?? "pre"
-
-                    if notiGameStart && previousGameState != "in" && newState == "in" {
-                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                    }
-                    if notiGameComplete && previousGameState != "post" && newState == "post" {
-                        gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                    }
-
-                    previousGameState = newState
-                    currentGameState = newState
-
-                    if pinnedByNotch {
-                        notchViewModel.tennisCompetition = updatedCompetition
-                    }
+            RefreshManager.shared.registerRefreshAction(for: league) {
+                Task {
+                    await RefreshManager.shared.performRefresh(
+                        tennisViewModel: viewModel,
+                        league: league,
+                        fetchURL: fetchURL,
+                        currentTitle: $currentTitle,
+                        currentGameID: $currentGameID,
+                        currentGameState: $currentGameState,
+                        previousGameState: $previousGameState,
+                        type: .tennis,
+                        pinnedByMenubar: $pinnedByMenubar,
+                        pinnedByNotch: $pinnedByNotch,
+                        notchViewModel: notchViewModel
+                    )
                 }
             }
+        }
+        .onDisappear {
+            RefreshManager.shared.unregisterRefreshAction(for: league)
         }
     }
 }

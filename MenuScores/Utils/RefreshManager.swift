@@ -13,7 +13,8 @@ class RefreshManager: NSObject, ObservableObject {
 
     // Refresh Interval Settings
 
-    var timer: Timer?
+    private var timer: Timer?
+    private var refreshActions: [String: () -> Void] = [:]
 
     private var selectedOption: String {
         UserDefaults.standard.string(forKey: "refreshInterval") ?? "15 seconds"
@@ -56,15 +57,21 @@ class RefreshManager: NSObject, ObservableObject {
         viewModel: GamesListView,
         league: String,
         fetchURL: URL,
+
         currentTitle: Binding<String>,
         currentGameID: Binding<String>,
         currentGameState: Binding<String>,
         previousGameState: Binding<String?>,
-        pinnedByMenubar: Bool,
-        pinnedByNotch: Bool,
+
+        pinnedByMenubar: Binding<Bool>,
+        pinnedByNotch: Binding<Bool>,
+
         notchViewModel: NotchViewModel
     ) async {
+        print("RefreshManager [\(league)]: Starting standard data fetch from URL...")
         await viewModel.populateGames(from: fetchURL)
+        print("RefreshManager [\(league)]: Fetched \(viewModel.games.count) game(s).")
+
         await FavoritesManager.shared.checkForFavoriteGames(
             in: viewModel,
             league: league,
@@ -74,9 +81,9 @@ class RefreshManager: NSObject, ObservableObject {
         )
 
         if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID.wrappedValue }) {
-            if pinnedByMenubar {
+            if pinnedByMenubar.wrappedValue {
                 currentTitle.wrappedValue = displayText(for: updatedGame, league: league)
-            } else if pinnedByNotch {
+            } else if pinnedByNotch.wrappedValue {
                 currentTitle.wrappedValue = ""
             }
 
@@ -92,7 +99,7 @@ class RefreshManager: NSObject, ObservableObject {
             previousGameState.wrappedValue = newState
             currentGameState.wrappedValue = newState
 
-            if pinnedByNotch {
+            if pinnedByNotch.wrappedValue {
                 notchViewModel.game = updatedGame
             }
         }
@@ -109,21 +116,23 @@ class RefreshManager: NSObject, ObservableObject {
         currentGameState: Binding<String>,
         previousGameState: Binding<String?>,
 
-        pinnedByMenubar: Bool,
-        pinnedByNotch: Bool,
+        pinnedByMenubar: Binding<Bool>,
+        pinnedByNotch: Binding<Bool>,
 
         notchViewModel: NotchViewModel
     ) async {
+        print("RefreshManager [\(league)]: Starting tennis data fetch...")
         await viewModel.populateTennis(from: fetchURL)
+        print("RefreshManager [\(league)]: Fetched \(viewModel.tennisGames.count) game(s).")
 
         if let updatedCompetition = viewModel.tennisGames
             .flatMap({ $0.groupings })
             .flatMap({ $0.competitions })
             .first(where: { $0.id == currentGameID.wrappedValue })
         {
-            if pinnedByMenubar {
+            if pinnedByMenubar.wrappedValue {
                 currentTitle.wrappedValue = displayTennisText(for: updatedCompetition)
-            } else if pinnedByNotch {
+            } else if pinnedByNotch.wrappedValue {
                 currentTitle.wrappedValue = ""
             }
 
@@ -139,16 +148,14 @@ class RefreshManager: NSObject, ObservableObject {
             previousGameState.wrappedValue = newState
             currentGameState.wrappedValue = newState
 
-            if pinnedByNotch {
+            if pinnedByNotch.wrappedValue {
                 notchViewModel.tennisCompetition = updatedCompetition
             }
         }
     }
 
-    // Refresh System
-
     @MainActor
-    func performRefesh(
+    func performRefresh(
         viewModel: GamesListView? = nil,
         tennisViewModel: TennisListView? = nil,
         league: String,
@@ -160,8 +167,8 @@ class RefreshManager: NSObject, ObservableObject {
         previousGameState: Binding<String?>,
 
         type: RefreshType,
-        pinnedByMenubar: Bool,
-        pinnedByNotch: Bool,
+        pinnedByMenubar: Binding<Bool>,
+        pinnedByNotch: Binding<Bool>,
 
         notchViewModel: NotchViewModel
     ) async {
@@ -200,9 +207,48 @@ class RefreshManager: NSObject, ObservableObject {
         }
     }
 
-    func startTimer(action: @escaping () -> Void) {
-        timer = Timer.scheduledTimer(withTimeInterval: currentInterval, repeats: true) { _ in
+    // Refresh System
+
+    @MainActor
+    func startTimer() {
+        timer?.invalidate()
+        print("RefreshManager: Global timer started with interval: \(currentInterval)s")
+
+        timer = Timer.scheduledTimer(
+            withTimeInterval: currentInterval,
+            repeats: true
+        ) { [weak self] _ in
+            Task { @MainActor in
+                print("RefreshManager: Timer ticked. Executing \(self?.refreshActions.count ?? 0) registered action(s)...")
+
+                self?.refreshActions.values.forEach { action in
+                    action()
+                }
+            }
+        }
+    }
+
+    @MainActor
+    func registerRefreshAction(for league: String, action: @escaping () -> Void) {
+        print("RefreshManager: Registered refresh action for league -> \(league)")
+
+        refreshActions[league] = action
+
+        Task {
             action()
+        }
+
+        if timer == nil {
+            startTimer()
+        }
+    }
+
+    @MainActor
+    func unregisterRefreshAction(for league: String) {
+        refreshActions.removeValue(forKey: league)
+        if refreshActions.isEmpty {
+            timer?.invalidate()
+            timer = nil
         }
     }
 }
