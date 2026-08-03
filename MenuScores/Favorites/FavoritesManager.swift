@@ -341,24 +341,24 @@ class FavoritesManager: ObservableObject {
 
         guard autoPinFavorites else { return }
 
-        var activeGame: Event? = nil
-        var activeLeagueKey = ""
+        var currentGame: Event? = nil
+        var currentLeague = ""
 
-        for (leagueKey, vmAny) in leagueVMs {
-            if let vm = vmAny as? GamesListView,
-               let found = vm.games.first(where: { $0.id == currentGameID.wrappedValue })
+        for (leagueKey, vmKey) in leagueVMs {
+            if let vm = vmKey as? GamesListView,
+               let matchedGame = vm.games.first(where: { $0.id == currentGameID.wrappedValue })
             {
-                activeGame = found
-                activeLeagueKey = leagueKey
+                currentGame = matchedGame
+                currentLeague = leagueKey
                 break
             }
         }
 
-        if let updatedGame = activeGame {
+        if let updatedGame = currentGame {
             currentGameState.wrappedValue = updatedGame.status.type.state
 
             if selectedPinType == .menubar {
-                currentTitle.wrappedValue = displayText(for: updatedGame, league: activeLeagueKey)
+                currentTitle.wrappedValue = displayText(for: updatedGame, league: currentLeague)
             }
 
             if selectedPinType == .notch {
