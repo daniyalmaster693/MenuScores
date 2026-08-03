@@ -132,10 +132,74 @@ class FavoritesManager: ObservableObject {
 
     @MainActor
     func registerViewModels(
-        nhl: GamesListView, mlb: GamesListView
+        nhl: GamesListView, hncaam: GamesListView, hncaaf: GamesListView,
+        nba: GamesListView, wnba: GamesListView, ncaam: GamesListView, ncaaf: GamesListView,
+        nfl: GamesListView, fncaa: GamesListView,
+        mlb: GamesListView, bncaa: GamesListView, sncaa: GamesListView,
+        f1: GamesListView, nc: GamesListView, ncs: GamesListView, nct: GamesListView, irl: GamesListView,
+        pga: GamesListView, lpga: GamesListView,
+        uefa: GamesListView, euefa: GamesListView, wuefa: GamesListView,
+        mls: GamesListView, nwsl: GamesListView, mex: GamesListView, fra: GamesListView,
+        ned: GamesListView, por: GamesListView, epl: GamesListView, wepl: GamesListView,
+        esp: GamesListView, ger: GamesListView, ita: GamesListView,
+        nll: GamesListView, pll: GamesListView, lncaam: GamesListView, lncaaf: GamesListView,
+        vncaam: GamesListView, vncaaf: GamesListView,
+        omihc: GamesListView, owihc: GamesListView, omb: GamesListView, owb: GamesListView,
+        ffwc: GamesListView, ffwwc: GamesListView, ffwcquefa: GamesListView,
+        conmebol: GamesListView, concacaf: GamesListView, caf: GamesListView,
+        afc: GamesListView, ofc: GamesListView
     ) {
         leagueVMs["NHL"] = nhl
+        leagueVMs["HNCAAM"] = hncaam
+        leagueVMs["HNCAAF"] = hncaaf
+        leagueVMs["NBA"] = nba
+        leagueVMs["WNBA"] = wnba
+        leagueVMs["NCAAM"] = ncaam
+        leagueVMs["NCAAF"] = ncaaf
+        leagueVMs["NFL"] = nfl
+        leagueVMs["FNCAA"] = fncaa
         leagueVMs["MLB"] = mlb
+        leagueVMs["BNCAA"] = bncaa
+        leagueVMs["SNCAA"] = sncaa
+        leagueVMs["F1"] = f1
+        leagueVMs["NC"] = nc
+        leagueVMs["NCS"] = ncs
+        leagueVMs["NCT"] = nct
+        leagueVMs["IRL"] = irl
+        leagueVMs["PGA"] = pga
+        leagueVMs["LPGA"] = lpga
+        leagueVMs["UEFA"] = uefa
+        leagueVMs["EUEFA"] = euefa
+        leagueVMs["WUEFA"] = wuefa
+        leagueVMs["MLS"] = mls
+        leagueVMs["NWSL"] = irl
+        leagueVMs["MEX"] = mex
+        leagueVMs["FRA"] = fra
+        leagueVMs["NED"] = ned
+        leagueVMs["POR"] = por
+        leagueVMs["EPL"] = epl
+        leagueVMs["WEPL"] = wepl
+        leagueVMs["ESP"] = esp
+        leagueVMs["GER"] = ger
+        leagueVMs["ITA"] = ita
+        leagueVMs["NLL"] = nll
+        leagueVMs["PLL"] = pll
+        leagueVMs["LNCAAM"] = lncaam
+        leagueVMs["LNCAAF"] = lncaaf
+        leagueVMs["VNCAAM"] = vncaam
+        leagueVMs["VNCAAF"] = vncaaf
+        leagueVMs["OMIHC"] = omihc
+        leagueVMs["OWIHC"] = owihc
+        leagueVMs["OMB"] = omb
+        leagueVMs["OWB"] = owb
+        leagueVMs["FFWC"] = ffwc
+        leagueVMs["FFWWC"] = ffwwc
+        leagueVMs["FFWCQUEFA"] = ffwcquefa
+        leagueVMs["CONMEBOL"] = conmebol
+        leagueVMs["CONCACAF"] = concacaf
+        leagueVMs["CAF"] = caf
+        leagueVMs["AFC"] = afc
+        leagueVMs["OFC"] = ofc
     }
 
     @MainActor
@@ -192,34 +256,6 @@ class FavoritesManager: ObservableObject {
     // Auto Pin Methods
 
     @MainActor
-    func clearFinishedGame(
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        currentTitle: Binding<String>
-    ) async {
-        currentTitle.wrappedValue = ""
-        currentGameID.wrappedValue = ""
-        currentGameState.wrappedValue = ""
-
-        if let notch = NotchViewModel.shared.notch {
-            await notch.hide()
-        }
-
-        NotchViewModel.shared.game = nil
-        NotchViewModel.shared.currentGameID = ""
-        NotchViewModel.shared.currentGameState = ""
-        NotchViewModel.shared.previousGameState = ""
-        NotchViewModel.shared.notch = nil
-    }
-
-    func dismissAutoPinnedGame(_ gameID: String) {
-        guard !gameID.isEmpty else { return }
-
-        dismissedPin = true
-        dismissedGameID = gameID
-    }
-
-    @MainActor
     func updateNotch(
         for game: Event,
         sport: String,
@@ -269,5 +305,34 @@ class FavoritesManager: ObservableObject {
         currentTitle.wrappedValue = displayText(for: game, league: league)
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
+    }
+
+    @MainActor
+    func clearFinishedGame(
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        currentTitle.wrappedValue = ""
+        currentGameID.wrappedValue = ""
+        currentGameState.wrappedValue = ""
+
+        if let notch = NotchViewModel.shared.notch {
+            await notch.hide()
+        }
+
+        NotchViewModel.shared.game = nil
+        NotchViewModel.shared.currentGameID = ""
+        NotchViewModel.shared.currentGameState = ""
+        NotchViewModel.shared.previousGameState = ""
+        NotchViewModel.shared.notch = nil
+    }
+
+    @MainActor
+    func dismissAutoPinnedGame(_ gameID: String) {
+        guard !gameID.isEmpty else { return }
+
+        dismissedPin = true
+        dismissedGameID = gameID
     }
 }
