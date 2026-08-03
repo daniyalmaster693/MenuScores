@@ -187,15 +187,7 @@ struct RacingMenu: View {
             }
         }
         .onDisappear {
-            RefreshManager.shared.unregisterRefreshAction(
-                for: league,
-                currentTitle: $currentTitle,
-                currentGameID: $currentGameID,
-                currentGameState: $currentGameState,
-                previousGameState: $previousGameState,
-                pinnedByMenubar: $pinnedByMenubar,
-                pinnedByNotch: $pinnedByNotch
-            )
+            RefreshManager.shared.unregisterRefreshAction(for: league)
         }
     }
 }

@@ -228,35 +228,7 @@ class RefreshManager: NSObject, ObservableObject {
     }
 
     @MainActor
-    func unregisterRefreshAction(
-        for league: String,
-        currentTitle: Binding<String>,
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        previousGameState: Binding<String?>,
-        pinnedByMenubar: Binding<Bool>,
-        pinnedByNotch: Binding<Bool>
-    ) {
-        currentTitle.wrappedValue = ""
-        currentGameID.wrappedValue = ""
-        currentGameState.wrappedValue = ""
-
-        previousGameState.wrappedValue = nil
-
-        pinnedByMenubar.wrappedValue = false
-        pinnedByNotch.wrappedValue = false
-
-        Task {
-            if let notch = NotchViewModel.shared.notch {
-                await notch.hide()
-            }
-            NotchViewModel.shared.game = nil
-            NotchViewModel.shared.currentGameID = ""
-            NotchViewModel.shared.currentGameState = ""
-            NotchViewModel.shared.previousGameState = ""
-            NotchViewModel.shared.notch = nil
-        }
-
+    func unregisterRefreshAction(for league: String) {
         refreshActions.removeValue(forKey: league)
         if refreshActions.isEmpty {
             timer?.invalidate()
