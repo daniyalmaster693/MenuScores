@@ -45,6 +45,13 @@ enum FavoriteTeams {
         "MEX": LeagueInfo(sport: "soccer", league: "mex.1", displayName: "Liga MX"),
 
         "F1": LeagueInfo(sport: "racing", league: "f1", displayName: "F1"),
+        "NC": LeagueInfo(sport: "racing", league: "nc", displayName: "Nascar Premier"),
+        "NCS": LeagueInfo(sport: "racing", league: "ncs", displayName: "Nascar Secondary"),
+        "NCT": LeagueInfo(sport: "racing", league: "nct", displayName: "Nascar Truck"),
+        "IRL": LeagueInfo(sport: "racing", league: "irl", displayName: "IndyCar"),
+
+        "PGA": LeagueInfo(sport: "golf", league: "pga", displayName: "PGA"),
+        "LPGA": LeagueInfo(sport: "golf", league: "lpga", displayName: "LPGA"),
 
         "NLL": LeagueInfo(sport: "lacrosse", league: "nll", displayName: "NLL"),
         "PLL": LeagueInfo(sport: "lacrosse", league: "pll", displayName: "PLL"),
@@ -93,6 +100,13 @@ enum FavoriteTeams {
             case "MLB": return defaults.bool(forKey: "enableMLB")
             case "BNCAA": return defaults.bool(forKey: "enableBNCAA")
             case "SNCAA": return defaults.bool(forKey: "enableSNCAA")
+            case "F1": return defaults.bool(forKey: "enableF1")
+            case "NC": return defaults.bool(forKey: "enableNC")
+            case "NCS": return defaults.bool(forKey: "enableNCS")
+            case "NCT": return defaults.bool(forKey: "enableNCT")
+            case "IRL": return defaults.bool(forKey: "enableIRL")
+            case "PGA": return defaults.bool(forKey: "enablePGA")
+            case "LPGA": return defaults.bool(forKey: "enableLPGA")
             case "MLS": return defaults.bool(forKey: "enableMLS")
             case "NWSL": return defaults.bool(forKey: "enableNWSL")
             case "UEFA": return defaults.bool(forKey: "enableUEFA")
@@ -107,7 +121,6 @@ enum FavoriteTeams {
             case "NED": return defaults.bool(forKey: "enableNED")
             case "POR": return defaults.bool(forKey: "enablePOR")
             case "MEX": return defaults.bool(forKey: "enableMEX")
-            case "F1": return defaults.bool(forKey: "enableF1")
             case "NLL": return defaults.bool(forKey: "enableNLL")
             case "PLL": return defaults.bool(forKey: "enablePLL")
             case "LNCAAM": return defaults.bool(forKey: "enableLNCAAM")

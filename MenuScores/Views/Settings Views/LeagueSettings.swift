@@ -394,7 +394,7 @@ struct LeagueSettingsView: View {
                         HStack {
                             Image(systemName: "flag.checkered")
                                 .foregroundColor(.primary)
-                            Text("Nascar primary")
+                            Text("Nascar Secondary")
                         }
                     }
 
