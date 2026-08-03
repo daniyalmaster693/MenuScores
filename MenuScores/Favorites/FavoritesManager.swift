@@ -29,9 +29,6 @@ class FavoritesManager: ObservableObject {
 
     // Pin Data
 
-    private var pinnedByNotch = false
-    private var pinnedByMenubar = false
-
     private var dismissedPin = false
     private var dismissedGameID = ""
 
@@ -141,9 +138,6 @@ class FavoritesManager: ObservableObject {
         currentGameState.wrappedValue = game.status.type.state
         currentTitle.wrappedValue = ""
 
-        pinnedByNotch = true
-        pinnedByMenubar = false
-
         notchViewModel.game = game
 
         if let existingNotch = NotchViewModel.shared.notch {
@@ -180,9 +174,6 @@ class FavoritesManager: ObservableObject {
         currentTitle.wrappedValue = displayText(for: game, league: league)
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
-
-        pinnedByMenubar = true
-        pinnedByNotch = false
     }
 
     @MainActor
