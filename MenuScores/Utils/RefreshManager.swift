@@ -236,12 +236,6 @@ class RefreshManager: NSObject, ObservableObject {
 
         Task {
             action()
-
-            await FavoritesManager.shared.checkForFavorites(
-                currentGameID,
-                currentGameState,
-                currentTitle
-            )
         }
 
         if timer == nil {
