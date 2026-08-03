@@ -85,6 +85,44 @@ enum FavoriteTeams {
         mappings[leagueKey]?.displayName ?? leagueKey
     }
 
+    static func isLeagueOnly(_ leagueKey: String) -> Bool {
+        guard let info = mappings[leagueKey] else { return false }
+        return info.sport == "racing" || info.sport == "golf"
+    }
+
+    static func leagueAsTeam(for leagueKey: String) -> TeamInfo {
+        let info = mappings[leagueKey]
+        let displayName = info?.displayName ?? leagueKey
+        let sport = mappings[leagueKey]?.sport ?? "hockey"
+        let logo = fallbackLogoForLeague(leagueKey)
+
+        return TeamInfo(
+            id: "league-\(leagueKey.lowercased())",
+            color: nil,
+            alternateColor: nil,
+            displayName: displayName,
+            abbreviation: leagueKey,
+            logos: [TeamLogo(href: logo, width: 80, height: 80)]
+        )
+    }
+
+    static func fallbackLogoForLeague(_ leagueKey: String) -> String {
+        let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
+        let league = (FavoriteTeams.mappings[leagueKey]?.league ?? "NHL")
+
+        if sport == "racing" && league == "f1" {
+            return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+        } else if sport == "racing" && league != "f1" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
+        } else if sport == "golf" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&h=80&w=80&scale=crop&cquality=40"
+        } else if sport == "volleyball" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+        } else {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport).png&h=80&w=80&scale=crop&cquality=40"
+        }
+    }
+
     static var supportedLeagueKeys: [String] {
         let defaults = UserDefaults.standard
 

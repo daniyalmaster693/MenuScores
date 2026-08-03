@@ -1,5 +1,5 @@
 //
-//  FavoriteSettings.swift
+//  FavoritesSettingsView.swift
 //  MenuScores
 //
 //  Created by Daniyal Master on 2026-06-20.
@@ -83,8 +83,12 @@ struct FavoritesSettingsView: View {
 
     private func fallbackLogo(for leagueKey: String) -> String {
         let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
-        if sport == "racing" {
+        let league = (FavoriteTeams.mappings[leagueKey]?.league ?? "NHL")
+
+        if sport == "racing" && league == "F1" {
             return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+        } else if sport == "racing" && league != "F1" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
         } else if sport == "golf" {
             return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&h=80&w=80&scale=crop&cquality=40"
         } else if sport == "volleyball" {
@@ -95,6 +99,14 @@ struct FavoritesSettingsView: View {
     }
 
     private var filteredTeams: [TeamInfo] {
+        if FavoriteTeams.isLeagueOnly(selectedLeague) {
+            let leagueTeam = FavoriteTeams.leagueAsTeam(for: selectedLeague)
+            if searchText.isEmpty {
+                return [leagueTeam]
+            }
+            return leagueTeam.displayName.localizedCaseInsensitiveContains(searchText) ? [leagueTeam] : []
+        }
+
         let teams = favoritesManager.availableTeams[selectedLeague] ?? []
 
         if searchText.isEmpty {
@@ -173,7 +185,9 @@ struct FavoritesSettingsView: View {
                                 VStack(alignment: .leading) {
                                     Text(favorite.displayName)
 
-                                    Text(FavoriteTeams.displayName(for: favorite.leagueKey))
+                                    Text(FavoriteTeams.isLeagueOnly(favorite.leagueKey)
+                                        ? (FavoriteTeams.mappings[favorite.leagueKey]?.sport.capitalized ?? favorite.leagueKey)
+                                        : FavoriteTeams.displayName(for: favorite.leagueKey))
                                         .font(.caption)
                                         .foregroundStyle(.primary)
                                 }
@@ -249,7 +263,9 @@ struct FavoritesSettingsView: View {
                     .animation(.easeInOut(duration: 0.2), value: favoritesManager.isLoadingTeams || favoritesManager.availableTeams[selectedLeague] == nil)
                 }
                 .task(id: selectedLeague) {
-                    if let url = FavoriteTeams.teamsUrl(for: selectedLeague) {
+                    if FavoriteTeams.isLeagueOnly(selectedLeague) {
+                        favoritesManager.isLoadingTeams = false
+                    } else if let url = FavoriteTeams.teamsUrl(for: selectedLeague) {
                         await favoritesManager.loadTeams(
                             for: selectedLeague,
                             url: url
@@ -270,8 +286,12 @@ struct FavoriteTeamRow: View {
 
     private var fallbackLogo: String {
         let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
-        if sport == "racing" {
+        let league = (FavoriteTeams.mappings[leagueKey]?.league ?? "NHL")
+
+        if sport == "racing" && league == "F1" {
             return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+        } else if sport == "racing" && league != "F1" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
         } else if sport == "golf" {
             return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&h=80&w=80&scale=crop&cquality=40"
         } else if sport == "volleyball" {
