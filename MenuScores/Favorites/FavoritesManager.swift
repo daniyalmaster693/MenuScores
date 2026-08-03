@@ -92,8 +92,6 @@ class FavoritesManager: ObservableObject {
         }
     }
 
-    // Favorites Actions
-
     func toggleFavorite(_ team: TeamInfo, leagueKey: String) {
         if let index = favorites.firstIndex(where: {
             $0.id == team.id && $0.leagueKey == leagueKey
@@ -124,6 +122,57 @@ class FavoritesManager: ObservableObject {
     }
 
     // Auto Pin Functionality
+
+    @MainActor
+    func findGame(in games: [Event], favorites: [FavoriteTeam], league: String) -> Event? {
+        let leagueFavorites = favorites.filter { $0.leagueKey == league }
+
+        for favorite in leagueFavorites {
+            let teamGames = games.filter { game in
+                game.competitions.first?.competitors?.contains {
+                    $0.team?.id == favorite.id
+
+                } ?? false
+            }
+
+            if let liveGame = teamGames.first(where: {
+                $0.status.type.state == "in"
+
+            }) {
+                return liveGame
+            }
+        }
+
+        return nil
+    }
+
+    @MainActor
+    func clearFinishedGame(
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        currentTitle.wrappedValue = ""
+        currentGameID.wrappedValue = ""
+        currentGameState.wrappedValue = ""
+
+        if let notch = NotchViewModel.shared.notch {
+            await notch.hide()
+        }
+
+        NotchViewModel.shared.game = nil
+        NotchViewModel.shared.currentGameID = ""
+        NotchViewModel.shared.currentGameState = ""
+        NotchViewModel.shared.previousGameState = ""
+        NotchViewModel.shared.notch = nil
+    }
+
+    func dismissAutoPinnedGame(_ gameID: String) {
+        guard !gameID.isEmpty else { return }
+
+        dismissedPin = true
+        dismissedGameID = gameID
+    }
 
     @MainActor
     func updateNotch(
@@ -174,57 +223,6 @@ class FavoritesManager: ObservableObject {
         currentTitle.wrappedValue = displayText(for: game, league: league)
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
-    }
-
-    @MainActor
-    func findGame(in games: [Event], favorites: [FavoriteTeam], league: String) -> Event? {
-        let leagueFavorites = favorites.filter { $0.leagueKey == league }
-
-        for favorite in leagueFavorites {
-            let teamGames = games.filter { game in
-                game.competitions.first?.competitors?.contains {
-                    $0.team?.id == favorite.id
-
-                } ?? false
-            }
-
-            if let liveGame = teamGames.first(where: {
-                $0.status.type.state == "in"
-
-            }) {
-                return liveGame
-            }
-        }
-
-        return nil
-    }
-
-    func dismissAutoPinnedGame(_ gameID: String) {
-        guard !gameID.isEmpty else { return }
-
-        dismissedPin = true
-        dismissedGameID = gameID
-    }
-
-    @MainActor
-    func clearFinishedGame(
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        currentTitle: Binding<String>
-    ) async {
-        currentTitle.wrappedValue = ""
-        currentGameID.wrappedValue = ""
-        currentGameState.wrappedValue = ""
-
-        if let notch = NotchViewModel.shared.notch {
-            await notch.hide()
-        }
-
-        NotchViewModel.shared.game = nil
-        NotchViewModel.shared.currentGameID = ""
-        NotchViewModel.shared.currentGameState = ""
-        NotchViewModel.shared.previousGameState = ""
-        NotchViewModel.shared.notch = nil
     }
 
     @MainActor
