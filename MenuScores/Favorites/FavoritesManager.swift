@@ -315,7 +315,7 @@ class FavoritesManager: ObservableObject {
                 } ?? false
             }
 
-            if let liveGame = matchingGames.first(where: { $0.status.type.state == "pre" }) {
+            if let liveGame = matchingGames.first(where: { $0.status.type.state == "in" }) {
                 return (game: liveGame, leagueKey: target.leagueKey)
             }
         }
