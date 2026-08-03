@@ -172,7 +172,7 @@ class FavoritesManager: ObservableObject {
         leagueVMs["EUEFA"] = euefa
         leagueVMs["WUEFA"] = wuefa
         leagueVMs["MLS"] = mls
-        leagueVMs["NWSL"] = irl
+        leagueVMs["NWSL"] = nwsl
         leagueVMs["MEX"] = mex
         leagueVMs["FRA"] = fra
         leagueVMs["NED"] = ned
@@ -223,22 +223,11 @@ class FavoritesManager: ObservableObject {
         let targets = getSearchTargets()
 
         for target in targets {
-            let games: [Event]
+            let key = target.leagueKey.uppercased()
 
-            switch target.leagueKey.uppercased() {
-                case "NHL":
-                    guard let vm = leagueVMs["NHL"] as? GamesListView else { continue }
-                    games = vm.games
+            guard let vm = leagueVMs[key] as? GamesListView else { continue }
 
-                case "MLB":
-                    guard let vm = leagueVMs["MLB"] as? GamesListView else { continue }
-                    games = vm.games
-
-                default:
-                    continue
-            }
-
-            let matchingGames = games.filter { game in
+            let matchingGames = vm.games.filter { game in
                 game.competitions.first?.competitors?.contains { competitor in
                     competitor.team?.id == target.teamID
                 } ?? false

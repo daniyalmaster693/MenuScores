@@ -165,7 +165,7 @@ struct FavoritesSettingsView: View {
                         Text("No favorite teams selected.")
                             .foregroundStyle(.primary)
                     } else {
-                        ForEach(favoritesManager.favorites) { favorite in
+                        ForEach(favoritesManager.favorites, id: \.uniqueID) { favorite in
                             HStack {
                                 AsyncImage(url: URL(string: favorite.logo ?? fallbackLogo(for: favorite.leagueKey))) { phase in
                                     if let image = phase.image {

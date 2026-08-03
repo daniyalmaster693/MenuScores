@@ -22,6 +22,12 @@ struct FavoriteTeam: Codable, Identifiable, Hashable {
     static func == (lhs: FavoriteTeam, rhs: FavoriteTeam) -> Bool {
         lhs.id == rhs.id && lhs.leagueKey == rhs.leagueKey
     }
+
+    var uniqueID: String {
+        "\(leagueKey)-\(id)"
+    }
+
+    var varId: String { uniqueID }
 }
 
 struct TeamsResponse: Decodable {
