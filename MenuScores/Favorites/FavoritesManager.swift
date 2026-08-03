@@ -24,6 +24,8 @@ class FavoritesManager: ObservableObject {
     private let favoritesKey = "favoriteTeams"
     private let teamsCache = NSCache<NSString, NSArray>()
 
+    private var leagueVMs: [String: any ObservableObject] = [:]
+
     init() {
         loadFavorites()
     }
@@ -126,6 +128,32 @@ class FavoritesManager: ObservableObject {
         saveFavorites()
     }
 
+    // Auto Pin Functionality
+
+    @MainActor
+    func registerViewModels(
+        nhl: GamesListView, mlb: GamesListView
+    ) {
+        leagueVMs["NHL"] = nhl
+        leagueVMs["MLB"] = mlb
+    }
+
+    @MainActor
+    func getSearchTargets() -> [FavoriteTarget] {
+        var targets: [FavoriteTarget] = []
+
+        for favorite in favorites {
+            let target = FavoriteTarget(leagueKey: favorite.leagueKey, teamID: favorite.id)
+
+            if !targets.contains(where: { $0.leagueKey == target.leagueKey && $0.teamID == target.teamID }) {
+                targets.append(target)
+            }
+        }
+
+        print(targets)
+        return targets
+    }
+
     // Auto Pin Methods
 
     @MainActor
@@ -205,23 +233,5 @@ class FavoritesManager: ObservableObject {
         currentTitle.wrappedValue = displayText(for: game, league: league)
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
-    }
-
-    // Auto Pin Functionality
-
-    @MainActor
-    func getSearchTargets() -> [FavoriteTarget] {
-        var targets: [FavoriteTarget] = []
-
-        for favorite in favorites {
-            let target = FavoriteTarget(leagueKey: favorite.leagueKey, teamID: favorite.id)
-
-            if !targets.contains(where: { $0.leagueKey == target.leagueKey && $0.teamID == target.teamID }) {
-                targets.append(target)
-            }
-        }
-
-        print(targets)
-        return targets
     }
 }

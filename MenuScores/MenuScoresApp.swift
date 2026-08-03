@@ -907,6 +907,12 @@ struct MenuScoresApp: App {
             }
 
             Divider()
+                .onAppear {
+                    FavoritesManager.shared.registerViewModels(
+                        nhl: nhlVM,
+                        mlb: mlbVM,
+                    )
+                }
 
             if enableNotch {
                 Picker("Choose Display", selection: $notchScreenIndex) {
@@ -945,6 +951,7 @@ struct MenuScoresApp: App {
 
             Button {
                 FavoritesManager.shared.getSearchTargets()
+//                FavoritesManager.shared.findGame()
             } label: {
                 Text("Test Pin")
             }
