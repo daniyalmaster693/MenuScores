@@ -152,40 +152,34 @@ struct SoccerMenu: View {
             }
         }
         .onAppear {
-            LeagueSelectionModel.shared.currentLeague = league
-            Task {
-                await viewModel.populateGames(from: fetchURL)
-            }
-        }
-        .onReceive(
-            Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
-        ) { _ in
-            Task {
-                await viewModel.populateGames(from: fetchURL)
-                if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID }) {
-                    if pinnedByMenubar {
-                        currentTitle = displayText(for: updatedGame, league: league)
-                    } else if pinnedByNotch {
-                        currentTitle = ""
-                    }
-
-                    let newState = updatedGame.status.type.state
-
-                    if notiGameStart && previousGameState != "in" && newState == "in" {
-                        gameStartNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                    }
-                    if notiGameComplete && previousGameState != "post" && newState == "post" {
-                        gameCompleteNotification(gameId: currentGameID, gameTitle: currentTitle, newState: newState)
-                    }
-
-                    previousGameState = newState
-                    currentGameState = newState
-
-                    if pinnedByNotch {
-                        notchViewModel.game = updatedGame
-                    }
+            RefreshManager.shared.registerRefreshAction(for: league) {
+                Task {
+                    await RefreshManager.shared.performRefresh(
+                        viewModel: viewModel,
+                        league: league,
+                        fetchURL: fetchURL,
+                        currentTitle: $currentTitle,
+                        currentGameID: $currentGameID,
+                        currentGameState: $currentGameState,
+                        previousGameState: $previousGameState,
+                        type: .standard,
+                        pinnedByMenubar: $pinnedByMenubar,
+                        pinnedByNotch: $pinnedByNotch,
+                        notchViewModel: notchViewModel
+                    )
                 }
             }
+        }
+        .onDisappear {
+            RefreshManager.shared.unregisterRefreshAction(
+                for: league,
+                currentTitle: $currentTitle,
+                currentGameID: $currentGameID,
+                currentGameState: $currentGameState,
+                previousGameState: $previousGameState,
+                pinnedByMenubar: $pinnedByMenubar,
+                pinnedByNotch: $pinnedByNotch
+            )
         }
     }
 }
