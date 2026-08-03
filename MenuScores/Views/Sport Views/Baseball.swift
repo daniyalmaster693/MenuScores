@@ -46,7 +46,7 @@ struct BaseballMenu: View {
         default: return 15
         }
     }
-
+    
     var body: some View {
         Menu(title) {
             let groupedGames = Dictionary(grouping: viewModel.games) { game in

@@ -7,13 +7,16 @@
 
 import SwiftUI
 
+@MainActor
 class RefreshManager: NSObject, ObservableObject {
     static let shared = RefreshManager()
     var timer: Timer?
 
     // Refresh Interval Settings
 
-    let selectedOption = UserDefaults.standard.string(forKey: "refreshInterval") ?? "15 seconds"
+    private var selectedOption: String {
+        UserDefaults.standard.string(forKey: "refreshInterval") ?? "15 seconds"
+    }
 
     private var currentInterval: TimeInterval {
         switch selectedOption {
@@ -32,72 +35,141 @@ class RefreshManager: NSObject, ObservableObject {
 
     // Toggled League Settings
 
-    let enableNHL = UserDefaults.standard.bool(forKey: "enableNHL")
-    let enableHNCAAM = UserDefaults.standard.bool(forKey: "enableHNCAAM")
-    let enableHNCAAF = UserDefaults.standard.bool(forKey: "enableHNCAAF")
+    var enableNHL: Bool { UserDefaults.standard.bool(forKey: "enableNHL") }
+    var enableHNCAAM: Bool { UserDefaults.standard.bool(forKey: "enableHNCAAM") }
+    var enableHNCAAF: Bool { UserDefaults.standard.bool(forKey: "enableHNCAAF") }
 
-    let enableNBA = UserDefaults.standard.bool(forKey: "enableNBA")
-    let enableWNBA = UserDefaults.standard.bool(forKey: "enableWNBA")
-    let enableNCAAM = UserDefaults.standard.bool(forKey: "enableNCAAM")
-    let enableNCAAF = UserDefaults.standard.bool(forKey: "enableNCAAF")
+    var enableNBA: Bool { UserDefaults.standard.bool(forKey: "enableNBA") }
+    var enableWNBA: Bool { UserDefaults.standard.bool(forKey: "enableWNBA") }
+    var enableNCAAM: Bool { UserDefaults.standard.bool(forKey: "enableNCAAM") }
+    var enableNCAAF: Bool { UserDefaults.standard.bool(forKey: "enableNCAAF") }
 
-    let enableNFL = UserDefaults.standard.bool(forKey: "enableNFL")
-    let enableFNCAA = UserDefaults.standard.bool(forKey: "enableFNCAA")
+    var enableNFL: Bool { UserDefaults.standard.bool(forKey: "enableNFL") }
+    var enableFNCAA: Bool { UserDefaults.standard.bool(forKey: "enableFNCAA") }
 
-    let enableMLB = UserDefaults.standard.bool(forKey: "enableMLB")
-    let enableBNCAA = UserDefaults.standard.bool(forKey: "enableBNCAA")
-    let enableSNCAA = UserDefaults.standard.bool(forKey: "enableSNCAA")
+    var enableMLB: Bool { UserDefaults.standard.bool(forKey: "enableMLB") }
+    var enableBNCAA: Bool { UserDefaults.standard.bool(forKey: "enableBNCAA") }
+    var enableSNCAA: Bool { UserDefaults.standard.bool(forKey: "enableSNCAA") }
 
-    let enableF1 = UserDefaults.standard.bool(forKey: "enableF1")
-    let enableNC = UserDefaults.standard.bool(forKey: "enableNC")
-    let enableNCS = UserDefaults.standard.bool(forKey: "enableNCS")
-    let enableNCT = UserDefaults.standard.bool(forKey: "enableNCT")
-    let enableIRL = UserDefaults.standard.bool(forKey: "enableIRL")
+    var enableF1: Bool { UserDefaults.standard.bool(forKey: "enableF1") }
+    var enableNC: Bool { UserDefaults.standard.bool(forKey: "enableNC") }
+    var enableNCS: Bool { UserDefaults.standard.bool(forKey: "enableNCS") }
+    var enableNCT: Bool { UserDefaults.standard.bool(forKey: "enableNCT") }
+    var enableIRL: Bool { UserDefaults.standard.bool(forKey: "enableIRL") }
 
-    let enablePGA = UserDefaults.standard.bool(forKey: "enablePGA")
-    let enableLPGA = UserDefaults.standard.bool(forKey: "enableLPGA")
+    var enablePGA: Bool { UserDefaults.standard.bool(forKey: "enablePGA") }
+    var enableLPGA: Bool { UserDefaults.standard.bool(forKey: "enableLPGA") }
 
-    let enableMLS = UserDefaults.standard.bool(forKey: "enableMLS")
-    let enableNWSL = UserDefaults.standard.bool(forKey: "enableNWSL")
-    let enableUEFA = UserDefaults.standard.bool(forKey: "enableUEFA")
-    let enableEUEFA = UserDefaults.standard.bool(forKey: "enableEUEFA")
-    let enableWUEFA = UserDefaults.standard.bool(forKey: "enableWUEFA")
-    let enableMEX = UserDefaults.standard.bool(forKey: "enableMEX")
-    let enableFRA = UserDefaults.standard.bool(forKey: "enableFRA")
-    let enableNED = UserDefaults.standard.bool(forKey: "enableNED")
-    let enablePOR = UserDefaults.standard.bool(forKey: "enablePOR")
-    let enableEPL = UserDefaults.standard.bool(forKey: "enableEPL")
-    let enableWEPL = UserDefaults.standard.bool(forKey: "enableWEPL")
-    let enableESP = UserDefaults.standard.bool(forKey: "enableESP")
-    let enableGER = UserDefaults.standard.bool(forKey: "enableGER")
-    let enableITA = UserDefaults.standard.bool(forKey: "enableITA")
+    var enableMLS: Bool { UserDefaults.standard.bool(forKey: "enableMLS") }
+    var enableNWSL: Bool { UserDefaults.standard.bool(forKey: "enableNWSL") }
+    var enableUEFA: Bool { UserDefaults.standard.bool(forKey: "enableUEFA") }
+    var enableEUEFA: Bool { UserDefaults.standard.bool(forKey: "enableEUEFA") }
+    var enableWUEFA: Bool { UserDefaults.standard.bool(forKey: "enableWUEFA") }
+    var enableMEX: Bool { UserDefaults.standard.bool(forKey: "enableMEX") }
+    var enableFRA: Bool { UserDefaults.standard.bool(forKey: "enableFRA") }
+    var enableNED: Bool { UserDefaults.standard.bool(forKey: "enableNED") }
+    var enablePOR: Bool { UserDefaults.standard.bool(forKey: "enablePOR") }
+    var enableEPL: Bool { UserDefaults.standard.bool(forKey: "enableEPL") }
+    var enableWEPL: Bool { UserDefaults.standard.bool(forKey: "enableWEPL") }
+    var enableESP: Bool { UserDefaults.standard.bool(forKey: "enableESP") }
+    var enableGER: Bool { UserDefaults.standard.bool(forKey: "enableGER") }
+    var enableITA: Bool { UserDefaults.standard.bool(forKey: "enableITA") }
 
-    let enableFFWC = UserDefaults.standard.bool(forKey: "enableFFWC")
-    let enableFFWWC = UserDefaults.standard.bool(forKey: "enableFFWWC")
-    let enableFFWCQUEFA = UserDefaults.standard.bool(forKey: "enableFFWCQUEFA")
-    let enableCONCACAF = UserDefaults.standard.bool(forKey: "enableCONCACAF")
-    let enableCONMEBOL = UserDefaults.standard.bool(forKey: "enableCONMEBOL")
-    let enableCAF = UserDefaults.standard.bool(forKey: "enableCAF")
-    let enableAFC = UserDefaults.standard.bool(forKey: "enableAFC")
-    let enableOFC = UserDefaults.standard.bool(forKey: "enableOFC")
+    var enableFFWC: Bool { UserDefaults.standard.bool(forKey: "enableFFWC") }
+    var enableFFWWC: Bool { UserDefaults.standard.bool(forKey: "enableFFWWC") }
+    var enableFFWCQUEFA: Bool { UserDefaults.standard.bool(forKey: "enableFFWCQUEFA") }
+    var enableCONCACAF: Bool { UserDefaults.standard.bool(forKey: "enableCONCACAF") }
+    var enableCONMEBOL: Bool { UserDefaults.standard.bool(forKey: "enableCONMEBOL") }
+    var enableCAF: Bool { UserDefaults.standard.bool(forKey: "enableCAF") }
+    var enableAFC: Bool { UserDefaults.standard.bool(forKey: "enableAFC") }
+    var enableOFC: Bool { UserDefaults.standard.bool(forKey: "enableOFC") }
 
-    let enableATP = UserDefaults.standard.bool(forKey: "enableATP")
-    let enableWTA = UserDefaults.standard.bool(forKey: "enableWTA")
+    var enableATP: Bool { UserDefaults.standard.bool(forKey: "enableATP") }
+    var enableWTA: Bool { UserDefaults.standard.bool(forKey: "enableWTA") }
 
-    let enableUFC = UserDefaults.standard.bool(forKey: "enableUFC")
+    var enableUFC: Bool { UserDefaults.standard.bool(forKey: "enableUFC") }
 
-    let enableNLL = UserDefaults.standard.bool(forKey: "enableNLL")
-    let enablePLL = UserDefaults.standard.bool(forKey: "enablePLL")
-    let enableLNCAAM = UserDefaults.standard.bool(forKey: "enableLNCAAM")
-    let enableLNCAAF = UserDefaults.standard.bool(forKey: "enableLNCAAF")
+    var enableNLL: Bool { UserDefaults.standard.bool(forKey: "enableNLL") }
+    var enablePLL: Bool { UserDefaults.standard.bool(forKey: "enablePLL") }
+    var enableLNCAAM: Bool { UserDefaults.standard.bool(forKey: "enableLNCAAM") }
+    var enableLNCAAF: Bool { UserDefaults.standard.bool(forKey: "enableLNCAAF") }
 
-    let enableVNCAAM = UserDefaults.standard.bool(forKey: "enableVNCAAM")
-    let enableVNCAAF = UserDefaults.standard.bool(forKey: "enableVNCAAF")
+    var enableVNCAAM: Bool { UserDefaults.standard.bool(forKey: "enableVNCAAM") }
+    var enableVNCAAF: Bool { UserDefaults.standard.bool(forKey: "enableVNCAAF") }
 
-    let enableOMIHC = UserDefaults.standard.bool(forKey: "enableOMIHC")
-    let enableOWIHC = UserDefaults.standard.bool(forKey: "enableOWIHC")
-    let enableOMB = UserDefaults.standard.bool(forKey: "enableOMB")
-    let enableOWB = UserDefaults.standard.bool(forKey: "enableOWB")
+    var enableOMIHC: Bool { UserDefaults.standard.bool(forKey: "enableOMIHC") }
+    var enableOWIHC: Bool { UserDefaults.standard.bool(forKey: "enableOWIHC") }
+    var enableOMB: Bool { UserDefaults.standard.bool(forKey: "enableOMB") }
+    var enableOWB: Bool { UserDefaults.standard.bool(forKey: "enableOWB") }
+
+    // Data Models
+
+    private let nhlVM = GamesListView()
+    private let hncaamVM = GamesListView()
+    private let hncaafVM = GamesListView()
+
+    private let nbaVM = GamesListView()
+    private let wnbaVM = GamesListView()
+    private let ncaamVM = GamesListView()
+    private let ncaafVM = GamesListView()
+
+    private let nflVM = GamesListView()
+    private let fncaaVM = GamesListView()
+
+    private let mlbVM = GamesListView()
+    private let bncaaVM = GamesListView()
+    private let sncaaVM = GamesListView()
+
+    private let f1VM = GamesListView()
+    private let ncVM = GamesListView()
+    private let ncsVM = GamesListView()
+    private let nctVM = GamesListView()
+    private let irlVM = GamesListView()
+
+    private let pgaVM = GamesListView()
+    private let lpgaVM = GamesListView()
+
+    private let uefaVM = GamesListView()
+    private let euefaVM = GamesListView()
+    private let wuefaVM = GamesListView()
+    private let mlsVM = GamesListView()
+    private let nwslVM = GamesListView()
+    private let mexVM = GamesListView()
+    private let fraVM = GamesListView()
+    private let nedVM = GamesListView()
+    private let porVM = GamesListView()
+    private let eplVM = GamesListView()
+    private let weplVM = GamesListView()
+    private let espVM = GamesListView()
+    private let gerVM = GamesListView()
+    private let itaVM = GamesListView()
+
+    private let atpVM = TennisListView()
+    private let wtaVM = TennisListView()
+
+//    private let ufcVM = GamesListView()
+
+    private let nllVM = GamesListView()
+    private let pllVM = GamesListView()
+    private let lncaamVM = GamesListView()
+    private let lncaafVM = GamesListView()
+
+    private let vncaamVM = GamesListView()
+    private let vncaafVM = GamesListView()
+
+    private let omihcVM = GamesListView()
+    private let owihcVM = GamesListView()
+    private let ombVM = GamesListView()
+    private let owbVM = GamesListView()
+
+    private let ffwcVM = GamesListView()
+    private let ffwwcVM = GamesListView()
+    private let ffwcquefaVM = GamesListView()
+    private let conmebolVM = GamesListView()
+    private let concacafVM = GamesListView()
+    private let cafVM = GamesListView()
+    private let afcVM = GamesListView()
+    private let ofcVM = GamesListView()
 
     // Refresh System
 
@@ -110,11 +182,6 @@ class RefreshManager: NSObject, ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: currentInterval, repeats: true) { _ in
             action()
         }
-    }
-
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 
     override init() {
@@ -134,6 +201,7 @@ class RefreshManager: NSObject, ObservableObject {
     }
 
     deinit {
-        stopTimer()
+        timer?.invalidate()
+        timer = nil
     }
 }
