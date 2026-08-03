@@ -944,6 +944,13 @@ struct MenuScoresApp: App {
             Divider()
 
             Button {
+                FavoritesManager.shared.getSearchTargets()
+            } label: {
+                Text("Test Pin")
+            }
+            .keyboardShortcut("p")
+
+            Button {
                 updateManager.getUpdateData(manualCheck: true)
             } label: {
                 Text("Check for Updates")

@@ -9,6 +9,11 @@ import DynamicNotchKit
 import Foundation
 import SwiftUI
 
+struct FavoriteTarget {
+    let leagueKey: String
+    let teamID: String
+}
+
 class FavoritesManager: ObservableObject {
     static let shared = FavoritesManager()
 
@@ -121,30 +126,7 @@ class FavoritesManager: ObservableObject {
         saveFavorites()
     }
 
-    // Auto Pin Functionality
-
-    @MainActor
-    func findGame(in games: [Event], favorites: [FavoriteTeam], league: String) -> Event? {
-        let leagueFavorites = favorites.filter { $0.leagueKey == league }
-
-        for favorite in leagueFavorites {
-            let teamGames = games.filter { game in
-                game.competitions.first?.competitors?.contains {
-                    $0.team?.id == favorite.id
-
-                } ?? false
-            }
-
-            if let liveGame = teamGames.first(where: {
-                $0.status.type.state == "in"
-
-            }) {
-                return liveGame
-            }
-        }
-
-        return nil
-    }
+    // Auto Pin Methods
 
     @MainActor
     func clearFinishedGame(
@@ -225,60 +207,21 @@ class FavoritesManager: ObservableObject {
         currentGameState.wrappedValue = game.status.type.state
     }
 
+    // Auto Pin Functionality
+
     @MainActor
-    func checkForFavoriteGames(
-        in vm: GamesListView,
-        league: String,
-        currentGameID: Binding<String>,
-        currentGameState: Binding<String>,
-        currentTitle: Binding<String>
-    ) async {
-        @AppStorage("autoPinFavorites") var autoPinFavorites = false
-        @AppStorage("selectedPinType") var selectedPinType: PinType = .notch
+    func getSearchTargets() -> [FavoriteTarget] {
+        var targets: [FavoriteTarget] = []
 
-        enum PinType: String, CaseIterable, Identifiable {
-            case menubar = "Menubar"
-            case notch = "Notch"
+        for favorite in favorites {
+            let target = FavoriteTarget(leagueKey: favorite.leagueKey, teamID: favorite.id)
 
-            var id: String { rawValue }
-        }
-
-        guard autoPinFavorites else { return }
-
-        let favorites = FavoritesManager.shared.favorites
-        let rawSport = FavoriteTeams.mappings[league]?.sport ?? "Hockey"
-        let sportName = rawSport.prefix(1).uppercased() + rawSport.dropFirst().lowercased()
-
-        if let updatedGame = vm.games.first(where: { $0.id == currentGameID.wrappedValue }) {
-            currentGameState.wrappedValue = updatedGame.status.type.state
-
-            if selectedPinType == .menubar {
-                currentTitle.wrappedValue = displayText(for: updatedGame, league: league)
-            }
-
-            if selectedPinType == .notch {
-                notchViewModel.game = updatedGame
-            }
-
-            if currentGameState.wrappedValue == "post" {
-                await clearFinishedGame(
-                    currentGameID: currentGameID,
-                    currentGameState: currentGameState,
-                    currentTitle: currentTitle
-                )
+            if !targets.contains(where: { $0.leagueKey == target.leagueKey && $0.teamID == target.teamID }) {
+                targets.append(target)
             }
         }
 
-        if let bestGame = findGame(in: vm.games, favorites: favorites, league: league) {
-            if currentGameID.wrappedValue != bestGame.id && (!dismissedPin || dismissedGameID != bestGame.id) {
-                Task { @MainActor in
-                    if selectedPinType == .notch {
-                        await updateNotch(for: bestGame, sport: sportName, league: league, currentGameID: currentGameID, currentGameState: currentGameState, currentTitle: currentTitle)
-                    } else {
-                        await updateMenuBar(for: bestGame, league: league, currentGameID: currentGameID, currentGameState: currentGameState, currentTitle: currentTitle)
-                    }
-                }
-            }
-        }
+        print(targets)
+        return targets
     }
 }
