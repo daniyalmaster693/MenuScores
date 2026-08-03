@@ -85,6 +85,8 @@ struct FavoritesSettingsView: View {
         let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
         if sport == "racing" {
             return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+        } else if sport == "golf" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&h=80&w=80&scale=crop&cquality=40"
         } else if sport == "volleyball" {
             return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
         } else {
@@ -270,6 +272,8 @@ struct FavoriteTeamRow: View {
         let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
         if sport == "racing" {
             return "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+        } else if sport == "golf" {
+            return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-golf.png&h=80&w=80&scale=crop&cquality=40"
         } else if sport == "volleyball" {
             return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
         } else {
