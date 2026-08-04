@@ -60,13 +60,13 @@ struct TennisMenu: View {
                                     return competitionDate == currentDate
                                 }
 
-                                Text(currentDate)
-                                    .font(.headline)
-                                Divider().padding(.bottom)
-
                                 if sortedDates.isEmpty {
                                     Text("No Games Scheduled")
                                 } else {
+                                    Text(currentDate)
+                                        .font(.headline)
+                                    Divider().padding(.bottom)
+
                                     ForEach(sortedDates, id: \.id) { competition in
                                         let team1 = competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1"
                                         let team2 = competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2"
