@@ -36,6 +36,12 @@ class RefreshManager: NSObject, ObservableObject {
         }
     }
 
+    // Auto Pin Settings
+
+    private var autoPinFavorites: Bool {
+        UserDefaults.standard.bool(forKey: "autoPinFavorites")
+    }
+
     // Notification Settings
 
     private var notiGameStart: Bool {
@@ -215,11 +221,13 @@ class RefreshManager: NSObject, ObservableObject {
                     action()
                 }
 
-                await FavoritesManager.shared.checkForFavorites(
-                    currentGameID,
-                    currentGameState,
-                    currentTitle
-                )
+                if self?.autoPinFavorites == true {
+                    await FavoritesManager.shared.checkForFavorites(
+                        currentGameID,
+                        currentGameState,
+                        currentTitle
+                    )
+                }
             }
         }
     }
