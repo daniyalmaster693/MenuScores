@@ -30,10 +30,6 @@ class FavoritesManager: ObservableObject {
         loadFavorites()
     }
 
-    // Notch Data
-
-    private let notchViewModel = NotchViewModel()
-
     // Pin Data
 
     private var dismissedPin = false
@@ -143,10 +139,10 @@ class FavoritesManager: ObservableObject {
         currentGameState.wrappedValue = game.status.type.state
         currentTitle.wrappedValue = ""
 
-        notchViewModel.game = game
+        NotchViewModel.shared.game = game
 
-        if let existingNotch = NotchViewModel.shared.notch {
-            await existingNotch.hide()
+        if let notch = NotchViewModel.shared.notch {
+            await notch.hide()
             NotchViewModel.shared.game = nil
             NotchViewModel.shared.currentGameID = ""
             NotchViewModel.shared.currentGameState = ""
@@ -158,11 +154,11 @@ class FavoritesManager: ObservableObject {
             hoverBehavior: .all,
             style: .notch
         ) {
-            Info(notchViewModel: self.notchViewModel, sport: sport, league: league)
+            Info(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
         } compactLeading: {
-            CompactLeading(notchViewModel: self.notchViewModel, sport: sport)
+            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport)
         } compactTrailing: {
-            CompactTrailing(notchViewModel: self.notchViewModel, sport: sport)
+            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport)
         }
 
         NotchViewModel.shared.notch = newNotch
@@ -352,7 +348,7 @@ class FavoritesManager: ObservableObject {
             if selectedPinType == .menubar {
                 currentTitle.wrappedValue = displayText(for: currentGame, league: currentLeague)
             } else if selectedPinType == .notch {
-                notchViewModel.game = currentGame
+                NotchViewModel.shared.game = currentGame
             }
 
             if currentGameState.wrappedValue == "post" {
