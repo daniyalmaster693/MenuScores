@@ -206,6 +206,7 @@ struct FavoritesSettingsView: View {
                                 }
                                 .disabled(index == 0)
                                 .buttonStyle(.plain)
+                                .help("Increase priority")
 
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.2)) {
@@ -219,6 +220,7 @@ struct FavoritesSettingsView: View {
                                 }
                                 .disabled(index == favoritesManager.favorites.count - 1)
                                 .buttonStyle(.plain)
+                                .help("Decrease priority")
 
                                 Button {
                                     favoritesManager.favorites.removeAll {
@@ -229,6 +231,7 @@ struct FavoritesSettingsView: View {
                                     Image(systemName: "star.fill")
                                 }
                                 .buttonStyle(.plain)
+                                .help("Remove from favorites")
                             }
                         }
                     }
@@ -253,6 +256,7 @@ struct FavoritesSettingsView: View {
                             .controlSize(.small)
                             .buttonStyle(.plain)
                             .foregroundColor(.secondary)
+                            .help("Important!")
                         }
                     }
                 }
@@ -359,6 +363,7 @@ struct FavoriteTeamRow: View {
             }
             .padding(.trailing, 15)
             .buttonStyle(.plain)
+            .help("Add to favorites")
         }
         .padding(.top, 5)
     }
