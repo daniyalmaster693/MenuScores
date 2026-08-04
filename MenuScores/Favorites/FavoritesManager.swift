@@ -316,7 +316,7 @@ class FavoritesManager: ObservableObject {
                 }
             }
 
-            if let liveGame = matchingGames.first(where: { $0.status.type.state == "pre" }) {
+            if let liveGame = matchingGames.first(where: { $0.status.type.state == "in" }) {
                 return (game: liveGame, leagueKey: target.leagueKey)
             }
         }
@@ -369,7 +369,7 @@ class FavoritesManager: ObservableObject {
 
         if !dismissedPin || dismissedGameID != currentGame.id {
             let sport = FavoriteTeams.mappings[currentLeague]?.sport ?? "hockey"
-            let sportName = sport.prefix(1).uppercased() + sport.dropFirst().lowercased()
+            let sportName = (currentLeague.uppercased() == "F1") ? "F1" : (sport.prefix(1).uppercased() + sport.dropFirst().lowercased())
 
             Task { @MainActor in
                 if selectedPinType == .notch {
