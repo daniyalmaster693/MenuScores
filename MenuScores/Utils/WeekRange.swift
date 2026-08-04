@@ -7,30 +7,24 @@
 
 import Foundation
 
-func getWeekStart() -> String {
+func getRangeStart() -> String {
     let calendar = Calendar.current
     let today = Date()
-    let weekday = calendar.component(.weekday, from: today)
-    let startOfWeek = calendar.date(byAdding: .day, value: -(weekday - 1), to: today)!
+    let startDate = calendar.date(byAdding: .day, value: -2, to: today)!
 
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyyMMdd"
-    let startDateString = formatter.string(from: startOfWeek)
-
-    return startDateString
+    return formatter.string(from: startDate)
 }
 
-func getWeekEnd() -> String {
+func getRangeEnd() -> String {
     let calendar = Calendar.current
     let today = Date()
-    let weekday = calendar.component(.weekday, from: today)
-
-    let endOfWeek = calendar.date(byAdding: .day, value: 7 - weekday, to: today)!
+    let endDate = calendar.date(byAdding: .day, value: 2, to: today)!
 
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyyMMdd"
-    let endDateString = formatter.string(from: endOfWeek)
-    return endDateString
+    return formatter.string(from: endDate)
 }
 
 func getCurrentYear() -> String {
