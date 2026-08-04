@@ -162,8 +162,8 @@ struct FavoritesSettingsView: View {
 
                 Section {
                     if favoritesManager.favorites.isEmpty {
-                        Text("No favorite teams selected.")
-                            .foregroundStyle(.primary)
+                        Text("No teams added.")
+                            .foregroundStyle(.secondary)
                     } else {
                         ForEach(Array(favoritesManager.favorites.enumerated()), id: \.element.uniqueID) { index, favorite in
                             HStack {
@@ -259,6 +259,10 @@ struct FavoritesSettingsView: View {
                             .help("Important!")
                         }
                     }
+                } footer: {
+                    Text("Use the arrows to set priority. Higher priority teams take precedence when multiple games are live.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
 
                 Section("Teams") {
