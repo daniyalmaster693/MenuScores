@@ -260,9 +260,11 @@ struct FavoritesSettingsView: View {
                         }
                     }
                 } footer: {
-                    Text("Use the arrows to set priority. Higher priority teams take precedence when multiple games are live.")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                    if !favoritesManager.favorites.isEmpty {
+                        Text("Use the arrows to set priority. Higher priority teams take precedence when multiple games are live.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
 
                 Section("Teams") {
