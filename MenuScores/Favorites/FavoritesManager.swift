@@ -302,16 +302,21 @@ class FavoritesManager: ObservableObject {
 
         for target in targets {
             let key = target.leagueKey.uppercased()
-
             guard let vm = leagueVMs[key] as? GamesListView else { continue }
 
-            let matchingGames = vm.games.filter { game in
-                game.competitions.first?.competitors?.contains { competitor in
-                    competitor.team?.id == target.teamID
-                } ?? false
+            let matchingGames: [Event]
+
+            if target.teamID.hasPrefix("league-") {
+                matchingGames = vm.games
+            } else {
+                matchingGames = vm.games.filter { game in
+                    game.competitions.first?.competitors?.contains { competitor in
+                        competitor.team?.id == target.teamID
+                    } ?? false
+                }
             }
 
-            if let liveGame = matchingGames.first(where: { $0.status.type.state == "in" }) {
+            if let liveGame = matchingGames.first(where: { $0.status.type.state == "pre" }) {
                 return (game: liveGame, leagueKey: target.leagueKey)
             }
         }
