@@ -165,7 +165,7 @@ struct FavoritesSettingsView: View {
                         Text("No favorite teams selected.")
                             .foregroundStyle(.primary)
                     } else {
-                        ForEach(favoritesManager.favorites, id: \.uniqueID) { favorite in
+                        ForEach(Array(favoritesManager.favorites.enumerated()), id: \.element.uniqueID) { index, favorite in
                             HStack {
                                 AsyncImage(url: URL(string: favorite.logo ?? fallbackLogo(for: favorite.leagueKey))) { phase in
                                     if let image = phase.image {
@@ -193,6 +193,32 @@ struct FavoritesSettingsView: View {
                                 }
 
                                 Spacer()
+
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        if index > 0 {
+                                            favoritesManager.favorites.swapAt(index, index - 1)
+                                            favoritesManager.saveFavorites()
+                                        }
+                                    }
+                                } label: {
+                                    Image(systemName: "chevron.up")
+                                }
+                                .disabled(index == 0)
+                                .buttonStyle(.plain)
+
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        if index < favoritesManager.favorites.count - 1 {
+                                            favoritesManager.favorites.swapAt(index, index + 1)
+                                            favoritesManager.saveFavorites()
+                                        }
+                                    }
+                                } label: {
+                                    Image(systemName: "chevron.down")
+                                }
+                                .disabled(index == favoritesManager.favorites.count - 1)
+                                .buttonStyle(.plain)
 
                                 Button {
                                     favoritesManager.favorites.removeAll {
