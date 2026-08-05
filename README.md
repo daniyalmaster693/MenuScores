@@ -61,7 +61,7 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 
 ## Usage
 
-Grant MenuScores notification permission from **Settings → Behavior** to receive game start and finish notifications.
+**To use the notifications feature**, you must grant permission for MenuScores to send notifications. An option will be presented to do so in the settings window under the behavior tab by clicking the question mark icon.
 
 1. Click the **radio waves** icon in the menu bar to browse available leagues.
 2. Hovering over a league will show you different games. From there you can select a game to pin to the **menu bar**, **notch**, or open it on ESPN.
