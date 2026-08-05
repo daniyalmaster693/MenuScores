@@ -71,7 +71,7 @@ Grant MenuScores notification permission from **Settings → Behavior** to recei
 
 ### Auto Pin Games
 
-- Note: the Auto Pin feature supports all leagues except Tennis.
+**Note:** the Auto Pin feature supports all leagues except Tennis.
 
 **Configuration**
 
