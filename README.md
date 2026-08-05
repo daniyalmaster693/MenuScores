@@ -82,7 +82,7 @@
 - **Track your favorite teams** - Select your favorite teams and live games will automatically pin to your menu bar or notch once live.
 - **Smart Notifications** - Get notified when a pinned game starts or finishes.
 - **League Control** - Track over 48 different leagues across 12 different sports.
-- **Lightweight & Native** - Built with Swift and SwiftUI for a native feel and seamless macOS integration.
+- **Lightweight & Native** - Built with Swift and SwiftUI for a native performance and seamless macOS integration.
 
 ## Installation
 
@@ -90,7 +90,7 @@
 
 ### Manual Installation
 
-1. Go to the [latest release](https://github.com/daniyalmaster693/MenuScores/releases/latest) and download `MenuScores.zip`.
+1. Open the [latest release](https://github.com/daniyalmaster693/MenuScores/releases/latest) and download `MenuScores.zip`.
 2. Extract the `.zip` file and drag `MenuScores.app` into your **Applications** folder.
 
 **Note:** Because the app is not signed, on first launch, macOS may warn that the app couldn't be verified. To open it:
@@ -136,14 +136,14 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 
 1. Configure your favorite teams directly from the **Favorites** tab in the Settings window by selecting a league to load its teams.
 2. Only enabled leagues are supported. If you add a team and later disable the league, make sure to remove the team.
-3. Click the star icon next to add it to your favorites.
+3. Click the star icon next to a team to add it to your favorites.
 4. Teams added as favorites will be displayed in the favorite teams section. You can choose to remove a team using the star icon or change it's priority using the arrows.
-5. The app uses your team priority order to decide which game to pin if multiple favorite teams are playing live simultaneously. Higher-ranked teams take precedence.
+5. The app uses the order of teams as a priority list to decide which game to pin if multiple favorite teams are playing live simultaneously. Higher-ranked teams take precedence.
 
 **Usage**
 
 6. Games are automatically pinned once they go live, and update in real time.
-7. If you have manually pinned game, the app will clear the game in favour of an auto pin game.
+7. If you have a manually pinned game, the app will clear the game in favour of an auto pin game.
 8. If you manually clear an auto pin game, the app will not auto pin that game again (unless you restart the app).
 9. Once an auto pin game finishes, it will automatically be cleared from the notch/menubar.
 
