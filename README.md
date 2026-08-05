@@ -71,8 +71,6 @@ Grant MenuScores notification permission from **Settings → Behavior** to recei
 
 ### Auto Pin Games
 
-**Note:** the Auto Pin feature supports all leagues except Tennis.
-
 **Configuration**
 
 1. Configure your favorite teams directly from the **Favorites** tab in the Settings window by selecting a league to load its teams.
@@ -87,6 +85,8 @@ Grant MenuScores notification permission from **Settings → Behavior** to recei
 7. If you have a manually pinned game, the app will clear the game in favour of an auto pin game.
 8. If you manually clear an auto pin game, the app will not auto pin that game again (unless you restart the app).
 9. Once an auto pin game finishes, it will automatically be cleared from the notch/menubar.
+
+**Note:** the Auto Pin feature supports all leagues except Tennis.
 
 ## Roadmap
 
