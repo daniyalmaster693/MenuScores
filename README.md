@@ -28,9 +28,9 @@
 - **Wide Coverage** - Track over 48 different leagues across 12 different sports.
 - **Lightweight & Native** - Built with Swift and SwiftUI for a native performance and seamless macOS integration.
 
-## Supported Leagues
+## Supported Sports
 
-Supports 50+ leagues across 12 sports, including NHL, NBA, NFL, MLB, Premier League, MLS, Champions League, F1, NASCAR, PGA, ATP, and many more.
+MenuScores supports 50+ leagues across 12 sports.
 
 See [LEAGUES.md](LEAGUES.md) for the complete list.
 
