@@ -62,7 +62,7 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 
 ## Usage
 
-- Grant MenuScores notification permission from **Settings → Behavior** to receive game start and finish notifications.
+Grant MenuScores notification permission from **Settings → Behavior** to receive game start and finish notifications.
 
 1. Click the **radio waves** icon in the menu bar to browse available leagues.
 2. Hovering over a league will show you different games. From there you can select a game to pin to the **menu bar**, **notch**, or open it on ESPN.
@@ -72,7 +72,7 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 
 ### Auto Pin Games
 
-**Note: the Auto Pin feature supports all leagues except Tennis.**
+- Note: the Auto Pin feature supports all leagues except Tennis.
 
 **Configuration**
 
