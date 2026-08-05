@@ -17,7 +17,7 @@
 <br>
 <br>
 
-<img src="/Assets/Mockups/Repo-Cover.png" width="100%" alt="MenuScores"/><br/>
+<img src="/Assets/Mockups/MenuScores-Cover.png" width="100%" alt="MenuScores"/><br/>
 
 ## Supported Leagues
 
