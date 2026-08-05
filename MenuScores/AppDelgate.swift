@@ -22,7 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             tour.present(
                 pages: [
-                    TourPage(imageName: "tour-welcome", title: "Welcome to MenuScores", description: "Live scores - Right From Your Notch"),
+                    TourPage(imageName: "tour-welcome", title: "Welcome to MenuScores", description: "Live Scores, Designed for Mac"),
                     TourPage(imageName: "tour-detailed", title: "Sleek and Minimal Display", description: "Stay effortlessly updated from the Menubar or Notch."),
                     TourPage(imageName: "tour-views", title: "Know the Matchup", description: "View relevant details before games to stay up to date."),
                     TourPage(imageName: "tour-favorites", title: "Track your Favorite Teams", description: "Choose your favorite teams and we'll handle the pinning for you."),
