@@ -103,7 +103,7 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 
 ## Usage
 
-- **In order to use the notifications feature**, you must grant permission for MenuScores to send notifications. An option will be presented to do so in the settings window under the behavior tab.
+- **In order to use the notifications feature**, you must grant permission for MenuScores to send notifications. An option will be presented to do so in the settings window under the behavior tab by clicking the question mark icon.
 
 1. Clicking on the radio waves icon will show a list available leagues.
 2. Hovering over a league will show a dropdown of all the games for the day in that league.
