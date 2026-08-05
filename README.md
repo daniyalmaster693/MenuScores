@@ -19,70 +19,20 @@
 
 <img src="/Assets/Mockups/MenuScores-Cover.png" width="100%" alt="MenuScores"/><br/>
 
-## Supported Leagues
-
-- NHL
-- Men's College Hockey
-- Women's College Hockey
-- NBA
-- WNBA
-- Men's College Basketball
-- Women's College Basketball
-- NFL
-- College Football
-- MLB
-- College Baseball
-- College Softball
-- Champions League
-- Europa Champions League
-- Women's Champions League
-- MLS
-- National Women's Soccer League
-- Premier League
-- Women's Super League
-- La Liga
-- Bundesliga
-- Serie A
-- LIGA MX
-- Ligue 1
-- Eredivisie
-- Primeira Liga
-- F1
-- Nascar Premier
-- Nascar Secondary
-- Nascar Truck
-- IndyCar
-- PGA
-- LPGA
-- ATP
-- WTA
-- NLL
-- PLL
-- Men's College Lacrosse
-- Women's College Lacrosse
-- Men's College Volleyball
-- Women's College Volleyball
-- Men's Olympic Ice Hockey
-- Women's Olympic Ice Hockey
-- Men's Olympic Basketball
-- Women's Olympic Basketball
-- FIFA World Cup
-- FIFA Women's World Cup
-- FIFA World Cup UEFA Qualifiers
-- FIFA World Cup CONMEBOL Qualifiers
-- FIFA World Cup CONCACAF Qualifiers
-- FIFA World Cup African Qualifiers
-- FIFA World Cup Asian Qualifiers
-- FIFA World Cup Oceanian Qualifiers
-
 ## Features
 
 - **Live Notch Scores** - Pin games to your notch and receive real-time score updates and game info available at a glace.
 - **Live Menubar Scores** - Pin games to your menu bar and receive real-time score updates available at a glance.
 - **Track your favorite teams** - Select your favorite teams and live games will automatically pin to your menu bar or notch once live.
 - **Smart Notifications** - Get notified when a pinned game starts or finishes.
-- **League Control** - Track over 48 different leagues across 12 different sports.
+- **Wide Coverage** - Track over 48 different leagues across 12 different sports.
 - **Lightweight & Native** - Built with Swift and SwiftUI for a native performance and seamless macOS integration.
+
+## Supported Leagues
+
+Supports 50+ leagues across 12 sports, including NHL, NBA, NFL, MLB, Premier League, MLS, Champions League, F1, NASCAR, PGA, ATP, and many more.
+
+See [Leagues.md](Leagues.md) for the complete list.
 
 ## Installation
 
@@ -112,21 +62,13 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 
 ## Usage
 
-- **In order to use the notifications feature**, you must grant permission for MenuScores to send notifications. An option will be presented to do so in the settings window under the behavior tab by clicking the question mark icon.
+- Grant MenuScores notification permission from **Settings → Behavior** to receive game start and finish notifications.
 
-1. Clicking on the radio waves icon will show a list available leagues.
+1. Click the **radio waves** icon in the menu bar to browse available leagues.
+2. Hovering over a league will show you different games. From there you can select a game to pin to the **menu bar**, **notch**, or open it on ESPN.
+3. Configure enabled leagues, favorite teams, notifications, and other preferences from the **Settings** window.
 
-2. Hovering over a league show you different games.
-
-3. Hovering over a game will allow you to choose from pinning the game to your menubar, notch, or viewing the game page in your browser on ESPN. **Important: If you pin a game to the notch and then to the menubar, the app will only update the newest pin**.
-
-**Note: the notch feature works best on Macbooks with a notch. It will still work on non notched devices, but hovering over it will not open the expanded view. You can still expand the notch using the expand notch shortcut**
-
-4. You can use the clear set game option to remove a game, or pin a different game to clear a pinned game.
-
-5. When a game is pinned to the notch, expanding it will reveal different info depending on the game state and league.
-
-6. You can configure enabled leagues from the preferences window.
+**Note:** The notch display works best on MacBooks with a notch. On Macs without a notch, the notch can still be expanded using the **Expand Notch** keyboard shortcut.
 
 ### Auto Pin Games
 
@@ -150,13 +92,10 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 ## Roadmap
 
 - [x] ~Notch Display for Games~
-- [x] ~Links to more game info~
 - [x] ~Detailed Leaderboards for F1~
 - [x] ~Recent plays in the notch~
 - [x] ~Headline features for pre game and post game matchups~
 - [x] ~Additional live game info (outs, strikes, down placements, weather info, arena info)~
-- [x] ~Animated score updates and game loading~
-- [x] ~Higher quality icons for notch views~
 - [x] ~Automatically pin games to the notch or menubar (favorite teams feature)~
 - [x] ~Tennis Integration~
 - [x] ~Multi day schedules and scores~
