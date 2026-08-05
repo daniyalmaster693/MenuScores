@@ -34,6 +34,7 @@ class FavoritesManager: ObservableObject {
 
     private var dismissedPin = false
     private var dismissedGameID = ""
+    private var isAutoPinned = false
 
     // Notch Behaviors
 
@@ -135,6 +136,8 @@ class FavoritesManager: ObservableObject {
         currentGameState: Binding<String>,
         currentTitle: Binding<String>
     ) async {
+        isAutoPinned = true
+
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
         currentTitle.wrappedValue = ""
@@ -173,6 +176,8 @@ class FavoritesManager: ObservableObject {
         currentGameState: Binding<String>,
         currentTitle: Binding<String>
     ) async {
+        isAutoPinned = true
+
         currentTitle.wrappedValue = displayText(for: game, league: league)
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
@@ -184,6 +189,8 @@ class FavoritesManager: ObservableObject {
         currentGameState: Binding<String>,
         currentTitle: Binding<String>
     ) async {
+        isAutoPinned = false
+
         currentTitle.wrappedValue = ""
         currentGameID.wrappedValue = ""
         currentGameState.wrappedValue = ""
@@ -341,7 +348,18 @@ class FavoritesManager: ObservableObject {
         }
 
         guard autoPinFavorites else { return }
-        guard let result = findGame() else { return }
+
+        guard let result = findGame() else {
+            if isAutoPinned && !currentGameID.wrappedValue.isEmpty {
+                await clearFinishedGame(
+                    currentGameID: currentGameID,
+                    currentGameState: currentGameState,
+                    currentTitle: currentTitle
+                )
+            }
+
+            return
+        }
 
         let currentGame = result.game
         let currentLeague = result.leagueKey
@@ -354,14 +372,6 @@ class FavoritesManager: ObservableObject {
                 currentTitle.wrappedValue = displayText(for: currentGame, league: currentLeague)
             } else if selectedPinType == .notch {
                 NotchViewModel.shared.game = currentGame
-            }
-
-            if currentGameState.wrappedValue == "post" {
-                await clearFinishedGame(
-                    currentGameID: currentGameID,
-                    currentGameState: currentGameState,
-                    currentTitle: currentTitle
-                )
             }
 
             return
