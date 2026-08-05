@@ -32,7 +32,7 @@
 
 Supports 50+ leagues across 12 sports, including NHL, NBA, NFL, MLB, Premier League, MLS, Champions League, F1, NASCAR, PGA, ATP, and many more.
 
-See [Leagues.md](Leagues.md) for the complete list.
+See [LEAGUES.md](LEAGUES.md) for the complete list.
 
 ## Installation
 
