@@ -1,5 +1,7 @@
 ## Supported Leagues
 
+Don't see your favorite league? [Open a new issue](https://github.com/daniyalmaster693/MenuScores/issues/new) and let us know what you would like to see added.
+
 **Hockey**
 
 - NHL
