@@ -30,7 +30,7 @@
 
 ## Supported Sports
 
-MenuScores supports 50+ leagues across 12 sports.
+MenuScores supports 50+ leagues across 12 different sports.
 
 See [LEAGUES.md](LEAGUES.md) for the complete list.
 
