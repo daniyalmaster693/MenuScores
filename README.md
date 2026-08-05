@@ -25,7 +25,6 @@
 - **Live Menubar Scores** - Pin games to your menu bar and receive real-time score updates available at a glance.
 - **Track your favorite teams** - Select your favorite teams and live games will automatically pin to your menu bar or notch once live.
 - **Smart Notifications** - Get notified when a pinned game starts or finishes.
-- **Wide Coverage** - Track over 48 different leagues across 12 different sports.
 - **Lightweight & Native** - Built with Swift and SwiftUI for a native performance and seamless macOS integration.
 
 ## Supported Sports
