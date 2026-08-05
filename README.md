@@ -92,9 +92,8 @@ Grant MenuScores notification permission from **Settings → Behavior** to recei
 
 - [x] ~Notch Display for Games~
 - [x] ~Detailed Leaderboards for F1~
-- [x] ~Recent plays in the notch~
+- [x] ~Recent plays and additional game info in the notch~
 - [x] ~Headline features for pre game and post game matchups~
-- [x] ~Additional live game info (outs, strikes, down placements, weather info, arena info)~
 - [x] ~Automatically pin games to the notch or menubar (favorite teams feature)~
 - [x] ~Tennis Integration~
 - [x] ~Multi day schedules and scores~
@@ -102,10 +101,8 @@ Grant MenuScores notification permission from **Settings → Behavior** to recei
 - [ ] Automatic notch expansion for game events (goals, penalties, and key moments)
 - [ ] UFC Integration
 - [ ] Cricket Integration
-- [ ] Updated Menubar control view
-- [ ] Custom Menubar Score Component
-- [ ] Lock Screen Widgets
-- [ ] App Widgets
+- [ ] Updated Menubar Views and custom Menubar Score Component
+- [ ] Widgets
 
 ...and more to come...
 
