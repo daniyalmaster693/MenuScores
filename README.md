@@ -44,7 +44,7 @@ See [LEAGUES.md](LEAGUES.md) for the complete list.
 
 **Note:** Because the app is not signed, on first launch, macOS may warn that the app couldn't be verified. To open it:
 
-1. Click **OK** on the warning prompt.
+1. Click **Done** on the warning prompt.
 2. Open **System Settings → Privacy & Security**.
 3. Scroll down to the security section and click **Open Anyway**.
 
