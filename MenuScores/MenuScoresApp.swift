@@ -725,7 +725,7 @@ struct MenuScoresApp: App {
 
             if enableOMIHC {
                 HockeyMenu(
-                    title: "Men's Olympic Ice Hcokey",
+                    title: "Men's Olympic Ice Hockey",
                     viewModel: omihcVM,
                     league: "OMIHC",
                     fetchURL: Scoreboard.Urls.omihc,
@@ -738,7 +738,7 @@ struct MenuScoresApp: App {
 
             if enableOWIHC {
                 HockeyMenu(
-                    title: "Women's Olympic Ice Hcokey",
+                    title: "Women's Olympic Ice Hockey",
                     viewModel: owihcVM,
                     league: "OWIHC",
                     fetchURL: Scoreboard.Urls.owihc,
