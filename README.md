@@ -40,7 +40,7 @@ See [LEAGUES.md](LEAGUES.md) for the complete list.
 ### Manual Installation
 
 1. Open the [latest release](https://github.com/daniyalmaster693/MenuScores/releases/latest) and download `MenuScores.dmg`.
-2. Open the `.dmg` file and drag `MenuScores.app` into your **Applications** folder.
+2. Open the `.dmg` file and drag the app icon into your **Applications** folder.
 
 **Note:** Because the app is not signed, on first launch, macOS may warn that the app couldn't be verified. To open it:
 
