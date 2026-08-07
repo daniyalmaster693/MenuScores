@@ -29,6 +29,13 @@ struct SettingsView: View {
                     .tag("behavior")
 
                     HStack {
+                        Image(systemName: "bell.badge")
+                            .frame(width: 18, height: 18)
+                        Text("Alerts")
+                    }
+                    .tag("alerts")
+
+                    HStack {
                         Image(systemName: "star")
                             .frame(width: 18, height: 18)
                         Text("Favorites")
@@ -62,6 +69,9 @@ struct SettingsView: View {
                 case "behavior":
                     BehaviorSettingsView()
                         .navigationTitle("Behavior")
+                case "alerts":
+                    AlertSettingsView()
+                        .navigationTitle("Alerts")
                 case "favorites":
                     FavoritesSettingsView()
                         .navigationTitle("Favorites")

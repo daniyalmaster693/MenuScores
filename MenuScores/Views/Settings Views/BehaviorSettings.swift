@@ -16,9 +16,6 @@ struct BehaviorSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
-    @AppStorage("playAlerts") private var enablePlayAlerts = false
-    @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
-
     @State private var notificationStatusMessage: String?
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
