@@ -29,7 +29,7 @@ struct AlertSettingsView: View {
     var body: some View {
         VStack(spacing: 4) {
             Form {
-                Section("Play Alerts") {
+                Section {
                     Toggle(isOn: $enablePlayAlerts) {
                         HStack {
                             Image(systemName: "play.display")
@@ -58,21 +58,52 @@ struct AlertSettingsView: View {
                         HStack {
                             Image(systemName: "timer")
                                 .foregroundColor(.primary)
-                            Text("Alerts Timer: \(String(format: "%.1f", self.alertsTimer))s")
+                            Text("Notch Alert Duration: \(String(format: "%.1f", self.alertsTimer))s")
                         }
-
-                        Text("Controls how long the notch will stay expanded")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.leading, 25)
-                            .padding(.bottom, 10)
 
                         Slider(value: self.$alertsTimer, in: 5 ... 15.0, step: 0.5)
                             .disabled(!enablePlayAlerts || !enableNotch || !enableNotchAlerts)
                     }
+                } header: {
+                    HStack(spacing: 4) {
+                        HStack {
+                            Text("Play Alerts")
+                                .font(.headline)
+                            Spacer()
+
+                            if let message = notificationStatusMessage {
+                                Text(message)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                            Button(action: {
+                                UNUserNotificationCenter.current()
+                                    .requestAuthorization(options: [
+                                        .alert, .sound, .badge,
+                                    ]) { granted, error in
+                                        DispatchQueue.main.async {
+                                            if let error = error {
+                                                notificationStatusMessage =
+                                                    "\(error.localizedDescription)"
+                                            } else if granted {
+                                                notificationStatusMessage =
+                                                    "Permissions granted!"
+                                            }
+                                        }
+                                    }
+                            }) {
+                                Image(systemName: "questionmark.circle")
+                            }
+                            .controlSize(.small)
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
+                            .help("Request notification permissions")
+                        }
+                    }
                 }
 
-                Section {
+                Section("Alert Types") {
                     Toggle(isOn: $enableScoreChanges) {
                         HStack {
                             Image(systemName: "plus.circle")
@@ -117,43 +148,6 @@ struct AlertSettingsView: View {
                         }
                     }
                     .disabled(!enablePlayAlerts)
-                } header: {
-                    HStack(spacing: 4) {
-                        HStack {
-                            Text("Alert Types")
-                                .font(.headline)
-                            Spacer()
-
-                            if let message = notificationStatusMessage {
-                                Text(message)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-
-                            Button(action: {
-                                UNUserNotificationCenter.current()
-                                    .requestAuthorization(options: [
-                                        .alert, .sound, .badge,
-                                    ]) { granted, error in
-                                        DispatchQueue.main.async {
-                                            if let error = error {
-                                                notificationStatusMessage =
-                                                    "\(error.localizedDescription)"
-                                            } else if granted {
-                                                notificationStatusMessage =
-                                                    "Permissions granted!"
-                                            }
-                                        }
-                                    }
-                            }) {
-                                Image(systemName: "questionmark.circle")
-                            }
-                            .controlSize(.small)
-                            .buttonStyle(.plain)
-                            .foregroundColor(.secondary)
-                            .help("Request notification permissions")
-                        }
-                    }
                 }
             }
             .formStyle(.grouped)
