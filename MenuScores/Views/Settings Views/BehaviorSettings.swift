@@ -18,7 +18,7 @@ struct BehaviorSettingsView: View {
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
-    @AppStorage("autoClear") private var enableAutoClear = false
+    @AppStorage("autoClear") private var enableAutoClear = true
 
     let refreshOptions = [
         "10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds",
