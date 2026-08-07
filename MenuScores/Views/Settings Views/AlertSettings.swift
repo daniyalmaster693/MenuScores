@@ -19,6 +19,10 @@ struct AlertSettingsView: View {
     @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
 
     @AppStorage("scoreChanges") private var enableScoreChanges = true
+    @AppStorage("periodStartAlert") private var enablePeriodStartAlert = false
+    @AppStorage("periodEndAlert") private var enablePeriodEndAlert = false
+    @AppStorage("penaltyAlert") private var enablePenaltyAlert = false
+    @AppStorage("timeoutAlert") private var enableTimeoutAlert = false
 
     var body: some View {
         VStack(spacing: 4) {
@@ -36,7 +40,7 @@ struct AlertSettingsView: View {
                         HStack {
                             Image(systemName: "bell")
                                 .foregroundColor(.primary)
-                            Text("Receive notifications for play alerts.")
+                            Text("Receive notifications for play alerts")
                         }
                     }.disabled(!enablePlayAlerts)
 
@@ -66,14 +70,51 @@ struct AlertSettingsView: View {
                     }
                 }
 
-                Section("Alert Types") {
+                Section("Play Alerts") {
                     Toggle(isOn: $enableScoreChanges) {
                         HStack {
                             Image(systemName: "plus.circle")
                                 .foregroundColor(.primary)
                             Text("Score Changes")
                         }
-                    }.disabled(!enablePlayAlerts)
+                    }
+                    .disabled(!enablePlayAlerts)
+
+                    Toggle(isOn: $enablePeriodStartAlert) {
+                        HStack {
+                            Image(systemName: "play.circle")
+                                .foregroundColor(.primary)
+                            Text("Start of Game Segment")
+                        }
+                    }
+                    .disabled(!enablePlayAlerts)
+
+                    Toggle(isOn: $enablePeriodEndAlert) {
+                        HStack {
+                            Image(systemName: "stop.circle")
+                                .foregroundColor(.primary)
+                            Text("End of Game Segment")
+                        }
+                    }
+                    .disabled(!enablePlayAlerts)
+
+                    Toggle(isOn: $enablePenaltyAlert) {
+                        HStack {
+                            Image(systemName: "exclamationmark.circle")
+                                .foregroundColor(.primary)
+                            Text("Penalties & Fouls")
+                        }
+                    }
+                    .disabled(!enablePlayAlerts)
+
+                    Toggle(isOn: $enableTimeoutAlert) {
+                        HStack {
+                            Image(systemName: "stopwatch")
+                                .foregroundColor(.primary)
+                            Text("Timeouts")
+                        }
+                    }
+                    .disabled(!enablePlayAlerts)
                 }
             }
             .formStyle(.grouped)
