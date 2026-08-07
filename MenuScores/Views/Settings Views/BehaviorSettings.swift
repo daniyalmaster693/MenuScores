@@ -18,6 +18,8 @@ struct BehaviorSettingsView: View {
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
+    @AppStorage("autoClear") private var enableAutoClear = true
+
     let refreshOptions = [
         "10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds",
         "50 seconds", "1 minute", "2 minutes", "5 minutes",
@@ -77,33 +79,6 @@ struct BehaviorSettingsView: View {
                     }
                 }
 
-//                Section("Play Alerts") {
-//                    Toggle(isOn: $enablePlayAlerts) {
-//                        HStack {
-//                            Image(systemName: "play.display")
-//                                .foregroundColor(.primary)
-//                            Text("Expand notch automatically for major plays")
-//                        }
-//                    }.disabled(!enableNotch)
-//
-//                    VStack(alignment: .leading, spacing: 6) {
-//                        HStack {
-//                            Image(systemName: "timer")
-//                                .foregroundColor(.primary)
-//                            Text("Alerts Timer: \(String(format: "%.1f", self.alertsTimer))s")
-//                        }
-//
-//                        Text("Controls how long play alerts remain visible")
-//                            .font(.caption)
-//                            .foregroundColor(.secondary)
-//                            .padding(.leading, 25)
-//                            .padding(.bottom, 10)
-//
-//                        Slider(value: self.$alertsTimer, in: 2 ... 12.0, step: 0.5)
-//                            .disabled(!enablePlayAlerts || !enableNotch)
-//                    }
-//                }
-
                 Section("Score Updates") {
                     VStack(alignment: .leading, spacing: 2) {
                         HStack {
@@ -117,6 +92,16 @@ struct BehaviorSettingsView: View {
                             }
                             .pickerStyle(.menu)
                             .frame(width: 150)
+                        }
+                    }
+                }
+
+                Section("Pin Management") {
+                    Toggle(isOn: $enableAutoClear) {
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .foregroundColor(.primary)
+                            Text("Automatically Clear Finished Games")
                         }
                     }
                 }
