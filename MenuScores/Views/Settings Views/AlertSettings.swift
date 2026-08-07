@@ -18,6 +18,8 @@ struct AlertSettingsView: View {
     @AppStorage("notchAlerts") private var enableNotchAlerts = false
     @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
 
+    @AppStorage("scoreChanges") private var enableScoreChanges = true
+
     var body: some View {
         VStack(spacing: 4) {
             Form {
@@ -64,7 +66,15 @@ struct AlertSettingsView: View {
                     }
                 }
 
-                Section("Alert Types") {}
+                Section("Alert Types") {
+                    Toggle(isOn: $enableScoreChanges) {
+                        HStack {
+                            Image(systemName: "plus.circle")
+                                .foregroundColor(.primary)
+                            Text("Score Changes")
+                        }
+                    }.disabled(!enablePlayAlerts || !enableNotificationAlerts || !enableNotchAlerts)
+                }
             }
             .formStyle(.grouped)
         }
