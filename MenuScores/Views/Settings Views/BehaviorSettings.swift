@@ -16,8 +16,6 @@ struct BehaviorSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
-    @State private var notificationStatusMessage: String?
-
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
     let refreshOptions = [
@@ -39,6 +37,8 @@ struct BehaviorSettingsView: View {
         default: return 15
         }
     }
+
+    @State private var notificationStatusMessage: String?
 
     var body: some View {
         VStack(spacing: 4) {

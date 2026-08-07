@@ -24,6 +24,8 @@ struct AlertSettingsView: View {
     @AppStorage("penaltyAlert") private var enablePenaltyAlert = false
     @AppStorage("timeoutAlert") private var enableTimeoutAlert = false
 
+    @State private var notificationStatusMessage: String?
+
     var body: some View {
         VStack(spacing: 4) {
             Form {
@@ -70,7 +72,7 @@ struct AlertSettingsView: View {
                     }
                 }
 
-                Section("Play Alerts") {
+                Section {
                     Toggle(isOn: $enableScoreChanges) {
                         HStack {
                             Image(systemName: "plus.circle")
@@ -115,6 +117,43 @@ struct AlertSettingsView: View {
                         }
                     }
                     .disabled(!enablePlayAlerts)
+                } header: {
+                    HStack(spacing: 4) {
+                        HStack {
+                            Text("Alert Types")
+                                .font(.headline)
+                            Spacer()
+
+                            if let message = notificationStatusMessage {
+                                Text(message)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                            Button(action: {
+                                UNUserNotificationCenter.current()
+                                    .requestAuthorization(options: [
+                                        .alert, .sound, .badge,
+                                    ]) { granted, error in
+                                        DispatchQueue.main.async {
+                                            if let error = error {
+                                                notificationStatusMessage =
+                                                    "\(error.localizedDescription)"
+                                            } else if granted {
+                                                notificationStatusMessage =
+                                                    "Permissions granted!"
+                                            }
+                                        }
+                                    }
+                            }) {
+                                Image(systemName: "questionmark.circle")
+                            }
+                            .controlSize(.small)
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
+                            .help("Request notification permissions")
+                        }
+                    }
                 }
             }
             .formStyle(.grouped)
