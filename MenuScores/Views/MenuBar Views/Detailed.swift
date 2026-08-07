@@ -41,7 +41,6 @@ struct DetailedMenuBar: View {
                     .font(.system(size: 19, weight: .semibold))
                     .padding(.horizontal, 35)
 
-                // Philadelphia
                 HStack(spacing: 4) {
                     VStack {
                         Text("0")
@@ -67,18 +66,16 @@ struct DetailedMenuBar: View {
                 }
             }
 
-            GeometryReader { geo in
-                HStack(spacing: 10) {
-                    Capsule()
-                        .fill(.white)
-                        .frame(width: 3, height: 16)
+            HStack(spacing: 10) {
+                Capsule()
+                    .fill(.white)
+                    .frame(width: 3, height: 16)
 
-                    Text(headlineText)
-                        .font(.system(size: 14, weight: .medium))
-                }
-                .frame(width: geo.size.width)
+                Text(headlineText)
+                    .font(.system(size: 14, weight: .medium))
             }
-            .frame(height: 22)
+            .padding(.top, 10)
+            .frame(width: 300, height: 22, alignment: .center)
 
             HStack(spacing: 6) {
                 Image(systemName: "location.fill")
@@ -88,6 +85,7 @@ struct DetailedMenuBar: View {
                 Text("Philadelphia, Pennsylvania 84°")
                     .font(.system(size: 14, weight: .medium))
             }
+            .padding(.top, 3)
         }
     }
 }

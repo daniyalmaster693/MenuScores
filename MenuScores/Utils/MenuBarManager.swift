@@ -13,7 +13,6 @@ class MenuBarManager {
     static let shared = MenuBarManager()
 
     private var statusItem: NSStatusItem!
-    private var detailedPanel: NSPanel?
 
     private init() {}
 
@@ -45,6 +44,33 @@ class MenuBarManager {
 
         button.isBordered = false
 
+        button.action = #selector(toggleMenu(_:))
+        button.target = self
+
         statusItem = item
+    }
+
+    @objc private func toggleMenu(_ sender: Any?) {
+        let menu = NSMenu()
+
+        let item = NSMenuItem()
+
+        let hosting = NSHostingView(
+            rootView: DetailedMenuBar()
+        )
+
+        hosting.frame = NSRect(
+            x: 0,
+            y: 0,
+            width: 330,
+            height: 150
+        )
+
+        item.view = hosting
+
+        menu.addItem(item)
+
+        statusItem.menu = menu
+        statusItem.button?.performClick(nil)
     }
 }

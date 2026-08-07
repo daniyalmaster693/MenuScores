@@ -433,7 +433,8 @@ struct Info: View {
                                         .font(.system(size: 14, weight: .medium))
                                         .fixedSize()
                                 }
-                            }.padding(.top, 3)
+                            }
+                            .padding(.top, 3)
                         }
                     }
                 }
