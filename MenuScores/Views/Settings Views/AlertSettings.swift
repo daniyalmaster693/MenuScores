@@ -73,7 +73,7 @@ struct AlertSettingsView: View {
                                 .foregroundColor(.primary)
                             Text("Score Changes")
                         }
-                    }.disabled(!enablePlayAlerts || !enableNotificationAlerts || !enableNotchAlerts)
+                    }.disabled(!enablePlayAlerts)
                 }
             }
             .formStyle(.grouped)
