@@ -86,7 +86,7 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 8. If you manually clear an auto pin game, the app will not auto pin that game again (unless you restart the app).
 9. Once an auto pin game finishes, it will automatically be cleared from the notch/menubar.
 
-**Note:** the Auto Pin feature supports all leagues except Tennis.
+**Note:** the Auto Pin feature supports all leagues except ATP and WTA.
 
 ## Roadmap
 
