@@ -972,6 +972,13 @@ struct MenuScoresApp: App {
             Divider()
 
             Button {
+                MenuBarManager.shared.show()
+            } label: {
+                Text("Test View")
+            }
+            .keyboardShortcut("t")
+
+            Button {
                 updateManager.getUpdateData(manualCheck: true)
             } label: {
                 Text("Check for Updates")
