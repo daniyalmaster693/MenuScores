@@ -19,6 +19,7 @@ struct BehaviorSettingsView: View {
     @State private var notificationStatusMessage: String?
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
+
     let refreshOptions = [
         "10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds",
         "50 seconds", "1 minute", "2 minutes", "5 minutes",
