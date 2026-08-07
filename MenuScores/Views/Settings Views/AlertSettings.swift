@@ -12,7 +12,7 @@ import UserNotifications
 struct AlertSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
 
-    @AppStorage("playAlerts") private var enablePlayAlerts = false
+    @AppStorage("playAlerts") private var enablePlayAlerts = true
     @AppStorage("notificationAlerts") private var enableNotificationAlerts = true
 
     @AppStorage("notchAlerts") private var enableNotchAlerts = false
