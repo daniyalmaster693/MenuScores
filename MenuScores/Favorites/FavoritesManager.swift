@@ -76,7 +76,7 @@ class FavoritesManager: ObservableObject {
         do {
             favorites = try JSONDecoder().decode([FavoriteTeam].self, from: data)
         } catch {
-            print("Failed to decode favorites:", error)
+            print("Failed to fetch favorites:", error)
             favorites = []
         }
     }
@@ -86,7 +86,7 @@ class FavoritesManager: ObservableObject {
             let data = try JSONEncoder().encode(favorites)
             UserDefaults.standard.set(data, forKey: favoritesKey)
         } catch {
-            print("Failed to encode favorites:", error)
+            print("Failed to save favorites:", error)
         }
     }
 
