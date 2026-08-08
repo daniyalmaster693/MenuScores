@@ -1049,19 +1049,23 @@ struct Info: View {
                                         }
                                         .padding(.trailing, 3)
 
-                                        Text("\(race.shortName)")
+                                        Text("\(race.competitionType.text) - \(formattedRaceTime(from: race.date))")
                                             .font(.system(size: 18, weight: .medium))
                                     }
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(.leading, 10)
                                     .padding(.trailing, 10)
 
-                                    HStack {
-                                        Image(systemName: "flag.checkered")
-                                            .font(.system(size: 12))
+                                    VStack {
+                                        HStack {
+                                            Image(systemName: "location.fill")
+                                                .font(.system(size: 12))
+                                                .foregroundColor(.gray)
 
-                                        Text("\(formattedRaceDate(from: race.date))  @  \(formattedRaceTime(from: race.date))")
-                                            .font(.system(size: 14, weight: .medium))
+                                            Text("\(race.location)   \(race.track.displayLength)")
+                                                .font(.system(size: 14, weight: .medium))
+                                                .fixedSize()
+                                        }
                                     }
                                     .padding(.top, 6)
                                     .frame(maxWidth: .infinity, alignment: .center)
