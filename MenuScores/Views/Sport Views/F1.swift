@@ -126,47 +126,19 @@ struct F1Menu: View {
 
                                     Divider()
 
-//                                let f1Index = game.competitions.indices.contains(4) ? 4 : (game.competitions.indices.count - 1)
-//
-//                                if game.competitions.indices.contains(f1Index),
-//                                   game.competitions[f1Index].status.type.state == "in" || game.competitions[f1Index].status.type.state == "post"
-//                                {
-//                                    Menu {
-//                                        let competitors = game.competitions[f1Index].competitors ?? []
-//
-//                                        ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
-//                                            Button {} label: {
-//                                                HStack {
-//                                                    Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
-//                                                        .lineLimit(1)
-//                                                        .truncationMode(.tail)
-//                                                }
-//                                            }
-//                                        }
-//                                    } label: {
-//                                        HStack {
-//                                            Image(systemName: "flag.checkered")
-//                                                .resizable()
-//                                                .scaledToFit()
-//                                                .frame(width: 20, height: 20)
-//                                            Text("Leaderboard")
-//                                        }
-//                                    }
-//                                }
-
-//                                Button {
-//                                    if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
-//                                        NSWorkspace.shared.open(url)
-//                                    }
-//                                } label: {
-//                                    HStack {
-//                                        Image(systemName: "info.circle")
-//                                            .resizable()
-//                                            .scaledToFit()
-//                                            .frame(width: 20, height: 20)
-//                                        Text("View Race Details")
-//                                    }
-//                                }
+                                    Button {
+                                        if let urlString = race.links.first?.href, let url = URL(string: urlString) {
+                                            NSWorkspace.shared.open(url)
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "info.circle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("View Race Details")
+                                        }
+                                    }
                                 } label: {
                                     HStack {
                                         AsyncImage(
