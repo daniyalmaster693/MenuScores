@@ -97,7 +97,7 @@ struct Info: View {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
-            let response = try decoder.decode(RaceInfoResponse.self, from: data)
+            let response = try decoder.decode(RaceResponse.self, from: data)
 
             if let race = response.sports.first?.leagues.first?.events[4] {
                 DispatchQueue.main.async {

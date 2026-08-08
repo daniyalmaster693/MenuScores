@@ -95,35 +95,35 @@ enum Scoreboard {
         static let f1: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard?dates=\(getCurrentYear())"
+                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=f1"
             )!
         }
 
         static let nc: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-premier/scoreboard"
+                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=nascar-premier"
             )!
         }
 
         static let ncs: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-secondary/scoreboard"
+                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=nascar-secondary"
             )!
         }
 
         static let nct: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-truck/scoreboard"
+                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=nascar-truck"
             )!
         }
 
         static let irl: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/racing/irl/scoreboard"
+                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=irl"
             )!
         }
 
@@ -246,10 +246,11 @@ enum Scoreboard {
             )!
         }
 
-        static let wta: () -> URL = { URL(
-            string:
-            "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard"
-        )!
+        static let wta: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard"
+            )!
         }
 
 //        static let ufc = URL(

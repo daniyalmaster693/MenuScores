@@ -5,7 +5,9 @@
 //  Created by Daniyal Master on 2025-08-22.
 //
 
-struct RaceInfoResponse: Decodable {
+import Foundation
+
+struct RaceResponse: Decodable {
     let sports: [Sport]
 }
 
@@ -14,10 +16,10 @@ struct Sport: Decodable {
 }
 
 struct RaceLeagues: Decodable {
-    let events: [Race]
+    let events: [RaceEvent]
 }
 
-struct Race: Decodable {
+struct RaceEvent: Decodable {
     let id: String
     let date: String
     let name: String
