@@ -1,8 +1,8 @@
 //
 //  SettingsWindowController.swift
-//  MenuScores
+//  boringNotch
 //
-//  Created by Daniyal Master on 2026-08-01.
+//  Created by Alexander on 2025-06-14.
 //
 
 import AppKit
