@@ -1095,9 +1095,6 @@ struct Info: View {
         }
 
         if let tennisGame = notchViewModel.tennisCompetition {
-            let team1 = tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.first?.roster?.displayName ?? "Player 1"
-            let team2 = tennisGame.competitors?.dropFirst().first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.displayName ?? "Player 2"
-
             if sport == "Tennis" {
                 VStack {
                     HStack(spacing: 4) {
@@ -1158,7 +1155,13 @@ struct Info: View {
                                                 .padding(.leading, 10)
 
                                             Text(
-                                                "\(tennisGame.competitors?.first?.athlete?.shortName ?? tennisGame.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 1")"
+                                                tennisGame.competitors?
+                                                    .first(where: { $0.winner == true })?
+                                                    .athlete?.shortName
+                                                    ?? tennisGame.competitors?
+                                                    .first(where: { $0.winner == true })?
+                                                    .roster?.shortDisplayName
+                                                    ?? "Player 1"
                                             )
                                             .lineLimit(1)
                                             .font(.system(size: 14, weight: .semibold))

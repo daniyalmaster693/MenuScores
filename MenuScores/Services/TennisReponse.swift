@@ -97,9 +97,14 @@ struct TennisCompetitor: Decodable, Identifiable {
 }
 
 struct TennisLinesScore: Decodable, Identifiable {
-    let id = UUID()
+    let id: UUID = .init()
     let winner: Bool?
     let value: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case winner
+        case value
+    }
 }
 
 struct TennisAthlete: Decodable {

@@ -93,7 +93,6 @@ enum FavoriteTeams {
     static func leagueAsTeam(for leagueKey: String) -> TeamInfo {
         let info = mappings[leagueKey]
         let displayName = info?.displayName ?? leagueKey
-        let sport = mappings[leagueKey]?.sport ?? "hockey"
         let logo = fallbackLogoForLeague(leagueKey)
 
         return TeamInfo(
