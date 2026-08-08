@@ -48,114 +48,141 @@ struct F1Menu: View {
 
     var body: some View {
         Menu(title) {
-            let groupedRaces = Dictionary(grouping: viewModel.races) { race in
-                formattedRaceDate(from: race.date)
+            let groupedByRace = Dictionary(grouping: viewModel.races) { race in
+                race.shortName
             }
 
-            let sortedDates = groupedRaces.keys.sorted()
+            let sortedRaces = groupedByRace.keys.sorted()
 
-            if sortedDates.isEmpty {
+            if sortedRaces.isEmpty {
                 Text("No Races Scheduled")
             } else {
-                ForEach(sortedDates, id: \.self) { date in
-                    if let racesForDate = groupedRaces[date] {
-                        Menu(date) {
-                            ForEach(racesForDate, id: \.competitionId) { race in
-                                Menu {
-                                    Button {
-//                                    currentTitle = displayText(for: race, league: league)
-                                        currentGameID = race.competitionId
-                                        currentGameState = race.fullStatus.type.state
+                ForEach(sortedRaces, id: \.self) { raceName in
+                    if let raceEvents = groupedByRace[raceName] {
+                        Menu {
+                            let groupedByDate = Dictionary(grouping: raceEvents) { race in
+                                formattedRaceDate(from: race.date)
+                            }
 
-                                        pinnedByMenubar = true
-                                        pinnedByNotch = false
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "menubar.rectangle")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 20, height: 20)
-                                            Text("Pin Race to Menubar")
-                                        }
-                                    }
+                            let sortedDates = groupedByDate.keys.sorted()
 
-                                    if enableNotch {
-                                        Button {
-                                            currentGameID = race.competitionId
-                                            currentGameState = race.fullStatus.type.state
+                            ForEach(sortedDates, id: \.self) { date in
+                                if let racesForDate = groupedByDate[date] {
+                                    Menu(date) {
+                                        ForEach(racesForDate, id: \.competitionId) { race in
+                                            Menu {
+                                                Button {
+                                                    currentTitle = displayF1Text(for: race)
+                                                    currentGameID = race.competitionId
+                                                    currentGameState = race.fullStatus.type.state
 
-                                            pinnedByNotch = true
-                                            pinnedByMenubar = false
-
-                                            notchViewModel.racingCompetition = race
-
-                                            Task {
-                                                if let existingNotch = NotchViewModel.shared.notch {
-                                                    await existingNotch.hide()
-                                                    NotchViewModel.shared.game = nil
-                                                    NotchViewModel.shared.currentGameID = ""
-                                                    NotchViewModel.shared.currentGameState = ""
-                                                    NotchViewModel.shared.previousGameState = ""
-                                                    NotchViewModel.shared.notch = nil
+                                                    pinnedByMenubar = true
+                                                    pinnedByNotch = false
+                                                } label: {
+                                                    HStack {
+                                                        Image(systemName: "menubar.rectangle")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 20, height: 20)
+                                                        Text("Pin Race to Menubar")
+                                                    }
                                                 }
 
-                                                let newNotch = DynamicNotch(
-                                                    hoverBehavior: .all,
-                                                    style: .notch
-                                                ) {
-                                                    Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
-                                                } compactLeading: {
-                                                    CompactLeading(notchViewModel: notchViewModel, sport: "F1")
-                                                } compactTrailing: {
-                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
+                                                if enableNotch {
+                                                    Button {
+                                                        currentGameID = race.competitionId
+                                                        currentGameState = race.fullStatus.type.state
+
+                                                        pinnedByNotch = true
+                                                        pinnedByMenubar = false
+
+                                                        notchViewModel.racingCompetition = race
+
+                                                        Task {
+                                                            if let existingNotch = NotchViewModel.shared.notch {
+                                                                await existingNotch.hide()
+                                                                NotchViewModel.shared.game = nil
+                                                                NotchViewModel.shared.currentGameID = ""
+                                                                NotchViewModel.shared.currentGameState = ""
+                                                                NotchViewModel.shared.previousGameState = ""
+                                                                NotchViewModel.shared.notch = nil
+                                                            }
+
+                                                            let newNotch = DynamicNotch(
+                                                                hoverBehavior: .all,
+                                                                style: .notch
+                                                            ) {
+                                                                Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
+                                                            } compactLeading: {
+                                                                CompactLeading(notchViewModel: notchViewModel, sport: "F1")
+                                                            } compactTrailing: {
+                                                                CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
+                                                            }
+
+                                                            NotchViewModel.shared.notch = newNotch
+                                                            await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                                        }
+                                                    } label: {
+                                                        HStack {
+                                                            Image(systemName: "macbook")
+                                                                .resizable()
+                                                                .scaledToFit()
+                                                                .frame(width: 20, height: 20)
+                                                            Text("Pin Race to Notch")
+                                                        }
+                                                    }
                                                 }
 
-                                                NotchViewModel.shared.notch = newNotch
-                                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                                Divider()
+
+                                                Button {
+                                                    if let urlString = race.links.first?.href, let url = URL(string: urlString) {
+                                                        NSWorkspace.shared.open(url)
+                                                    }
+                                                } label: {
+                                                    HStack {
+                                                        Image(systemName: "info.circle")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 20, height: 20)
+                                                        Text("View Race Details")
+                                                    }
+                                                }
+                                            } label: {
+                                                HStack {
+                                                    AsyncImage(
+                                                        url: URL(
+                                                            string:
+                                                            "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                                        )
+                                                    ) { image in
+                                                        image.resizable().scaledToFit()
+                                                    } placeholder: {
+                                                        ProgressView()
+                                                    }
+                                                    .frame(width: 40, height: 40)
+
+                                                    Text(displayF1Text(for: race))
+                                                }
                                             }
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: "macbook")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 20, height: 20)
-                                                Text("Pin Race to Notch")
-                                            }
                                         }
-                                    }
-
-                                    Divider()
-
-                                    Button {
-                                        if let urlString = race.links.first?.href, let url = URL(string: urlString) {
-                                            NSWorkspace.shared.open(url)
-                                        }
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "info.circle")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 20, height: 20)
-                                            Text("View Race Details")
-                                        }
-                                    }
-                                } label: {
-                                    HStack {
-                                        AsyncImage(
-                                            url: URL(
-                                                string:
-                                                "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                                            )
-                                        ) { image in
-                                            image.resizable().scaledToFit()
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
-                                        .frame(width: 40, height: 40)
-
-                                        Text("Heiken GP")
                                     }
                                 }
+                            }
+                        } label: {
+                            HStack {
+                                AsyncImage(
+                                    url: URL(
+                                        string: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                    )
+                                ) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 20, height: 20)
+
+                                Text(raceName)
                             }
                         }
                     }
