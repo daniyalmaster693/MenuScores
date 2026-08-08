@@ -101,9 +101,9 @@ struct Info: View {
 
             if let race = response.sports.first?.leagues.first?.events[4] {
                 DispatchQueue.main.async {
-                    driverArray = race.competitors
+                    driverArray = race.competitors ?? []
                     totalLaps = race.laps
-                    flagColor = race.fullStatus?.flag
+                    flagColor = race.fullStatus.flag
                 }
             } else {
                 DispatchQueue.main.async {

@@ -30,6 +30,27 @@ struct GameListView {
 
 // MARK: Racing Only
 
+@MainActor
+class RacingListView: ObservableObject {
+    @Published var races: [RaceEvent] = []
+
+    func populateRacing(from url: URL) async {
+        do {
+            self.races = try await getGames().getRaceArray(url: url)
+        } catch {
+            print("Failed to fetch games:", error)
+        }
+    }
+}
+
+struct RacingGameListView {
+    private var game: RaceEvent
+
+    init(game: RaceEvent) {
+        self.game = game
+    }
+}
+
 // MARK: Tennis Only
 
 @MainActor
