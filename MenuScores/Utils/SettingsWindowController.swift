@@ -38,6 +38,7 @@ class SettingsWindowController: NSWindowController {
         window.isMovableByWindowBackground = true
         window.collectionBehavior = [.managed, .participatesInCycle, .fullScreenAuxiliary]
         window.hidesOnDeactivate = false
+        window.isExcludedFromWindowsMenu = false
         window.isRestorable = true
         window.identifier = NSUserInterfaceItemIdentifier("MenuScoresSettingsWindow")
         
@@ -56,10 +57,20 @@ class SettingsWindowController: NSWindowController {
             return
         }
         
-        window?.center()
         window?.orderFrontRegardless()
         window?.makeKeyAndOrderFront(nil)
+        window?.center()
+        
         NSApp.activate(ignoringOtherApps: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.window?.makeKeyAndOrderFront(nil)
+        }
+    }
+    
+    override func close() {
+        super.close()
+        relinquishFocus()
     }
     
     private func relinquishFocus() {
@@ -71,5 +82,13 @@ class SettingsWindowController: NSWindowController {
 extension SettingsWindowController: NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
         relinquishFocus()
+    }
+        
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        return true
+    }
+    
+    func windowDidBecomeKey(_ notification: Notification) {
+        NSApp.setActivationPolicy(.regular)
     }
 }

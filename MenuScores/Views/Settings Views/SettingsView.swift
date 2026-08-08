@@ -8,84 +8,68 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State private var selectedItem: String? = "general"
+    @State private var selectedTab = "General"
 
     var body: some View {
         NavigationSplitView {
-            VStack {
-                List(selection: $selectedItem) {
-                    HStack {
-                        Image(systemName: "gearshape")
-                            .frame(width: 18, height: 18)
-                        Text("General")
-                    }
-                    .tag("general")
-
-                    HStack {
-                        Image(systemName: "slider.horizontal.3")
-                            .frame(width: 18, height: 18)
-                        Text("Behavior")
-                    }
-                    .tag("behavior")
-
-//                    HStack {
-//                        Image(systemName: "bell")
-//                            .frame(width: 18, height: 18)
-//                        Text("Alerts")
-//                    }
-//                    .tag("alerts")
-
-                    HStack {
-                        Image(systemName: "star")
-                            .frame(width: 18, height: 18)
-                        Text("Favorites")
-                    }
-                    .tag("favorites")
-
-                    HStack {
-                        Image(systemName: "sportscourt")
-                            .frame(width: 18, height: 18)
-                        Text("Leagues")
-                    }
-                    .tag("leagues")
-
-                    HStack {
-                        Image(systemName: "info.circle")
-                            .frame(width: 18, height: 18)
-                        Text("About")
-                    }
-                    .tag("about")
+            List(selection: $selectedTab) {
+                NavigationLink(value: "General") {
+                    Label("General", systemImage: "gear")
                 }
-                .listStyle(.sidebar)
-                .padding(.top, 7)
+
+                NavigationLink(value: "Behavior") {
+                    Label("Behavior", systemImage: "slider.horizontal.3")
+                }
+
+//                NavigationLink(value: "Alerts") {
+//                    Label("Alerts", systemImage: "bell")
+//                }
+
+                NavigationLink(value: "Favorites") {
+                    Label("Favorites", systemImage: "star")
+                }
+
+                NavigationLink(value: "Leagues") {
+                    Label("Leagues", systemImage: "sportscourt")
+                }
+
+                NavigationLink(value: "About") {
+                    Label("About", systemImage: "info.circle")
+                }
             }
-            .frame(minWidth: 175)
+            .listStyle(SidebarListStyle())
+            .navigationSplitViewColumnWidth(175)
+
         } detail: {
             Group {
-                switch selectedItem {
-                case "general":
+                switch selectedTab {
+                case "General":
                     GeneralSettingsView()
                         .navigationTitle("General")
-                case "behavior":
+                case "Behavior":
                     BehaviorSettingsView()
                         .navigationTitle("Behavior")
-//                case "alerts":
+//                case "Alerts":
 //                    AlertSettingsView()
 //                        .navigationTitle("Alerts")
-                case "favorites":
+                case "Favorites":
                     FavoritesSettingsView()
                         .navigationTitle("Favorites")
-                case "leagues":
+                case "Leagues":
                     LeagueSettingsView()
                         .navigationTitle("Leagues")
-                case "about":
+                case "About":
                     AboutSettingsView()
                         .navigationTitle("About")
                 default:
-                    Text("No item selected")
+                    GeneralSettingsView()
+                        .navigationTitle("General")
                 }
             }
         }
+        .navigationSplitViewStyle(.balanced)
+        .formStyle(.grouped)
+        .background(Color(NSColor.windowBackgroundColor))
         .frame(minWidth: 750, minHeight: 500)
     }
 }
