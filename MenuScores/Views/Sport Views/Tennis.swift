@@ -71,6 +71,12 @@ struct TennisMenu: View {
                                         let team1 = competition.competitors?.first?.athlete?.shortName ?? competition.competitors?.first?.roster?.shortDisplayName ?? "Player 1"
                                         let team2 = competition.competitors?.dropFirst().first?.athlete?.shortName ?? competition.competitors?.dropFirst().first?.roster?.shortDisplayName ?? "Player 2"
 
+                                        let winner = competition.competitors?.first(where: { $0.winner == true })
+
+                                        let winnerName = winner?.athlete?.shortName
+                                            ?? winner?.roster?.shortDisplayName
+                                            ?? "Winner"
+
                                         let status = competition.status?.type.state ?? "pre"
                                         let set = competition.status?.period ?? 0
 
@@ -79,7 +85,7 @@ struct TennisMenu: View {
                                             case "in":
                                                 return "S\(set)"
                                             case "post":
-                                                return "(Final)"
+                                                return "(W: \(winnerName))"
                                             default:
                                                 return ""
                                             }
