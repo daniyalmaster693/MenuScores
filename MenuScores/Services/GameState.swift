@@ -81,19 +81,8 @@ func displayText(for game: Event, league: String) -> String {
 
 func displayF1Text(for race: RaceEvent) -> String {
     let f1State = race.fullStatus.type.state
-
-//    if league == "F1", f1State == "pre" {
-//        return
-//            "\(race.shortName) - \(formattedTime(from: race.date))"
-//    }
-
-//    if league == "F1", f1State == "in" {
-//        return "\(driverName)     \(f1PeriodText)"
-//    }
-//
-//    if league == "F1", f1State == "post" {
-//        return "\(driverName)     (Final)"
-//    }
+    let driverName = race.competitors?.first?.shortName ?? "Driver"
+    let lap = race.fullStatus.period ?? 0
 
     switch f1State {
     case "pre":
@@ -101,11 +90,11 @@ func displayF1Text(for race: RaceEvent) -> String {
 
     case "in":
         return
-            ""
+            "\(driverName)     L\(lap)"
 
     case "post":
         return
-            ""
+            "\(driverName)     (Final)"
 
     default:
         return race.shortName
