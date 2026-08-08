@@ -28,12 +28,12 @@ struct SettingsView: View {
                     }
                     .tag("behavior")
 
-                    HStack {
-                        Image(systemName: "bell")
-                            .frame(width: 18, height: 18)
-                        Text("Alerts")
-                    }
-                    .tag("alerts")
+//                    HStack {
+//                        Image(systemName: "bell")
+//                            .frame(width: 18, height: 18)
+//                        Text("Alerts")
+//                    }
+//                    .tag("alerts")
 
                     HStack {
                         Image(systemName: "star")
@@ -69,9 +69,9 @@ struct SettingsView: View {
                 case "behavior":
                     BehaviorSettingsView()
                         .navigationTitle("Behavior")
-                case "alerts":
-                    AlertSettingsView()
-                        .navigationTitle("Alerts")
+//                case "alerts":
+//                    AlertSettingsView()
+//                        .navigationTitle("Alerts")
                 case "favorites":
                     FavoritesSettingsView()
                         .navigationTitle("Favorites")
