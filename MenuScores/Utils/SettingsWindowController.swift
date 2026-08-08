@@ -49,21 +49,11 @@ class SettingsWindowController: NSWindowController {
     
     func showWindow() {
         NSApp.setActivationPolicy(.regular)
-        
-        if window?.isVisible == true {
-            NSApp.activate(ignoringOtherApps: true)
-            window?.orderFrontRegardless()
-            window?.makeKeyAndOrderFront(nil)
-            return
-        }
-        
-        window?.orderFrontRegardless()
-        window?.makeKeyAndOrderFront(nil)
-        window?.center()
-        
         NSApp.activate(ignoringOtherApps: true)
         
         DispatchQueue.main.async { [weak self] in
+            self?.window?.center()
+            self?.window?.orderFrontRegardless()
             self?.window?.makeKeyAndOrderFront(nil)
         }
     }
