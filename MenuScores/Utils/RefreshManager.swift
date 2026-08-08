@@ -63,7 +63,7 @@ class RefreshManager: NSObject, ObservableObject {
     func standardRefresh(
         viewModel: GamesListView,
         league: String,
-        fetchURL: URL,
+        fetchURL: () -> URL,
 
         currentTitle: Binding<String>,
         currentGameID: Binding<String>,
@@ -75,7 +75,7 @@ class RefreshManager: NSObject, ObservableObject {
 
         notchViewModel: NotchViewModel
     ) async {
-        await viewModel.populateGames(from: fetchURL)
+        await viewModel.populateGames(from: fetchURL())
 
         if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID.wrappedValue }) {
             if pinnedByMenubar.wrappedValue {
@@ -106,7 +106,7 @@ class RefreshManager: NSObject, ObservableObject {
     func tennisRefresh(
         viewModel: TennisListView,
         league: String,
-        fetchURL: URL,
+        fetchURL: () -> URL,
 
         currentTitle: Binding<String>,
         currentGameID: Binding<String>,
@@ -118,7 +118,7 @@ class RefreshManager: NSObject, ObservableObject {
 
         notchViewModel: NotchViewModel
     ) async {
-        await viewModel.populateTennis(from: fetchURL)
+        await viewModel.populateTennis(from: fetchURL())
 
         if let updatedCompetition = viewModel.tennisGames
             .flatMap({ $0.groupings })
@@ -154,7 +154,7 @@ class RefreshManager: NSObject, ObservableObject {
         viewModel: GamesListView? = nil,
         tennisViewModel: TennisListView? = nil,
         league: String,
-        fetchURL: URL,
+        fetchURL: () -> URL,
 
         currentTitle: Binding<String>,
         currentGameID: Binding<String>,

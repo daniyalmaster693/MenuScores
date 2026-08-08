@@ -13,7 +13,7 @@ struct BaseballMenu: View {
     let title: String
     @ObservedObject var viewModel: GamesListView
     let league: String
-    let fetchURL: URL
+    let fetchURL: () -> URL
 
     @StateObject private var notchViewModel = NotchViewModel()
 
