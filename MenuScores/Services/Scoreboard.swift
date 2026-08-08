@@ -256,14 +256,14 @@ enum Scoreboard {
         static var omb: URL {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
             )!
         }
 
         static var owb: URL {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
             )!
         }
 
