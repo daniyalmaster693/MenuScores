@@ -26,13 +26,13 @@ struct LeagueSettingsView: View {
     @AppStorage("enableBNCAA") private var enableBNCAA = false
     @AppStorage("enableSNCAA") private var enableSNCAA = false
 
-    @AppStorage("enableF1") private var enableF1 = true
+    @AppStorage("enableF1") private var enableF1 = false
     @AppStorage("enableNC") private var enableNC = false
     @AppStorage("enableNCS") private var enableNCS = false
     @AppStorage("enableNCT") private var enableNCT = false
     @AppStorage("enableIRL") private var enableIRL = false
 
-    @AppStorage("enablePGA") private var enablePGA = true
+    @AppStorage("enablePGA") private var enablePGA = false
     @AppStorage("enableLPGA") private var enableLPGA = false
 
     @AppStorage("enableMLS") private var enableMLS = true
@@ -53,7 +53,7 @@ struct LeagueSettingsView: View {
     @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
 
-//    @AppStorage("enableUFC") private var enableUFC = true
+//    @AppStorage("enableUFC") private var enableUFC = false
 
     @AppStorage("enableNLL") private var enableNLL = false
     @AppStorage("enablePLL") private var enablePLL = false

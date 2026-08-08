@@ -39,13 +39,13 @@ struct MenuScoresApp: App {
     @AppStorage("enableBNCAA") private var enableBNCAA = false
     @AppStorage("enableSNCAA") private var enableSNCAA = false
 
-    @AppStorage("enableF1") private var enableF1 = true
+    @AppStorage("enableF1") private var enableF1 = false
     @AppStorage("enableNC") private var enableNC = false
     @AppStorage("enableNCS") private var enableNCS = false
     @AppStorage("enableNCT") private var enableNCT = false
     @AppStorage("enableIRL") private var enableIRL = false
 
-    @AppStorage("enablePGA") private var enablePGA = true
+    @AppStorage("enablePGA") private var enablePGA = false
     @AppStorage("enableLPGA") private var enableLPGA = false
 
     @AppStorage("enableMLS") private var enableMLS = true
@@ -63,6 +63,24 @@ struct MenuScoresApp: App {
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
 
+    @AppStorage("enableATP") private var enableATP = false
+    @AppStorage("enableWTA") private var enableWTA = false
+
+//    @AppStorage("enableUFC") private var enableUFC = false
+
+    @AppStorage("enableNLL") private var enableNLL = false
+    @AppStorage("enablePLL") private var enablePLL = false
+    @AppStorage("enableLNCAAM") private var enableLNCAAM = false
+    @AppStorage("enableLNCAAF") private var enableLNCAAF = false
+
+    @AppStorage("enableVNCAAM") private var enableVNCAAM = false
+    @AppStorage("enableVNCAAF") private var enableVNCAAF = false
+
+    @AppStorage("enableOMIHC") private var enableOMIHC = false
+    @AppStorage("enableOWIHC") private var enableOWIHC = false
+    @AppStorage("enableOMB") private var enableOMB = false
+    @AppStorage("enableOWB") private var enableOWB = false
+
     @AppStorage("enableFFWC") private var enableFFWC = false
     @AppStorage("enableFFWWC") private var enableFFWWC = false
     @AppStorage("enableFFWCQUEFA") private var enableFFWCQUEFA = false
@@ -71,24 +89,6 @@ struct MenuScoresApp: App {
     @AppStorage("enableCAF") private var enableCAF = false
     @AppStorage("enableAFC") private var enableAFC = false
     @AppStorage("enableOFC") private var enableOFC = false
-
-    @AppStorage("enableATP") private var enableATP = false
-    @AppStorage("enableWTA") private var enableWTA = false
-
-    @AppStorage("enableUFC") private var enableUFC = true
-
-    @AppStorage("enableNLL") private var enableNLL = true
-    @AppStorage("enablePLL") private var enablePLL = false
-    @AppStorage("enableLNCAAM") private var enableLNCAAM = false
-    @AppStorage("enableLNCAAF") private var enableLNCAAF = false
-
-    @AppStorage("enableVNCAAM") private var enableVNCAAM = true
-    @AppStorage("enableVNCAAF") private var enableVNCAAF = false
-
-    @AppStorage("enableOMIHC") private var enableOMIHC = true
-    @AppStorage("enableOWIHC") private var enableOWIHC = false
-    @AppStorage("enableOMB") private var enableOMB = false
-    @AppStorage("enableOWB") private var enableOWB = false
 
     // Title State Settings
 
