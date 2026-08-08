@@ -850,180 +850,177 @@ struct Info: View {
                 VStack {
                     HStack(spacing: 4) {
                         VStack {
-//                                if f1State == "in" || f1State == "post" {
-//                                    HStack {
-//                                        AsyncImage(
-//                                            url: URL(
-//                                                string:
-//                                                "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-//                                            )
-//                                        ) { phase in
-//                                            if let image = phase.image {
-//                                                image
-//                                                    .resizable()
-//                                                    .interpolation(.high)
-//                                                    .scaledToFit()
-//                                                    .transition(.opacity)
-//                                                    .frame(width: 25, height: 25)
-//                                            } else {
-//                                                Color.clear
-//                                                    .transition(.opacity)
-//                                                    .frame(width: 25, height: 25)
-//                                            }
-//                                        }
-//                                        .padding(.trailing, 3)
-//                                        .padding(.leading, 10)
-//
-//                                        Text("Leaders")
-//                                            .font(.system(size: 14, weight: .medium))
-//
-//                                        Spacer()
-//
-//                                        if f1State == "in" {
-//                                            if let lap = currentCompetition?.status.period {
-//                                                HStack {
-//                                                    Image(systemName: "flag.checkered")
-//                                                        .foregroundColor(mapFlagColor(flagColor))
-//                                                        .font(.system(size: 12))
-//
-//                                                    Text("Laps: \(lap)/\(totalLaps ?? "-")")
-//                                                        .contentTransition(.numericText(countsDown: false))
-//                                                        .font(.system(size: 14, weight: .semibold))
-//                                                        .padding(.trailing, 10)
-//                                                }
-//                                            }
-//                                        }
-//
-//                                        if f1State == "post" {
+                            if f1State == "in" || f1State == "post" {
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                        )
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 25, height: 25)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 25, height: 25)
+                                        }
+                                    }
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
+
+                                    Text("Leaders")
+                                        .font(.system(size: 14, weight: .medium))
+
+                                    Spacer()
+
+//                                    if f1State == "in" {
+//                                        if let lap = currentCompetition?.status.period {
 //                                            HStack {
-//                                                Image(systemName: "trophy.fill")
-//                                                    .foregroundColor(.yellow)
+//                                                Image(systemName: "flag.checkered")
+//                                                    .foregroundColor(mapFlagColor(flagColor))
 //                                                    .font(.system(size: 12))
 //
-//                                                Text(
-//                                                    "\(currentCompetition?.competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
-//                                                )
-//                                                .contentTransition(.numericText(countsDown: false))
-//                                                .font(.system(size: 14, weight: .semibold))
-//                                                .padding(.trailing, 10)
+//                                                Text("Laps: \(lap)/\(totalLaps ?? "-")")
+//                                                    .contentTransition(.numericText(countsDown: false))
+//                                                    .font(.system(size: 14, weight: .semibold))
+//                                                    .padding(.trailing, 10)
 //                                            }
 //                                        }
 //                                    }
 //
-//                                    VStack(spacing: 5) {
+//                                    if f1State == "post" {
 //                                        HStack {
-//                                            Text("#")
-//                                                .frame(width: 30, alignment: .leading)
+//                                            Image(systemName: "trophy.fill")
+//                                                .foregroundColor(.yellow)
+//                                                .font(.system(size: 12))
 //
-//                                            Text("Driver")
-//                                                .frame(width: 130, alignment: .leading)
-//
-//                                            if f1State == "post" {
-//                                                Text("Race Time")
-//                                                    .frame(width: 100, alignment: .trailing)
-//                                            } else {
-//                                                Text("Team")
-//                                                    .frame(width: 120, alignment: .trailing)
-//                                            }
-//
-//                                            Text("Laps")
-//                                                .frame(width: 50, alignment: .trailing)
-//
-//                                            Text("Pits")
-//                                                .frame(width: 50, alignment: .trailing)
+//                                            Text(
+//                                                "\(currentCompetition?.competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
+//                                            )
+//                                            .contentTransition(.numericText(countsDown: false))
+//                                            .font(.system(size: 14, weight: .semibold))
+//                                            .padding(.trailing, 10)
 //                                        }
-//                                        .font(.system(size: 12, weight: .semibold))
-//                                        .padding(.horizontal, 10)
-//                                        .frame(maxWidth: .infinity, alignment: .leading)
+//                                    }
+                                }
+
+                                VStack(spacing: 5) {
+                                    HStack {
+                                        Text("#")
+                                            .frame(width: 30, alignment: .leading)
+
+                                        Text("Driver")
+                                            .frame(width: 130, alignment: .leading)
+
+                                        if f1State == "post" {
+                                            Text("Race Time")
+                                                .frame(width: 100, alignment: .trailing)
+                                        } else {
+                                            Text("Team")
+                                                .frame(width: 120, alignment: .trailing)
+                                        }
+
+                                        Text("Laps")
+                                            .frame(width: 50, alignment: .trailing)
+
+                                        if race.competitionType.text == "Race" {
+                                            Text("Pits")
+                                                .frame(width: 50, alignment: .trailing)
+                                        }
+                                    }
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .padding(.horizontal, 10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                    Divider()
+
+//                                    ScrollView(.vertical, showsIndicators: true) {
+//                                        VStack(spacing: 4) {
+//                                            ForEach(driverArray.filter { $0.order != nil }, id: \.id) { driver in
+//                                                HStack {
+//                                                    Text(driver.order.map { String($0) } ?? "-")
+//                                                        .contentTransition(.numericText(countsDown: false))
+//                                                        .frame(width: 30, alignment: .leading)
 //
-//                                        Divider()
-//
-//                                        ScrollView(.vertical, showsIndicators: true) {
-//                                            VStack(spacing: 4) {
-//                                                ForEach(driverArray.filter { $0.order != nil }, id: \.id) { driver in
-//                                                    HStack {
-//                                                        Text(driver.order.map { String($0) } ?? "-")
-//                                                            .contentTransition(.numericText(countsDown: false))
-//                                                            .frame(width: 30, alignment: .leading)
-//
-//                                                        HStack(spacing: 4) {
-//                                                            if let logoURL = URL(string: driver.logo) {
-//                                                                AsyncImage(url: logoURL) { phase in
-//                                                                    if let image = phase.image {
-//                                                                        image
-//                                                                            .resizable()
-//                                                                            .interpolation(.high)
-//                                                                            .scaledToFit()
-//                                                                            .transition(.opacity)
-//                                                                            .frame(width: 16, height: 16)
-//                                                                    } else {
-//                                                                        Color.clear
-//                                                                            .transition(.opacity)
-//                                                                            .frame(width: 16, height: 16)
-//                                                                    }
+//                                                    HStack(spacing: 4) {
+//                                                        if let logoURL = URL(string: driver.logo) {
+//                                                            AsyncImage(url: logoURL) { phase in
+//                                                                if let image = phase.image {
+//                                                                    image
+//                                                                        .resizable()
+//                                                                        .interpolation(.high)
+//                                                                        .scaledToFit()
+//                                                                        .transition(.opacity)
+//                                                                        .frame(width: 16, height: 16)
+//                                                                } else {
+//                                                                    Color.clear
+//                                                                        .transition(.opacity)
+//                                                                        .frame(width: 16, height: 16)
 //                                                                }
-//                                                                .padding(.trailing, 5)
 //                                                            }
-//
-//                                                            Text(driver.displayName)
-//                                                                .lineLimit(1)
-//                                                                .truncationMode(.tail)
-//                                                        }
-//                                                        .frame(width: 130, alignment: .leading)
-//
-//                                                        if f1State == "post" {
-//                                                            if driver.order == 1 {
-//                                                                Text(
-//                                                                    "\(driver.time ?? "-")"
-//                                                                )
-//                                                                .contentTransition(.numericText(countsDown: false))
-//                                                                .frame(width: 100, alignment: .trailing)
-//                                                            } else {
-//                                                                Text(
-//                                                                    {
-//                                                                        if let behindTime = driver.behindTime, !behindTime.starts(with: "+") {
-//                                                                            return "+\(behindTime)"
-//                                                                        } else if let behindTime = driver.behindTime {
-//                                                                            return behindTime
-//                                                                        } else if let behindLaps = driver.behindLaps, let lapsInt = Int(behindLaps) {
-//                                                                            return "+\(lapsInt) \(lapsInt == 1 ? "Lap" : "Laps")"
-//                                                                        } else if let behindLaps = driver.behindLaps, !behindLaps.isEmpty {
-//                                                                            return "+\(behindLaps)"
-//                                                                        }
-//                                                                        return "+-"
-//                                                                    }()
-//                                                                )
-//                                                                .frame(width: 100, alignment: .trailing)
-//                                                            }
-//                                                        } else {
-//                                                            Text(driver.vehicle?.manufacturer ?? "-")
-//                                                                .frame(width: 120, alignment: .trailing)
+//                                                            .padding(.trailing, 5)
 //                                                        }
 //
-//                                                        Text(driver.laps)
-//                                                            .contentTransition(.numericText(countsDown: false))
-//                                                            .frame(width: 50, alignment: .trailing)
-//
-//                                                        Text(driver.pitsTaken ?? "-")
-//                                                            .contentTransition(.numericText(countsDown: false))
-//                                                            .frame(width: 50, alignment: .trailing)
+//                                                        Text(driver.displayName)
+//                                                            .lineLimit(1)
+//                                                            .truncationMode(.tail)
 //                                                    }
-//                                                    .font(.system(size: 13))
-//                                                    .padding(.horizontal, 10)
-//                                                }.frame(maxWidth: .infinity, alignment: .leading)
-//                                            }
+//                                                    .frame(width: 130, alignment: .leading)
+//
+//                                                    if f1State == "post" {
+//                                                        if driver.order == 1 {
+//                                                            Text(
+//                                                                "\(driver.time ?? "-")"
+//                                                            )
+//                                                            .contentTransition(.numericText(countsDown: false))
+//                                                            .frame(width: 100, alignment: .trailing)
+//                                                        } else {
+//                                                            Text(
+//                                                                {
+//                                                                    if let behindTime = driver.behindTime, !behindTime.starts(with: "+") {
+//                                                                        return "+\(behindTime)"
+//                                                                    } else if let behindTime = driver.behindTime {
+//                                                                        return behindTime
+//                                                                    } else if let behindLaps = driver.behindLaps, let lapsInt = Int(behindLaps) {
+//                                                                        return "+\(lapsInt) \(lapsInt == 1 ? "Lap" : "Laps")"
+//                                                                    } else if let behindLaps = driver.behindLaps, !behindLaps.isEmpty {
+//                                                                        return "+\(behindLaps)"
+//                                                                    }
+//                                                                    return "+-"
+//                                                                }()
+//                                                            )
+//                                                            .frame(width: 100, alignment: .trailing)
+//                                                        }
+//                                                    } else {
+//                                                        Text(driver.vehicle?.manufacturer ?? "-")
+//                                                            .frame(width: 120, alignment: .trailing)
+//                                                    }
+//
+//                                                    Text(driver.laps)
+//                                                        .contentTransition(.numericText(countsDown: false))
+//                                                        .frame(width: 50, alignment: .trailing)
+//
+//                                                    Text(driver.pitsTaken ?? "-")
+//                                                        .contentTransition(.numericText(countsDown: false))
+//                                                        .frame(width: 50, alignment: .trailing)
+//                                                }
+//                                                .font(.system(size: 13))
+//                                                .padding(.horizontal, 10)
+//                                            }.frame(maxWidth: .infinity, alignment: .leading)
 //                                        }
-//                                        .padding(.top, 5)
 //                                    }
-//                                    .task {
-//                                        if let _ = notchViewModel.game?.id {
-//                                            await fetchRaceInfo()
-//                                        }
-//                                    }
-//                                    .frame(maxHeight: 130)
-//                                    .padding(.top, 10)
-//                                    .padding(.bottom, 5)
-//                                }
+                                        .padding(.top, 5)
+                                }
+                                .frame(maxHeight: 130)
+                                .padding(.top, 10)
+                                .padding(.bottom, 5)
+                            }
 
                             if f1State == "pre" {
                                 VStack {
