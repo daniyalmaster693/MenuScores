@@ -121,29 +121,29 @@ class RefreshManager: NSObject, ObservableObject {
     ) async {
         await viewModel.populateRacing(from: fetchURL())
 
-        if let updatedGame = viewModel.races.first(where: { $0.id == currentGameID.wrappedValue }) {
+        if let race = viewModel.races.first(where: { $0.id == currentGameID.wrappedValue }) {
             if pinnedByMenubar.wrappedValue {
-//                currentTitle.wrappedValue = displayText(for: updatedGame, league: league)
+                currentTitle.wrappedValue = displayF1Text(for: race)
                 currentTitle.wrappedValue = ""
             } else if pinnedByNotch.wrappedValue {
                 currentTitle.wrappedValue = ""
             }
 
-            let newState = updatedGame.fullStatus.type.state
+            let newState = race.fullStatus.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-//                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
             }
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-//                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
             }
 
             previousGameState.wrappedValue = newState
             currentGameState.wrappedValue = newState
 
-//            if pinnedByNotch.wrappedValue {
-//                notchViewModel.game = updatedGame
-//            }
+            if pinnedByNotch.wrappedValue {
+                notchViewModel.racingCompetition = race
+            }
         }
     }
 
