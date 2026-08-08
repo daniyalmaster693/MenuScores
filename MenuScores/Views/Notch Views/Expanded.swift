@@ -130,6 +130,8 @@ struct Info: View {
             return .blue
         case "CHECKERED":
             return .white
+        case "CHECKER":
+            return .white
         default:
             return .gray
         }
