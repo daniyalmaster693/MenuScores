@@ -39,7 +39,7 @@ struct AlertSettingsView: View {
 
                     Toggle(isOn: $enableNotificationAlerts) {
                         HStack {
-                            Image(systemName: "bell")
+                            Image(systemName: "bell.badge")
                                 .foregroundColor(.primary)
                             Text("Receive notifications for play alerts")
                         }

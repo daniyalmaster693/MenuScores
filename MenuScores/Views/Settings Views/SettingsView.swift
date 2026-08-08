@@ -29,7 +29,7 @@ struct SettingsView: View {
                     .tag("behavior")
 
                     HStack {
-                        Image(systemName: "bell.badge")
+                        Image(systemName: "bell")
                             .frame(width: 18, height: 18)
                         Text("Alerts")
                     }

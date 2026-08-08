@@ -109,7 +109,7 @@ struct BehaviorSettingsView: View {
                 Section {
                     Toggle(isOn: $notiGameStart) {
                         HStack {
-                            Image(systemName: "bell")
+                            Image(systemName: "bell.badge")
                                 .foregroundColor(.primary)
                             Text("Notify when a pinned game starts")
                         }
