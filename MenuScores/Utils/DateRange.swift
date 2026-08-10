@@ -27,6 +27,11 @@ func getRangeEnd() -> String {
     return formatter.string(from: endDate)
 }
 
+func getCurrentYear() -> String {
+    let currentYear = Calendar.current.component(.year, from: Date())
+    return String(currentYear)
+}
+
 func getCurrentDate() -> String {
     let today = Date()
 

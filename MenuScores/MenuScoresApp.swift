@@ -124,7 +124,7 @@ struct MenuScoresApp: App {
     @StateObject private var bncaaVM = GamesListView()
     @StateObject private var sncaaVM = GamesListView()
 
-    @StateObject private var f1VM = RacingListView()
+    @StateObject private var f1VM = GamesListView()
     @StateObject private var ncVM = GamesListView()
     @StateObject private var ncsVM = GamesListView()
     @StateObject private var nctVM = GamesListView()

@@ -5,9 +5,7 @@
 //  Created by Daniyal Master on 2025-08-22.
 //
 
-import Foundation
-
-struct RaceResponse: Decodable {
+struct RaceInfoResponse: Decodable {
     let sports: [Sport]
 }
 
@@ -16,51 +14,32 @@ struct Sport: Decodable {
 }
 
 struct RaceLeagues: Decodable {
-    let events: [RaceEvent]
+    let events: [Race]
 }
 
-struct RaceEvent: Decodable {
+struct Race: Decodable {
     let id: String
     let date: String
     let name: String
     let shortName: String
     let competitionId: String
-    let competitionType: CompetitionType
     let description: String
     let location: String
-    let links: [RaceLinks]
+    let link: String
     let status: String
-    let fullStatus: FullStatus
+    let fullStatus: FullStatus?
     let summary: String
     let period: Int
-    let laps: String?
+    let laps: String
     let trackText: String
     let track: Track
     let note: String
-    let competitors: [Driver]?
-}
-
-struct RaceLinks: Decodable {
-    let href: String
-}
-
-struct CompetitionType: Decodable {
-    let abbreviation: String
-    let text: String
+    let competitors: [Driver]
 }
 
 struct FullStatus: Decodable {
     let period: Int?
     let flag: String?
-    let type: RacingStatus
-}
-
-struct RacingStatus: Decodable {
-    let state: String
-    let completed: Bool
-    let description: String
-    let detail: String
-    let shortDetail: String
 }
 
 struct Track: Decodable {

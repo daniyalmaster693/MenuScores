@@ -19,18 +19,3 @@ func formattedDate(from dateString: String) -> String {
 
     return "Invalid Date"
 }
-
-func formattedRaceDate(from dateString: String) -> String {
-    let inputFormatter = DateFormatter()
-    inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-
-    if let gameDate = inputFormatter.date(from: dateString) {
-        let outputFormatter = DateFormatter()
-        outputFormatter.timeStyle = .none
-        outputFormatter.dateStyle = .short
-
-        return outputFormatter.string(from: gameDate)
-    }
-
-    return "Invalid Date"
-}
