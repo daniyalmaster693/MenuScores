@@ -21,9 +21,9 @@ struct SettingsView: View {
                     Label("Behavior", systemImage: "slider.horizontal.3")
                 }
 
-//                NavigationLink(value: "Alerts") {
-//                    Label("Alerts", systemImage: "bell")
-//                }
+                NavigationLink(value: "Alerts") {
+                    Label("Alerts", systemImage: "bell")
+                }
 
                 NavigationLink(value: "Favorites") {
                     Label("Favorites", systemImage: "star")
@@ -49,9 +49,9 @@ struct SettingsView: View {
                 case "Behavior":
                     BehaviorSettingsView()
                         .navigationTitle("Behavior")
-//                case "Alerts":
-//                    AlertSettingsView()
-//                        .navigationTitle("Alerts")
+                case "Alerts":
+                    AlertSettingsView()
+                        .navigationTitle("Alerts")
                 case "Favorites":
                     FavoritesSettingsView()
                         .navigationTitle("Favorites")
