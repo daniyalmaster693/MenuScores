@@ -65,51 +65,6 @@ struct CompactLeading: View {
                 }
             }
 
-            if sport == "F1" {
-                HStack {
-                    AsyncImage(
-                        url: URL(
-                            string:
-                            "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                        )
-                    ) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .interpolation(.high)
-                                .scaledToFit()
-                                .transition(.opacity)
-                                .frame(width: 18, height: 18)
-                        } else {
-                            Color.clear
-                                .transition(.opacity)
-                                .frame(width: 18, height: 18)
-                        }
-                    }
-                }.contextMenu {
-                    Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
-                                .tag(index)
-                        }
-                    }
-
-                    Button {
-                        SettingsWindowController.shared.showWindow()
-                    } label: {
-                        Text("Preferences")
-                    }
-                    .keyboardShortcut(",")
-
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Text("Quit")
-                    }
-                    .keyboardShortcut("q")
-                }
-            }
-
             if sport == "Racing" {
                 HStack {
                     AsyncImage(
@@ -198,6 +153,51 @@ struct CompactLeading: View {
                     }
                     .keyboardShortcut("q")
                 }
+            }
+        }
+
+        if sport == "F1" {
+            HStack {
+                AsyncImage(
+                    url: URL(
+                        string:
+                        "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                    )
+                ) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .interpolation(.high)
+                            .scaledToFit()
+                            .transition(.opacity)
+                            .frame(width: 18, height: 18)
+                    } else {
+                        Color.clear
+                            .transition(.opacity)
+                            .frame(width: 18, height: 18)
+                    }
+                }
+            }.contextMenu {
+                Picker("Choose Display", selection: $notchScreenIndex) {
+                    ForEach(NSScreen.screens.indices, id: \.self) { index in
+                        Text(NSScreen.screens[index].localizedName)
+                            .tag(index)
+                    }
+                }
+
+                Button {
+                    SettingsWindowController.shared.showWindow()
+                } label: {
+                    Text("Preferences")
+                }
+                .keyboardShortcut(",")
+
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Text("Quit")
+                }
+                .keyboardShortcut("q")
             }
         }
 

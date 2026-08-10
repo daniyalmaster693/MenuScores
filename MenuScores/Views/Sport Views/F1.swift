@@ -10,7 +10,7 @@ import SwiftUI
 
 struct F1Menu: View {
     let title: String
-    @ObservedObject var viewModel: GamesListView
+    @ObservedObject var viewModel: RacingListView
     let league: String
     let fetchURL: () -> URL
 
@@ -48,143 +48,145 @@ struct F1Menu: View {
 
     var body: some View {
         Menu(title) {
-            if !viewModel.games.isEmpty {
-                ForEach(Array(viewModel.games.enumerated()), id: \.1.id) { _, game in
-                    if let country = game.circuit?.address.country {
-                        Menu(country) {
-                            Text(formattedDate(from: game.endDate ?? "Invalid Date"))
-                                .font(.headline)
-                            Divider().padding(.bottom)
-                            Menu {
-                                Button {
-                                    currentTitle = displayText(for: game, league: league)
-                                    currentGameID = game.id
-                                    currentGameState = game.status.type.state
+            let groupedByRace = Dictionary(grouping: viewModel.races) { race in
+                race.shortName
+            }
 
-                                    pinnedByMenubar = true
-                                    pinnedByNotch = false
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "menubar.rectangle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 20, height: 20)
-                                        Text("Pin Race to Menubar")
-                                    }
-                                }
+            let sortedRaces = groupedByRace.keys.sorted()
 
-                                if enableNotch {
-                                    Button {
-                                        currentGameID = game.id
-                                        currentGameState = game.status.type.state
+            if sortedRaces.isEmpty {
+                Text("No Races Scheduled")
+            } else {
+                ForEach(sortedRaces, id: \.self) { raceName in
+                    if let raceEvents = groupedByRace[raceName] {
+                        Menu {
+                            let groupedByDate = Dictionary(grouping: raceEvents) { race in
+                                formattedRaceDate(from: race.date)
+                            }
 
-                                        pinnedByNotch = true
-                                        pinnedByMenubar = false
+                            let sortedDates = groupedByDate.keys.sorted()
 
-                                        notchViewModel.game = game
+                            ForEach(sortedDates, id: \.self) { date in
+                                if let racesForDate = groupedByDate[date] {
+                                    Menu(date) {
+                                        ForEach(racesForDate, id: \.competitionId) { race in
+                                            Menu {
+                                                Button {
+                                                    currentTitle = displayF1Text(for: race)
+                                                    currentGameID = race.competitionId
+                                                    currentGameState = race.fullStatus.type.state
 
-                                        Task {
-                                            if let existingNotch = NotchViewModel.shared.notch {
-                                                await existingNotch.hide()
-                                                NotchViewModel.shared.game = nil
-                                                NotchViewModel.shared.currentGameID = ""
-                                                NotchViewModel.shared.currentGameState = ""
-                                                NotchViewModel.shared.previousGameState = ""
-                                                NotchViewModel.shared.notch = nil
-                                            }
+                                                    pinnedByMenubar = true
+                                                    pinnedByNotch = false
+                                                } label: {
+                                                    HStack {
+                                                        Image(systemName: "menubar.rectangle")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 20, height: 20)
+                                                        Text("Pin Race to Menubar")
+                                                    }
+                                                }
 
-                                            let newNotch = DynamicNotch(
-                                                hoverBehavior: .all,
-                                                style: .notch
-                                            ) {
-                                                Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
-                                            } compactLeading: {
-                                                CompactLeading(notchViewModel: notchViewModel, sport: "F1")
-                                            } compactTrailing: {
-                                                CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
-                                            }
+                                                if enableNotch {
+                                                    Button {
+                                                        currentGameID = race.competitionId
+                                                        currentGameState = race.fullStatus.type.state
 
-                                            NotchViewModel.shared.notch = newNotch
-                                            await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-                                        }
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "macbook")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 20, height: 20)
-                                            Text("Pin Race to Notch")
-                                        }
-                                    }
-                                }
+                                                        pinnedByNotch = true
+                                                        pinnedByMenubar = false
 
-                                Divider()
+                                                        notchViewModel.racingCompetition = race
 
-                                let f1Index = game.competitions.indices.contains(4) ? 4 : (game.competitions.indices.count - 1)
+                                                        Task {
+                                                            if let existingNotch = NotchViewModel.shared.notch {
+                                                                await existingNotch.hide()
+                                                                NotchViewModel.shared.game = nil
+                                                                NotchViewModel.shared.currentGameID = ""
+                                                                NotchViewModel.shared.currentGameState = ""
+                                                                NotchViewModel.shared.previousGameState = ""
+                                                                NotchViewModel.shared.notch = nil
+                                                            }
 
-                                if game.competitions.indices.contains(f1Index),
-                                   game.competitions[f1Index].status.type.state == "in" || game.competitions[f1Index].status.type.state == "post"
-                                {
-                                    Menu {
-                                        let competitors = game.competitions[f1Index].competitors ?? []
+                                                            let newNotch = DynamicNotch(
+                                                                hoverBehavior: .all,
+                                                                style: .notch
+                                                            ) {
+                                                                Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
+                                                            } compactLeading: {
+                                                                CompactLeading(notchViewModel: notchViewModel, sport: "F1")
+                                                            } compactTrailing: {
+                                                                CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
+                                                            }
 
-                                        ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
-                                            Button {} label: {
+                                                            NotchViewModel.shared.notch = newNotch
+                                                            await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                                        }
+                                                    } label: {
+                                                        HStack {
+                                                            Image(systemName: "macbook")
+                                                                .resizable()
+                                                                .scaledToFit()
+                                                                .frame(width: 20, height: 20)
+                                                            Text("Pin Race to Notch")
+                                                        }
+                                                    }
+                                                }
+
+                                                Divider()
+
+                                                Button {
+                                                    if let urlString = race.links.first?.href, let url = URL(string: urlString) {
+                                                        NSWorkspace.shared.open(url)
+                                                    }
+                                                } label: {
+                                                    HStack {
+                                                        Image(systemName: "info.circle")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 20, height: 20)
+                                                        Text("View Race Details")
+                                                    }
+                                                }
+                                            } label: {
                                                 HStack {
-                                                    Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown")")
-                                                        .lineLimit(1)
-                                                        .truncationMode(.tail)
+                                                    AsyncImage(
+                                                        url: URL(
+                                                            string:
+                                                            "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                                        )
+                                                    ) { image in
+                                                        image.resizable().scaledToFit()
+                                                    } placeholder: {
+                                                        ProgressView()
+                                                    }
+                                                    .frame(width: 40, height: 40)
+
+                                                    Text(displayF1Text(for: race))
                                                 }
                                             }
                                         }
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "flag.checkered")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 20, height: 20)
-                                            Text("Leaderboard")
-                                        }
                                     }
                                 }
+                            }
+                        } label: {
+                            HStack {
+                                AsyncImage(
+                                    url: URL(
+                                        string: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                    )
+                                ) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                .frame(width: 20, height: 20)
 
-                                Button {
-                                    if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
-                                        NSWorkspace.shared.open(url)
-                                    }
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "info.circle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 20, height: 20)
-                                        Text("View Race Details")
-                                    }
-                                }
-                            } label: {
-                                HStack {
-                                    AsyncImage(
-                                        url: URL(
-                                            string:
-                                            "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
-                                        )
-                                    ) { image in
-                                        image.resizable().scaledToFit()
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                    .frame(width: 40, height: 40)
-
-                                    Text(displayText(for: game, league: league))
-                                }
+                                Text(raceName)
                             }
                         }
                     }
                 }
-            } else {
-                Text("Loading games...")
-                    .foregroundColor(.gray)
-                    .padding()
             }
         }
         .onAppear {
@@ -196,14 +198,14 @@ struct F1Menu: View {
             ) {
                 Task {
                     await RefreshManager.shared.performRefresh(
-                        viewModel: viewModel,
+                        racingViewModel: viewModel,
                         league: league,
                         fetchURL: fetchURL,
                         currentTitle: $currentTitle,
                         currentGameID: $currentGameID,
                         currentGameState: $currentGameState,
                         previousGameState: $previousGameState,
-                        type: .standard,
+                        type: .racing,
                         pinnedByMenubar: $pinnedByMenubar,
                         pinnedByNotch: $pinnedByNotch,
                         notchViewModel: notchViewModel

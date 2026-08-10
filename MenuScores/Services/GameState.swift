@@ -32,45 +32,6 @@ func displayText(for game: Event, league: String) -> String {
             "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
     }
 
-    // F1 Race States
-
-    let f1Index = game.competitions.indices.contains(4) ? 4 : (game.competitions.isEmpty ? nil : game.competitions.count - 1)
-
-    let driverName: String
-    if let index = f1Index,
-       game.competitions.indices.contains(index),
-       let f1Competitors = game.competitions[index].competitors,
-       !f1Competitors.isEmpty
-    {
-        driverName = f1Competitors.first(where: { $0.order == 1 })?.athlete?.displayName ?? "-"
-    } else {
-        driverName = "-"
-    }
-
-    var f1Period: Int?
-    var f1State = "-"
-
-    if let index = f1Index,
-       game.competitions.indices.contains(index)
-    {
-        f1Period = game.competitions[index].status.period
-        f1State = game.competitions[index].status.type.state
-    }
-    let f1PeriodText = f1Period.map { "\(prefix)\($0)" } ?? "-"
-
-    if league == "F1", f1State == "pre" {
-        return
-            "\(game.shortName ?? game.name) - \(formattedTime(from: game.endDate ?? game.date))"
-    }
-
-    if league == "F1", f1State == "in" {
-        return "\(driverName)     \(f1PeriodText)"
-    }
-
-    if league == "F1", f1State == "post" {
-        return "\(driverName)     (Final)"
-    }
-
     // Other Racing Game States
 
     let leaderName = game.competitions[0].competitors?.first(where: { $0.order == 1 })?.athlete?.displayName ?? "-"
@@ -115,6 +76,28 @@ func displayText(for game: Event, league: String) -> String {
 
     default:
         return game.shortName ?? game.name
+    }
+}
+
+func displayF1Text(for race: RaceEvent) -> String {
+    let f1State = race.fullStatus.type.state
+    let driverName = race.competitors?.first?.shortName ?? "Driver"
+    let lap = race.fullStatus.period ?? 0
+
+    switch f1State {
+    case "pre":
+        return "\(race.competitionType.text) - \(formattedRaceTime(from: race.date))"
+
+    case "in":
+        return
+            "\(driverName)     L\(lap)"
+
+    case "post":
+        return
+            "\(driverName)     (Final)"
+
+    default:
+        return race.shortName
     }
 }
 
