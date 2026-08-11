@@ -84,18 +84,12 @@ struct Driver: Decodable {
     let behindTime: String?
     let behindLaps: String?
     let time: String?
+    let score: String?
     let pitsTaken: String?
-    let vehicle: Vehicle?
     let status: DriverStatus?
 }
 
 struct DriverStatus: Decodable {
     let displayValue: String?
     let period: Int?
-}
-
-struct Vehicle: Decodable {
-    let manufacturer: String?
-    let number: String?
-    let teamColor: String?
 }

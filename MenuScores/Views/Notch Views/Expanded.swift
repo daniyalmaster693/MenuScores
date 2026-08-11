@@ -946,28 +946,28 @@ struct Info: View {
 
                                     Spacer()
 
-//                                    if game.status.type.state == "in" {
-//                                        if let lap = game.competitions[0].status.period {
-//                                            Text("L\(lap)")
-//                                                .contentTransition(.numericText(countsDown: false))
-//                                                .font(.system(size: 14, weight: .semibold))
-//                                                .padding(.trailing, 10)
-//                                        }
-//                                    }
-//
-//                                    if game.status.type.state == "post" {
-//                                        HStack {
-//                                            Image(systemName: "trophy.fill")
-//                                                .foregroundColor(.yellow)
-//                                                .font(.system(size: 10))
-//
-//                                            Text(
-//                                                "\(game.competitions[0].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
-//                                            )
-//                                            .font(.system(size: 14, weight: .semibold))
-//                                            .padding(.trailing, 10)
-//                                        }
-//                                    }
+                                    if raceState == "in" {
+                                        if let lap = race.fullStatus.period {
+                                            Text("L\(lap)")
+                                                .contentTransition(.numericText(countsDown: false))
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .padding(.trailing, 10)
+                                        }
+                                    }
+
+                                    if raceState == "post" {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.system(size: 10))
+
+                                            Text(
+                                                "\(race.competitors?.first(where: { $0.order == 1 })?.shortName ?? "-")"
+                                            )
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 10)
+                                        }
+                                    }
                                 }
                                 .padding(.top, 5)
 
@@ -975,6 +975,17 @@ struct Info: View {
                                     HStack {
                                         Text("#").frame(width: 30, alignment: .leading)
                                         Text("Driver").frame(width: 160, alignment: .leading)
+
+                                        Text("Starting #")
+                                            .frame(width: 100, alignment: .trailing)
+
+                                        Text("Laps")
+                                            .frame(width: 50, alignment: .trailing)
+
+                                        if raceState == "post" {
+                                            Text("Points")
+                                                .frame(width: 50, alignment: .trailing)
+                                        }
                                     }
                                     .font(.system(size: 12, weight: .semibold))
                                     .padding(.horizontal, 10)
@@ -984,43 +995,56 @@ struct Info: View {
 
                                     ScrollView(.vertical, showsIndicators: true) {
                                         VStack(spacing: 4) {
-//                                            let competitors = game.competitions[0].competitors ?? []
+                                            let competitors = race.competitors ?? []
 //
-//                                            ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
-//                                                HStack {
-//                                                    Text("\(competitor.order ?? 0)")
-//                                                        .contentTransition(.numericText(countsDown: false))
-//                                                        .frame(width: 30, alignment: .leading)
-//
-//                                                    HStack(spacing: 4) {
-//                                                        if let flagURLString = competitor.athlete?.flag?.href,
-//                                                           let flagURL = URL(string: flagURLString)
-//                                                        {
-//                                                            AsyncImage(url: flagURL) { phase in
-//                                                                if let image = phase.image {
-//                                                                    image
-//                                                                        .resizable()
-//                                                                        .scaledToFit()
-//                                                                        .transition(.opacity)
-//                                                                        .frame(width: 16, height: 16)
-//                                                                } else {
-//                                                                    Color.clear
-//                                                                        .transition(.opacity)
-//                                                                        .frame(width: 16, height: 16)
-//                                                                }
-//                                                            }
-//                                                            .padding(.trailing, 5)
-//                                                        }
-//
-//                                                        Text(competitor.athlete?.displayName ?? "-")
-//                                                            .lineLimit(1)
-//                                                            .truncationMode(.tail)
-//                                                    }
-//                                                    .frame(width: 160, alignment: .leading)
-//                                                }
-//                                                .font(.system(size: 13))
-//                                                .padding(.horizontal, 10)
-//                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                            ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
+                                                HStack {
+                                                    Text("\(competitor.order ?? 0)")
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                        .frame(width: 30, alignment: .leading)
+
+                                                    HStack(spacing: 4) {
+                                                        if let logoURL = URL(string: competitor.logo) {
+                                                            AsyncImage(url: logoURL) { phase in
+                                                                if let image = phase.image {
+                                                                    image
+                                                                        .resizable()
+                                                                        .scaledToFit()
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                } else {
+                                                                    Color.clear
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 16, height: 16)
+                                                                }
+                                                            }
+                                                            .padding(.trailing, 5)
+                                                        }
+
+                                                        Text(competitor.displayName)
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                    }
+                                                    .frame(width: 160, alignment: .leading)
+
+                                                    Text("\(competitor.startOrder ?? 0)")
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                        .frame(width: 100, alignment: .trailing)
+
+                                                    Text("\(competitor.laps)")
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                        .frame(width: 50, alignment: .trailing)
+
+                                                    if raceState == "post" {
+                                                        Text("\(competitor.score ?? "0")")
+                                                            .contentTransition(.numericText(countsDown: false))
+                                                            .frame(width: 50, alignment: .trailing)
+                                                    }
+                                                }
+                                                .font(.system(size: 13))
+                                                .padding(.horizontal, 10)
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                     .padding(.top, 5)
