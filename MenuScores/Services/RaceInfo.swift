@@ -27,7 +27,7 @@ struct RaceEvent: Decodable {
     let competitionId: String
     let competitionType: CompetitionType?
     let description: String
-    let location: String
+    let location: String?
     let links: [RaceLinks]
     let status: String
     let fullStatus: FullStatus

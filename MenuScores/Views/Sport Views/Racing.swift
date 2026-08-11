@@ -56,7 +56,7 @@ struct RacingMenu: View {
                 ForEach(Array(viewModel.races.enumerated()), id: \.1.id) { _, race in
                     Menu {
                         Button {
-//                            currentTitle = displayText(for: game, league: league)
+                            currentTitle = displayRacingText(for: race)
                             currentGameID = race.id
                             currentGameState = race.fullStatus.type.state
 
@@ -133,7 +133,7 @@ struct RacingMenu: View {
                             }
                             .frame(width: 40, height: 40)
 
-//                            Text(displayText(for: game, league: league))
+                            Text(displayRacingText(for: race))
                         }
                     }
                 }

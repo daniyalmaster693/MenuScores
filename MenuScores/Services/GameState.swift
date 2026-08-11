@@ -32,18 +32,6 @@ func displayText(for game: Event, league: String) -> String {
             "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    \(detailText)"
     }
 
-    // Other Racing Game States
-
-    let leaderName = game.competitions[0].competitors?.first(where: { $0.order == 1 })?.athlete?.displayName ?? "-"
-
-    if league == "NC" || league == "NCS" || league == "NCT" || league == "IRL", state == "in" {
-        return "\(leaderName) - \(periodText)"
-    }
-
-    if league == "NC" || league == "NCS" || league == "NCT" || league == "IRL", state == "post" {
-        return "\(leaderName)     (Final)"
-    }
-
     // PGA Game States
 
     let golferName =
@@ -87,6 +75,28 @@ func displayF1Text(for race: RaceEvent) -> String {
     switch f1State {
     case "pre":
         return "\(race.competitionType?.text ?? "Race") - \(formattedRaceTime(from: race.date))"
+
+    case "in":
+        return
+            "\(driverName)     L\(lap)"
+
+    case "post":
+        return
+            "\(driverName)     (Final)"
+
+    default:
+        return race.shortName
+    }
+}
+
+func displayRacingText(for race: RaceEvent) -> String {
+    let raceState = race.fullStatus.type.state
+    let driverName = race.competitors?.first?.shortName ?? "Driver"
+    let lap = race.fullStatus.period ?? 0
+
+    switch raceState {
+    case "pre":
+        return "\(race.shortName) - \(formattedRaceTime(from: race.date))"
 
     case "in":
         return
