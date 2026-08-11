@@ -117,7 +117,7 @@ enum Scoreboard {
         static let f1: () -> URL = {
             URL(
                 string:
-                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=f1"
+                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=racing&league=f1&dates=20260724"
             )!
         }
 
