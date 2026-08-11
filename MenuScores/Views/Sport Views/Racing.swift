@@ -48,74 +48,74 @@ struct RacingMenu: View {
 
     var body: some View {
         Menu(title) {
-            Text(formattedDate(from: viewModel.races.first?.date ?? "Invalid Date"))
+            Text(formattedRaceDate(from: viewModel.races.first?.date ?? "Invalid Date"))
                 .font(.headline)
             Divider().padding(.bottom)
 
             if !viewModel.races.isEmpty {
-                ForEach(Array(viewModel.races.enumerated()), id: \.1.id) { _, _ in
+                ForEach(Array(viewModel.races.enumerated()), id: \.1.id) { _, race in
                     Menu {
-//                        Button {
+                        Button {
 //                            currentTitle = displayText(for: game, league: league)
-//                            currentGameID = game.id
-//                            currentGameState = game.status.type.state
-//
-//                            pinnedByMenubar = true
-//                            pinnedByNotch = false
-//                        } label: {
-//                            HStack {
-//                                Image(systemName: "menubar.rectangle")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(width: 20, height: 20)
-//                                Text("Pin Race to Menubar")
-//                            }
-//                        }
+                            currentGameID = race.id
+                            currentGameState = race.fullStatus.type.state
 
-//                        if enableNotch {
-//                            Button {
-//                                currentGameID = game.id
-//                                currentGameState = game.status.type.state
-//
-//                                pinnedByNotch = true
-//                                pinnedByMenubar = false
-//
-//                                notchViewModel.game = game
-//
-//                                Task {
-//                                    if let existingNotch = NotchViewModel.shared.notch {
-//                                        await existingNotch.hide()
-//                                        NotchViewModel.shared.game = nil
-//                                        NotchViewModel.shared.currentGameID = ""
-//                                        NotchViewModel.shared.currentGameState = ""
-//                                        NotchViewModel.shared.previousGameState = ""
-//                                        NotchViewModel.shared.notch = nil
-//                                    }
-//
-//                                    let newNotch = DynamicNotch(
-//                                        hoverBehavior: .all,
-//                                        style: .notch
-//                                    ) {
-//                                        Info(notchViewModel: notchViewModel, sport: "Racing", league: "\(league)")
-//                                    } compactLeading: {
-//                                        CompactLeading(notchViewModel: notchViewModel, sport: "Racing")
-//                                    } compactTrailing: {
-//                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Racing")
-//                                    }
-//
-//                                    NotchViewModel.shared.notch = newNotch
-//                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-//                                }
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "macbook")
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 20, height: 20)
-//                                    Text("Pin Race to Notch")
-//                                }
-//                            }
-//                        }
+                            pinnedByMenubar = true
+                            pinnedByNotch = false
+                        } label: {
+                            HStack {
+                                Image(systemName: "menubar.rectangle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("Pin Race to Menubar")
+                            }
+                        }
+
+                        if enableNotch {
+                            Button {
+                                currentGameID = race.id
+                                currentGameState = race.fullStatus.type.state
+
+                                pinnedByNotch = true
+                                pinnedByMenubar = false
+
+                                notchViewModel.racingCompetition = race
+
+                                Task {
+                                    if let existingNotch = NotchViewModel.shared.notch {
+                                        await existingNotch.hide()
+                                        NotchViewModel.shared.game = nil
+                                        NotchViewModel.shared.currentGameID = ""
+                                        NotchViewModel.shared.currentGameState = ""
+                                        NotchViewModel.shared.previousGameState = ""
+                                        NotchViewModel.shared.notch = nil
+                                    }
+
+                                    let newNotch = DynamicNotch(
+                                        hoverBehavior: .all,
+                                        style: .notch
+                                    ) {
+                                        Info(notchViewModel: notchViewModel, sport: "Racing", league: "\(league)")
+                                    } compactLeading: {
+                                        CompactLeading(notchViewModel: notchViewModel, sport: "Racing")
+                                    } compactTrailing: {
+                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Racing")
+                                    }
+
+                                    NotchViewModel.shared.notch = newNotch
+                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "macbook")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("Pin Race to Notch")
+                                }
+                            }
+                        }
 
                         Divider()
 
