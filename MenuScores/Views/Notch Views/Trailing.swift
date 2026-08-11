@@ -66,40 +66,6 @@ struct CompactTrailing: View {
                 }
             }
 
-            if sport == "Racing" {
-                HStack {
-                    if let lap = game.competitions[0].status.period {
-                        Text("L\(lap)")
-                            .contentTransition(.numericText(countsDown: false))
-                            .font(.system(size: 14, weight: .semibold))
-                    } else {
-                        Text("L -")
-                            .font(.system(size: 14, weight: .semibold))
-                    }
-                }.contextMenu {
-                    Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
-                                .tag(index)
-                        }
-                    }
-
-                    Button {
-                        SettingsWindowController.shared.showWindow()
-                    } label: {
-                        Text("Preferences")
-                    }
-                    .keyboardShortcut(",")
-
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Text("Quit")
-                    }
-                    .keyboardShortcut("q")
-                }
-            }
-
             if sport == "Golf" {
                 HStack {
                     if let round = game.competitions[0].status.period {
@@ -137,6 +103,40 @@ struct CompactTrailing: View {
 
         if let race = notchViewModel.racingCompetition {
             if sport == "F1" {
+                HStack {
+                    if let lap = race.fullStatus.period {
+                        Text("L\(lap)")
+                            .contentTransition(.numericText(countsDown: false))
+                            .font(.system(size: 14, weight: .semibold))
+                    } else {
+                        Text("L -")
+                            .font(.system(size: 14, weight: .semibold))
+                    }
+                }.contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
+                }
+            }
+
+            if sport == "Racing" {
                 HStack {
                     if let lap = race.fullStatus.period {
                         Text("L\(lap)")

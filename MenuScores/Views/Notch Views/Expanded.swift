@@ -464,190 +464,6 @@ struct Info: View {
                 }
             }
 
-            if sport == "Racing" {
-                VStack {
-                    HStack(spacing: 4) {
-                        VStack {
-                            if game.competitions[0].status.type.state == "in" || game.competitions[0].status.type.state == "post" {
-                                HStack {
-                                    AsyncImage(
-                                        url: URL(
-                                            string:
-                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
-                                        )
-                                    ) { phase in
-                                        if let image = phase.image {
-                                            image
-                                                .resizable()
-                                                .interpolation(.high)
-                                                .scaledToFit()
-                                                .transition(.opacity)
-                                                .frame(width: 18, height: 18)
-                                        } else {
-                                            Color.clear
-                                                .transition(.opacity)
-                                                .frame(width: 18, height: 18)
-                                        }
-                                    }
-                                    .padding(.trailing, 3)
-                                    .padding(.leading, 10)
-
-                                    Text("Leaders")
-                                        .font(.system(size: 14, weight: .medium))
-
-                                    Spacer()
-
-                                    if game.status.type.state == "in" {
-                                        if let lap = game.competitions[0].status.period {
-                                            Text("L\(lap)")
-                                                .contentTransition(.numericText(countsDown: false))
-                                                .font(.system(size: 14, weight: .semibold))
-                                                .padding(.trailing, 10)
-                                        }
-                                    }
-
-                                    if game.status.type.state == "post" {
-                                        HStack {
-                                            Image(systemName: "trophy.fill")
-                                                .foregroundColor(.yellow)
-                                                .font(.system(size: 10))
-
-                                            Text(
-                                                "\(game.competitions[0].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
-                                            )
-                                            .font(.system(size: 14, weight: .semibold))
-                                            .padding(.trailing, 10)
-                                        }
-                                    }
-                                }
-                                .padding(.top, 5)
-
-                                VStack(spacing: 5) {
-                                    HStack {
-                                        Text("#").frame(width: 30, alignment: .leading)
-                                        Text("Driver").frame(width: 160, alignment: .leading)
-                                    }
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .padding(.horizontal, 10)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                                    Divider()
-
-                                    ScrollView(.vertical, showsIndicators: true) {
-                                        VStack(spacing: 4) {
-                                            let competitors = game.competitions[0].competitors ?? []
-
-                                            ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
-                                                HStack {
-                                                    Text("\(competitor.order ?? 0)")
-                                                        .contentTransition(.numericText(countsDown: false))
-                                                        .frame(width: 30, alignment: .leading)
-
-                                                    HStack(spacing: 4) {
-                                                        if let flagURLString = competitor.athlete?.flag?.href,
-                                                           let flagURL = URL(string: flagURLString)
-                                                        {
-                                                            AsyncImage(url: flagURL) { phase in
-                                                                if let image = phase.image {
-                                                                    image
-                                                                        .resizable()
-                                                                        .scaledToFit()
-                                                                        .transition(.opacity)
-                                                                        .frame(width: 16, height: 16)
-                                                                } else {
-                                                                    Color.clear
-                                                                        .transition(.opacity)
-                                                                        .frame(width: 16, height: 16)
-                                                                }
-                                                            }
-                                                            .padding(.trailing, 5)
-                                                        }
-
-                                                        Text(competitor.athlete?.displayName ?? "-")
-                                                            .lineLimit(1)
-                                                            .truncationMode(.tail)
-                                                    }
-                                                    .frame(width: 160, alignment: .leading)
-                                                }
-                                                .font(.system(size: 13))
-                                                .padding(.horizontal, 10)
-                                            }.frame(maxWidth: .infinity, alignment: .leading)
-                                        }
-                                    }
-                                    .padding(.top, 5)
-                                }
-                                .frame(maxHeight: 130)
-                                .padding(.top, 10)
-                                .padding(.bottom, 5)
-                            }
-
-                            if game.competitions[0].status.type.state == "pre" {
-                                HStack {
-                                    AsyncImage(
-                                        url: URL(
-                                            string:
-                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
-                                        )
-                                    ) { phase in
-                                        if let image = phase.image {
-                                            image
-                                                .resizable()
-                                                .interpolation(.high)
-                                                .scaledToFit()
-                                                .transition(.opacity)
-                                                .frame(width: 28, height: 28)
-                                        } else {
-                                            Color.clear
-                                                .transition(.opacity)
-                                                .frame(width: 28, height: 28)
-                                        }
-                                    }
-                                    .padding(.trailing, 3)
-
-                                    Text("\(game.shortName ?? game.name)")
-                                        .font(.system(size: 18, weight: .medium))
-                                }
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .padding(.leading, 10)
-                                .padding(.trailing, 10)
-
-                                HStack {
-                                    Image(systemName: "flag.checkered")
-                                        .font(.system(size: 12))
-
-                                    Text("\(formattedDate(from: game.date)) @ \(formattedTime(from: game.date))")
-                                        .font(.system(size: 14, weight: .medium))
-                                }
-                                .padding(.top, 2)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            }
-                        }
-                    }
-                }
-                .contextMenu {
-                    Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
-                                .tag(index)
-                        }
-                    }
-
-                    Button {
-                        SettingsWindowController.shared.showWindow()
-                    } label: {
-                        Text("Preferences")
-                    }
-                    .keyboardShortcut(",")
-
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Text("Quit")
-                    }
-                    .keyboardShortcut("q")
-                }
-            }
-
             if sport == "Golf" {
                 VStack {
                     HStack(spacing: 4) {
@@ -1067,6 +883,192 @@ struct Info: View {
                                     .padding(.top, 6)
                                     .frame(maxWidth: .infinity, alignment: .center)
                                 }
+                            }
+                        }
+                    }
+                }
+                .contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
+                }
+            }
+
+            if sport == "Racing" {
+                let raceState = race.fullStatus.type.state
+
+                VStack {
+                    HStack(spacing: 4) {
+                        VStack {
+                            if raceState == "in" || raceState == "post" {
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
+                                        )
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        }
+                                    }
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
+
+                                    Text("Leaders")
+                                        .font(.system(size: 14, weight: .medium))
+
+                                    Spacer()
+
+//                                    if game.status.type.state == "in" {
+//                                        if let lap = game.competitions[0].status.period {
+//                                            Text("L\(lap)")
+//                                                .contentTransition(.numericText(countsDown: false))
+//                                                .font(.system(size: 14, weight: .semibold))
+//                                                .padding(.trailing, 10)
+//                                        }
+//                                    }
+//
+//                                    if game.status.type.state == "post" {
+//                                        HStack {
+//                                            Image(systemName: "trophy.fill")
+//                                                .foregroundColor(.yellow)
+//                                                .font(.system(size: 10))
+//
+//                                            Text(
+//                                                "\(game.competitions[0].competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
+//                                            )
+//                                            .font(.system(size: 14, weight: .semibold))
+//                                            .padding(.trailing, 10)
+//                                        }
+//                                    }
+                                }
+                                .padding(.top, 5)
+
+                                VStack(spacing: 5) {
+                                    HStack {
+                                        Text("#").frame(width: 30, alignment: .leading)
+                                        Text("Driver").frame(width: 160, alignment: .leading)
+                                    }
+                                    .font(.system(size: 12, weight: .semibold))
+                                    .padding(.horizontal, 10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                    Divider()
+
+                                    ScrollView(.vertical, showsIndicators: true) {
+                                        VStack(spacing: 4) {
+//                                            let competitors = game.competitions[0].competitors ?? []
+//
+//                                            ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
+//                                                HStack {
+//                                                    Text("\(competitor.order ?? 0)")
+//                                                        .contentTransition(.numericText(countsDown: false))
+//                                                        .frame(width: 30, alignment: .leading)
+//
+//                                                    HStack(spacing: 4) {
+//                                                        if let flagURLString = competitor.athlete?.flag?.href,
+//                                                           let flagURL = URL(string: flagURLString)
+//                                                        {
+//                                                            AsyncImage(url: flagURL) { phase in
+//                                                                if let image = phase.image {
+//                                                                    image
+//                                                                        .resizable()
+//                                                                        .scaledToFit()
+//                                                                        .transition(.opacity)
+//                                                                        .frame(width: 16, height: 16)
+//                                                                } else {
+//                                                                    Color.clear
+//                                                                        .transition(.opacity)
+//                                                                        .frame(width: 16, height: 16)
+//                                                                }
+//                                                            }
+//                                                            .padding(.trailing, 5)
+//                                                        }
+//
+//                                                        Text(competitor.athlete?.displayName ?? "-")
+//                                                            .lineLimit(1)
+//                                                            .truncationMode(.tail)
+//                                                    }
+//                                                    .frame(width: 160, alignment: .leading)
+//                                                }
+//                                                .font(.system(size: 13))
+//                                                .padding(.horizontal, 10)
+//                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                    }
+                                    .padding(.top, 5)
+                                }
+                                .frame(maxHeight: 130)
+                                .padding(.top, 10)
+                                .padding(.bottom, 5)
+                            }
+
+                            if raceState == "pre" {
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-nascar.png&h=80&w=80&scale=crop&cquality=40"
+                                        )
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 28, height: 28)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 28, height: 28)
+                                        }
+                                    }
+                                    .padding(.trailing, 3)
+
+                                    Text("\(race.shortName) - \(formattedRaceTime(from: race.date))")
+                                        .font(.system(size: 18, weight: .medium))
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.leading, 10)
+                                .padding(.trailing, 10)
+
+                                HStack {
+                                    Image(systemName: "location.fill")
+                                        .font(.system(size: 12))
+
+                                    Text("\(race.location ?? "Unknown")")
+                                        .font(.system(size: 14, weight: .medium))
+                                }
+                                .padding(.top, 2)
+                                .frame(maxWidth: .infinity, alignment: .center)
                             }
                         }
                     }
