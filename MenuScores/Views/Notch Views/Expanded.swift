@@ -695,35 +695,35 @@ struct Info: View {
 
                                     Spacer()
 
-//                                    if f1State == "in" {
-//                                        if let lap = currentCompetition?.status.period {
-//                                            HStack {
-//                                                Image(systemName: "flag.checkered")
+                                    if f1State == "in" {
+                                        if let lap = race.fullStatus.period {
+                                            HStack {
+                                                Image(systemName: "flag.checkered")
 //                                                    .foregroundColor(mapFlagColor(flagColor))
-//                                                    .font(.system(size: 12))
-//
-//                                                Text("Laps: \(lap)/\(totalLaps ?? "-")")
-//                                                    .contentTransition(.numericText(countsDown: false))
-//                                                    .font(.system(size: 14, weight: .semibold))
-//                                                    .padding(.trailing, 10)
-//                                            }
-//                                        }
-//                                    }
-//
-//                                    if f1State == "post" {
-//                                        HStack {
-//                                            Image(systemName: "trophy.fill")
-//                                                .foregroundColor(.yellow)
-//                                                .font(.system(size: 12))
-//
-//                                            Text(
-//                                                "\(currentCompetition?.competitors?.first(where: { $0.order == 1 })?.athlete?.shortName ?? "-")"
-//                                            )
-//                                            .contentTransition(.numericText(countsDown: false))
-//                                            .font(.system(size: 14, weight: .semibold))
-//                                            .padding(.trailing, 10)
-//                                        }
-//                                    }
+                                                    .font(.system(size: 12))
+
+                                                Text("Laps: \(lap)")
+                                                    .contentTransition(.numericText(countsDown: false))
+                                                    .font(.system(size: 14, weight: .semibold))
+                                                    .padding(.trailing, 10)
+                                            }
+                                        }
+                                    }
+
+                                    if f1State == "post" {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.system(size: 12))
+
+                                            Text(
+                                                "\(race.competitors?.first(where: { $0.order == 1 })?.shortName ?? "-")"
+                                            )
+                                            .contentTransition(.numericText(countsDown: false))
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 10)
+                                        }
+                                    }
                                 }
 
                                 VStack(spacing: 5) {
@@ -996,7 +996,7 @@ struct Info: View {
                                     ScrollView(.vertical, showsIndicators: true) {
                                         VStack(spacing: 4) {
                                             let competitors = race.competitors ?? []
-//
+
                                             ForEach(competitors.filter { $0.order != nil }, id: \.id) { competitor in
                                                 HStack {
                                                     Text("\(competitor.order ?? 0)")
