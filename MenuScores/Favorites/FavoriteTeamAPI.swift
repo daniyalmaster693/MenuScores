@@ -21,6 +21,8 @@ enum FavoriteTeams {
 
         "NBA": LeagueInfo(sport: "basketball", league: "nba", displayName: "NBA"),
         "WNBA": LeagueInfo(sport: "basketball", league: "wnba", displayName: "WNBA"),
+        "NCAAM": LeagueInfo(sport: "basketball", league: "mens-college-basketball", displayName: "NCAA M"),
+        "NCAAF": LeagueInfo(sport: "basketball", league: "womens-college-basketball", displayName: "NCAA F"),
         "SNBA": LeagueInfo(sport: "basketball", league: "nba-summer", displayName: "SNBA"),
         "GNBA": LeagueInfo(sport: "basketball", league: "nba-development", displayName: "GNBA"),
 
@@ -135,6 +137,8 @@ enum FavoriteTeams {
             case "HNCAAF": return defaults.bool(forKey: "enableHNCAAF")
             case "NBA": return defaults.bool(forKey: "enableNBA")
             case "WNBA": return defaults.bool(forKey: "enableWNBA")
+            case "NCAAM": return defaults.bool(forKey: "enableNCAAM")
+            case "NCAAF": return defaults.bool(forKey: "enableNCAAF")
             case "GNBA": return defaults.bool(forKey: "enableGNBA")
             case "NFL": return defaults.bool(forKey: "enableNFL")
             case "FNCAA": return defaults.bool(forKey: "enableFNCAA")
