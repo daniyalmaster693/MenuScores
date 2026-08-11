@@ -86,7 +86,7 @@ func displayF1Text(for race: RaceEvent) -> String {
 
     switch f1State {
     case "pre":
-        return "\(race.competitionType.text) - \(formattedRaceTime(from: race.date))"
+        return "\(race.competitionType?.text ?? "Race") - \(formattedRaceTime(from: race.date))"
 
     case "in":
         return

@@ -929,7 +929,7 @@ struct Info: View {
                                         Text("Laps")
                                             .frame(width: 50, alignment: .trailing)
 
-                                        if race.competitionType.text == "Race" {
+                                        if race.competitionType?.text == "Race" {
                                             Text("Pits")
                                                 .frame(width: 50, alignment: .trailing)
                                         }
@@ -1046,7 +1046,7 @@ struct Info: View {
                                         }
                                         .padding(.trailing, 3)
 
-                                        Text("\(race.competitionType.text) - \(formattedRaceTime(from: race.date))")
+                                        Text("\(race.competitionType?.text ?? "Race") - \(formattedRaceTime(from: race.date))")
                                             .font(.system(size: 18, weight: .medium))
                                     }
                                     .frame(maxWidth: .infinity, alignment: .center)
@@ -1059,7 +1059,7 @@ struct Info: View {
                                                 .font(.system(size: 12))
                                                 .foregroundColor(.gray)
 
-                                            Text("\(race.location)   \(race.track.displayLength)")
+                                            Text("\(race.location)   \(race.track?.displayLength ?? "0 km")")
                                                 .font(.system(size: 14, weight: .medium))
                                                 .fixedSize()
                                         }
