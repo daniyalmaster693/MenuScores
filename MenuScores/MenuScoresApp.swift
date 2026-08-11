@@ -31,6 +31,8 @@ struct MenuScoresApp: App {
     @AppStorage("enableWNBA") private var enableWNBA = false
     @AppStorage("enableNCAAM") private var enableNCAAM = false
     @AppStorage("enableNCAAF") private var enableNCAAF = false
+    @AppStorage("enableSNBA") private var enableSNBA = false
+    @AppStorage("enableGNBA") private var enableGNBA = false
 
     @AppStorage("enableNFL") private var enableNFL = true
     @AppStorage("enableFNCAA") private var enableFNCAA = false
@@ -117,6 +119,8 @@ struct MenuScoresApp: App {
     @StateObject private var wnbaVM = GamesListView()
     @StateObject private var ncaamVM = GamesListView()
     @StateObject private var ncaafVM = GamesListView()
+    @StateObject private var snbaVM = GamesListView()
+    @StateObject private var gnbaVM = GamesListView()
 
     @StateObject private var nflVM = GamesListView()
     @StateObject private var fncaaVM = GamesListView()
@@ -263,6 +267,32 @@ struct MenuScoresApp: App {
                     viewModel: ncaafVM,
                     league: "NCAA F",
                     fetchURL: Scoreboard.Urls.ncaaf,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableSNBA {
+                BasketballMenu(
+                    title: "NBA Summer",
+                    viewModel: snbaVM,
+                    league: "SNBA",
+                    fetchURL: Scoreboard.Urls.snba,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableGNBA {
+                BasketballMenu(
+                    title: "NBA G League",
+                    viewModel: gnbaVM,
+                    league: "GNBA",
+                    fetchURL: Scoreboard.Urls.gnba,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
@@ -904,6 +934,8 @@ struct MenuScoresApp: App {
                         wnba: wnbaVM,
                         ncaam: ncaamVM,
                         ncaaf: ncaafVM,
+                        snba: snbaVM,
+                        gnba: gnbaVM,
                         nfl: nflVM,
                         fncaa: fncaaVM,
                         mlb: mlbVM,

@@ -18,6 +18,8 @@ struct LeagueSettingsView: View {
     @AppStorage("enableWNBA") private var enableWNBA = false
     @AppStorage("enableNCAAM") private var enableNCAAM = false
     @AppStorage("enableNCAAF") private var enableNCAAF = false
+    @AppStorage("enableSNBA") private var enableSNBA = false
+    @AppStorage("enableGNBA") private var enableGNBA = false
 
     @AppStorage("enableNFL") private var enableNFL = true
     @AppStorage("enableFNCAA") private var enableFNCAA = false
@@ -122,6 +124,8 @@ struct LeagueSettingsView: View {
                                 enableWNBA = false
                                 enableNCAAM = false
                                 enableNCAAF = false
+                                enableSNBA = false
+                                enableGNBA = false
                                 enableNFL = false
                                 enableFNCAA = false
                                 enableMLB = false
@@ -213,6 +217,22 @@ struct LeagueSettingsView: View {
                             Image(systemName: "basketball")
                                 .foregroundColor(.primary)
                             Text("Women's College Basketball")
+                        }
+                    }
+
+                    Toggle(isOn: $enableSNBA) {
+                        HStack {
+                            Image(systemName: "basketball")
+                                .foregroundColor(.primary)
+                            Text("NBA Summer")
+                        }
+                    }
+
+                    Toggle(isOn: $enableGNBA) {
+                        HStack {
+                            Image(systemName: "basketball")
+                                .foregroundColor(.primary)
+                            Text("NBA G League")
                         }
                     }
                 }

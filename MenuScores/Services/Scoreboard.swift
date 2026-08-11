@@ -57,6 +57,21 @@ enum Scoreboard {
             )!
         }
 
+        static let snba: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-summer/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+
+            )!
+        }
+
+        static let gnba: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-development/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+            )!
+        }
+
         static let nfl: () -> URL = {
             URL(
                 string:
