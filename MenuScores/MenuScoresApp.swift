@@ -65,6 +65,9 @@ struct MenuScoresApp: App {
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
     @AppStorage("enableTUR") private var enableTUR = false
+    @AppStorage("enableBRA1") private var enableBRA1 = false
+    @AppStorage("enableBRA2") private var enableBRA2 = false
+    @AppStorage("enableKSA") private var enableKSA = false
 
     @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
@@ -153,6 +156,9 @@ struct MenuScoresApp: App {
     @StateObject private var gerVM = GamesListView()
     @StateObject private var itaVM = GamesListView()
     @StateObject private var turVM = GamesListView()
+    @StateObject private var bra1VM = GamesListView()
+    @StateObject private var bra2VM = GamesListView()
+    @StateObject private var ksaVM = GamesListView()
 
     @StateObject private var atpVM = TennisListView()
     @StateObject private var wtaVM = TennisListView()
@@ -553,6 +559,45 @@ struct MenuScoresApp: App {
                     viewModel: turVM,
                     league: "TUR",
                     fetchURL: Scoreboard.Urls.tur,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableBRA1 {
+                SoccerMenu(
+                    title: "Brazilian Serie A",
+                    viewModel: bra1VM,
+                    league: "BRA1",
+                    fetchURL: Scoreboard.Urls.bra1,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableBRA2 {
+                SoccerMenu(
+                    title: "Brazilian Serie B",
+                    viewModel: bra2VM,
+                    league: "BRA2",
+                    fetchURL: Scoreboard.Urls.bra2,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableKSA {
+                SoccerMenu(
+                    title: "Saudi Pro League",
+                    viewModel: ksaVM,
+                    league: "KSA",
+                    fetchURL: Scoreboard.Urls.ksa,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
@@ -963,6 +1008,9 @@ struct MenuScoresApp: App {
                         ger: gerVM,
                         ita: itaVM,
                         tur: turVM,
+                        bra1: bra1VM,
+                        bra2: bra2VM,
+                        ksa: ksaVM,
                         nll: nllVM,
                         pll: pllVM,
                         lncaam: lncaamVM,

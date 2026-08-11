@@ -48,6 +48,9 @@ enum FavoriteTeams {
         "POR": LeagueInfo(sport: "soccer", league: "por.1", displayName: "Primeira Liga"),
         "MEX": LeagueInfo(sport: "soccer", league: "mex.1", displayName: "Liga MX"),
         "TUR": LeagueInfo(sport: "soccer", league: "tur.1", displayName: "Turkish Super Lig"),
+        "BRA1": LeagueInfo(sport: "soccer", league: "bra.1", displayName: "Brazilian Serie A"),
+        "BRA2": LeagueInfo(sport: "soccer", league: "bra.2", displayName: "Brazilian Serie B"),
+        "KSA": LeagueInfo(sport: "soccer", league: "ksa.1", displayName: "Saudi Pro League"),
 
         "F1": LeagueInfo(sport: "racing", league: "f1", displayName: "F1"),
         "NC": LeagueInfo(sport: "racing", league: "nc", displayName: "Nascar Premier"),
@@ -167,6 +170,9 @@ enum FavoriteTeams {
             case "POR": return defaults.bool(forKey: "enablePOR")
             case "MEX": return defaults.bool(forKey: "enableMEX")
             case "TUR": return defaults.bool(forKey: "enableTUR")
+            case "BRA1": return defaults.bool(forKey: "enableBRA1")
+            case "BRA2": return defaults.bool(forKey: "enableBRA2")
+            case "KSA": return defaults.bool(forKey: "enableKSA")
             case "NLL": return defaults.bool(forKey: "enableNLL")
             case "PLL": return defaults.bool(forKey: "enablePLL")
             case "LNCAAM": return defaults.bool(forKey: "enableLNCAAM")

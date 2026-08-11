@@ -261,6 +261,27 @@ enum Scoreboard {
             )!
         }
 
+        static let bra1: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/soccer/BRA.1/scoreboard"
+            )!
+        }
+
+        static let bra2: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/soccer/BRA.2/scoreboard"
+            )!
+        }
+
+        static let ksa: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/soccer/KSA.1/scoreboard"
+            )!
+        }
+
         static let atp: () -> URL = {
             URL(
                 string:

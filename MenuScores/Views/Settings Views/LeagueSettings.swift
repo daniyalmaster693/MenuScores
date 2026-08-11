@@ -52,6 +52,9 @@ struct LeagueSettingsView: View {
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
     @AppStorage("enableTUR") private var enableTUR = false
+    @AppStorage("enableBRA1") private var enableBRA1 = false
+    @AppStorage("enableBRA2") private var enableBRA2 = false
+    @AppStorage("enableKSA") private var enableKSA = false
 
     @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
@@ -399,6 +402,30 @@ struct LeagueSettingsView: View {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.primary)
                             Text("Turkish Super Lig")
+                        }
+                    }
+
+                    Toggle(isOn: $enableBRA1) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.primary)
+                            Text("Brazilian Serie A")
+                        }
+                    }
+
+                    Toggle(isOn: $enableBRA2) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.primary)
+                            Text("Brazilian Serie B")
+                        }
+                    }
+
+                    Toggle(isOn: $enableKSA) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.primary)
+                            Text("Saudi Pro League")
                         }
                     }
                 }
