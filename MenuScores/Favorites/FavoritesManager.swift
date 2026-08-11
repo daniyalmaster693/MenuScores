@@ -220,7 +220,7 @@ class FavoritesManager: ObservableObject {
     func registerViewModels(
         nhl: GamesListView, hncaam: GamesListView, hncaaf: GamesListView,
         nba: GamesListView, wnba: GamesListView, ncaam: GamesListView, ncaaf: GamesListView, snba: GamesListView, gnba: GamesListView,
-        nfl: GamesListView, fncaa: GamesListView,
+        nfl: GamesListView, afl: GamesListView, fncaa: GamesListView,
         mlb: GamesListView, bncaa: GamesListView, sncaa: GamesListView,
         f1: RacingListView, nc: GamesListView, ncs: GamesListView, nct: GamesListView, irl: GamesListView,
         pga: GamesListView, lpga: GamesListView,
@@ -245,6 +245,7 @@ class FavoritesManager: ObservableObject {
         leagueVMs["SNBA"] = snba
         leagueVMs["GNBA"] = gnba
         leagueVMs["NFL"] = nfl
+        leagueVMs["AFL"] = afl
         leagueVMs["FNCAA"] = fncaa
         leagueVMs["MLB"] = mlb
         leagueVMs["BNCAA"] = bncaa

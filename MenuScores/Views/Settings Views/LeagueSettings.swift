@@ -22,6 +22,7 @@ struct LeagueSettingsView: View {
     @AppStorage("enableGNBA") private var enableGNBA = false
 
     @AppStorage("enableNFL") private var enableNFL = true
+    @AppStorage("enableAFL") private var enableAFL = false
     @AppStorage("enableFNCAA") private var enableFNCAA = false
 
     @AppStorage("enableMLB") private var enableMLB = true
@@ -156,6 +157,9 @@ struct LeagueSettingsView: View {
                                 enableGER = false
                                 enableITA = false
                                 enableTUR = false
+                                enableBRA1 = false
+                                enableBRA2 = false
+                                enableKSA = false
                                 enableATP = false
                                 enableWTA = false
 //                                enableUFC = false
@@ -246,6 +250,14 @@ struct LeagueSettingsView: View {
                             Image(systemName: "football")
                                 .foregroundColor(.primary)
                             Text("NFL")
+                        }
+                    }
+
+                    Toggle(isOn: $enableAFL) {
+                        HStack {
+                            Image(systemName: "football")
+                                .foregroundColor(.primary)
+                            Text("AFL")
                         }
                     }
 

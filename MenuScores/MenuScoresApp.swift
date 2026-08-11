@@ -35,6 +35,7 @@ struct MenuScoresApp: App {
     @AppStorage("enableGNBA") private var enableGNBA = false
 
     @AppStorage("enableNFL") private var enableNFL = true
+    @AppStorage("enableAFL") private var enableAFL = false
     @AppStorage("enableFNCAA") private var enableFNCAA = false
 
     @AppStorage("enableMLB") private var enableMLB = true
@@ -126,6 +127,7 @@ struct MenuScoresApp: App {
     @StateObject private var gnbaVM = GamesListView()
 
     @StateObject private var nflVM = GamesListView()
+    @StateObject private var aflVM = GamesListView()
     @StateObject private var fncaaVM = GamesListView()
 
     @StateObject private var mlbVM = GamesListView()
@@ -312,6 +314,19 @@ struct MenuScoresApp: App {
                     viewModel: nflVM,
                     league: "NFL",
                     fetchURL: Scoreboard.Urls.nfl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableAFL {
+                FootballMenu(
+                    title: "AFL",
+                    viewModel: aflVM,
+                    league: "AFL",
+                    fetchURL: Scoreboard.Urls.afl,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
@@ -982,6 +997,7 @@ struct MenuScoresApp: App {
                         snba: snbaVM,
                         gnba: gnbaVM,
                         nfl: nflVM,
+                        afl: aflVM,
                         fncaa: fncaaVM,
                         mlb: mlbVM,
                         bncaa: bncaaVM,

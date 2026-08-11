@@ -79,6 +79,13 @@ enum Scoreboard {
             )!
         }
 
+        static let afl: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/australian-football/afl/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+            )!
+        }
+
         static let fncaa: () -> URL = {
             URL(
                 string:
