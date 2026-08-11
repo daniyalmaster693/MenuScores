@@ -667,7 +667,7 @@ struct Info: View {
                                         if let lap = race.fullStatus.period {
                                             HStack {
                                                 Image(systemName: "flag.checkered")
-//                                                    .foregroundColor(mapFlagColor(flagColor))
+                                                    .foregroundColor(mapFlagColor(race.fullStatus.flag))
                                                     .font(.system(size: 12))
 
                                                 Text("Laps: \(lap)")
