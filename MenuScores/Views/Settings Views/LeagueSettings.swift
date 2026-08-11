@@ -49,6 +49,7 @@ struct LeagueSettingsView: View {
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
+    @AppStorage("enableTUR") private var enableTUR = false
 
     @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
@@ -147,6 +148,7 @@ struct LeagueSettingsView: View {
                                 enableESP = false
                                 enableGER = false
                                 enableITA = false
+                                enableTUR = false
                                 enableATP = false
                                 enableWTA = false
 //                                enableUFC = false
@@ -369,6 +371,14 @@ struct LeagueSettingsView: View {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.primary)
                             Text("Primeira Liga")
+                        }
+                    }
+
+                    Toggle(isOn: $enableTUR) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.primary)
+                            Text("Turkish Super Lig")
                         }
                     }
                 }

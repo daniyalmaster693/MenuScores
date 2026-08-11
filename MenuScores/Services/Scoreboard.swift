@@ -239,6 +239,13 @@ enum Scoreboard {
             )!
         }
 
+        static let tur: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/soccer/TUR.1/scoreboard"
+            )!
+        }
+
         static let atp: () -> URL = {
             URL(
                 string:

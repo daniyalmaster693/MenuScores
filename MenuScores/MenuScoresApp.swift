@@ -62,6 +62,7 @@ struct MenuScoresApp: App {
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
+    @AppStorage("enableTUR") private var enableTUR = false
 
     @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
@@ -147,6 +148,7 @@ struct MenuScoresApp: App {
     @StateObject private var espVM = GamesListView()
     @StateObject private var gerVM = GamesListView()
     @StateObject private var itaVM = GamesListView()
+    @StateObject private var turVM = GamesListView()
 
     @StateObject private var atpVM = TennisListView()
     @StateObject private var wtaVM = TennisListView()
@@ -508,6 +510,19 @@ struct MenuScoresApp: App {
                     viewModel: porVM,
                     league: "POR",
                     fetchURL: Scoreboard.Urls.por,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableTUR {
+                SoccerMenu(
+                    title: "Turkish Super Lig",
+                    viewModel: turVM,
+                    league: "TUR",
+                    fetchURL: Scoreboard.Urls.tur,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
@@ -915,6 +930,7 @@ struct MenuScoresApp: App {
                         esp: espVM,
                         ger: gerVM,
                         ita: itaVM,
+                        tur: turVM,
                         nll: nllVM,
                         pll: pllVM,
                         lncaam: lncaamVM,

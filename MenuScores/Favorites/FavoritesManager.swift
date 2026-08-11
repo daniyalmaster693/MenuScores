@@ -227,7 +227,7 @@ class FavoritesManager: ObservableObject {
         uefa: GamesListView, euefa: GamesListView, wuefa: GamesListView,
         mls: GamesListView, nwsl: GamesListView, mex: GamesListView, fra: GamesListView,
         ned: GamesListView, por: GamesListView, epl: GamesListView, wepl: GamesListView,
-        esp: GamesListView, ger: GamesListView, ita: GamesListView,
+        esp: GamesListView, ger: GamesListView, ita: GamesListView, tur: GamesListView,
         nll: GamesListView, pll: GamesListView, lncaam: GamesListView, lncaaf: GamesListView,
         vncaam: GamesListView, vncaaf: GamesListView,
         omihc: GamesListView, owihc: GamesListView, omb: GamesListView, owb: GamesListView,
@@ -268,6 +268,7 @@ class FavoritesManager: ObservableObject {
         leagueVMs["ESP"] = esp
         leagueVMs["GER"] = ger
         leagueVMs["ITA"] = ita
+        leagueVMs["TUR"] = tur
         leagueVMs["NLL"] = nll
         leagueVMs["PLL"] = pll
         leagueVMs["LNCAAM"] = lncaam
