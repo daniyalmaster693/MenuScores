@@ -60,98 +60,91 @@ struct FightingMenu: View {
                 ForEach(sortedFights, id: \.self) { fightName in
                     if let fightEvents = groupedByFight[fightName] {
                         Menu {
-                            let groupedByDate = Dictionary(grouping: fightEvents) { fight in
-                                formattedDate(from: fight.date)
-                            }
+                            Text(formattedFightingDate(from: viewModel.fights.first?.date ?? "Invalid Date"))
+                                .font(.headline)
 
-                            let sortedDates = groupedByDate.keys.sorted()
+                            Divider().padding(.bottom)
 
-                            ForEach(sortedDates, id: \.self) { date in
-                                if let fightsForDate = groupedByDate[date] {
-                                    Menu(date) {
-                                        ForEach(fightsForDate, id: \.competitionId) { fight in
-                                            Menu {
-                                                Button {
+                            ForEach(fightEvents, id: \.competitionId) { fight in
+                                Menu {
+                                    Button {
 //                                                    currentTitle = displayF1Text(for: race)
-                                                    currentGameID = fight.competitionId
+                                        currentGameID = fight.competitionId
 //                                                    currentGameState = race.fullStatus.type.state
 
-                                                    pinnedByMenubar = true
-                                                    pinnedByNotch = false
-                                                } label: {
-                                                    HStack {
-                                                        Image(systemName: "menubar.rectangle")
-                                                            .resizable()
-                                                            .scaledToFit()
-                                                            .frame(width: 20, height: 20)
-                                                        Text("Pin Race to Menubar")
-                                                    }
-                                                }
+                                        pinnedByMenubar = true
+                                        pinnedByNotch = false
+                                    } label: {
+                                        HStack {
+                                            Image(systemName: "menubar.rectangle")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                            Text("Pin Race to Menubar")
+                                        }
+                                    }
 
-                                                if enableNotch {
-                                                    Button {
-                                                        currentGameID = fight.competitionId
+                                    if enableNotch {
+                                        Button {
+                                            currentGameID = fight.competitionId
 //                                                        currentGameState = race.fullStatus.type.state
 
-                                                        pinnedByNotch = true
-                                                        pinnedByMenubar = false
+                                            pinnedByNotch = true
+                                            pinnedByMenubar = false
 
 //                                                        notchViewModel.racingCompetition = race
 
-                                                        Task {
-                                                            if let existingNotch = NotchViewModel.shared.notch {
-                                                                await existingNotch.hide()
-                                                                NotchViewModel.shared.game = nil
-                                                                NotchViewModel.shared.currentGameID = ""
-                                                                NotchViewModel.shared.currentGameState = ""
-                                                                NotchViewModel.shared.previousGameState = ""
-                                                                NotchViewModel.shared.notch = nil
-                                                            }
-
-                                                            let newNotch = DynamicNotch(
-                                                                hoverBehavior: .all,
-                                                                style: .notch
-                                                            ) {
-                                                                Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
-                                                            } compactLeading: {
-                                                                CompactLeading(notchViewModel: notchViewModel, sport: "F1")
-                                                            } compactTrailing: {
-                                                                CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
-                                                            }
-
-                                                            NotchViewModel.shared.notch = newNotch
-                                                            await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-                                                        }
-                                                    } label: {
-                                                        HStack {
-                                                            Image(systemName: "macbook")
-                                                                .resizable()
-                                                                .scaledToFit()
-                                                                .frame(width: 20, height: 20)
-                                                            Text("Pin Race to Notch")
-                                                        }
-                                                    }
-
-                                                    Divider()
+                                            Task {
+                                                if let existingNotch = NotchViewModel.shared.notch {
+                                                    await existingNotch.hide()
+                                                    NotchViewModel.shared.game = nil
+                                                    NotchViewModel.shared.currentGameID = ""
+                                                    NotchViewModel.shared.currentGameState = ""
+                                                    NotchViewModel.shared.previousGameState = ""
+                                                    NotchViewModel.shared.notch = nil
                                                 }
-                                            } label: {
-                                                HStack {
-                                                    AsyncImage(
-                                                        url: URL(
-                                                            string:
-                                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                                        )
-                                                    ) { image in
-                                                        image.resizable().scaledToFit()
-                                                    } placeholder: {
-                                                        ProgressView()
-                                                    }
-                                                    .frame(width: 40, height: 40)
 
-//                                                    Text(displayF1Text(for: race))
+                                                let newNotch = DynamicNotch(
+                                                    hoverBehavior: .all,
+                                                    style: .notch
+                                                ) {
+                                                    Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
+                                                } compactLeading: {
+                                                    CompactLeading(notchViewModel: notchViewModel, sport: "F1")
+                                                } compactTrailing: {
+                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
                                                 }
+
+                                                NotchViewModel.shared.notch = newNotch
+                                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                            }
+                                        } label: {
+                                            HStack {
+                                                Image(systemName: "macbook")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 20, height: 20)
+                                                Text("Pin Race to Notch")
                                             }
                                         }
+
+                                        Divider()
+                                    }
+                                } label: {
+                                    HStack {
+                                        AsyncImage(
+                                            url: URL(
+                                                string:
+                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                            )
+                                        ) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 40, height: 40)
+
+//                                                    Text(displayF1Text(for: race))
                                     }
                                 }
                             }
