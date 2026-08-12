@@ -134,8 +134,8 @@ struct FightingMenu: View {
                                     HStack {
                                         AsyncImage(
                                             url: URL(
-                                                string:
-                                                "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                                string: fight.competitors.first?.logo ??
+                                                    "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                             )
                                         ) { image in
                                             image.resizable().scaledToFit()
