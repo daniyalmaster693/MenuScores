@@ -1259,5 +1259,33 @@ struct Info: View {
                 }
             }
         }
+
+        if let fight = notchViewModel.fightCompetition {
+            if sport == "Fighting" {
+                VStack {}
+                    .contextMenu {
+                        Picker("Choose Display", selection: $notchScreenIndex) {
+                            ForEach(NSScreen.screens.indices, id: \.self) { index in
+                                Text(NSScreen.screens[index].localizedName)
+                                    .tag(index)
+                            }
+                        }
+
+                        Button {
+                            SettingsWindowController.shared.showWindow()
+                        } label: {
+                            Text("Preferences")
+                        }
+                        .keyboardShortcut(",")
+
+                        Button {
+                            NSApplication.shared.terminate(nil)
+                        } label: {
+                            Text("Quit")
+                        }
+                        .keyboardShortcut("q")
+                    }
+            }
+        }
     }
 }
