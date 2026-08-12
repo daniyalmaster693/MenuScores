@@ -62,8 +62,8 @@ struct FightType: Decodable {
 
 struct FightResult: Decodable {
     let name: String?
-    let shortName: String?
-    let shortDisplayName: String?
+    let description: String?
+    let displayName: String?
 }
 
 struct FightCompetitors: Decodable {
