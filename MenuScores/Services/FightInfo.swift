@@ -25,11 +25,23 @@ struct FightEvent: Decodable {
     let name: String
     let shortName: String
     let competitionId: String
+    let competitionType: FightCompetitionType
     let description: String?
     let location: String?
     let note: String?
     let cardSegment: String?
     let fullStatus: FightFullStatus
+    let links: [FightLinks]
+    let competitors: [FightCompetitors]
+}
+
+struct FightCompetitionType: Decodable {
+    let abbreviation: String?
+    let text: String?
+}
+
+struct FightLinks: Decodable {
+    let href: String
 }
 
 struct FightFullStatus: Decodable {
@@ -52,4 +64,18 @@ struct FightResult: Decodable {
     let name: String?
     let shortName: String?
     let shortDisplayName: String?
+}
+
+struct FightCompetitors: Decodable {
+    let displayName: String?
+    let name: String?
+    let abbrevation: String?
+    let color: String?
+    let winner: Bool?
+    let alternateColor: String?
+    let record: String?
+    let logo: String?
+    let firstName: String?
+    let lastName: String?
+    let shortName: String?
 }

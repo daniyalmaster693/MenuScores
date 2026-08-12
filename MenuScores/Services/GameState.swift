@@ -113,21 +113,27 @@ func displayRacingText(for race: RaceEvent) -> String {
 
 func displayFightingText(for fight: FightEvent) -> String {
     let fightState = fight.fullStatus.type.state
+    let round = fight.fullStatus.period
+
+    let competitor1 = fight.competitors.first?.shortName ?? "Competitor 1"
+    let competitor2 = fight.competitors.dropFirst().first?.shortName ?? "Competitor 2"
+
+    let winner = fight.competitors.first(where: { $0.winner == true })?.shortName ?? "Unknown"
 
     switch fightState {
     case "pre":
-        return "\(fight.shortName) - \(formattedFightTime(from: fight.date))"
+        return "\(competitor1) - \(competitor2)"
 
-//    case "in":
-//        return
-//            "\(driverName)     L\(lap)"
-//
-//    case "post":
-//        return
-//            "\(driverName)     (Final)"
+    case "in":
+        return
+            "\(competitor1) - \(competitor2)     R\(round)"
+
+    case "post":
+        return
+            "\(competitor1) - \(competitor2)     (W:\(winner))"
 
     default:
-        return fight.shortName
+        return "\(competitor1) - \(competitor2)"
     }
 }
 
