@@ -165,7 +165,7 @@ struct MenuScoresApp: App {
     @StateObject private var atpVM = TennisListView()
     @StateObject private var wtaVM = TennisListView()
 
-    @StateObject private var ufcVM = GamesListView()
+    @StateObject private var ufcVM = FightingListView()
 
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
@@ -738,7 +738,7 @@ struct MenuScoresApp: App {
             }
 
             if enableUFC {
-                UFCMenu(
+                FightingMenu(
                     title: "UFC",
                     viewModel: ufcVM,
                     league: "UFC",

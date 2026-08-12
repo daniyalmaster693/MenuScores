@@ -38,7 +38,7 @@ class RacingListView: ObservableObject {
         do {
             self.races = try await getGames().getRaceArray(url: url)
         } catch {
-            print("Failed to fetch games:", error)
+            print("Failed to fetch races:", error)
         }
     }
 }
@@ -61,7 +61,7 @@ class FightingListView: ObservableObject {
         do {
             self.fights = try await getGames().getFightArray(url: url)
         } catch {
-            print("Failed to fetch games:", error)
+            print("Failed to fetch fights:", error)
         }
     }
 }
@@ -84,7 +84,7 @@ class TennisListView: ObservableObject {
         do {
             self.tennisGames = try await getGames().getTennisArray(url: url)
         } catch {
-            print("Failed to fetch games:", error)
+            print("Failed to fetch matches:", error)
         }
     }
 }
