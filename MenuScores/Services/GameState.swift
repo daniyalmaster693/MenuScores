@@ -112,7 +112,9 @@ func displayRacingText(for race: RaceEvent) -> String {
 }
 
 func displayFightingText(for fight: FightEvent) -> String {
+    let time = formattedFightTime(from: fight.date)
     let fightState = fight.fullStatus.type.state
+
     let round = fight.fullStatus.period ?? 0
     let displayClock = fight.fullStatus.displayClock
 
@@ -123,7 +125,7 @@ func displayFightingText(for fight: FightEvent) -> String {
 
     switch fightState {
     case "pre":
-        return "\(competitor1) - \(competitor2)"
+        return "\(competitor1) - \(competitor2) @ \(time)"
 
     case "in":
         return
@@ -155,19 +157,23 @@ func displayTennisText(for competition: TennisCompetition) -> String {
         .map { "\($0.value ?? 0)" }
         .joined(separator: " ") ?? ""
 
+    let time = formattedTime(from: competition.date)
+
     let status = competition.status?.type.state ?? "pre"
     let set = competition.status?.period ?? 0
 
     let statusSuffix: String = {
         switch status {
+        case "pre":
+            return "@ \(time)"
         case "in":
-            return "S\(set)"
+            return "    S\(set)"
         case "post":
-            return "(Final)"
+            return "    (Final)"
         default:
             return ""
         }
     }()
 
-    return "\(team1)  \(team1Scores) - \(team2Scores)  \(team2)     \(statusSuffix)"
+    return "\(team1)  \(team1Scores) - \(team2Scores)  \(team2) \(statusSuffix)"
 }

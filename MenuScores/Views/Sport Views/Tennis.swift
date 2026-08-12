@@ -77,21 +77,25 @@ struct TennisMenu: View {
                                             ?? winner?.roster?.shortDisplayName
                                             ?? "Winner"
 
+                                        let time = formattedTime(from: competition.date)
+
                                         let status = competition.status?.type.state ?? "pre"
                                         let set = competition.status?.period ?? 0
 
                                         let statusSuffix: String = {
                                             switch status {
+                                            case "pre":
+                                                return "@ \(time)"
                                             case "in":
-                                                return "S\(set)"
+                                                return "    S\(set)"
                                             case "post":
-                                                return "(W: \(winnerName))"
+                                                return "    (W: \(winnerName))"
                                             default:
                                                 return ""
                                             }
                                         }()
 
-                                        let tennisTitle = "\(team1) - \(team2)     \(statusSuffix)"
+                                        let tennisTitle = "\(team1) - \(team2) \(statusSuffix)"
 
                                         Menu {
                                             Button {
