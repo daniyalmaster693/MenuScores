@@ -60,7 +60,7 @@ struct LeagueSettingsView: View {
     @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
 
-//    @AppStorage("enableUFC") private var enableUFC = false
+    @AppStorage("enableUFC") private var enableUFC = false
 
     @AppStorage("enableNLL") private var enableNLL = false
     @AppStorage("enablePLL") private var enablePLL = false
@@ -162,7 +162,7 @@ struct LeagueSettingsView: View {
                                 enableKSA = false
                                 enableATP = false
                                 enableWTA = false
-//                                enableUFC = false
+                                enableUFC = false
                                 enableNLL = false
                                 enablePLL = false
                                 enableLNCAAM = false
@@ -520,15 +520,15 @@ struct LeagueSettingsView: View {
                     }
                 }
 
-//                Section("Fighting") {
-//                    Toggle(isOn: $enableUFC) {
-//                        HStack {
-//                            Image(systemName: "figure.boxing")
-//                                .foregroundColor(.primary)
-//                            Text("UFC")
-//                        }
-//                    }
-//                }
+                Section("Fighting") {
+                    Toggle(isOn: $enableUFC) {
+                        HStack {
+                            Image(systemName: "figure.boxing")
+                                .foregroundColor(.primary)
+                            Text("UFC")
+                        }
+                    }
+                }
 
                 Section("Lacrosse") {
                     Toggle(isOn: $enableNLL) {

@@ -303,10 +303,12 @@ enum Scoreboard {
             )!
         }
 
-//        static let ufc = URL(
-//            string:
-//            "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard"
-//        )!
+        static let ufc: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard"
+            )!
+        }
 
         static let nll: () -> URL = {
             URL(

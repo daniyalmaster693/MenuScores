@@ -73,7 +73,7 @@ struct MenuScoresApp: App {
     @AppStorage("enableATP") private var enableATP = false
     @AppStorage("enableWTA") private var enableWTA = false
 
-//    @AppStorage("enableUFC") private var enableUFC = false
+    @AppStorage("enableUFC") private var enableUFC = false
 
     @AppStorage("enableNLL") private var enableNLL = false
     @AppStorage("enablePLL") private var enablePLL = false
@@ -165,7 +165,7 @@ struct MenuScoresApp: App {
     @StateObject private var atpVM = TennisListView()
     @StateObject private var wtaVM = TennisListView()
 
-//    @StateObject private var ufcVM = GamesListView()
+    @StateObject private var ufcVM = GamesListView()
 
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
@@ -737,18 +737,18 @@ struct MenuScoresApp: App {
                 )
             }
 
-//            if enableUFC {
-//                UFCMenu(
-//                    title: "UFC",
-//                    viewModel: ufcVM,
-//                    league: "UFC",
-//                    fetchURL: Scoreboard.Urls.ufc,
-//                    currentTitle: $currentTitle,
-//                    currentGameID: $currentGameID,
-//                    currentGameState: $currentGameState,
-//                    previousGameState: $previousGameState
-//                )
-//            }
+            if enableUFC {
+                UFCMenu(
+                    title: "UFC",
+                    viewModel: ufcVM,
+                    league: "UFC",
+                    fetchURL: Scoreboard.Urls.ufc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
 
             if enableNLL {
                 LacrosseMenu(
