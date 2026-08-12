@@ -113,7 +113,7 @@ func displayRacingText(for race: RaceEvent) -> String {
 
 func displayFightingText(for fight: FightEvent) -> String {
     let fightState = fight.fullStatus.type.state
-    let round = fight.fullStatus.period
+    let round = fight.fullStatus.period ?? 0
 
     let competitor1 = fight.competitors.first?.shortName ?? "Competitor 1"
     let competitor2 = fight.competitors.dropFirst().first?.shortName ?? "Competitor 2"

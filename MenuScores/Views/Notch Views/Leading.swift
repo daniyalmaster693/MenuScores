@@ -245,5 +245,50 @@ struct CompactLeading: View {
                 .keyboardShortcut("q")
             }
         }
+
+        if sport == "Fighting" {
+            HStack {
+                AsyncImage(
+                    url: URL(
+                        string:
+                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                    )
+                ) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .interpolation(.high)
+                            .scaledToFit()
+                            .transition(.opacity)
+                            .frame(width: 18, height: 18)
+                    } else {
+                        Color.clear
+                            .transition(.opacity)
+                            .frame(width: 18, height: 18)
+                    }
+                }
+            }.contextMenu {
+                Picker("Choose Display", selection: $notchScreenIndex) {
+                    ForEach(NSScreen.screens.indices, id: \.self) { index in
+                        Text(NSScreen.screens[index].localizedName)
+                            .tag(index)
+                    }
+                }
+
+                Button {
+                    SettingsWindowController.shared.showWindow()
+                } label: {
+                    Text("Preferences")
+                }
+                .keyboardShortcut(",")
+
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Text("Quit")
+                }
+                .keyboardShortcut("q")
+            }
+        }
     }
 }

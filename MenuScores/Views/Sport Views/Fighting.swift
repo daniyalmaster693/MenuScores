@@ -92,7 +92,7 @@ struct FightingMenu: View {
                                             pinnedByNotch = true
                                             pinnedByMenubar = false
 
-//                                                        notchViewModel.racingCompetition = race
+                                            notchViewModel.fightCompetition = fight
 
                                             Task {
                                                 if let existingNotch = NotchViewModel.shared.notch {
@@ -108,11 +108,11 @@ struct FightingMenu: View {
                                                     hoverBehavior: .all,
                                                     style: .notch
                                                 ) {
-                                                    Info(notchViewModel: notchViewModel, sport: "F1", league: "\(league)")
+                                                    Info(notchViewModel: notchViewModel, sport: "Fighting", league: "\(league)")
                                                 } compactLeading: {
-                                                    CompactLeading(notchViewModel: notchViewModel, sport: "F1")
+                                                    CompactLeading(notchViewModel: notchViewModel, sport: "Fighting")
                                                 } compactTrailing: {
-                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "F1")
+                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Fighting")
                                                 }
 
                                                 NotchViewModel.shared.notch = newNotch

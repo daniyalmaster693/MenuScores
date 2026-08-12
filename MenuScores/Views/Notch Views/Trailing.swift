@@ -206,5 +206,39 @@ struct CompactTrailing: View {
                 }
             }
         }
+
+        if let fight = notchViewModel.fightCompetition {
+            HStack {
+                if let round = fight.fullStatus.period {
+                    Text("R\(round)")
+                        .contentTransition(.numericText(countsDown: false))
+                        .font(.system(size: 14, weight: .semibold))
+                } else {
+                    Text("R -")
+                        .font(.system(size: 14, weight: .semibold))
+                }
+            }.contextMenu {
+                Picker("Choose Display", selection: $notchScreenIndex) {
+                    ForEach(NSScreen.screens.indices, id: \.self) { index in
+                        Text(NSScreen.screens[index].localizedName)
+                            .tag(index)
+                    }
+                }
+
+                Button {
+                    SettingsWindowController.shared.showWindow()
+                } label: {
+                    Text("Preferences")
+                }
+                .keyboardShortcut(",")
+
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Text("Quit")
+                }
+                .keyboardShortcut("q")
+            }
+        }
     }
 }
