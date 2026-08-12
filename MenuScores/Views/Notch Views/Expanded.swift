@@ -1262,29 +1262,164 @@ struct Info: View {
 
         if let fight = notchViewModel.fightCompetition {
             if sport == "Fighting" {
-                VStack {}
-                    .contextMenu {
-                        Picker("Choose Display", selection: $notchScreenIndex) {
-                            ForEach(NSScreen.screens.indices, id: \.self) { index in
-                                Text(NSScreen.screens[index].localizedName)
-                                    .tag(index)
+                VStack {
+                    HStack(spacing: 4) {
+                        VStack {
+                            HStack {
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                        )
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        }
+                                    }
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
+
+                                    Text("\(fight.competitionType.abbreviation ?? fight.competitionType.text ?? "Event")")
+                                        .font(.system(size: 14, weight: .medium))
+                                        .padding(.trailing, 7)
+                                }
+
+                                Spacer()
+
+                                HStack {
+                                    if fight.fullStatus.type.state == "pre" {
+                                        Text("\(formattedFightDate(from: fight.date))")
+                                            .contentTransition(.numericText(countsDown: false))
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 15)
+                                    }
+
+                                    if fight.fullStatus.type.state == "in" {
+                                        if let round = fight.fullStatus.period {
+                                            Text("R\(round)")
+                                                .contentTransition(.numericText(countsDown: false))
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .padding(.trailing, 15)
+                                        }
+                                    }
+
+                                    if fight.fullStatus.type.state == "post" {
+                                        HStack {
+                                            Image(systemName: "trophy.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.system(size: 10))
+                                                .padding(.leading, 10)
+
+                                            Text(
+                                                fight.competitors
+                                                    .first(where: { $0.winner == true })?
+                                                    .shortName ?? "Player 1"
+                                            )
+                                            .lineLimit(1)
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 10)
+                                        }
+                                    }
+                                }
                             }
-                        }
 
-                        Button {
-                            SettingsWindowController.shared.showWindow()
-                        } label: {
-                            Text("Preferences")
+//                            VStack(spacing: 5) {
+//                                Divider()
+//
+//                                ScrollView(.vertical, showsIndicators: true) {
+//                                    VStack(spacing: 4) {
+//                                        if let competitors = tennisGame.competitors {
+//                                            ForEach(competitors) { competitor in
+//                                                HStack {
+//                                                    HStack(spacing: 4) {
+//                                                        if let flagURLString = competitor.athlete?.flag?.href ?? competitor.roster?.athletes?.first?.flag?.href,
+//                                                           let flagURL = URL(string: flagURLString)
+//                                                        {
+//                                                            AsyncImage(url: flagURL) { phase in
+//                                                                if let image = phase.image {
+//                                                                    image
+//                                                                        .resizable()
+//                                                                        .interpolation(.high)
+//                                                                        .scaledToFit()
+//                                                                        .transition(.opacity)
+//                                                                        .frame(width: 23, height: 23)
+//                                                                } else {
+//                                                                    Color.clear
+//                                                                        .transition(.opacity)
+//                                                                        .frame(width: 23, height: 23)
+//                                                                }
+//                                                            }
+//                                                            .padding(.trailing, 5)
+//                                                        }
+//
+//                                                        Text(competitor.athlete?.fullName ?? competitor.roster?.shortDisplayName ?? "Player")
+//                                                            .font(.system(size: 14, weight: .medium))
+//                                                            .lineLimit(1)
+//                                                            .truncationMode(.tail)
+//                                                    }
+//
+//                                                    Spacer()
+//
+//                                                    if let linescores = competitor.linescores {
+//                                                        HStack(spacing: 4) {
+//                                                            ForEach(linescores) { linescore in
+//                                                                Text("\(linescore.value ?? 0)  ")
+//                                                                    .frame(minWidth: 20)
+//                                                            }
+//                                                        }
+//                                                        .font(.system(size: 14, weight: .medium))
+//                                                        .contentTransition(.numericText(countsDown: false))
+//                                                    } else {
+//                                                        Text("0  ")
+//                                                            .frame(minWidth: 20)
+//                                                            .font(.system(size: 14, weight: .medium))
+//                                                            .contentTransition(.numericText(countsDown: false))
+//                                                    }
+//                                                }
+//                                                .padding(.horizontal, 10)
+//                                            }.frame(maxWidth: .infinity, alignment: .leading)
+//                                        }
+//                                    }
+//                                }
+//                            }
+                            .frame(maxHeight: 120)
+                            .padding(.top, 10)
+                            .padding(.bottom, 5)
                         }
-                        .keyboardShortcut(",")
-
-                        Button {
-                            NSApplication.shared.terminate(nil)
-                        } label: {
-                            Text("Quit")
-                        }
-                        .keyboardShortcut("q")
                     }
+                }
+                .contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
+
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
+
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
+                }
             }
         }
     }

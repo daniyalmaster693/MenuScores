@@ -130,7 +130,7 @@ func displayFightingText(for fight: FightEvent) -> String {
 
     case "post":
         return
-            "\(competitor1) - \(competitor2)     (W:\(winner))"
+            "\(competitor1) - \(competitor2)     (W: \(winner))"
 
     default:
         return "\(competitor1) - \(competitor2)"
