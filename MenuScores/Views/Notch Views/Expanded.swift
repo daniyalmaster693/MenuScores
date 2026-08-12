@@ -1131,7 +1131,7 @@ struct Info: View {
 
                                 HStack {
                                     if tennisGame.status?.type.state == "pre" {
-                                        Text("\(formattedDate(from: tennisGame.date))")
+                                        Text("\(formattedTime(from: tennisGame.date))")
                                             .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 15)
@@ -1298,7 +1298,7 @@ struct Info: View {
 
                                 HStack {
                                     if fight.fullStatus.type.state == "pre" {
-                                        Text("\(formattedFightDate(from: fight.date))")
+                                        Text("\(formattedFightTime(from: fight.date))")
                                             .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 15)
