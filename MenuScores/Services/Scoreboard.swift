@@ -306,7 +306,7 @@ enum Scoreboard {
         static let ufc: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard"
+                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=mma&league=ufc"
             )!
         }
 
