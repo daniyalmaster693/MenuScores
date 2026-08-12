@@ -60,7 +60,7 @@ struct FightingMenu: View {
                 ForEach(sortedFights, id: \.self) { fightName in
                     if let fightEvents = groupedByFight[fightName] {
                         Menu {
-                            Text(formattedFightingDate(from: viewModel.fights.first?.date ?? "Invalid Date"))
+                            Text(formattedFightDate(from: viewModel.fights.first?.date ?? "Invalid Date"))
                                 .font(.headline)
 
                             Divider().padding(.bottom)
@@ -68,9 +68,9 @@ struct FightingMenu: View {
                             ForEach(fightEvents, id: \.competitionId) { fight in
                                 Menu {
                                     Button {
-//                                                    currentTitle = displayF1Text(for: race)
+                                        currentTitle = displayFightingText(for: fight)
                                         currentGameID = fight.competitionId
-//                                                    currentGameState = race.fullStatus.type.state
+                                        currentGameState = fight.fullStatus.type.state
 
                                         pinnedByMenubar = true
                                         pinnedByNotch = false
@@ -87,7 +87,7 @@ struct FightingMenu: View {
                                     if enableNotch {
                                         Button {
                                             currentGameID = fight.competitionId
-//                                                        currentGameState = race.fullStatus.type.state
+                                            currentGameState = fight.fullStatus.type.state
 
                                             pinnedByNotch = true
                                             pinnedByMenubar = false
@@ -144,7 +144,7 @@ struct FightingMenu: View {
                                         }
                                         .frame(width: 40, height: 40)
 
-//                                                    Text(displayF1Text(for: race))
+                                        Text(displayFightingText(for: fight))
                                     }
                                 }
                             }

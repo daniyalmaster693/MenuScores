@@ -35,7 +35,7 @@ func formattedRaceDate(from dateString: String) -> String {
     return "Invalid Date"
 }
 
-func formattedFightingDate(from dateString: String) -> String {
+func formattedFightDate(from dateString: String) -> String {
     let inputFormatter = DateFormatter()
     inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 

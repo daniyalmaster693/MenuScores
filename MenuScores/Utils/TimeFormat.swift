@@ -43,7 +43,7 @@ func formattedRaceTime(from dateString: String) -> String {
     return "Invalid Time"
 }
 
-func formattedFightingTime(from dateString: String) -> String {
+func formattedFightTime(from dateString: String) -> String {
     let inputFormatter = DateFormatter()
     inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
     inputFormatter.locale = Locale(identifier: "en_US_POSIX")

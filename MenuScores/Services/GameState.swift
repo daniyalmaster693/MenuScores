@@ -111,6 +111,26 @@ func displayRacingText(for race: RaceEvent) -> String {
     }
 }
 
+func displayFightingText(for fight: FightEvent) -> String {
+    let fightState = fight.fullStatus.type.state
+
+    switch fightState {
+    case "pre":
+        return "\(fight.shortName) - \(formattedFightTime(from: fight.date))"
+
+//    case "in":
+//        return
+//            "\(driverName)     L\(lap)"
+//
+//    case "post":
+//        return
+//            "\(driverName)     (Final)"
+
+    default:
+        return fight.shortName
+    }
+}
+
 func displayTennisText(for competition: TennisCompetition) -> String {
     let team1 = competition.competitors?.first?.athlete?.shortName
         ?? competition.competitors?.first?.athlete?.displayName ?? competition.competitors?.first?.roster?.athletes?.first?.shortName ?? competition.competitors?.first?.roster?.athletes?.first?.displayName

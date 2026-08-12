@@ -29,4 +29,27 @@ struct FightEvent: Decodable {
     let location: String?
     let note: String?
     let cardSegment: String?
+    let fullStatus: FightFullStatus
+}
+
+struct FightFullStatus: Decodable {
+    let displayClock: String
+    let period: Int
+    let displayPeriod: String
+    let type: FightType
+    let result: FightResult?
+}
+
+struct FightType: Decodable {
+    let state: String
+    let completed: Bool
+    let description: String
+    let detail: String
+    let shortDetail: String
+}
+
+struct FightResult: Decodable {
+    let name: String?
+    let shortName: String?
+    let shortDisplayName: String?
 }
