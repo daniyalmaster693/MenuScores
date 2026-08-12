@@ -114,6 +114,7 @@ func displayRacingText(for race: RaceEvent) -> String {
 func displayFightingText(for fight: FightEvent) -> String {
     let fightState = fight.fullStatus.type.state
     let round = fight.fullStatus.period ?? 0
+    let displayClock = fight.fullStatus.displayClock
 
     let competitor1 = fight.competitors.first?.shortName ?? "Competitor 1"
     let competitor2 = fight.competitors.dropFirst().first?.shortName ?? "Competitor 2"
@@ -126,7 +127,7 @@ func displayFightingText(for fight: FightEvent) -> String {
 
     case "in":
         return
-            "\(competitor1) - \(competitor2)     R\(round)"
+            "\(competitor1) - \(competitor2)     R\(round) \(displayClock)"
 
     case "post":
         return
