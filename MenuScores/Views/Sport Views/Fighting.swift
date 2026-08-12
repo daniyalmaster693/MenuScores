@@ -129,6 +129,20 @@ struct FightingMenu: View {
                                         }
 
                                         Divider()
+
+                                        Button {
+                                            if let urlString = fight.links.first?.href, let url = URL(string: urlString) {
+                                                NSWorkspace.shared.open(url)
+                                            }
+                                        } label: {
+                                            HStack {
+                                                Image(systemName: "info.circle")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 20, height: 20)
+                                                Text("View Fight Details")
+                                            }
+                                        }
                                     }
                                 } label: {
                                     HStack {
