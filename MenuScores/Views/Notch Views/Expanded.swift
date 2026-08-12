@@ -1334,6 +1334,10 @@ struct Info: View {
                                     }
                                 }
                             }
+
+                            VStack(spacing: 5) {
+                                Divider()
+                            }
                             .frame(maxHeight: 120)
                             .padding(.top, 10)
                             .padding(.bottom, 5)
