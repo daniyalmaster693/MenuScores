@@ -1306,7 +1306,9 @@ struct Info: View {
 
                                     if fight.fullStatus.type.state == "in" {
                                         if let round = fight.fullStatus.period {
-                                            Text("R\(round)")
+                                            let displayClock = fight.fullStatus.displayClock
+
+                                            Text("R\(round) \(displayClock)")
                                                 .contentTransition(.numericText(countsDown: false))
                                                 .font(.system(size: 14, weight: .semibold))
                                                 .padding(.trailing, 15)
