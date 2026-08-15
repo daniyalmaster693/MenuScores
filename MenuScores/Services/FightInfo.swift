@@ -47,7 +47,7 @@ struct FightLinks: Decodable {
 struct FightFullStatus: Decodable {
     let displayClock: String
     let period: Int?
-    let displayPeriod: String
+    let displayPeriod: String?
     let type: FightType
     let result: FightResult?
 }
