@@ -33,7 +33,6 @@ struct FightCompetitions: Decodable {
     let type: FightCompetitionType
     let status: FightStatus
     let venue: FightVenue
-    let details: FightDetails?
     let competitors: [FightCompetitor]?
 }
 
@@ -63,14 +62,6 @@ struct FightVenue: Decodable {
 struct FightVenueAddress: Decodable {
     let city: String?
     let state: String?
-}
-
-struct FightDetails: Decodable {
-    let detailType: FightDetailType
-}
-
-struct FightDetailType: Decodable {
-    let text: String
 }
 
 struct FightCompetitor: Decodable {
