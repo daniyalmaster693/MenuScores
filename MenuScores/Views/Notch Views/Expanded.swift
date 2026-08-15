@@ -1335,6 +1335,62 @@ struct Info: View {
 
                             VStack(spacing: 5) {
                                 Divider()
+
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    VStack(spacing: 4) {
+                                        if let competitors = fight.competitors {
+                                            ForEach(competitors, id: \.id) { competitor in
+                                                HStack {
+                                                    HStack(spacing: 4) {
+                                                        if let flagURLString = competitor.athlete?.flag.href,
+                                                           let flagURL = URL(string: flagURLString)
+                                                        {
+                                                            AsyncImage(url: flagURL) { phase in
+                                                                if let image = phase.image {
+                                                                    image
+                                                                        .resizable()
+                                                                        .interpolation(.high)
+                                                                        .scaledToFit()
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 23, height: 23)
+                                                                } else {
+                                                                    Color.clear
+                                                                        .transition(.opacity)
+                                                                        .frame(width: 23, height: 23)
+                                                                }
+                                                            }
+                                                            .padding(.trailing, 5)
+                                                        }
+
+                                                        Text(competitor.athlete?.fullName ?? "Player")
+                                                            .font(.system(size: 14, weight: .medium))
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                    }
+
+                                                    Spacer()
+
+                                                    if let linescores = competitor.linescores {
+                                                        HStack(spacing: 4) {
+                                                            ForEach(linescores) { linescore in
+                                                                Text("\(linescore.displayValue)  ")
+                                                                    .frame(minWidth: 20)
+                                                            }
+                                                        }
+                                                        .font(.system(size: 14, weight: .medium))
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                    } else {
+                                                        Text("0  ")
+                                                            .frame(minWidth: 20)
+                                                            .font(.system(size: 14, weight: .medium))
+                                                            .contentTransition(.numericText(countsDown: false))
+                                                    }
+                                                }
+                                                .padding(.horizontal, 10)
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                    }
+                                }
                             }
                             .frame(maxHeight: 120)
                             .padding(.top, 10)

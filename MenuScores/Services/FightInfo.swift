@@ -78,7 +78,7 @@ struct FightCompetitor: Decodable {
     let order: Int?
     let winner: Bool?
     let athlete: FightAthlete?
-    let linescores: FightLineScores?
+    let linescores: [FightLineScores]?
 }
 
 struct FightAthlete: Decodable {
@@ -92,6 +92,13 @@ struct FightFlag: Decodable {
     let href: String
 }
 
-struct FightLineScores: Decodable {
+struct FightLineScores: Decodable, Identifiable {
+    let id: UUID = .init()
+    let value: Int
     let displayValue: String
+
+    enum CodingKeys: String, CodingKey {
+        case value
+        case displayValue
+    }
 }
