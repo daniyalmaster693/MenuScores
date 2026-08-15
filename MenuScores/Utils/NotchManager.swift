@@ -20,7 +20,7 @@ class NotchViewModel: ObservableObject {
     @Published var game: Event?
     @Published var racingCompetition: RaceEvent?
     @Published var tennisCompetition: TennisCompetition?
-    @Published var fightCompetition: FightEvent?
+    @Published var fightCompetition: FightCompetitions?
     
     var sport: String = ""
     var league: String = ""

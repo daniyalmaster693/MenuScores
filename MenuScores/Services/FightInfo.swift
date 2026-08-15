@@ -27,17 +27,18 @@ struct FightEvent: Decodable {
 }
 
 struct FightCompetitions: Decodable {
+    let id: String
     let date: String
     let endDate: String
     let type: FightCompetitionType
     let status: FightStatus
     let venue: FightVenue
-    let details: FightDetails
+    let details: FightDetails?
     let competitors: [FightCompetitor]?
 }
 
 struct FightCompetitionType: Decodable {
-    let abbreviation: String
+    let abbreviation: String?
 }
 
 struct FightStatus: Decodable {

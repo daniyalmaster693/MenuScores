@@ -55,7 +55,7 @@ struct RacingGameListView {
 
 @MainActor
 class FightingListView: ObservableObject {
-    @Published var fights: [FightEvent] = []
+    @Published var fights: [FightCompetitions] = []
 
     func populateFighting(from url: URL) async {
         do {

@@ -173,7 +173,7 @@ class RefreshManager: NSObject, ObservableObject {
                 currentTitle.wrappedValue = ""
             }
 
-            let newState = fight.fullStatus.type.state
+            let newState = fight.status.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
                 gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)

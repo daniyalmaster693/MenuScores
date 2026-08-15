@@ -1289,7 +1289,7 @@ struct Info: View {
                                     .padding(.trailing, 3)
                                     .padding(.leading, 10)
 
-                                    Text("\(fight.competitionType.abbreviation ?? fight.competitionType.text ?? "Event")")
+                                    Text("\(fight.type.abbreviation ?? "Event")")
                                         .font(.system(size: 14, weight: .medium))
                                         .padding(.trailing, 7)
                                 }
@@ -1297,16 +1297,16 @@ struct Info: View {
                                 Spacer()
 
                                 HStack {
-                                    if fight.fullStatus.type.state == "pre" {
-                                        Text("\(formattedFightTime(from: fight.date))")
+                                    if fight.status.type.state == "pre" {
+                                        Text("\(formattedTime(from: fight.date))")
                                             .contentTransition(.numericText(countsDown: false))
                                             .font(.system(size: 14, weight: .semibold))
                                             .padding(.trailing, 15)
                                     }
 
-                                    if fight.fullStatus.type.state == "in" {
-                                        if let round = fight.fullStatus.period {
-                                            let displayClock = fight.fullStatus.displayClock
+                                    if fight.status.type.state == "in" {
+                                        if let round = fight.status.period {
+                                            let displayClock = fight.status.displayClock ?? "-"
 
                                             Text("R\(round) \(displayClock)")
                                                 .contentTransition(.numericText(countsDown: false))
@@ -1315,7 +1315,7 @@ struct Info: View {
                                         }
                                     }
 
-                                    if fight.fullStatus.type.state == "post" {
+                                    if fight.status.type.state == "post" {
                                         HStack {
                                             Image(systemName: "trophy.fill")
                                                 .foregroundColor(.yellow)
@@ -1323,9 +1323,7 @@ struct Info: View {
                                                 .padding(.leading, 10)
 
                                             Text(
-                                                fight.competitors
-                                                    .first(where: { $0.winner == true })?
-                                                    .shortName ?? "Player 1"
+                                                fight.competitors?.first(where: { $0.winner == true })?.athlete?.shortName ?? "Player 1"
                                             )
                                             .lineLimit(1)
                                             .font(.system(size: 14, weight: .semibold))

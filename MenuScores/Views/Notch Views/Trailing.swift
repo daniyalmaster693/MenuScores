@@ -209,7 +209,7 @@ struct CompactTrailing: View {
 
         if let fight = notchViewModel.fightCompetition {
             HStack {
-                if let round = fight.fullStatus.period {
+                if let round = fight.status.period {
                     Text("R\(round)")
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))

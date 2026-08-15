@@ -42,8 +42,8 @@ class getGames {
 
         return decoded.sports.first?.leagues.first?.events ?? []
     }
-    
-    func getFightArray(url: URL) async throws -> [FightEvent] {
+
+    func getFightArray(url: URL) async throws -> [FightCompetitions] {
         let (data, response) = try await URLSession.shared.data(from: url)
 
         guard let httpResponse = response as? HTTPURLResponse,
@@ -56,7 +56,7 @@ class getGames {
             FightResponse.self, from: data
         )
 
-        return decoded.sports.first?.leagues.first?.events ?? []
+        return decoded.events.first?.competitions ?? []
     }
 
     func getTennisArray(url: URL) async throws -> [TennisEvent] {

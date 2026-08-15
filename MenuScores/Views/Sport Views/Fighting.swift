@@ -48,135 +48,108 @@ struct FightingMenu: View {
 
     var body: some View {
         Menu(title) {
-            let groupedByFight = Dictionary(grouping: viewModel.fights) { fight in
-                fight.shortName
-            }
-
-            let sortedFights = groupedByFight.keys.sorted()
-
-            if sortedFights.isEmpty {
+            if viewModel.fights.isEmpty {
                 Text("No Fights Scheduled")
             } else {
-                ForEach(sortedFights, id: \.self) { fightName in
-                    if let fightEvents = groupedByFight[fightName] {
-                        Menu {
-                            Text(formattedFightDate(from: viewModel.fights.first?.date ?? "Invalid Date"))
-                                .font(.headline)
+                Text(formattedDate(from: viewModel.fights.first?.date ?? "Invalid Date"))
+                    .font(.headline)
 
-                            Divider().padding(.bottom)
+                Divider().padding(.bottom)
 
-                            ForEach(fightEvents, id: \.competitionId) { fight in
-                                Menu {
-                                    Button {
-                                        currentTitle = displayFightingText(for: fight)
-                                        currentGameID = fight.competitionId
-                                        currentGameState = fight.fullStatus.type.state
+                ForEach(viewModel.fights, id: \.id) { fight in
+                    Menu {
+                        Button {
+                            currentTitle = displayFightingText(for: fight)
+                            currentGameID = fight.id
+                            currentGameState = fight.status.type.state
 
-                                        pinnedByMenubar = true
-                                        pinnedByNotch = false
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "menubar.rectangle")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 20, height: 20)
-                                            Text("Pin Race to Menubar")
-                                        }
-                                    }
-
-                                    if enableNotch {
-                                        Button {
-                                            currentGameID = fight.competitionId
-                                            currentGameState = fight.fullStatus.type.state
-
-                                            pinnedByNotch = true
-                                            pinnedByMenubar = false
-
-                                            notchViewModel.fightCompetition = fight
-
-                                            Task {
-                                                if let existingNotch = NotchViewModel.shared.notch {
-                                                    await existingNotch.hide()
-                                                    NotchViewModel.shared.game = nil
-                                                    NotchViewModel.shared.currentGameID = ""
-                                                    NotchViewModel.shared.currentGameState = ""
-                                                    NotchViewModel.shared.previousGameState = ""
-                                                    NotchViewModel.shared.notch = nil
-                                                }
-
-                                                let newNotch = DynamicNotch(
-                                                    hoverBehavior: .all,
-                                                    style: .notch
-                                                ) {
-                                                    Info(notchViewModel: notchViewModel, sport: "Fighting", league: "\(league)")
-                                                } compactLeading: {
-                                                    CompactLeading(notchViewModel: notchViewModel, sport: "Fighting")
-                                                } compactTrailing: {
-                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Fighting")
-                                                }
-
-                                                NotchViewModel.shared.notch = newNotch
-                                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
-                                            }
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: "macbook")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 20, height: 20)
-                                                Text("Pin Race to Notch")
-                                            }
-                                        }
-
-                                        Divider()
-
-                                        Button {
-                                            if let urlString = fight.links.first?.href, let url = URL(string: urlString) {
-                                                NSWorkspace.shared.open(url)
-                                            }
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: "info.circle")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 20, height: 20)
-                                                Text("View Fight Details")
-                                            }
-                                        }
-                                    }
-                                } label: {
-                                    HStack {
-                                        AsyncImage(
-                                            url: URL(
-                                                string: fight.competitors.first?.logo ??
-                                                    "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                            )
-                                        ) { image in
-                                            image.resizable().scaledToFit()
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
-                                        .frame(width: 40, height: 40)
-
-                                        Text(displayFightingText(for: fight))
-                                    }
-                                }
-                            }
+                            pinnedByMenubar = true
+                            pinnedByNotch = false
                         } label: {
                             HStack {
-                                AsyncImage(
-                                    url: URL(
-                                        string: "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                    )
-                                ) { image in
-                                    image.resizable().scaledToFit()
-                                } placeholder: {
-                                    ProgressView()
-                                }
-                                .frame(width: 20, height: 20)
-
-                                Text(fightName)
+                                Image(systemName: "menubar.rectangle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("Pin Race to Menubar")
                             }
+                        }
+
+                        if enableNotch {
+                            Button {
+                                currentGameID = fight.id
+                                currentGameState = fight.status.type.state
+
+                                pinnedByNotch = true
+                                pinnedByMenubar = false
+
+                                notchViewModel.fightCompetition = fight
+
+                                Task {
+                                    if let existingNotch = NotchViewModel.shared.notch {
+                                        await existingNotch.hide()
+                                        NotchViewModel.shared.game = nil
+                                        NotchViewModel.shared.currentGameID = ""
+                                        NotchViewModel.shared.currentGameState = ""
+                                        NotchViewModel.shared.previousGameState = ""
+                                        NotchViewModel.shared.notch = nil
+                                    }
+
+                                    let newNotch = DynamicNotch(
+                                        hoverBehavior: .all,
+                                        style: .notch
+                                    ) {
+                                        Info(notchViewModel: notchViewModel, sport: "Fighting", league: "\(league)")
+                                    } compactLeading: {
+                                        CompactLeading(notchViewModel: notchViewModel, sport: "Fighting")
+                                    } compactTrailing: {
+                                        CompactTrailing(notchViewModel: notchViewModel, sport: "Fighting")
+                                    }
+
+                                    NotchViewModel.shared.notch = newNotch
+                                    await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "macbook")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("Pin Race to Notch")
+                                }
+                            }
+
+                            Divider()
+
+//                            Button {
+//                                if let urlString = fight.links.first?.href, let url = URL(string: urlString) {
+//                                    NSWorkspace.shared.open(url)
+//                                }
+//                            } label: {
+//                                HStack {
+//                                    Image(systemName: "info.circle")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 20, height: 20)
+//                                    Text("View Fight Details")
+//                                }
+//                            }
+                        }
+                    } label: {
+                        HStack {
+                            AsyncImage(
+                                url: URL(
+                                    string: fight.competitors?.first?.athlete?.flag.href ??
+                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-mma.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                )
+                            ) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayFightingText(for: fight))
                         }
                     }
                 }

@@ -111,17 +111,17 @@ func displayRacingText(for race: RaceEvent) -> String {
     }
 }
 
-func displayFightingText(for fight: FightEvent) -> String {
-    let time = formattedFightTime(from: fight.date)
-    let fightState = fight.fullStatus.type.state
+func displayFightingText(for fight: FightCompetitions) -> String {
+    let time = formattedTime(from: fight.date)
+    let fightState = fight.status.type.state
 
-    let round = fight.fullStatus.period ?? 0
-    let displayClock = fight.fullStatus.displayClock
+    let round = fight.status.period ?? 0
+    let displayClock = fight.status.displayClock ?? "-"
 
-    let competitor1 = fight.competitors.first?.shortName ?? "Competitor 1"
-    let competitor2 = fight.competitors.dropFirst().first?.shortName ?? "Competitor 2"
+    let competitor1 = fight.competitors?.first?.athlete?.shortName ?? "Competitor 1"
+    let competitor2 = fight.competitors?.dropFirst().first?.athlete?.shortName ?? "Competitor 2"
 
-    let winner = fight.competitors.first(where: { $0.winner == true })?.shortName ?? "Unknown"
+    let winner = fight.competitors?.first(where: { $0.winner == true })?.athlete?.shortName ?? "Unknown"
 
     switch fightState {
     case "pre":
