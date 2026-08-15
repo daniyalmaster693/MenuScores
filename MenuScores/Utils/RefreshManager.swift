@@ -168,27 +168,26 @@ class RefreshManager: NSObject, ObservableObject {
 
         if let fight = viewModel.fights.first(where: { $0.id == currentGameID.wrappedValue }) {
             if pinnedByMenubar.wrappedValue {
-//                currentTitle.wrappedValue = displayF1Text(for: race)
-                currentTitle.wrappedValue = ""
+                currentTitle.wrappedValue = displayFightingText(for: fight)
             } else if pinnedByNotch.wrappedValue {
                 currentTitle.wrappedValue = ""
             }
 
-//            let newState = race.fullStatus.type.state
+            let newState = fight.fullStatus.type.state
 
-//            if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-//                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
-//            }
-//            if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-//                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
-//            }
+            if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+            }
+            if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+            }
 
-//            previousGameState.wrappedValue = newState
-//            currentGameState.wrappedValue = newState
+            previousGameState.wrappedValue = newState
+            currentGameState.wrappedValue = newState
 
-//            if pinnedByNotch.wrappedValue {
-//                notchViewModel.racingCompetition = race
-//            }
+            if pinnedByNotch.wrappedValue {
+                notchViewModel.fightCompetition = fight
+            }
         }
     }
 
