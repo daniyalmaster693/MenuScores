@@ -8,74 +8,89 @@
 import Foundation
 
 struct FightResponse: Decodable {
-    let sports: [FightingSports]
-}
-
-struct FightingSports: Decodable {
-    let leagues: [FightingLeagues]
-}
-
-struct FightingLeagues: Decodable {
     let events: [FightEvent]
+    let leagues: [FightLeagues]
+}
+
+struct FightLeagues: Decodable {
+    let name: String?
+    let abbreviation: String?
+    let slug: String
 }
 
 struct FightEvent: Decodable {
     let id: String
     let date: String
     let name: String
-    let shortName: String
-    let competitionId: String
-    let competitionType: FightCompetitionType
-    let description: String?
-    let location: String?
-    let note: String?
-    let cardSegment: String?
-    let fullStatus: FightFullStatus
-    let links: [FightLinks]
-    let competitors: [FightCompetitors]
+    let shortName: String?
+    let competitions: [FightCompetitions]
+}
+
+struct FightCompetitions: Decodable {
+    let date: String
+    let endDate: String
+    let type: FightCompetitionType
+    let status: FightStatus
+    let venue: FightVenue
+    let details: FightDetails
+    let competitors: [FightCompetitor]?
 }
 
 struct FightCompetitionType: Decodable {
-    let abbreviation: String?
-    let text: String?
+    let abbreviation: String
 }
 
-struct FightLinks: Decodable {
-    let href: String
-}
-
-struct FightFullStatus: Decodable {
-    let displayClock: String
+struct FightStatus: Decodable {
+    let displayClock: String?
     let period: Int?
-    let displayPeriod: String?
     let type: FightType
-    let result: FightResult?
 }
 
 struct FightType: Decodable {
     let state: String
     let completed: Bool
-    let description: String
-    let detail: String
-    let shortDetail: String
+    let detail: String?
+    let shortDetail: String?
 }
 
-struct FightResult: Decodable {
-    let name: String?
-    let description: String?
-    let shortDisplayName: String?
+struct FightVenue: Decodable {
+    let id: String?
+    let fullName: String?
+    let address: FightVenueAddress?
 }
 
-struct FightCompetitors: Decodable {
-    let displayName: String?
-    let name: String?
-    let abbrevation: String?
-    let color: String?
+struct FightVenueAddress: Decodable {
+    let city: String?
+    let state: String?
+}
+
+struct FightDetails: Decodable {
+    let detailType: FightDetailType
+}
+
+struct FightDetailType: Decodable {
+    let text: String
+}
+
+struct FightCompetitor: Decodable {
+    let id: String
+    let order: Int?
     let winner: Bool?
-    let alternateColor: String?
-    let record: String?
-    let logo: String?
-    let firstName: String?
-    let lastName: String?
-    let shortName: String?
+    let athlete: FightAthlete?
+    let linescores: FightLineScores?
+}
+
+struct FightAthlete: Decodable {
+    let fullName: String
+    let displayName: String
+    let shortName: String
+    let flag: FightFlag
+}
+
+struct FightFlag: Decodable {
+    let href: String
+}
+
+struct FightLineScores: Decodable {
+    let displayValue: String
 }
