@@ -13,7 +13,7 @@ class NotchViewModel: ObservableObject {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     
     @AppStorage("notchAlerts") private var enableNotchAlerts = true
-    @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
+    @AppStorage("alertsTimer") private var alertsTimer: Double = 7.0
     
     static let shared = NotchViewModel()
     private static var didRegisterShortcuts = false

@@ -13,7 +13,7 @@ struct AlertSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
 
     @AppStorage("notchAlerts") private var enableNotchAlerts = true
-    @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
+    @AppStorage("alertsTimer") private var alertsTimer: Double = 7.0
 
     @AppStorage("scoreChanges") private var enableScoreChanges = true
     @AppStorage("notiGameStart") private var notiGameStart = false
