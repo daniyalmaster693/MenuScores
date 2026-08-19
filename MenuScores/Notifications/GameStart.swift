@@ -12,7 +12,7 @@ func gameStartNotification(gameId: String, gameTitle: String, newState: String) 
     guard newState == "in" else { return }
 
     let content = UNMutableNotificationContent()
-    content.title = "Game Started!"
+    content.title = "Game Started"
     content.body = "\(gameTitle)"
     content.interruptionLevel = .timeSensitive
     content.sound = .default

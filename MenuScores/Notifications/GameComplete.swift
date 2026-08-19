@@ -12,7 +12,7 @@ func gameCompleteNotification(gameId: String, gameTitle: String, newState: Strin
     guard newState == "post" else { return }
 
     let content = UNMutableNotificationContent()
-    content.title = "Game Finished!"
+    content.title = "Game Finished"
     content.body = "\(gameTitle)"
     content.interruptionLevel = .timeSensitive
     content.sound = .default
