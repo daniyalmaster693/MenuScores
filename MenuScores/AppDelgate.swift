@@ -8,6 +8,7 @@
 import AppKit
 import SwiftUI
 import TourKit
+import UserNotifications
 
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -33,6 +34,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 continueButtonTitle: "Continue",
                 finishButtonTitle: "Get Started",
                 onFinish: {
+                    Task {
+                        try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
+                    }
+
                     UserDefaults.standard.set(true, forKey: "hasShownTour")
                     NSApp.setActivationPolicy(.accessory)
                 },
