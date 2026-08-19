@@ -45,7 +45,7 @@ struct AlertSettingsView: View {
                     }
                 }
 
-                Section("Notifications") {
+                Section {
                     Toggle(isOn: $notiGameStart) {
                         HStack {
                             Image(systemName: "bell.badge")
@@ -59,6 +59,58 @@ struct AlertSettingsView: View {
                             Image(systemName: "bell.badge")
                                 .foregroundColor(.primary)
                             Text("Game End")
+                        }
+                    }
+                } header: {
+                    HStack(spacing: 4) {
+                        HStack {
+                            Text("Notifications")
+                                .font(.headline)
+                            Spacer()
+
+                            if let message = notificationStatusMessage {
+                                Text(message)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                            Button(action: {
+                                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                                    DispatchQueue.main.async {
+                                        switch settings.authorizationStatus {
+                                        case .authorized:
+                                            notificationStatusMessage = "Notifications Enabled"
+
+                                        case .denied:
+                                            let alert = NSAlert()
+                                            alert.messageText = "Notifications Disabled"
+                                            alert.informativeText = "Enable notifications for MenuScores in System Settings."
+                                            alert.alertStyle = .warning
+
+                                            alert.addButton(withTitle: "Open Settings")
+                                            alert.addButton(withTitle: "Cancel")
+
+                                            if alert.runModal() == .alertFirstButtonReturn {
+                                                if let url = URL(string: "x-apple.systempreferences:com.apple.Notifications-Settings") {
+                                                    NSWorkspace.shared.open(url)
+                                                }
+                                            }
+
+                                        case .notDetermined:
+                                            notificationStatusMessage = "Notifications Not Configured"
+
+                                        default:
+                                            notificationStatusMessage = "Notifications Unavailable"
+                                        }
+                                    }
+                                }
+                            }) {
+                                Image(systemName: "questionmark.circle")
+                            }
+                            .controlSize(.small)
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
+                            .help("Check notification settings")
                         }
                     }
                 }
