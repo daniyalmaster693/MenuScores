@@ -80,6 +80,8 @@ class RefreshManager: NSObject, ObservableObject {
         await viewModel.populateGames(from: fetchURL())
 
         if let updatedGame = viewModel.games.first(where: { $0.id == currentGameID.wrappedValue }) {
+            let notificationTitle = displayText(for: updatedGame, league: league)
+
             if pinnedByMenubar.wrappedValue {
                 currentTitle.wrappedValue = displayText(for: updatedGame, league: league)
             } else if pinnedByNotch.wrappedValue {
@@ -89,10 +91,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = updatedGame.status.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
+
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
 
             previousGameState.wrappedValue = newState
@@ -123,9 +126,20 @@ class RefreshManager: NSObject, ObservableObject {
         await viewModel.populateRacing(from: fetchURL())
 
         if let race = viewModel.races.first(where: { $0.id == currentGameID.wrappedValue }) {
+            let notificationTitle: String
+
+            if league == "F1" {
+                notificationTitle = displayF1Text(for: race)
+            } else {
+                notificationTitle = displayRacingText(for: race)
+            }
+
             if pinnedByMenubar.wrappedValue {
-                currentTitle.wrappedValue = displayF1Text(for: race)
-                currentTitle.wrappedValue = ""
+                if league == "F1" {
+                    currentTitle.wrappedValue = displayF1Text(for: race)
+                } else {
+                    currentTitle.wrappedValue = displayRacingText(for: race)
+                }
             } else if pinnedByNotch.wrappedValue {
                 currentTitle.wrappedValue = ""
             }
@@ -133,10 +147,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = race.fullStatus.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
+
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
 
             previousGameState.wrappedValue = newState
@@ -167,6 +182,8 @@ class RefreshManager: NSObject, ObservableObject {
         await viewModel.populateFighting(from: fetchURL())
 
         if let fight = viewModel.fights.first(where: { $0.id == currentGameID.wrappedValue }) {
+            let notificationTitle = displayFightingText(for: fight)
+
             if pinnedByMenubar.wrappedValue {
                 currentTitle.wrappedValue = displayFightingText(for: fight)
             } else if pinnedByNotch.wrappedValue {
@@ -176,10 +193,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = fight.status.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
+
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
 
             previousGameState.wrappedValue = newState
@@ -214,6 +232,8 @@ class RefreshManager: NSObject, ObservableObject {
             .flatMap({ $0.competitions })
             .first(where: { $0.id == currentGameID.wrappedValue })
         {
+            let notificationTitle = displayTennisText(for: updatedCompetition)
+
             if pinnedByMenubar.wrappedValue {
                 currentTitle.wrappedValue = displayTennisText(for: updatedCompetition)
             } else if pinnedByNotch.wrappedValue {
@@ -223,10 +243,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = updatedCompetition.status?.type.state ?? "pre"
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
+
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: currentTitle.wrappedValue, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
             }
 
             previousGameState.wrappedValue = newState
