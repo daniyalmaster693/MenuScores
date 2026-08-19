@@ -12,8 +12,6 @@ struct BehaviorSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
-    @AppStorage("autoClear") private var enableAutoClear = true
-
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
     let refreshOptions = [
@@ -70,16 +68,6 @@ struct BehaviorSettingsView: View {
                         KeyboardShortcuts.Recorder(for: .notchActivation)
                             .frame(width: 130)
                             .disabled(enableNotch == false)
-                    }
-                }
-
-                Section("Pin Management") {
-                    Toggle(isOn: $enableAutoClear) {
-                        HStack {
-                            Image(systemName: "checkmark.circle")
-                                .foregroundColor(.primary)
-                            Text("Automatically Clear Finished Games")
-                        }
                     }
                 }
 
