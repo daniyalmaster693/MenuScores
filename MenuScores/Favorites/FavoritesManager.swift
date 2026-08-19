@@ -169,6 +169,52 @@ class FavoritesManager: ObservableObject {
     }
 
     @MainActor
+    func updateRacingNotch(
+        for race: RaceEvent,
+        sport: String,
+        league: String,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        isAutoPinned = true
+
+        if league == "F1" {
+            currentGameID.wrappedValue = race.competitionId
+        } else {
+            currentGameID.wrappedValue = race.id
+        }
+
+        currentGameState.wrappedValue = race.fullStatus.type.state
+        currentTitle.wrappedValue = ""
+
+        NotchViewModel.shared.racingCompetition = race
+
+        if let notch = NotchViewModel.shared.notch {
+            await notch.hide()
+            NotchViewModel.shared.game = nil
+            NotchViewModel.shared.currentGameID = ""
+            NotchViewModel.shared.currentGameState = ""
+            NotchViewModel.shared.previousGameState = ""
+            NotchViewModel.shared.notch = nil
+        }
+
+        let newNotch = DynamicNotch(
+            hoverBehavior: .all,
+            style: .notch
+        ) {
+            Info(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
+        } compactLeading: {
+            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport)
+        } compactTrailing: {
+            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport)
+        }
+
+        NotchViewModel.shared.notch = newNotch
+        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+    }
+
+    @MainActor
     func updateMenuBar(
         for game: Event,
         league: String,
@@ -181,6 +227,27 @@ class FavoritesManager: ObservableObject {
         currentTitle.wrappedValue = displayText(for: game, league: league)
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
+    }
+
+    @MainActor
+    func updateRacingMenuBar(
+        for race: RaceEvent,
+        league: String,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        currentTitle: Binding<String>
+    ) async {
+        isAutoPinned = true
+
+        if league == "F1" {
+            currentTitle.wrappedValue = displayF1Text(for: race)
+            currentGameID.wrappedValue = race.competitionId
+        } else {
+            currentTitle.wrappedValue = displayRacingText(for: race)
+            currentGameID.wrappedValue = race.id
+        }
+
+        currentGameState.wrappedValue = race.fullStatus.type.state
     }
 
     @MainActor
@@ -310,12 +377,54 @@ class FavoritesManager: ObservableObject {
         return targets
     }
 
+    enum FavoriteGame {
+        case normal(Event)
+        case racing(RaceEvent, leagueKey: String)
+
+        var id: String {
+            switch self {
+            case .normal(let game):
+                return game.id
+
+            case .racing(let race, let leagueKey):
+                return leagueKey == "F1"
+                    ? race.competitionId
+                    : race.id
+            }
+        }
+
+        var state: String {
+            switch self {
+            case .normal(let game):
+                return game.status.type.state
+
+            case .racing(let race, _):
+                return race.fullStatus.type.state
+            }
+        }
+    }
+
     @MainActor
-    func findGame() -> (game: Event, leagueKey: String)? {
+    func findGame() -> (game: FavoriteGame, leagueKey: String)? {
         let targets = getSearchTargets()
 
         for target in targets {
             let key = target.leagueKey.uppercased()
+
+            if key == "F1" || key == "NC" || key == "NCS" || key == "NCT" || key == "IRL" {
+                guard let vm = leagueVMs[key] as? RacingListView else {
+                    continue
+                }
+
+                let matchingRaces = vm.races
+
+                if let race = matchingRaces.first(where: { $0.fullStatus.type.state == "pre" }) {
+                    return (game: .racing(race, leagueKey: target.leagueKey), leagueKey: target.leagueKey)
+                }
+
+                continue
+            }
+
             guard let vm = leagueVMs[key] as? GamesListView else { continue }
 
             let matchingGames: [Event]
@@ -330,8 +439,8 @@ class FavoritesManager: ObservableObject {
                 }
             }
 
-            if let liveGame = matchingGames.first(where: { $0.status.type.state == "in" }) {
-                return (game: liveGame, leagueKey: target.leagueKey)
+            if let game = matchingGames.first(where: { $0.status.type.state == "pre" }) {
+                return (game: .normal(game), leagueKey: target.leagueKey)
             }
         }
 
@@ -370,15 +479,30 @@ class FavoritesManager: ObservableObject {
 
         let currentGame = result.game
         let currentLeague = result.leagueKey
-        let currentState = currentGame.status.type.state
 
-        if currentGameID.wrappedValue == currentGame.id {
-            currentGameState.wrappedValue = currentState
+        let gameID = currentGame.id
+        let gameState = currentGame.state
 
-            if selectedPinType == .menubar {
-                currentTitle.wrappedValue = displayText(for: currentGame, league: currentLeague)
-            } else if selectedPinType == .notch {
-                NotchViewModel.shared.game = currentGame
+        if currentGameID.wrappedValue == gameID {
+            currentGameState.wrappedValue = gameState
+
+            switch currentGame {
+            case .normal(let game):
+                if selectedPinType == .menubar {
+                    currentTitle.wrappedValue = displayText(for: game, league: currentLeague)
+                } else if selectedPinType == .notch {
+                    NotchViewModel.shared.game = game
+                }
+            case .racing(let race, let leagueKey):
+                if selectedPinType == .menubar {
+                    if leagueKey == "F1" {
+                        currentTitle.wrappedValue = displayF1Text(for: race)
+                    } else {
+                        currentTitle.wrappedValue = displayRacingText(for: race)
+                    }
+                } else if selectedPinType == .notch {
+                    NotchViewModel.shared.racingCompetition = race
+                }
             }
 
             return
@@ -388,24 +512,49 @@ class FavoritesManager: ObservableObject {
             let sport = FavoriteTeams.mappings[currentLeague]?.sport ?? "hockey"
             let sportName = (currentLeague.uppercased() == "F1") ? "F1" : (sport.prefix(1).uppercased() + sport.dropFirst().lowercased())
 
-            Task { @MainActor in
-                if selectedPinType == .notch {
-                    await updateNotch(
-                        for: currentGame,
-                        sport: sportName,
-                        league: currentLeague,
-                        currentGameID: currentGameID,
-                        currentGameState: currentGameState,
-                        currentTitle: currentTitle
-                    )
-                } else {
-                    await updateMenuBar(
-                        for: currentGame,
-                        league: currentLeague,
-                        currentGameID: currentGameID,
-                        currentGameState: currentGameState,
-                        currentTitle: currentTitle
-                    )
+            switch currentGame {
+            case .normal(let game):
+                Task { @MainActor in
+                    if selectedPinType == .notch {
+                        await updateNotch(
+                            for: game,
+                            sport: sportName,
+                            league: currentLeague,
+                            currentGameID: currentGameID,
+                            currentGameState: currentGameState,
+                            currentTitle: currentTitle
+                        )
+                    } else {
+                        await updateMenuBar(
+                            for: game,
+                            league: currentLeague,
+                            currentGameID: currentGameID,
+                            currentGameState: currentGameState,
+                            currentTitle: currentTitle
+                        )
+                    }
+                }
+
+            case .racing(let race, _):
+                Task { @MainActor in
+                    if selectedPinType == .notch {
+                        await updateRacingNotch(
+                            for: race,
+                            sport: sportName,
+                            league: currentLeague,
+                            currentGameID: currentGameID,
+                            currentGameState: currentGameState,
+                            currentTitle: currentTitle
+                        )
+                    } else {
+                        await updateRacingMenuBar(
+                            for: race,
+                            league: currentLeague,
+                            currentGameID: currentGameID,
+                            currentGameState: currentGameState,
+                            currentTitle: currentTitle
+                        )
+                    }
                 }
             }
         }
