@@ -45,7 +45,7 @@ struct AlertSettingsView: View {
                     }
                 }
 
-                Section {
+                Section("Notifications") {
                     Toggle(isOn: $notiGameStart) {
                         HStack {
                             Image(systemName: "bell.badge")
@@ -59,43 +59,6 @@ struct AlertSettingsView: View {
                             Image(systemName: "bell.badge")
                                 .foregroundColor(.primary)
                             Text("Game End")
-                        }
-                    }
-                } header: {
-                    HStack(spacing: 4) {
-                        HStack {
-                            Text("Notifications")
-                                .font(.headline)
-                            Spacer()
-
-                            if let message = notificationStatusMessage {
-                                Text(message)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-
-                            Button(action: {
-                                UNUserNotificationCenter.current()
-                                    .requestAuthorization(options: [
-                                        .alert, .sound, .badge,
-                                    ]) { granted, error in
-                                        DispatchQueue.main.async {
-                                            if let error = error {
-                                                notificationStatusMessage =
-                                                    "\(error.localizedDescription)"
-                                            } else if granted {
-                                                notificationStatusMessage =
-                                                    "Permissions granted!"
-                                            }
-                                        }
-                                    }
-                            }) {
-                                Image(systemName: "questionmark.circle")
-                            }
-                            .controlSize(.small)
-                            .buttonStyle(.plain)
-                            .foregroundColor(.secondary)
-                            .help("Request notification permissions")
                         }
                     }
                 }
