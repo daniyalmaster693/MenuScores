@@ -40,7 +40,7 @@ struct AlertSettingsView: View {
                             Text("Notch Alert Duration: \(String(format: "%.1f", self.alertsTimer))s")
                         }
 
-                        Slider(value: self.$alertsTimer, in: 5 ... 15.0, step: 0.5)
+                        Slider(value: self.$alertsTimer, in: 5 ... 15.0, step: 1)
                             .disabled(!enableNotch || !enableNotchAlerts)
                     }
                 }
