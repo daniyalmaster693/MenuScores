@@ -20,8 +20,6 @@ struct AlertSettingsView: View {
     @AppStorage("scoreChanges") private var enableScoreChanges = true
     @AppStorage("periodStartAlert") private var enablePeriodStartAlert = false
     @AppStorage("periodEndAlert") private var enablePeriodEndAlert = false
-    @AppStorage("penaltyAlert") private var enablePenaltyAlert = false
-    @AppStorage("timeoutAlert") private var enableTimeoutAlert = false
 
     @State private var helpMessage: String?
 
@@ -89,24 +87,6 @@ struct AlertSettingsView: View {
                             Image(systemName: "stop.circle")
                                 .foregroundColor(.primary)
                             Text("End of Game Segment")
-                        }
-                    }
-                    .disabled(!enablePlayAlerts)
-
-                    Toggle(isOn: $enablePenaltyAlert) {
-                        HStack {
-                            Image(systemName: "exclamationmark.circle")
-                                .foregroundColor(.primary)
-                            Text("Penalties & Fouls")
-                        }
-                    }
-                    .disabled(!enablePlayAlerts)
-
-                    Toggle(isOn: $enableTimeoutAlert) {
-                        HStack {
-                            Image(systemName: "stopwatch")
-                                .foregroundColor(.primary)
-                            Text("Timeouts")
                         }
                     }
                     .disabled(!enablePlayAlerts)
