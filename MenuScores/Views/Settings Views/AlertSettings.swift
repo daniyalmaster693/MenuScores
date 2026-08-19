@@ -24,7 +24,7 @@ struct AlertSettingsView: View {
     var body: some View {
         VStack(spacing: 4) {
             Form {
-                Section("Play Alerts") {
+                Section("Score Changes") {
                     Toggle(isOn: $enableNotchAlerts) {
                         HStack {
                             Image(systemName: "macbook")
