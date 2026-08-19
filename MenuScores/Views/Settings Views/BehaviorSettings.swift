@@ -12,7 +12,7 @@ struct BehaviorSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
-//    @AppStorage("autoClear") private var enableAutoClear = false
+    @AppStorage("autoClear") private var enableAutoClear = true
 
     @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
@@ -73,15 +73,15 @@ struct BehaviorSettingsView: View {
                     }
                 }
 
-//                Section("Pin Management") {
-//                    Toggle(isOn: $enableAutoClear) {
-//                        HStack {
-//                            Image(systemName: "checkmark.circle")
-//                                .foregroundColor(.primary)
-//                            Text("Automatically Clear Finished Games")
-//                        }
-//                    }
-//                }
+                Section("Pin Management") {
+                    Toggle(isOn: $enableAutoClear) {
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .foregroundColor(.primary)
+                            Text("Automatically Clear Finished Games")
+                        }
+                    }
+                }
 
                 Section("Score Updates") {
                     VStack(alignment: .leading, spacing: 2) {
