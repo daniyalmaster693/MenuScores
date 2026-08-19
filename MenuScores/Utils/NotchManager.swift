@@ -12,6 +12,9 @@ import SwiftUI
 class NotchViewModel: ObservableObject {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     
+    @AppStorage("notchAlerts") private var enableNotchAlerts = true
+    @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
+    
     static let shared = NotchViewModel()
     private static var didRegisterShortcuts = false
     
@@ -28,6 +31,23 @@ class NotchViewModel: ObservableObject {
     @Published var currentGameID: String
     @Published var currentGameState: String
     @Published var previousGameState: String?
+    
+    private var alertTask: Task<Void, Never>?
+    
+    func triggerAlert() {
+        guard enableNotchAlerts else { return }
+        
+        alertTask?.cancel()
+        
+        alertTask = Task { @MainActor in
+            let screens = NSScreen.screens
+            if screens.indices.contains(self.notchScreenIndex) {
+                await NotchViewModel.shared.notch?.expand(on: screens[self.notchScreenIndex])
+                try? await Task.sleep(for: .seconds(self.alertsTimer))
+                await NotchViewModel.shared.notch?.compact(on: screens[self.notchScreenIndex])
+            }
+        }
+    }
     
     init(currentGameID: String = "", currentGameState: String = "", previousGameState: String? = nil) {
         self.currentGameID = currentGameID

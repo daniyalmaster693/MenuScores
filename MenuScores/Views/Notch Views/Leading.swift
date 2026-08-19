@@ -41,7 +41,13 @@ struct CompactLeading: View {
                     Text("\(game.competitions[0].competitors?[1].score ?? "-")")
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
-                }.contextMenu {
+                }
+                .onChange(of: game.competitions[0].competitors?[1].score) { newScore in
+                    guard newScore != nil else { return }
+
+                    NotchViewModel.shared.triggerAlert()
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
@@ -86,7 +92,8 @@ struct CompactLeading: View {
                                 .frame(width: 18, height: 18)
                         }
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
@@ -132,7 +139,8 @@ struct CompactLeading: View {
                             .frame(width: 18, height: 18)
                     }
                 }
-            }.contextMenu {
+            }
+            .contextMenu {
                 Picker("Choose Display", selection: $notchScreenIndex) {
                     ForEach(NSScreen.screens.indices, id: \.self) { index in
                         Text(NSScreen.screens[index].localizedName)
@@ -177,7 +185,8 @@ struct CompactLeading: View {
                             .frame(width: 18, height: 18)
                     }
                 }
-            }.contextMenu {
+            }
+            .contextMenu {
                 Picker("Choose Display", selection: $notchScreenIndex) {
                     ForEach(NSScreen.screens.indices, id: \.self) { index in
                         Text(NSScreen.screens[index].localizedName)
@@ -222,7 +231,8 @@ struct CompactLeading: View {
                             .frame(width: 18, height: 18)
                     }
                 }
-            }.contextMenu {
+            }
+            .contextMenu {
                 Picker("Choose Display", selection: $notchScreenIndex) {
                     ForEach(NSScreen.screens.indices, id: \.self) { index in
                         Text(NSScreen.screens[index].localizedName)
@@ -267,7 +277,8 @@ struct CompactLeading: View {
                             .frame(width: 18, height: 18)
                     }
                 }
-            }.contextMenu {
+            }
+            .contextMenu {
                 Picker("Choose Display", selection: $notchScreenIndex) {
                     ForEach(NSScreen.screens.indices, id: \.self) { index in
                         Text(NSScreen.screens[index].localizedName)

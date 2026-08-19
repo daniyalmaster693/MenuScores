@@ -42,7 +42,13 @@ struct CompactTrailing: View {
                                 .frame(width: 18, height: 18)
                         }
                     }
-                }.contextMenu {
+                }
+                .onChange(of: game.competitions[0].competitors?[0].score) { newScore in
+                    guard newScore != nil else { return }
+
+                    NotchViewModel.shared.triggerAlert()
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
@@ -76,7 +82,8 @@ struct CompactTrailing: View {
                         Text("R -")
                             .font(.system(size: 14, weight: .semibold))
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
@@ -112,7 +119,8 @@ struct CompactTrailing: View {
                         Text("L -")
                             .font(.system(size: 14, weight: .semibold))
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
@@ -146,7 +154,8 @@ struct CompactTrailing: View {
                         Text("L -")
                             .font(.system(size: 14, weight: .semibold))
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
@@ -182,7 +191,8 @@ struct CompactTrailing: View {
                         Text("S -")
                             .font(.system(size: 14, weight: .semibold))
                     }
-                }.contextMenu {
+                }
+                .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
@@ -208,36 +218,39 @@ struct CompactTrailing: View {
         }
 
         if let fight = notchViewModel.fightCompetition {
-            HStack {
-                if let round = fight.status.period {
-                    Text("R\(round)")
-                        .contentTransition(.numericText(countsDown: false))
-                        .font(.system(size: 14, weight: .semibold))
-                } else {
-                    Text("R -")
-                        .font(.system(size: 14, weight: .semibold))
-                }
-            }.contextMenu {
-                Picker("Choose Display", selection: $notchScreenIndex) {
-                    ForEach(NSScreen.screens.indices, id: \.self) { index in
-                        Text(NSScreen.screens[index].localizedName)
-                            .tag(index)
+            if sport == "Fighting" {
+                HStack {
+                    if let round = fight.status.period {
+                        Text("R\(round)")
+                            .contentTransition(.numericText(countsDown: false))
+                            .font(.system(size: 14, weight: .semibold))
+                    } else {
+                        Text("R -")
+                            .font(.system(size: 14, weight: .semibold))
                     }
                 }
+                .contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(NSScreen.screens.indices, id: \.self) { index in
+                            Text(NSScreen.screens[index].localizedName)
+                                .tag(index)
+                        }
+                    }
 
-                Button {
-                    SettingsWindowController.shared.showWindow()
-                } label: {
-                    Text("Preferences")
-                }
-                .keyboardShortcut(",")
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
 
-                Button {
-                    NSApplication.shared.terminate(nil)
-                } label: {
-                    Text("Quit")
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
                 }
-                .keyboardShortcut("q")
             }
         }
     }
