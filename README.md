@@ -97,8 +97,7 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 - [x] ~Automatically pin games to the notch or menubar (favorite teams feature)~
 - [x] ~Tennis Integration~
 - [x] ~Multi day schedules and scores~
-- [ ] Automatically clear games from the notch or menubar when finished (for manual pins)
-- [ ] Automatic notch expansion for game events (goals, penalties, and key moments)
+- [ ] Automatic notch expansion for score changes
 - [ ] UFC Integration
 - [ ] Cricket Integration
 - [ ] Updated Menubar Views and custom Menubar Score Component
