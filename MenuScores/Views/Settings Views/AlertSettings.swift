@@ -7,49 +7,31 @@
 
 import KeyboardShortcuts
 import SwiftUI
+import UserNotifications
 
 struct AlertSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
-
-    @AppStorage("playAlerts") private var enablePlayAlerts = true
-    @AppStorage("notificationAlerts") private var enableNotificationAlerts = false
 
     @AppStorage("notchAlerts") private var enableNotchAlerts = true
     @AppStorage("alertsTimer") private var alertsTimer: Double = 10.0
 
     @AppStorage("scoreChanges") private var enableScoreChanges = true
-    @AppStorage("periodStartAlert") private var enablePeriodStartAlert = false
-    @AppStorage("periodEndAlert") private var enablePeriodEndAlert = false
+    @AppStorage("notiGameStart") private var notiGameStart = false
+    @AppStorage("notiGameComplete") private var notiGameComplete = false
 
-    @State private var helpMessage: String?
+    @State private var notificationStatusMessage: String?
 
     var body: some View {
         VStack(spacing: 4) {
             Form {
                 Section("Play Alerts") {
-                    Toggle(isOn: $enablePlayAlerts) {
-                        HStack {
-                            Image(systemName: "play.display")
-                                .foregroundColor(.primary)
-                            Text("Enable Play Alerts")
-                        }
-                    }
-
-                    Toggle(isOn: $enableNotificationAlerts) {
-                        HStack {
-                            Image(systemName: "bell.badge")
-                                .foregroundColor(.primary)
-                            Text("Receive notifications for play alerts")
-                        }
-                    }.disabled(!enablePlayAlerts)
-
                     Toggle(isOn: $enableNotchAlerts) {
                         HStack {
                             Image(systemName: "macbook")
                                 .foregroundColor(.primary)
-                            Text("Expand notch automatically for major plays")
+                            Text("Auto Expand Notch for Score Changes")
                         }
-                    }.disabled(!enableNotch || !enablePlayAlerts)
+                    }.disabled(!enableNotch)
 
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
@@ -59,37 +41,63 @@ struct AlertSettingsView: View {
                         }
 
                         Slider(value: self.$alertsTimer, in: 5 ... 15.0, step: 0.5)
-                            .disabled(!enablePlayAlerts || !enableNotch || !enableNotchAlerts)
+                            .disabled(!enableNotch || !enableNotchAlerts)
                     }
                 }
 
-                Section("Alert Types") {
-                    Toggle(isOn: $enableScoreChanges) {
+                Section {
+                    Toggle(isOn: $notiGameStart) {
                         HStack {
-                            Image(systemName: "plus.circle")
+                            Image(systemName: "bell.badge")
                                 .foregroundColor(.primary)
-                            Text("Score Changes")
+                            Text("Game Start")
                         }
                     }
-                    .disabled(!enablePlayAlerts)
 
-                    Toggle(isOn: $enablePeriodStartAlert) {
+                    Toggle(isOn: $notiGameComplete) {
                         HStack {
-                            Image(systemName: "play.circle")
+                            Image(systemName: "bell.badge")
                                 .foregroundColor(.primary)
-                            Text("Start of Game Segment")
+                            Text("Game End")
                         }
                     }
-                    .disabled(!enablePlayAlerts)
+                } header: {
+                    HStack(spacing: 4) {
+                        HStack {
+                            Text("Notifications")
+                                .font(.headline)
+                            Spacer()
 
-                    Toggle(isOn: $enablePeriodEndAlert) {
-                        HStack {
-                            Image(systemName: "stop.circle")
-                                .foregroundColor(.primary)
-                            Text("End of Game Segment")
+                            if let message = notificationStatusMessage {
+                                Text(message)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+
+                            Button(action: {
+                                UNUserNotificationCenter.current()
+                                    .requestAuthorization(options: [
+                                        .alert, .sound, .badge,
+                                    ]) { granted, error in
+                                        DispatchQueue.main.async {
+                                            if let error = error {
+                                                notificationStatusMessage =
+                                                    "\(error.localizedDescription)"
+                                            } else if granted {
+                                                notificationStatusMessage =
+                                                    "Permissions granted!"
+                                            }
+                                        }
+                                    }
+                            }) {
+                                Image(systemName: "questionmark.circle")
+                            }
+                            .controlSize(.small)
+                            .buttonStyle(.plain)
+                            .foregroundColor(.secondary)
+                            .help("Request notification permissions")
                         }
                     }
-                    .disabled(!enablePlayAlerts)
                 }
             }
             .formStyle(.grouped)

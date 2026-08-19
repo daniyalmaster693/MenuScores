@@ -7,18 +7,14 @@
 
 import KeyboardShortcuts
 import SwiftUI
-import UserNotifications
 
 struct BehaviorSettingsView: View {
-    @AppStorage("notiGameStart") private var notiGameStart = false
-    @AppStorage("notiGameComplete") private var notiGameComplete = false
-
     @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
-    @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
-
 //    @AppStorage("autoClear") private var enableAutoClear = false
+
+    @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
 
     let refreshOptions = [
         "10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds",
@@ -39,8 +35,6 @@ struct BehaviorSettingsView: View {
         default: return 15
         }
     }
-
-    @State private var notificationStatusMessage: String?
 
     var body: some View {
         VStack(spacing: 4) {
@@ -79,6 +73,16 @@ struct BehaviorSettingsView: View {
                     }
                 }
 
+//                Section("Pin Management") {
+//                    Toggle(isOn: $enableAutoClear) {
+//                        HStack {
+//                            Image(systemName: "checkmark.circle")
+//                                .foregroundColor(.primary)
+//                            Text("Automatically Clear Finished Games")
+//                        }
+//                    }
+//                }
+
                 Section("Score Updates") {
                     VStack(alignment: .leading, spacing: 2) {
                         HStack {
@@ -92,71 +96,6 @@ struct BehaviorSettingsView: View {
                             }
                             .pickerStyle(.menu)
                             .frame(width: 150)
-                        }
-                    }
-                }
-
-//                Section("Pin Management") {
-//                    Toggle(isOn: $enableAutoClear) {
-//                        HStack {
-//                            Image(systemName: "checkmark.circle")
-//                                .foregroundColor(.primary)
-//                            Text("Automatically Clear Finished Games")
-//                        }
-//                    }
-//                }
-
-                Section {
-                    Toggle(isOn: $notiGameStart) {
-                        HStack {
-                            Image(systemName: "bell.badge")
-                                .foregroundColor(.primary)
-                            Text("Notify when a pinned game starts")
-                        }
-                    }
-
-                    Toggle(isOn: $notiGameComplete) {
-                        HStack {
-                            Image(systemName: "bell.badge")
-                                .foregroundColor(.primary)
-                            Text("Notify when a pinned game ends")
-                        }
-                    }
-                } header: {
-                    HStack(spacing: 4) {
-                        HStack {
-                            Text("Notifications")
-                                .font(.headline)
-                            Spacer()
-
-                            if let message = notificationStatusMessage {
-                                Text(message)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-
-                            Button(action: {
-                                UNUserNotificationCenter.current()
-                                    .requestAuthorization(options: [
-                                        .alert, .sound, .badge,
-                                    ]) { granted, error in
-                                        DispatchQueue.main.async {
-                                            if let error = error {
-                                                notificationStatusMessage =
-                                                    "\(error.localizedDescription)"
-                                            } else if granted {
-                                                notificationStatusMessage =
-                                                    "Permissions granted!"
-                                            }
-                                        }
-                                    }
-                            }) {
-                                Image(systemName: "questionmark.circle")
-                            }
-                            .controlSize(.small)
-                            .buttonStyle(.plain)
-                            .foregroundColor(.secondary)
-                            .help("Request notification permissions")
                         }
                     }
                 }
