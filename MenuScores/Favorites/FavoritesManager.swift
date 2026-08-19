@@ -418,7 +418,7 @@ class FavoritesManager: ObservableObject {
 
                 let matchingRaces = vm.races
 
-                if let race = matchingRaces.first(where: { $0.fullStatus.type.state == "pre" }) {
+                if let race = matchingRaces.first(where: { $0.fullStatus.type.state == "in" }) {
                     return (game: .racing(race, leagueKey: target.leagueKey), leagueKey: target.leagueKey)
                 }
 
@@ -439,7 +439,7 @@ class FavoritesManager: ObservableObject {
                 }
             }
 
-            if let game = matchingGames.first(where: { $0.status.type.state == "pre" }) {
+            if let game = matchingGames.first(where: { $0.status.type.state == "in" }) {
                 return (game: .normal(game), leagueKey: target.leagueKey)
             }
         }
