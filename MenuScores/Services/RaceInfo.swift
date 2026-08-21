@@ -80,7 +80,7 @@ struct Driver: Decodable {
     let headshot: String?
     let lapsLed: String?
     let laps: String
-    let place: Int
+    let place: Int?
     let behindTime: String?
     let behindLaps: String?
     let time: String?
