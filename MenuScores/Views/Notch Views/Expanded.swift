@@ -792,7 +792,7 @@ struct Info: View {
                                                         .frame(width: 100, alignment: .trailing)
                                                     }
 
-                                                    Text(competitor.laps)
+                                                    Text(competitor.laps ?? "0")
                                                         .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 50, alignment: .trailing)
 
@@ -1007,7 +1007,7 @@ struct Info: View {
                                                         .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 100, alignment: .trailing)
 
-                                                    Text("\(competitor.laps)")
+                                                    Text("\(competitor.laps ?? "0")")
                                                         .contentTransition(.numericText(countsDown: false))
                                                         .frame(width: 50, alignment: .trailing)
 
