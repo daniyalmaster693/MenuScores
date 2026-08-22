@@ -702,13 +702,8 @@ struct Info: View {
                                         Text("Driver")
                                             .frame(width: 130, alignment: .leading)
 
-                                        if f1State == "post" {
-                                            Text("Race Time")
-                                                .frame(width: 100, alignment: .trailing)
-                                        } else {
-                                            Text("Team")
-                                                .frame(width: 120, alignment: .trailing)
-                                        }
+                                        Text("Race Time")
+                                            .frame(width: 100, alignment: .trailing)
 
                                         Text("Laps")
                                             .frame(width: 50, alignment: .trailing)
@@ -758,33 +753,28 @@ struct Info: View {
                                                     }
                                                     .frame(width: 130, alignment: .leading)
 
-                                                    if f1State == "post" {
-                                                        if competitor.order == 1 {
-                                                            Text(
-                                                                "\(competitor.time ?? "-")"
-                                                            )
-                                                            .contentTransition(.numericText(countsDown: false))
-                                                            .frame(width: 100, alignment: .trailing)
-                                                        } else {
-                                                            Text(
-                                                                {
-                                                                    if let behindTime = competitor.behindTime, !behindTime.starts(with: "+") {
-                                                                        return "+\(behindTime)"
-                                                                    } else if let behindTime = competitor.behindTime {
-                                                                        return behindTime
-                                                                    } else if let behindLaps = competitor.behindLaps, let lapsInt = Int(behindLaps) {
-                                                                        return "+\(lapsInt) \(lapsInt == 1 ? "Lap" : "Laps")"
-                                                                    } else if let behindLaps = competitor.behindLaps, !behindLaps.isEmpty {
-                                                                        return "+\(behindLaps)"
-                                                                    }
-                                                                    return "+-"
-                                                                }()
-                                                            )
-                                                            .frame(width: 100, alignment: .trailing)
-                                                        }
+                                                    if competitor.order == 1 {
+                                                        Text(
+                                                            "\(competitor.time ?? "-")"
+                                                        )
+                                                        .contentTransition(.numericText(countsDown: false))
+                                                        .frame(width: 100, alignment: .trailing)
                                                     } else {
-                                                        Text(competitor.vehicle?.manufacturer ?? "-")
-                                                            .frame(width: 120, alignment: .trailing)
+                                                        Text(
+                                                            {
+                                                                if let behindTime = competitor.behindTime, !behindTime.starts(with: "+") {
+                                                                    return "+\(behindTime)"
+                                                                } else if let behindTime = competitor.behindTime {
+                                                                    return behindTime
+                                                                } else if let behindLaps = competitor.behindLaps, let lapsInt = Int(behindLaps) {
+                                                                    return "+\(lapsInt) \(lapsInt == 1 ? "Lap" : "Laps")"
+                                                                } else if let behindLaps = competitor.behindLaps, !behindLaps.isEmpty {
+                                                                    return "+\(behindLaps)"
+                                                                }
+                                                                return "+-"
+                                                            }()
+                                                        )
+                                                        .frame(width: 100, alignment: .trailing)
                                                     }
 
                                                     Text(competitor.laps)
