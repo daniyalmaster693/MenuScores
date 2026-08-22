@@ -50,6 +50,10 @@ struct CompactTrailing: View {
                         return
                     }
 
+                    guard NotchViewModel.shared.sport != "Basketball" else {
+                        return
+                    }
+
                     NotchViewModel.shared.triggerAlert()
                 }
                 .contextMenu {
