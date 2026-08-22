@@ -50,7 +50,7 @@ struct CompactTrailing: View {
                         return
                     }
 
-                    guard NotchViewModel.shared.sport != "Basketball" else {
+                    guard sport != "Basketball" else {
                         return
                     }
 
