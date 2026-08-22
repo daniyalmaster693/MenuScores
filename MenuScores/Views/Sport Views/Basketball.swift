@@ -92,11 +92,16 @@ struct BasketballMenu: View {
                                             Task {
                                                 if let existingNotch = NotchViewModel.shared.notch {
                                                     await existingNotch.hide()
+                                                    NotchViewModel.shared.notch = nil
+
                                                     NotchViewModel.shared.game = nil
+                                                    NotchViewModel.shared.racingCompetition = nil
+                                                    NotchViewModel.shared.fightCompetition = nil
+                                                    NotchViewModel.shared.tennisCompetition = nil
+
                                                     NotchViewModel.shared.currentGameID = ""
                                                     NotchViewModel.shared.currentGameState = ""
                                                     NotchViewModel.shared.previousGameState = ""
-                                                    NotchViewModel.shared.notch = nil
                                                 }
 
                                                 let newNotch = DynamicNotch(
