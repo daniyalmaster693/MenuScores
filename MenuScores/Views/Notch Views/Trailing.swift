@@ -46,6 +46,10 @@ struct CompactTrailing: View {
                 .onChange(of: game.competitions[0].competitors?[0].score) { newScore in
                     guard newScore != nil else { return }
 
+                    guard NotchViewModel.shared.currentGameID == game.id else {
+                        return
+                    }
+
                     NotchViewModel.shared.triggerAlert()
                 }
                 .contextMenu {
