@@ -146,11 +146,16 @@ class FavoritesManager: ObservableObject {
 
         if let notch = NotchViewModel.shared.notch {
             await notch.hide()
+            NotchViewModel.shared.notch = nil
+
             NotchViewModel.shared.game = nil
+            NotchViewModel.shared.racingCompetition = nil
+            NotchViewModel.shared.fightCompetition = nil
+            NotchViewModel.shared.tennisCompetition = nil
+
             NotchViewModel.shared.currentGameID = ""
             NotchViewModel.shared.currentGameState = ""
             NotchViewModel.shared.previousGameState = ""
-            NotchViewModel.shared.notch = nil
         }
 
         let newNotch = DynamicNotch(
@@ -192,11 +197,16 @@ class FavoritesManager: ObservableObject {
 
         if let notch = NotchViewModel.shared.notch {
             await notch.hide()
+            NotchViewModel.shared.notch = nil
+
             NotchViewModel.shared.game = nil
+            NotchViewModel.shared.racingCompetition = nil
+            NotchViewModel.shared.fightCompetition = nil
+            NotchViewModel.shared.tennisCompetition = nil
+
             NotchViewModel.shared.currentGameID = ""
             NotchViewModel.shared.currentGameState = ""
             NotchViewModel.shared.previousGameState = ""
-            NotchViewModel.shared.notch = nil
         }
 
         let newNotch = DynamicNotch(
@@ -266,11 +276,16 @@ class FavoritesManager: ObservableObject {
             await notch.hide()
         }
 
+        NotchViewModel.shared.notch = nil
+
         NotchViewModel.shared.game = nil
+        NotchViewModel.shared.racingCompetition = nil
+        NotchViewModel.shared.fightCompetition = nil
+        NotchViewModel.shared.tennisCompetition = nil
+
         NotchViewModel.shared.currentGameID = ""
         NotchViewModel.shared.currentGameState = ""
         NotchViewModel.shared.previousGameState = ""
-        NotchViewModel.shared.notch = nil
     }
 
     @MainActor
