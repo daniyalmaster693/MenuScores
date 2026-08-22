@@ -775,7 +775,7 @@ struct Info: View {
                                                                     } else if let behindLaps = competitor.behindLaps, !behindLaps.isEmpty {
                                                                         return "+\(behindLaps)"
                                                                     }
-                                                                    return "+-"
+                                                                    return "-"
                                                                 }()
                                                             )
                                                             .frame(width: 100, alignment: .trailing)
