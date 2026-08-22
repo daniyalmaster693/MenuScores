@@ -279,16 +279,20 @@ struct Info: View {
                                         .lineLimit(nil)
                                         .fixedSize(horizontal: false, vertical: true)
                                         .font(.system(size: 13, weight: .medium))
-                                }.padding(.top, 7)
+                                }
+                                .padding(.top, 7)
                             }
 
                             if sport == "Football" {
-                                HStack(alignment: .center, spacing: 20) {
-                                    Text("Down: \(game.competitions.first?.situation?.downDistanceText ?? "-")")
-                                        .lineLimit(nil)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .font(.system(size: 13, weight: .medium))
-                                }.padding(.top, 7)
+                                if let distance = game.competitions.first?.situation?.downDistanceText {
+                                    HStack(alignment: .center, spacing: 20) {
+                                        Text("Down: \(distance)")
+                                            .lineLimit(nil)
+                                            .fixedSize(horizontal: false, vertical: true)
+                                            .font(.system(size: 13, weight: .medium))
+                                    }
+                                    .padding(.top, 7)
+                                }
                             }
                         }
                         .padding(.top, 10)
