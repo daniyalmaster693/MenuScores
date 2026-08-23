@@ -187,7 +187,7 @@ enum Scoreboard {
         static let mls: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.1/scoreboard?dates=20260822"
+                "https://site.api.espn.com/apis/site/v2/sports/soccer/USA.1/scoreboard"
             )!
         }
 

@@ -1410,7 +1410,7 @@ struct Info: View {
                                     }
                                 }
 
-                                if let fight.status.type.state == "in" {
+                                if fight.status.type.state == "in" {
                                     if let detail = fight.details?.first?.type.text {
                                         GeometryReader { geo in
                                             HStack(alignment: .center, spacing: 10) {
