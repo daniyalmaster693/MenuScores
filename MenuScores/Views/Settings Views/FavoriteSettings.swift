@@ -84,6 +84,9 @@ struct FavoritesSettingsView: View {
     @AppStorage("selectedFavoriteLeague") private var selectedLeague = "NHL"
     @State private var searchText = ""
 
+    @State private var currentPage = 0
+    private let teamsPerPage = 50
+
     private func fallbackLogo(for leagueKey: String) -> String {
         let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
         let league = (FavoriteTeams.mappings[leagueKey]?.league ?? "NHL")
@@ -119,6 +122,21 @@ struct FavoritesSettingsView: View {
         return teams.filter {
             $0.displayName.localizedCaseInsensitiveContains(searchText)
         }
+    }
+
+    private var paginatedTeams: [TeamInfo] {
+        let startIndex = currentPage * teamsPerPage
+        let endIndex = min(startIndex + teamsPerPage, filteredTeams.count)
+
+        guard startIndex < endIndex else {
+            return []
+        }
+
+        return Array(filteredTeams[startIndex ..< endIndex])
+    }
+
+    private var totalPages: Int {
+        max(1, Int(ceil(Double(filteredTeams.count) / Double(teamsPerPage))))
     }
 
     var body: some View {
@@ -289,7 +307,7 @@ struct FavoritesSettingsView: View {
                     }
                 }
 
-                Section("Teams") {
+                Section {
                     TextField("Search teams...", text: $searchText)
                         .textFieldStyle(.roundedBorder)
 
@@ -297,19 +315,18 @@ struct FavoritesSettingsView: View {
                         if favoritesManager.isLoadingTeams {
                             ProgressView()
                                 .transition(.opacity)
-
                         } else {
                             ScrollView {
                                 LazyVStack {
-                                    ForEach(Array(filteredTeams.indices), id: \.self) { index in
-                                        let team = filteredTeams[index]
+                                    ForEach(Array(paginatedTeams.indices), id: \.self) { index in
+                                        let team = paginatedTeams[index]
 
                                         FavoriteTeamRow(
                                             team: team,
                                             leagueKey: selectedLeague
                                         )
 
-                                        if index != filteredTeams.count - 1 {
+                                        if index != paginatedTeams.count - 1 {
                                             Divider()
                                         }
                                     }
@@ -318,7 +335,41 @@ struct FavoritesSettingsView: View {
                             .transition(.opacity)
                         }
                     }
-                    .animation(.easeInOut(duration: 0.2), value: favoritesManager.isLoadingTeams || favoritesManager.availableTeams[selectedLeague] == nil)
+                    .animation(
+                        .easeInOut(duration: 0.2),
+                        value: favoritesManager.isLoadingTeams ||
+                            favoritesManager.availableTeams[selectedLeague] == nil
+                    )
+                } header: {
+                    Text("Teams")
+                } footer: {
+                    if totalPages > 1 {
+                        HStack {
+                            Button {
+                                currentPage -= 1
+                            } label: {
+                                Image(systemName: "chevron.left")
+                            }
+                            .buttonStyle(.bordered)
+                            .disabled(currentPage == 0)
+
+                            Spacer()
+
+                            Text("Page \(currentPage + 1) of \(totalPages)")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+
+                            Spacer()
+
+                            Button {
+                                currentPage += 1
+                            } label: {
+                                Image(systemName: "chevron.right")
+                            }
+                            .buttonStyle(.bordered)
+                            .disabled(currentPage >= totalPages - 1)
+                        }
+                    }
                 }
                 .task(id: selectedLeague) {
                     if FavoriteTeams.isLeagueOnly(selectedLeague) {

@@ -87,7 +87,7 @@ enum FavoriteTeams {
 
     static func teamsUrl(for leagueKey: String) -> URL? {
         guard let info = mappings[leagueKey] else { return nil }
-        return URL(string: "https://site.api.espn.com/apis/site/v2/sports/\(info.sport)/\(info.league)/teams")
+        return URL(string: "https://site.api.espn.com/apis/site/v2/sports/\(info.sport)/\(info.league)/teams?limit=220")
     }
 
     static func displayName(for leagueKey: String) -> String {
