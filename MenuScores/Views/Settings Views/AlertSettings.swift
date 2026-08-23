@@ -99,6 +99,20 @@ struct AlertSettingsView: View {
                                         case .notDetermined:
                                             notificationStatusMessage = "Notifications Not Configured"
 
+                                            let alert = NSAlert()
+                                            alert.messageText = "Notifications Not Configured"
+                                            alert.informativeText = "Request permission for MenuScores to send notifications."
+                                            alert.alertStyle = .warning
+
+                                            alert.addButton(withTitle: "Request Permission")
+                                            alert.addButton(withTitle: "Cancel")
+
+                                            if alert.runModal() == .alertFirstButtonReturn {
+                                                Task {
+                                                    try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
+                                                }
+                                            }
+
                                         default:
                                             notificationStatusMessage = "Notifications Unavailable"
                                         }
