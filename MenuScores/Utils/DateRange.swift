@@ -35,3 +35,9 @@ func getCurrentDate() -> String {
     let dateString = formatter.string(from: today)
     return dateString
 }
+
+func getCurrentYearMonth() -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyyMM"
+    return formatter.string(from: Date())
+}
