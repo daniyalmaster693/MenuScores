@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct FavoritesSettingsView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var favoritesManager = FavoritesManager.shared
+
     @AppStorage("autoPinFavorites") private var autoPinFavorites = false
     @AppStorage("autoClearFavorites") private var autoClearFavorites = true
 
@@ -179,11 +181,13 @@ struct FavoritesSettingsView: View {
                             HStack {
                                 AsyncImage(
                                     url: URL(
-                                        string: darkFavoriteLogoURL(
-                                            from: favorite.logo ?? fallbackLogo(for: favorite.leagueKey),
-                                            teamID: favorite.id,
-                                            league: favorite.leagueKey
-                                        ) ?? fallbackLogo(for: favorite.leagueKey)
+                                        string: colorScheme == .dark
+                                            ? darkFavoriteLogoURL(
+                                                from: favorite.logo ?? fallbackLogo(for: favorite.leagueKey),
+                                                teamID: favorite.id,
+                                                league: favorite.leagueKey
+                                            ) ?? fallbackLogo(for: favorite.leagueKey)
+                                            : favorite.logo ?? fallbackLogo(for: favorite.leagueKey)
                                     )
                                 ) { phase in
                                     if let image = phase.image {
@@ -333,10 +337,11 @@ struct FavoritesSettingsView: View {
 }
 
 struct FavoriteTeamRow: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject var favorites = FavoritesManager.shared
+
     let team: TeamInfo
     let leagueKey: String
-
-    @ObservedObject var favorites = FavoritesManager.shared
 
     private var fallbackLogo: String {
         let sport = (FavoriteTeams.mappings[leagueKey]?.sport ?? "hockey")
@@ -359,11 +364,13 @@ struct FavoriteTeamRow: View {
         HStack {
             AsyncImage(
                 url: URL(
-                    string: darkFavoriteLogoURL(
-                        from: team.logos?.first?.href ?? fallbackLogo,
-                        teamID: team.id,
-                        league: leagueKey
-                    ) ?? fallbackLogo
+                    string: colorScheme == .dark
+                        ? darkFavoriteLogoURL(
+                            from: team.logos?.first?.href ?? fallbackLogo,
+                            teamID: team.id,
+                            league: leagueKey
+                        ) ?? fallbackLogo
+                        : team.logos?.first?.href ?? fallbackLogo
                 )
             ) { phase in
                 if let image = phase.image {
