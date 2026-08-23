@@ -115,10 +115,20 @@ struct Info: View {
                                 HStack {
                                     AsyncImage(
                                         url: URL(string: {
+                                            let team = game.competitions[0].competitors?[1].team
+
                                             if sport == "volleyball" {
-                                                return game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                                return darkLogoURL(
+                                                    from: team?.logo,
+                                                    teamID: team?.id,
+                                                    league: league
+                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                             } else {
-                                                return game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
+                                                return darkLogoURL(
+                                                    from: team?.logo,
+                                                    teamID: team?.id,
+                                                    league: league
+                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
                                             }
                                         }())
                                     ) { phase in
@@ -197,10 +207,20 @@ struct Info: View {
 
                                     AsyncImage(
                                         url: URL(string: {
-                                            if sport == "Volleyball" {
-                                                return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                            let team = game.competitions[0].competitors?[0].team
+
+                                            if sport == "volleyball" {
+                                                return darkLogoURL(
+                                                    from: team?.logo,
+                                                    teamID: team?.id,
+                                                    league: league
+                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
                                             } else {
-                                                return game.competitions[0].competitors?[0].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
+                                                return darkLogoURL(
+                                                    from: team?.logo,
+                                                    teamID: team?.id,
+                                                    league: league
+                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
                                             }
                                         }())
                                     ) { phase in
