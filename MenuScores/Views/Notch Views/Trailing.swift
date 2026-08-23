@@ -10,7 +10,9 @@ import SwiftUI
 struct CompactTrailing: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
+
     var sport: String
+    var league: String
 
     var body: some View {
         if let game = notchViewModel.game {

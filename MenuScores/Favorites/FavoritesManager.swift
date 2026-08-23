@@ -164,9 +164,9 @@ class FavoritesManager: ObservableObject {
         ) {
             Info(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
         } compactLeading: {
-            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport)
+            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
         } compactTrailing: {
-            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport)
+            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
         }
 
         NotchViewModel.shared.notch = newNotch
@@ -215,9 +215,9 @@ class FavoritesManager: ObservableObject {
         ) {
             Info(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
         } compactLeading: {
-            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport)
+            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
         } compactTrailing: {
-            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport)
+            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
         }
 
         NotchViewModel.shared.notch = newNotch

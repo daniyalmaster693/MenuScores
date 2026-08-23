@@ -110,9 +110,9 @@ struct GolfMenu: View {
                                                 ) {
                                                     Info(notchViewModel: notchViewModel, sport: "Golf", league: "\(league)")
                                                 } compactLeading: {
-                                                    CompactLeading(notchViewModel: notchViewModel, sport: "Golf")
+                                                    CompactLeading(notchViewModel: notchViewModel, sport: "Golf", league: "\(league)")
                                                 } compactTrailing: {
-                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Golf")
+                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Golf", league: "\(league)")
                                                 }
 
                                                 NotchViewModel.shared.notch = newNotch
