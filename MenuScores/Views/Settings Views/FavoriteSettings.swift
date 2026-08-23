@@ -127,7 +127,7 @@ struct FavoritesSettingsView: View {
                         HStack {
                             Image(systemName: "pin")
                                 .foregroundColor(.primary)
-                            Text("Auto-pin favorite team games")
+                            Text("Auto Pin Favorite Team Games")
                         }
                     }
 
@@ -135,9 +135,10 @@ struct FavoritesSettingsView: View {
                         HStack {
                             Image(systemName: "checkmark.circle")
                                 .foregroundColor(.primary)
-                            Text("Auto-remove completed favorite team games")
+                            Text("Auto Remove Completed Games")
                         }
                     }
+                    .disabled(!self.autoPinFavorites)
 
                     HStack {
                         Label("Auto Pin Preference", systemImage: "display")
