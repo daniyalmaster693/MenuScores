@@ -1388,7 +1388,7 @@ struct Info: View {
                                                     if let linescores = competitor.linescores {
                                                         HStack(spacing: 4) {
                                                             ForEach(linescores) { linescore in
-                                                                Text("\(linescore.displayValue)  ")
+                                                                Text(Double(linescore.displayValue).map { String(format: "%.0f", $0) } ?? linescore.displayValue)
                                                                     .frame(minWidth: 20)
                                                             }
                                                         }
