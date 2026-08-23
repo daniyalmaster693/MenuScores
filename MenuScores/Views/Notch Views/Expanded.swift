@@ -1395,7 +1395,9 @@ struct Info: View {
                                                         .font(.system(size: 14, weight: .medium))
                                                         .contentTransition(.numericText(countsDown: false))
                                                     } else {
-                                                        Text("0  ")
+                                                        let record = competitor.records?.first?.summary ?? "0  "
+
+                                                        Text(record)
                                                             .frame(minWidth: 20)
                                                             .font(.system(size: 14, weight: .medium))
                                                             .contentTransition(.numericText(countsDown: false))

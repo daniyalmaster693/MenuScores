@@ -69,6 +69,7 @@ struct FightCompetitor: Decodable {
     let order: Int?
     let winner: Bool?
     let athlete: FightAthlete?
+    let records: [FightRecords]?
     let linescores: [FightLineScores]?
 }
 
@@ -81,6 +82,10 @@ struct FightAthlete: Decodable {
 
 struct FightFlag: Decodable {
     let href: String
+}
+
+struct FightRecords: Decodable {
+    let summary: String
 }
 
 struct FightLineScores: Decodable, Identifiable {
