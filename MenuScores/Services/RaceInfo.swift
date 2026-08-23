@@ -75,6 +75,8 @@ struct Driver: Decodable {
     let name: String
     let abbreviation: String
     let shortName: String
+    let firstName: String
+    let lastName: String
     let startOrder: Int?
     let logo: String
     let headshot: String?

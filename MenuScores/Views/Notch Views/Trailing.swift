@@ -119,15 +119,20 @@ struct CompactTrailing: View {
         if let race = notchViewModel.racingCompetition {
             if sport == "F1" {
                 HStack {
-                    if let lap = race.fullStatus.period {
-                        Text("L\(lap)")
-                            .contentTransition(.numericText(countsDown: false))
+                    if race.fullStatus.type.state == "in" {
+                        let firstName = race.competitors?.first?.firstName ?? ""
+                        let lastName = race.competitors?.first?.lastName ?? ""
+
+                        Text("\(firstName.prefix(1)).\(lastName.prefix(1)).")
                             .font(.system(size: 14, weight: .semibold))
                     } else {
-                        Text("L -")
+                        let raceType = race.competitionType?.abbreviation ?? ""
+
+                        Text("\(raceType)")
                             .font(.system(size: 14, weight: .semibold))
                     }
                 }
+
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
