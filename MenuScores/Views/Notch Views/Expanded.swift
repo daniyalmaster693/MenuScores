@@ -1404,12 +1404,51 @@ struct Info: View {
                                                     }
                                                 }
                                                 .padding(.horizontal, 10)
-                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                 }
+
+                                if let fight.status.type.state == "in" {
+                                    if let detail = fight.details?.first?.type.text {
+                                        GeometryReader { geo in
+                                            HStack(alignment: .center, spacing: 10) {
+                                                Capsule()
+                                                    .fill(.white)
+                                                    .frame(width: 3, height: 16)
+
+                                                ZStack {
+                                                    let font = NSFont.systemFont(ofSize: 14, weight: .medium)
+                                                    let detailWidth = (detail as NSString).size(withAttributes: [.font: font]).width
+
+                                                    if detailWidth < geo.size.width {
+                                                        Text(detail)
+                                                            .font(.system(size: 14, weight: .medium))
+                                                            .fixedSize()
+                                                    } else {
+                                                        MarqueeText($playText,
+                                                                    font: .system(size: 14, weight: .medium),
+                                                                    nsFont: .body,
+                                                                    textColor: .white,
+                                                                    frameWidth: geo.size.width - 23)
+                                                            .fontWeight(.medium)
+                                                            .onAppear {
+                                                                playText = detail
+                                                            }
+                                                    }
+                                                }
+                                            }
+                                            .frame(minWidth: geo.size.width, alignment: .center)
+                                            .padding(.top, 15)
+                                            .padding(.horizontal, 5)
+                                            .frame(height: 22)
+                                        }
+                                        .frame(height: 22)
+                                    }
+                                }
                             }
-                            .frame(maxHeight: 120)
+                            .frame(maxHeight: 140)
                             .padding(.top, 10)
                             .padding(.bottom, 5)
                         }

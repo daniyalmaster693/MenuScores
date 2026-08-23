@@ -34,6 +34,7 @@ struct FightCompetitions: Decodable {
     let status: FightStatus
     let venue: FightVenue
     let competitors: [FightCompetitor]?
+    let details: [FightDetails]?
 }
 
 struct FightCompetitionType: Decodable {
@@ -97,4 +98,12 @@ struct FightLineScores: Decodable, Identifiable {
         case value
         case displayValue
     }
+}
+
+struct FightDetails: Decodable {
+    let type: FightDetailType
+}
+
+struct FightDetailType: Decodable {
+    let text: String
 }
