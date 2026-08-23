@@ -10,6 +10,7 @@ import SwiftUI
 struct FavoritesSettingsView: View {
     @StateObject private var favoritesManager = FavoritesManager.shared
     @AppStorage("autoPinFavorites") private var autoPinFavorites = false
+    @AppStorage("autoClearFavorites") private var autoClearFavorites = true
 
     @AppStorage("selectedPinType") private var selectedPinType: PinType = .menubar
     @AppStorage("enableNotch") private var enableNotch = true
@@ -127,6 +128,14 @@ struct FavoritesSettingsView: View {
                             Image(systemName: "pin")
                                 .foregroundColor(.primary)
                             Text("Auto-pin favorite team games")
+                        }
+                    }
+
+                    Toggle(isOn: $autoClearFavorites) {
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .foregroundColor(.primary)
+                            Text("Auto-remove completed favorite team games")
                         }
                     }
 

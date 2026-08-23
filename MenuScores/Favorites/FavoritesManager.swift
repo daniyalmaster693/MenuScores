@@ -469,6 +469,7 @@ class FavoritesManager: ObservableObject {
         _ currentTitle: Binding<String>
     ) async {
         @AppStorage("autoPinFavorites") var autoPinFavorites = false
+        @AppStorage("autoClearFavorites") var autoClearFavorites = true
         @AppStorage("selectedPinType") var selectedPinType: PinType = .notch
 
         enum PinType: String, CaseIterable, Identifiable {
@@ -481,12 +482,14 @@ class FavoritesManager: ObservableObject {
         guard autoPinFavorites else { return }
 
         guard let result = findGame() else {
-            if isAutoPinned && !currentGameID.wrappedValue.isEmpty {
-                await clearFinishedGame(
-                    currentGameID: currentGameID,
-                    currentGameState: currentGameState,
-                    currentTitle: currentTitle
-                )
+            if autoClearFavorites {
+                if isAutoPinned && !currentGameID.wrappedValue.isEmpty {
+                    await clearFinishedGame(
+                        currentGameID: currentGameID,
+                        currentGameState: currentGameState,
+                        currentTitle: currentTitle
+                    )
+                }
             }
 
             return
