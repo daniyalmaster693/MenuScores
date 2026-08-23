@@ -119,7 +119,7 @@ struct CompactTrailing: View {
         if let race = notchViewModel.racingCompetition {
             if sport == "F1" {
                 HStack {
-                    if race.fullStatus.type.state == "in" {
+                    if race.fullStatus.type.state == "in" || race.fullStatus.type.state == "post" {
                         let firstName = race.competitors?.first?.firstName ?? ""
                         let lastName = race.competitors?.first?.lastName ?? ""
 
