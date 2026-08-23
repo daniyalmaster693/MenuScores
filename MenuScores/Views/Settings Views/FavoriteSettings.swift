@@ -177,7 +177,15 @@ struct FavoritesSettingsView: View {
                     } else {
                         ForEach(Array(favoritesManager.favorites.enumerated()), id: \.element.uniqueID) { index, favorite in
                             HStack {
-                                AsyncImage(url: URL(string: favorite.logo ?? fallbackLogo(for: favorite.leagueKey))) { phase in
+                                AsyncImage(
+                                    url: URL(
+                                        string: darkFavoriteLogoURL(
+                                            from: favorite.logo ?? fallbackLogo(for: favorite.leagueKey),
+                                            teamID: favorite.id,
+                                            league: favorite.leagueKey
+                                        ) ?? fallbackLogo(for: favorite.leagueKey)
+                                    )
+                                ) { phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()
@@ -349,7 +357,15 @@ struct FavoriteTeamRow: View {
 
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: team.logos?.first?.href ?? fallbackLogo)) { phase in
+            AsyncImage(
+                url: URL(
+                    string: darkFavoriteLogoURL(
+                        from: team.logos?.first?.href ?? fallbackLogo,
+                        teamID: team.id,
+                        league: leagueKey
+                    ) ?? fallbackLogo
+                )
+            ) { phase in
                 if let image = phase.image {
                     image
                         .resizable()
