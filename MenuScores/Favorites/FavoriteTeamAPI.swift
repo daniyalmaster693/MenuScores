@@ -72,8 +72,8 @@ enum FavoriteTeams {
 
         "OMIHC": LeagueInfo(sport: "hockey", league: "olympics-mens-ice-hockey", displayName: "Men's Olympic Hockey"),
         "OWIHC": LeagueInfo(sport: "hockey", league: "olympics-womens-ice-hockey", displayName: "Women's Olympic Hockey"),
-        "NCAA M": LeagueInfo(sport: "basketball", league: "mens-college-basketball", displayName: "NCAA M Basketball"),
-        "NCAA F": LeagueInfo(sport: "basketball", league: "womens-college-basketball", displayName: "NCAA F Basketball"),
+        "OMB": LeagueInfo(sport: "basketball", league: "olympics-men-basketball", displayName: "Men's Olympic Basketball"),
+        "OWB": LeagueInfo(sport: "basketball", league: "olympics-womens-basketball", displayName: "Women's Olympic Basketball"),
 
         "FFWC": LeagueInfo(sport: "soccer", league: "fifa.world", displayName: "FIFA World Cup"),
         "FFWWC": LeagueInfo(sport: "soccer", league: "fifa.wwc", displayName: "FIFA Women's World Cup"),
