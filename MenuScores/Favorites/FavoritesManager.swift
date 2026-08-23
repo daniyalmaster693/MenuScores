@@ -60,8 +60,12 @@ class FavoritesManager: ObservableObject {
             availableTeams[leagueKey] = teams.sorted {
                 $0.displayName < $1.displayName
             }
+        } catch is CancellationError {
+            return
+        } catch let error as URLError where error.code == .cancelled {
+            return
         } catch {
-            print(error)
+            print("Failed to load teams: \(error)")
         }
     }
 
