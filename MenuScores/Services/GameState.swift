@@ -72,22 +72,13 @@ func displayF1Text(for race: RaceEvent) -> String {
     let driverName = race.competitors?.first?.shortName ?? "Driver"
     let lap = race.fullStatus.period ?? 0
 
-    let raceType = race.competitionType?.abbreviation
-    let delta: String
-
-    if raceType == "SS" || raceType == "Qual" {
-        delta = "  \(race.competitors?.dropFirst().first?.behindTime ?? "")"
-    } else {
-        delta = ""
-    }
-
     switch f1State {
     case "pre":
         return "\(race.competitionType?.text ?? "Race") - \(formattedRaceTime(from: race.date))"
 
     case "in":
         return
-            "\(driverName)\(delta)     L\(lap)"
+            "\(driverName)     L\(lap)"
 
     case "post":
         return
