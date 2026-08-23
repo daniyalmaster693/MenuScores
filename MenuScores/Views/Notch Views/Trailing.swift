@@ -123,7 +123,7 @@ struct CompactTrailing: View {
                         let firstName = race.competitors?.first?.firstName ?? ""
                         let lastName = race.competitors?.first?.lastName ?? ""
 
-                        Text("\(firstName.prefix(1)).\(lastName.prefix(1)).")
+                        Text("\(firstName.prefix(1)).\(lastName.prefix(1))")
                             .font(.system(size: 14, weight: .semibold))
                     } else {
                         let raceType = race.competitionType?.abbreviation ?? ""
