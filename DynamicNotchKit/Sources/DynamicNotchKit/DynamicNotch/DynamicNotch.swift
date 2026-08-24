@@ -86,6 +86,9 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
 
     private var closePanelTask: Task<(), Never>? // Used to close the panel after hiding completes
 
+    private var hoverWorkItem: DispatchWorkItem?
+    private var debounceWorkItem: DispatchWorkItem?
+
     /// Creates a new DynamicNotch with custom content and style.
     /// - Parameters:
     ///   - hoverBehavior: defines the hover behavior of the notch, which allows for different interactions such as haptic feedback, increased shadow etc.
@@ -157,6 +160,11 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
     /// Updates the hover state of the DynamicNotch, and processes necessary hover behavior.
     /// - Parameter hovering: a boolean indicating whether the mouse is hovering over the notch.
     func updateHoverState(_ hovering: Bool) {
+        hoverWorkItem?.cancel()
+        hoverWorkItem = nil
+        debounceWorkItem?.cancel()
+        debounceWorkItem = nil
+
         // Ensure that we only update when the state changes
         guard state != .hidden, hovering != isHovering else { return }
 
@@ -165,6 +173,29 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
         if hoverBehavior.contains(.hapticFeedback) {
             let performer = NSHapticFeedbackManager.defaultPerformer
             performer.perform(.alignment, performanceTime: .default)
+        }
+
+        if hovering {
+            isHovering = true
+
+            let task = DispatchWorkItem { [weak self] in
+                guard let self, state == .compact, self.isHovering else { return }
+
+                Task { @MainActor in
+                    await self.expand()
+                }
+            }
+
+            hoverWorkItem = task
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
+        } else {
+            let debounce = DispatchWorkItem { [weak self] in
+                Task { @MainActor in
+                    await self?.compact()
+                }
+            }
+            debounceWorkItem = debounce
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: debounce)
         }
     }
 }
