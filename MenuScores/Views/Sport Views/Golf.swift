@@ -87,36 +87,14 @@ struct GolfMenu: View {
                                             pinnedByNotch = true
                                             pinnedByMenubar = false
 
-                                            notchViewModel.game = game
-
                                             Task {
-                                                if let existingNotch = NotchViewModel.shared.notch {
-                                                    await existingNotch.hide()
-                                                    NotchViewModel.shared.notch = nil
-
-                                                    NotchViewModel.shared.game = nil
-                                                    NotchViewModel.shared.racingCompetition = nil
-                                                    NotchViewModel.shared.fightCompetition = nil
-                                                    NotchViewModel.shared.tennisCompetition = nil
-
-                                                    NotchViewModel.shared.currentGameID = ""
-                                                    NotchViewModel.shared.currentGameState = ""
-                                                    NotchViewModel.shared.previousGameState = ""
-                                                }
-
-                                                let newNotch = DynamicNotch(
-                                                    hoverBehavior: .all,
-                                                    style: .notch
-                                                ) {
-                                                    Info(notchViewModel: notchViewModel, sport: "Golf", league: "\(league)")
-                                                } compactLeading: {
-                                                    CompactLeading(notchViewModel: notchViewModel, sport: "Golf", league: "\(league)")
-                                                } compactTrailing: {
-                                                    CompactTrailing(notchViewModel: notchViewModel, sport: "Golf", league: "\(league)")
-                                                }
-
-                                                NotchViewModel.shared.notch = newNotch
-                                                await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+                                                await NotchViewModel.shared.pinGame(
+                                                    game: game,
+                                                    sport: "Golf",
+                                                    league: league,
+                                                    gameID: game.id,
+                                                    gameState: game.status.type.state
+                                                )
                                             }
                                         } label: {
                                             HStack {

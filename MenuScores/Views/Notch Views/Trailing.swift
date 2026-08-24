@@ -55,15 +55,12 @@ struct CompactTrailing: View {
                         }
                     }
                 }
-                .onChange(of: game.competitions[0].competitors?[0].score) { newScore in
-                    guard newScore != nil else { return }
-
-                    guard sport != "Basketball" else {
-                        return
-                    }
-
-                    NotchViewModel.shared.triggerAlert()
-                }
+//                .onChange(of: game.competitions[0].competitors?[0].score) { newScore in
+//                    guard newScore != nil else { return }
+//                    guard sport != "Basketball" else { return }
+//
+//                    NotchViewModel.shared.triggerAlert()
+//                }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in

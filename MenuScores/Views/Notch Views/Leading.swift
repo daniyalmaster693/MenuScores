@@ -54,15 +54,12 @@ struct CompactLeading: View {
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
                 }
-                .onChange(of: game.competitions[0].competitors?[1].score) { newScore in
-                    guard newScore != nil else { return }
-
-                    guard sport != "Basketball" else {
-                        return
-                    }
-
-                    NotchViewModel.shared.triggerAlert()
-                }
+//                .onChange(of: game.competitions[0].competitors?[1].score) { newScore in
+//                    guard newScore != nil else { return }
+//                    guard sport != "Basketball" else { return }
+//
+//                    NotchViewModel.shared.triggerAlert()
+//                }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in

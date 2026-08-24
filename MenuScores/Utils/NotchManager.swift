@@ -34,12 +34,58 @@ class NotchViewModel: ObservableObject {
     
     private var alertTask: Task<Void, Never>?
     
+    // Notch Methods
+    
+    @MainActor
+    func pinGame(
+        game: Event? = nil,
+        racingCompetition: RaceEvent? = nil,
+        fightCompetition: FightCompetitions? = nil,
+        tennisCompetition: TennisCompetition? = nil,
+        sport: String,
+        league: String,
+        gameID: String = "",
+        gameState: String = ""
+    ) async {
+        self.game = game
+        self.racingCompetition = racingCompetition
+        self.fightCompetition = fightCompetition
+        self.tennisCompetition = tennisCompetition
+        
+        self.sport = sport
+        self.league = league
+        
+        self.currentGameID = gameID
+        self.currentGameState = gameState
+        self.previousGameState = nil
+        
+        if let existingNotch = self.notch {
+            await existingNotch.hide()
+            self.notch = nil
+        }
+        
+        let newNotch = DynamicNotch(
+            hoverBehavior: .all,
+            style: .notch
+        ) {
+            Info(notchViewModel: self, sport: "\(self.sport)", league: "\(self.league)")
+        } compactLeading: {
+            CompactLeading(notchViewModel: self, sport: "\(self.sport)", league: "\(self.league)")
+        } compactTrailing: {
+            CompactTrailing(notchViewModel: self, sport: "\(self.sport)", league: "\(self.league)")
+        }
+
+        self.notch = newNotch
+        await newNotch.compact(on: NSScreen.screens[self.notchScreenIndex])
+    }
+    
+    @MainActor
     func triggerAlert() {
-        guard enableNotchAlerts else { return }
+        guard self.enableNotchAlerts else { return }
         
-        alertTask?.cancel()
+        self.alertTask?.cancel()
         
-        alertTask = Task { @MainActor in
+        self.alertTask = Task { @MainActor in
             let screens = NSScreen.screens
             if screens.indices.contains(self.notchScreenIndex) {
                 await NotchViewModel.shared.notch?.expand(on: screens[self.notchScreenIndex])
@@ -48,6 +94,8 @@ class NotchViewModel: ObservableObject {
             }
         }
     }
+    
+    // Keyboard Shortcut
     
     init(currentGameID: String = "", currentGameState: String = "", previousGameState: String? = nil) {
         self.currentGameID = currentGameID
