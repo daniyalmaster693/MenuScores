@@ -178,8 +178,6 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
         let currentScreen = windowController?.window?.screen ?? NSScreen.screens[0]
 
         if hovering {
-            isHovering = true
-
             let task = DispatchWorkItem { [weak self] in
                 guard let self, state == .compact, self.isHovering else { return }
 
