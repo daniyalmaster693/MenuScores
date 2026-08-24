@@ -14,8 +14,6 @@ struct SoccerMenu: View {
     let league: String
     let fetchURL: () -> URL
 
-    @StateObject private var notchViewModel = NotchViewModel()
-
     @State private var pinnedByNotch = false
     @State private var pinnedByMenubar = false
 
@@ -153,7 +151,7 @@ struct SoccerMenu: View {
                         type: .standard,
                         pinnedByMenubar: $pinnedByMenubar,
                         pinnedByNotch: $pinnedByNotch,
-                        notchViewModel: notchViewModel
+                        notchViewModel: NotchViewModel.shared
                     )
                 }
             }

@@ -25,8 +25,8 @@ class NotchViewModel: ObservableObject {
     @Published var tennisCompetition: TennisCompetition?
     @Published var fightCompetition: FightCompetitions?
     
-    var sport: String = ""
-    var league: String = ""
+    @Published var sport: String = ""
+    @Published var league: String = ""
     
     @Published var currentGameID: String
     @Published var currentGameState: String
@@ -59,24 +59,21 @@ class NotchViewModel: ObservableObject {
         self.currentGameState = gameState
         self.previousGameState = nil
         
-        if let existingNotch = self.notch {
-            await existingNotch.hide()
-            self.notch = nil
+        if self.notch == nil {
+            let newNotch = DynamicNotch(
+                hoverBehavior: .all,
+                style: .notch
+            ) {
+                Info(notchViewModel: self)
+            } compactLeading: {
+                CompactLeading(notchViewModel: self)
+            } compactTrailing: {
+                CompactTrailing(notchViewModel: self)
+            }
+            
+            self.notch = newNotch
+            await newNotch.compact(on: NSScreen.screens[self.notchScreenIndex])
         }
-        
-        let newNotch = DynamicNotch(
-            hoverBehavior: .all,
-            style: .notch
-        ) {
-            Info(notchViewModel: self, sport: "\(self.sport)", league: "\(self.league)")
-        } compactLeading: {
-            CompactLeading(notchViewModel: self, sport: "\(self.sport)", league: "\(self.league)")
-        } compactTrailing: {
-            CompactTrailing(notchViewModel: self, sport: "\(self.sport)", league: "\(self.league)")
-        }
-
-        self.notch = newNotch
-        await newNotch.compact(on: NSScreen.screens[self.notchScreenIndex])
     }
     
     @MainActor

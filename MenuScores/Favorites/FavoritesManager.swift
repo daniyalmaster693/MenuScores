@@ -166,11 +166,11 @@ class FavoritesManager: ObservableObject {
             hoverBehavior: .all,
             style: .notch
         ) {
-            Info(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
+            Info(notchViewModel: NotchViewModel.shared)
         } compactLeading: {
-            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
+            CompactLeading(notchViewModel: NotchViewModel.shared)
         } compactTrailing: {
-            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
+            CompactTrailing(notchViewModel: NotchViewModel.shared)
         }
 
         NotchViewModel.shared.notch = newNotch
@@ -217,11 +217,11 @@ class FavoritesManager: ObservableObject {
             hoverBehavior: .all,
             style: .notch
         ) {
-            Info(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
+            Info(notchViewModel: NotchViewModel.shared)
         } compactLeading: {
-            CompactLeading(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
+            CompactLeading(notchViewModel: NotchViewModel.shared)
         } compactTrailing: {
-            CompactTrailing(notchViewModel: NotchViewModel.shared, sport: sport, league: league)
+            CompactTrailing(notchViewModel: NotchViewModel.shared)
         }
 
         NotchViewModel.shared.notch = newNotch

@@ -57,12 +57,15 @@ struct Info: View {
     @State private var totalLaps: String? = nil
     @State private var flagColor: String? = nil
 
-    // MARK: Sport Related Text Variables
+    // Sport and League Info
 
-    // Baseball
+    var sport: String {
+        notchViewModel.sport
+    }
 
-    var sport: String
-    var league: String
+    var league: String {
+        notchViewModel.league
+    }
 
     // Fetch Latest Play Team Color
 
