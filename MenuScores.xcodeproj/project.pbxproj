@@ -31,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D8AF852303C7CCF00EF0829 /* DynamicNotchKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DynamicNotchKit; path = "/Users/daniyalmaster/Programming/Swift Packages/DynamicNotchKit"; sourceTree = "<absolute>"; };
 		0D9553192DC6700100615774 /* MenuScores.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuScores.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D95532A2DC6700300615774 /* MenuScoresTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuScoresTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D9553342DC6700300615774 /* MenuScoresUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MenuScoresUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +104,7 @@
 				0D95532D2DC6700300615774 /* MenuScoresTests */,
 				0D9553372DC6700300615774 /* MenuScoresUITests */,
 				0D95531A2DC6700100615774 /* Products */,
+				0D8AF852303C7CCF00EF0829 /* DynamicNotchKit */,
 			);
 			sourceTree = "<group>";
 		};
