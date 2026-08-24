@@ -175,6 +175,8 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
             performer.perform(.alignment, performanceTime: .default)
         }
 
+        let currentScreen = windowController?.window?.screen ?? NSScreen.screens[0]
+
         if hovering {
             isHovering = true
 
@@ -182,7 +184,7 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
                 guard let self, state == .compact, self.isHovering else { return }
 
                 Task { @MainActor in
-                    await self.expand()
+                    await self.expand(on: currentScreen)
                 }
             }
 
@@ -191,7 +193,7 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
         } else {
             let debounce = DispatchWorkItem { [weak self] in
                 Task { @MainActor in
-                    await self?.compact()
+                    await self?.compact(on: currentScreen)
                 }
             }
             debounceWorkItem = debounce
