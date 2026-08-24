@@ -145,35 +145,13 @@ class FavoritesManager: ObservableObject {
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
 
-        NotchViewModel.shared.game = game
-
-        if let notch = NotchViewModel.shared.notch {
-            await notch.hide()
-            NotchViewModel.shared.notch = nil
-
-            NotchViewModel.shared.game = nil
-            NotchViewModel.shared.racingCompetition = nil
-            NotchViewModel.shared.fightCompetition = nil
-            NotchViewModel.shared.tennisCompetition = nil
-
-            NotchViewModel.shared.currentGameID = ""
-            NotchViewModel.shared.currentGameState = ""
-            NotchViewModel.shared.previousGameState = ""
-        }
-
-        let newNotch = DynamicNotch(
-            hoverBehavior: .all,
-            style: .notch
-        ) {
-            Info(notchViewModel: NotchViewModel.shared)
-        } compactLeading: {
-            CompactLeading(notchViewModel: NotchViewModel.shared)
-        } compactTrailing: {
-            CompactTrailing(notchViewModel: NotchViewModel.shared)
-        }
-
-        NotchViewModel.shared.notch = newNotch
-        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+        await NotchViewModel.shared.pinGame(
+            game: game,
+            sport: sport,
+            league: league,
+            gameID: game.id,
+            gameState: game.status.type.state
+        )
     }
 
     @MainActor
@@ -187,43 +165,24 @@ class FavoritesManager: ObservableObject {
     ) async {
         isAutoPinned = true
 
+        let raceID: String
+
         if league == "F1" {
-            currentGameID.wrappedValue = race.competitionId
+            raceID = race.competitionId
         } else {
-            currentGameID.wrappedValue = race.id
+            raceID = race.id
         }
 
+        currentGameID.wrappedValue = raceID
         currentGameState.wrappedValue = race.fullStatus.type.state
 
-        NotchViewModel.shared.racingCompetition = race
-
-        if let notch = NotchViewModel.shared.notch {
-            await notch.hide()
-            NotchViewModel.shared.notch = nil
-
-            NotchViewModel.shared.game = nil
-            NotchViewModel.shared.racingCompetition = nil
-            NotchViewModel.shared.fightCompetition = nil
-            NotchViewModel.shared.tennisCompetition = nil
-
-            NotchViewModel.shared.currentGameID = ""
-            NotchViewModel.shared.currentGameState = ""
-            NotchViewModel.shared.previousGameState = ""
-        }
-
-        let newNotch = DynamicNotch(
-            hoverBehavior: .all,
-            style: .notch
-        ) {
-            Info(notchViewModel: NotchViewModel.shared)
-        } compactLeading: {
-            CompactLeading(notchViewModel: NotchViewModel.shared)
-        } compactTrailing: {
-            CompactTrailing(notchViewModel: NotchViewModel.shared)
-        }
-
-        NotchViewModel.shared.notch = newNotch
-        await newNotch.compact(on: NSScreen.screens[notchScreenIndex])
+        await NotchViewModel.shared.pinGame(
+            racingCompetition: race,
+            sport: sport,
+            league: league,
+            gameID: raceID,
+            gameState: race.fullStatus.type.state
+        )
     }
 
     @MainActor
