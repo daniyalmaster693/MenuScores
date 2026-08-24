@@ -56,6 +56,15 @@ struct BehaviorSettingsView: View {
                                     .tag(index)
                             }
                         }
+                        .onChange(of: notchScreenIndex) { newIndex in
+                            guard newIndex < NSScreen.screens.count else { return }
+
+                            let targetScreen = NSScreen.screens[newIndex]
+
+                            Task {
+                                await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
+                            }
+                        }
                         .pickerStyle(.menu)
                         .frame(width: 190)
                         .disabled(!enableNotch)

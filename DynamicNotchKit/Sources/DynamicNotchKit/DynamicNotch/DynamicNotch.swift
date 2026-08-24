@@ -331,6 +331,21 @@ extension DynamicNotch {
             }
         }
     }
+
+    func _updateScreen(on screen: NSScreen = NSScreen.screens[0]) async {
+        guard state != .hidden else { return }
+
+        let needsNewWindow = windowController?.window?.screen != screen
+        if needsNewWindow {
+            Task { @MainActor in
+                initializeWindow(screen: screen)
+            }
+        }
+    }
+
+    public func updateScreen(on screen: NSScreen = NSScreen.screens[0]) async {
+        await _updateScreen(on: screen)
+    }
 }
 
 // MARK: - Window Management

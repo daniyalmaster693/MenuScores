@@ -442,6 +442,15 @@ struct Info: View {
                                 .tag(index)
                         }
                     }
+                    .onChange(of: notchScreenIndex) { newIndex in
+                        guard newIndex < NSScreen.screens.count else { return }
+
+                        let targetScreen = NSScreen.screens[newIndex]
+
+                        Task {
+                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
+                        }
+                    }
 
                     Button {
                         SettingsWindowController.shared.showWindow()
@@ -634,6 +643,15 @@ struct Info: View {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
                                 .tag(index)
+                        }
+                    }
+                    .onChange(of: notchScreenIndex) { newIndex in
+                        guard newIndex < NSScreen.screens.count else { return }
+
+                        let targetScreen = NSScreen.screens[newIndex]
+
+                        Task {
+                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
                         }
                     }
 
@@ -903,6 +921,15 @@ struct Info: View {
                                 .tag(index)
                         }
                     }
+                    .onChange(of: notchScreenIndex) { newIndex in
+                        guard newIndex < NSScreen.screens.count else { return }
+
+                        let targetScreen = NSScreen.screens[newIndex]
+
+                        Task {
+                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
+                        }
+                    }
 
                     Button {
                         SettingsWindowController.shared.showWindow()
@@ -1113,6 +1140,15 @@ struct Info: View {
                                 .tag(index)
                         }
                     }
+                    .onChange(of: notchScreenIndex) { newIndex in
+                        guard newIndex < NSScreen.screens.count else { return }
+
+                        let targetScreen = NSScreen.screens[newIndex]
+
+                        Task {
+                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
+                        }
+                    }
 
                     Button {
                         SettingsWindowController.shared.showWindow()
@@ -1278,6 +1314,15 @@ struct Info: View {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
                                 .tag(index)
+                        }
+                    }
+                    .onChange(of: notchScreenIndex) { newIndex in
+                        guard newIndex < NSScreen.screens.count else { return }
+
+                        let targetScreen = NSScreen.screens[newIndex]
+
+                        Task {
+                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
                         }
                     }
 
@@ -1482,6 +1527,15 @@ struct Info: View {
                         ForEach(NSScreen.screens.indices, id: \.self) { index in
                             Text(NSScreen.screens[index].localizedName)
                                 .tag(index)
+                        }
+                    }
+                    .onChange(of: notchScreenIndex) { newIndex in
+                        guard newIndex < NSScreen.screens.count else { return }
+
+                        let targetScreen = NSScreen.screens[newIndex]
+
+                        Task {
+                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
                         }
                     }
 

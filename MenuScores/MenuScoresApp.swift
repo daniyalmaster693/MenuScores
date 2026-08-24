@@ -1055,6 +1055,15 @@ struct MenuScoresApp: App {
                             .tag(index)
                     }
                 }
+                .onChange(of: notchScreenIndex) { newIndex in
+                    guard newIndex < NSScreen.screens.count else { return }
+
+                    let targetScreen = NSScreen.screens[newIndex]
+
+                    Task {
+                        await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
+                    }
+                }
             }
 
             Button {
