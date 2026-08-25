@@ -144,6 +144,7 @@ class FavoritesManager: ObservableObject {
 
         currentGameID.wrappedValue = game.id
         currentGameState.wrappedValue = game.status.type.state
+        currentTitle.wrappedValue = ""
 
         await NotchViewModel.shared.pinGame(
             game: game,
@@ -175,6 +176,7 @@ class FavoritesManager: ObservableObject {
 
         currentGameID.wrappedValue = raceID
         currentGameState.wrappedValue = race.fullStatus.type.state
+        currentTitle.wrappedValue = ""
 
         await NotchViewModel.shared.pinGame(
             racingCompetition: race,
