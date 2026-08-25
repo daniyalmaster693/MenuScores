@@ -587,7 +587,8 @@ struct Info: View {
                                                 }
                                                 .font(.system(size: 13))
                                                 .padding(.horizontal, 10)
-                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                 }
@@ -861,7 +862,8 @@ struct Info: View {
                                                 }
                                                 .font(.system(size: 13))
                                                 .padding(.horizontal, 10)
-                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                     .padding(.top, 5)
