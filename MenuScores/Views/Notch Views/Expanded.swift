@@ -1301,15 +1301,18 @@ struct Info: View {
                                                         }
                                                         .font(.system(size: 14, weight: .medium))
                                                         .contentTransition(.numericText(countsDown: false))
+                                                        .padding(.leading, 10)
                                                     } else {
                                                         Text("0  ")
                                                             .frame(minWidth: 20)
                                                             .font(.system(size: 14, weight: .medium))
                                                             .contentTransition(.numericText(countsDown: false))
+                                                            .padding(.leading, 10)
                                                     }
                                                 }
                                                 .padding(.horizontal, 10)
-                                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            }
                                         }
                                     }
                                 }
@@ -1474,6 +1477,7 @@ struct Info: View {
                                                         }
                                                         .font(.system(size: 14, weight: .medium))
                                                         .contentTransition(.numericText(countsDown: false))
+                                                        .padding(.leading, 10)
                                                     } else {
                                                         let record = competitor.records?.first?.summary ?? "0  "
 
@@ -1481,11 +1485,12 @@ struct Info: View {
                                                             .frame(minWidth: 20)
                                                             .font(.system(size: 14, weight: .medium))
                                                             .contentTransition(.numericText(countsDown: false))
+                                                            .padding(.leading, 10)
                                                     }
                                                 }
                                                 .padding(.horizontal, 10)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
                                             }
-                                            .frame(maxWidth: .infinity, alignment: .leading)
                                         }
                                     }
                                 }
