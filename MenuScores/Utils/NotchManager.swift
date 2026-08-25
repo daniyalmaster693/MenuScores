@@ -47,7 +47,7 @@ class NotchViewModel: ObservableObject {
         gameID: String = "",
         gameState: String = ""
     ) async {
-        withAnimation(.easeInOut(duration: 0.25)) {
+        withAnimation(.easeInOut(duration: 0.2)) {
             self.game = game
             self.racingCompetition = racingCompetition
             self.fightCompetition = fightCompetition
