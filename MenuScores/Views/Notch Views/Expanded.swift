@@ -1018,7 +1018,7 @@ struct Info: View {
                                 VStack(spacing: 5) {
                                     HStack {
                                         Text("#").frame(width: 30, alignment: .leading)
-                                        Text("Driver").frame(width: 160, alignment: .leading)
+                                        Text("Driver").frame(width: 130, alignment: .leading)
 
                                         Text("Starting #")
                                             .frame(width: 100, alignment: .trailing)
@@ -1069,7 +1069,7 @@ struct Info: View {
                                                             .lineLimit(1)
                                                             .truncationMode(.tail)
                                                     }
-                                                    .frame(width: 160, alignment: .leading)
+                                                    .frame(width: 130, alignment: .leading)
 
                                                     Text("\(competitor.startOrder ?? 0)")
                                                         .contentTransition(.numericText(countsDown: false))
