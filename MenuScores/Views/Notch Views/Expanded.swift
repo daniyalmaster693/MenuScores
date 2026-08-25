@@ -437,15 +437,16 @@ struct Info: View {
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
+                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
+                            Text(screen.localizedName)
                                 .tag(index)
                         }
                     }
                     .onChange(of: notchScreenIndex) { newIndex in
-                        guard newIndex < NSScreen.screens.count else { return }
+                        let screens = NSScreen.screens
+                        guard screens.indices.contains(newIndex) else { return }
 
-                        let targetScreen = NSScreen.screens[newIndex]
+                        let targetScreen = screens[newIndex]
 
                         Task {
                             await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
@@ -640,15 +641,16 @@ struct Info: View {
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
+                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
+                            Text(screen.localizedName)
                                 .tag(index)
                         }
                     }
                     .onChange(of: notchScreenIndex) { newIndex in
-                        guard newIndex < NSScreen.screens.count else { return }
+                        let screens = NSScreen.screens
+                        guard screens.indices.contains(newIndex) else { return }
 
-                        let targetScreen = NSScreen.screens[newIndex]
+                        let targetScreen = screens[newIndex]
 
                         Task {
                             await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
@@ -916,15 +918,16 @@ struct Info: View {
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
+                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
+                            Text(screen.localizedName)
                                 .tag(index)
                         }
                     }
                     .onChange(of: notchScreenIndex) { newIndex in
-                        guard newIndex < NSScreen.screens.count else { return }
+                        let screens = NSScreen.screens
+                        guard screens.indices.contains(newIndex) else { return }
 
-                        let targetScreen = NSScreen.screens[newIndex]
+                        let targetScreen = screens[newIndex]
 
                         Task {
                             await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
@@ -1135,15 +1138,16 @@ struct Info: View {
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
+                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
+                            Text(screen.localizedName)
                                 .tag(index)
                         }
                     }
                     .onChange(of: notchScreenIndex) { newIndex in
-                        guard newIndex < NSScreen.screens.count else { return }
+                        let screens = NSScreen.screens
+                        guard screens.indices.contains(newIndex) else { return }
 
-                        let targetScreen = NSScreen.screens[newIndex]
+                        let targetScreen = screens[newIndex]
 
                         Task {
                             await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
@@ -1311,15 +1315,16 @@ struct Info: View {
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
+                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
+                            Text(screen.localizedName)
                                 .tag(index)
                         }
                     }
                     .onChange(of: notchScreenIndex) { newIndex in
-                        guard newIndex < NSScreen.screens.count else { return }
+                        let screens = NSScreen.screens
+                        guard screens.indices.contains(newIndex) else { return }
 
-                        let targetScreen = NSScreen.screens[newIndex]
+                        let targetScreen = screens[newIndex]
 
                         Task {
                             await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
@@ -1524,15 +1529,16 @@ struct Info: View {
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(NSScreen.screens.indices, id: \.self) { index in
-                            Text(NSScreen.screens[index].localizedName)
+                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
+                            Text(screen.localizedName)
                                 .tag(index)
                         }
                     }
                     .onChange(of: notchScreenIndex) { newIndex in
-                        guard newIndex < NSScreen.screens.count else { return }
+                        let screens = NSScreen.screens
+                        guard screens.indices.contains(newIndex) else { return }
 
-                        let targetScreen = NSScreen.screens[newIndex]
+                        let targetScreen = screens[newIndex]
 
                         Task {
                             await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
