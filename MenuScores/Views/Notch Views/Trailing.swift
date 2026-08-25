@@ -62,7 +62,7 @@ struct CompactTrailing: View {
                         }
                     }
                 }
-                .onChange(of: NotchViewModel.shared.currentGameID) { _ in
+                .onChange(of: notchViewModel.currentGameID) { _ in
                     newGame = true
                 }
                 .onChange(of: game.competitions[0].competitors?[0].score) { newScore in
@@ -74,7 +74,7 @@ struct CompactTrailing: View {
                         return
                     }
 
-                    NotchViewModel.shared.triggerAlert()
+                    notchViewModel.triggerAlert()
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {

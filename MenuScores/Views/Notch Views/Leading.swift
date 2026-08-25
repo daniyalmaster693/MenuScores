@@ -61,7 +61,7 @@ struct CompactLeading: View {
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
                 }
-                .onChange(of: NotchViewModel.shared.currentGameID) { _ in
+                .onChange(of: notchViewModel.currentGameID) { _ in
                     newGame = true
                 }
                 .onChange(of: game.competitions[0].competitors?[1].score) { newScore in
@@ -73,7 +73,7 @@ struct CompactLeading: View {
                         return
                     }
 
-                    NotchViewModel.shared.triggerAlert()
+                    notchViewModel.triggerAlert()
                 }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
