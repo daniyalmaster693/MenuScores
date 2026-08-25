@@ -170,12 +170,14 @@ struct Info: View {
                                 } else if game.status.type.state == "pre" {
                                     Text(formattedTime(from: game.date))
                                         .font(.system(size: 19, weight: .semibold))
+                                        .truncationMode(.tail)
                                 } else {
                                     Text("\(game.status.type.detail ?? "-")")
                                         .contentTransition(.numericText(countsDown: false))
                                         .font(.system(size: 19, weight: .semibold))
                                 }
                             }
+                            .frame(maxWidth: 110)
                             .padding(.horizontal, 35)
                         }
 
@@ -620,8 +622,9 @@ struct Info: View {
 
                                         Text("\(game.shortName ?? game.name)")
                                             .font(.system(size: 18, weight: .medium))
+                                            .truncationMode(.tail)
                                     }
-                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .frame(maxWidth: 275, alignment: .center)
                                     .padding(.leading, 10)
                                     .padding(.trailing, 10)
 
@@ -631,9 +634,10 @@ struct Info: View {
 
                                         Text("\(formattedDate(from: game.endDate ?? "-")) @ \(formattedTime(from: game.date))")
                                             .font(.system(size: 14, weight: .medium))
+                                            .truncationMode(.tail)
                                     }
                                     .padding(.top, 2)
-                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .frame(maxWidth: 275, alignment: .center)
                                 }
                             }
                         }
@@ -893,8 +897,9 @@ struct Info: View {
 
                                         Text("\(race.competitionType?.text ?? "Race") - \(formattedRaceTime(from: race.date))")
                                             .font(.system(size: 18, weight: .medium))
+                                            .truncationMode(.tail)
                                     }
-                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .frame(maxWidth: 275, alignment: .center)
                                     .padding(.leading, 10)
                                     .padding(.trailing, 10)
 
@@ -906,11 +911,11 @@ struct Info: View {
 
                                             Text("\(race.location ?? "Unknown")   \(race.track?.displayLength ?? "0 km")")
                                                 .font(.system(size: 14, weight: .medium))
-                                                .fixedSize()
+                                                .truncationMode(.tail)
                                         }
                                     }
                                     .padding(.top, 6)
-                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .frame(maxWidth: 275, alignment: .center)
                                 }
                             }
                         }
@@ -1118,8 +1123,9 @@ struct Info: View {
 
                                     Text("\(race.shortName) - \(formattedRaceTime(from: race.date))")
                                         .font(.system(size: 18, weight: .medium))
+                                        .truncationMode(.tail)
                                 }
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .frame(maxWidth: 275, alignment: .center)
                                 .padding(.leading, 10)
                                 .padding(.trailing, 10)
 
@@ -1129,9 +1135,10 @@ struct Info: View {
 
                                     Text("\(race.location ?? "Unknown")")
                                         .font(.system(size: 14, weight: .medium))
+                                        .truncationMode(.tail)
                                 }
                                 .padding(.top, 2)
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .frame(maxWidth: 275, alignment: .center)
                             }
                         }
                     }
