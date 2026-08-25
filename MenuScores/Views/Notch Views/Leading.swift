@@ -302,6 +302,20 @@ struct CompactLeading: View {
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
                 }
+                .onChange(of: NotchViewModel.shared.currentGameID) { _ in
+                    newGame = true
+                }
+                .onChange(of: competition.competitors?.first?.linescores?.last?.value) { newScore in
+                    guard newScore != nil else { return }
+                    guard sport != "Basketball" else { return }
+
+                    if newGame {
+                        newGame = false
+                        return
+                    }
+
+                    NotchViewModel.shared.triggerAlert()
+                }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
