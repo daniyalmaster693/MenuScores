@@ -11,6 +11,8 @@ struct CompactLeading: View {
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
 
+    @State private var newGame: Bool = false
+
     var sport: String {
         notchViewModel.sport
     }
@@ -59,12 +61,20 @@ struct CompactLeading: View {
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
                 }
-//                .onChange(of: game.competitions[0].competitors?[1].score) { newScore in
-//                    guard newScore != nil else { return }
-//                    guard sport != "Basketball" else { return }
-//
-//                    NotchViewModel.shared.triggerAlert()
-//                }
+                .onChange(of: NotchViewModel.shared.currentGameID) { _ in
+                    newGame = true
+                }
+                .onChange(of: game.competitions[0].competitors?[1].score) { newScore in
+                    guard newScore != nil else { return }
+                    guard sport != "Basketball" else { return }
+
+                    if newGame {
+                        newGame = false
+                        return
+                    }
+
+                    NotchViewModel.shared.triggerAlert()
+                }
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
