@@ -151,7 +151,7 @@ struct TennisMenu: View {
                                                         .resizable()
                                                         .scaledToFit()
                                                         .frame(width: 20, height: 20)
-                                                    Text("View Tournament Details")
+                                                    Text("View Game Details")
                                                 }
                                             }
                                         } label: {

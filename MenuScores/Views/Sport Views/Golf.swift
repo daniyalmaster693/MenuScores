@@ -107,31 +107,6 @@ struct GolfMenu: View {
 
                                     Divider()
 
-                                    if game.status.type.state == "in" || game.status.type.state == "post" {
-                                        Menu {
-                                            let competitors = game.competitions.first?.competitors ?? []
-                                            let topCompetitors = competitors.prefix(20)
-
-                                            ForEach(topCompetitors.filter { $0.order != nil }, id: \.id) { competitor in
-                                                Button {} label: {
-                                                    HStack {
-                                                        Text("\(competitor.order ?? 0). \(competitor.athlete?.displayName ?? "Unknown") \(competitor.score ?? "-")")
-                                                            .lineLimit(1)
-                                                            .truncationMode(.tail)
-                                                    }
-                                                }
-                                            }
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: "figure.golf")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 20, height: 20)
-                                                Text("Leaderboard")
-                                            }
-                                        }
-                                    }
-
                                     Button {
                                         if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
                                             NSWorkspace.shared.open(url)
@@ -142,7 +117,7 @@ struct GolfMenu: View {
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 20, height: 20)
-                                            Text("View Game Details")
+                                            Text("View Tournament Details")
                                         }
                                     }
                                 } label: {
