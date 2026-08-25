@@ -787,7 +787,9 @@ struct Info: View {
                                                         .frame(width: 30, alignment: .leading)
 
                                                     HStack(spacing: 4) {
-                                                        if let logoURL = URL(string: competitor.logo) {
+                                                        if let logoString = competitor.logo,
+                                                           let logoURL = URL(string: logoString)
+                                                        {
                                                             AsyncImage(url: logoURL) { phase in
                                                                 if let image = phase.image {
                                                                     image
@@ -1050,7 +1052,9 @@ struct Info: View {
                                                         .frame(width: 30, alignment: .leading)
 
                                                     HStack(spacing: 4) {
-                                                        if let logoURL = URL(string: competitor.logo) {
+                                                        if let logoString = competitor.logo,
+                                                           let logoURL = URL(string: logoString)
+                                                        {
                                                             AsyncImage(url: logoURL) { phase in
                                                                 if let image = phase.image {
                                                                     image
