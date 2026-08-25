@@ -61,6 +61,7 @@ struct CompactLeading: View {
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
                 }
+                .transition(.opacity)
                 .onChange(of: notchViewModel.currentGameID) { _ in
                     newGame = true
                 }
@@ -131,6 +132,7 @@ struct CompactLeading: View {
                         }
                     }
                 }
+                .transition(.opacity)
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
@@ -188,6 +190,7 @@ struct CompactLeading: View {
                     }
                 }
             }
+            .transition(.opacity)
             .contextMenu {
                 Picker("Choose Display", selection: $notchScreenIndex) {
                     ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
@@ -244,6 +247,7 @@ struct CompactLeading: View {
                     }
                 }
             }
+            .transition(.opacity)
             .contextMenu {
                 Picker("Choose Display", selection: $notchScreenIndex) {
                     ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
@@ -302,6 +306,7 @@ struct CompactLeading: View {
                         .contentTransition(.numericText(countsDown: false))
                         .font(.system(size: 14, weight: .semibold))
                 }
+                .transition(.opacity)
                 .onChange(of: NotchViewModel.shared.currentGameID) { _ in
                     newGame = true
                 }
@@ -373,6 +378,7 @@ struct CompactLeading: View {
                     }
                 }
             }
+            .transition(.opacity)
             .contextMenu {
                 Picker("Choose Display", selection: $notchScreenIndex) {
                     ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in

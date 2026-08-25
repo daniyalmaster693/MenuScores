@@ -62,6 +62,7 @@ struct CompactTrailing: View {
                         }
                     }
                 }
+                .transition(.opacity)
                 .onChange(of: notchViewModel.currentGameID) { _ in
                     newGame = true
                 }
@@ -121,6 +122,7 @@ struct CompactTrailing: View {
                             .font(.system(size: 14, weight: .semibold))
                     }
                 }
+                .transition(.opacity)
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
@@ -172,7 +174,7 @@ struct CompactTrailing: View {
                             .font(.system(size: 14, weight: .semibold))
                     }
                 }
-
+                .transition(.opacity)
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
@@ -218,6 +220,7 @@ struct CompactTrailing: View {
                             .font(.system(size: 14, weight: .semibold))
                     }
                 }
+                .transition(.opacity)
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
@@ -277,6 +280,7 @@ struct CompactTrailing: View {
                         }
                     }
                 }
+                .transition(.opacity)
                 .onChange(of: NotchViewModel.shared.currentGameID) { _ in
                     newGame = true
                 }
@@ -338,6 +342,7 @@ struct CompactTrailing: View {
                             .font(.system(size: 14, weight: .semibold))
                     }
                 }
+                .transition(.opacity)
                 .contextMenu {
                     Picker("Choose Display", selection: $notchScreenIndex) {
                         ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in

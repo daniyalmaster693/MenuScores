@@ -47,17 +47,19 @@ class NotchViewModel: ObservableObject {
         gameID: String = "",
         gameState: String = ""
     ) async {
-        self.game = game
-        self.racingCompetition = racingCompetition
-        self.fightCompetition = fightCompetition
-        self.tennisCompetition = tennisCompetition
-        
-        self.sport = sport
-        self.league = league
-        
-        self.currentGameID = gameID
-        self.currentGameState = gameState
-        self.previousGameState = nil
+        withAnimation(.easeInOut(duration: 0.25)) {
+            self.game = game
+            self.racingCompetition = racingCompetition
+            self.fightCompetition = fightCompetition
+            self.tennisCompetition = tennisCompetition
+
+            self.sport = sport
+            self.league = league
+
+            self.currentGameID = gameID
+            self.currentGameState = gameState
+            self.previousGameState = nil
+        }
         
         if self.notch == nil {
             let newNotch = DynamicNotch(
