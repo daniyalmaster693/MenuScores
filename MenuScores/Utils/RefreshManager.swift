@@ -91,11 +91,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = updatedGame.status.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Game")
             }
 
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Game")
             }
 
             previousGameState.wrappedValue = newState
@@ -147,11 +147,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = race.fullStatus.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Race")
             }
 
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Race")
             }
 
             previousGameState.wrappedValue = newState
@@ -193,11 +193,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = fight.status.type.state
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Fight")
             }
 
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Fight")
             }
 
             previousGameState.wrappedValue = newState
@@ -243,11 +243,11 @@ class RefreshManager: NSObject, ObservableObject {
             let newState = updatedCompetition.status?.type.state ?? "pre"
 
             if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Game")
             }
 
             if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState)
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Game")
             }
 
             previousGameState.wrappedValue = newState

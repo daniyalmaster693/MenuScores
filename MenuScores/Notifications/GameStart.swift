@@ -8,11 +8,11 @@
 import Foundation
 import UserNotifications
 
-func gameStartNotification(gameId: String, gameTitle: String, newState: String) {
+func gameStartNotification(gameId: String, gameTitle: String, newState: String, eventType: String) {
     guard newState == "in" else { return }
 
     let content = UNMutableNotificationContent()
-    content.title = "Game Started"
+    content.title = "\(eventType) Started"
     content.body = "\(gameTitle)"
     content.interruptionLevel = .timeSensitive
     content.sound = .default

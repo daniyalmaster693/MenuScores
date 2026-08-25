@@ -8,11 +8,11 @@
 import Foundation
 import UserNotifications
 
-func gameCompleteNotification(gameId: String, gameTitle: String, newState: String) {
+func gameCompleteNotification(gameId: String, gameTitle: String, newState: String, eventType: String) {
     guard newState == "post" else { return }
 
     let content = UNMutableNotificationContent()
-    content.title = "Game Finished"
+    content.title = "\(eventType) Finished"
     content.body = "\(gameTitle)"
     content.interruptionLevel = .timeSensitive
     content.sound = .default
