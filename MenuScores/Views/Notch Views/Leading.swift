@@ -278,59 +278,62 @@ struct CompactLeading: View {
             }
         }
 
-        if sport == "Tennis" {
-            HStack {
-                AsyncImage(
-                    url: URL(
-                        string:
-                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40"
-                    )
-                ) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .interpolation(.high)
-                            .scaledToFit()
-                            .transition(.opacity)
-                            .frame(width: 18, height: 18)
-                    } else {
-                        Color.clear
-                            .transition(.opacity)
-                            .frame(width: 18, height: 18)
+        if let competition = notchViewModel.tennisCompetition {
+            if sport == "Tennis" {
+                HStack {
+                    AsyncImage(
+                        url: URL(string: competition.competitors?.first?.athlete?.flag?.href ?? competition.competitors?.first?.roster?.athletes?.first?.flag?.href ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
+                    ) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .interpolation(.high)
+                                .scaledToFit()
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        } else {
+                            Color.clear
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        }
                     }
+
+                    Text("\(competition.competitors?.first?.linescores?.last?.value ?? 0)")
+                        .contentTransition(.numericText(countsDown: false))
+                        .font(.system(size: 14, weight: .semibold))
                 }
-            }
-            .contextMenu {
-                Picker("Choose Display", selection: $notchScreenIndex) {
-                    ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                        Text(screen.localizedName)
-                            .tag(index)
+                .contextMenu {
+                    Picker("Choose Display", selection: $notchScreenIndex) {
+                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
+                            Text(screen.localizedName)
+                                .tag(index)
+                        }
                     }
-                }
-                .onChange(of: notchScreenIndex) { newIndex in
-                    let screens = NSScreen.screens
-                    guard screens.indices.contains(newIndex) else { return }
+                    .onChange(of: notchScreenIndex) { newIndex in
+                        let screens = NSScreen.screens
+                        guard screens.indices.contains(newIndex) else { return }
 
-                    let targetScreen = screens[newIndex]
+                        let targetScreen = screens[newIndex]
 
-                    Task {
-                        await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
+                        Task {
+                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
+                        }
                     }
-                }
 
-                Button {
-                    SettingsWindowController.shared.showWindow()
-                } label: {
-                    Text("Preferences")
-                }
-                .keyboardShortcut(",")
+                    Button {
+                        SettingsWindowController.shared.showWindow()
+                    } label: {
+                        Text("Preferences")
+                    }
+                    .keyboardShortcut(",")
 
-                Button {
-                    NSApplication.shared.terminate(nil)
-                } label: {
-                    Text("Quit")
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Text("Quit")
+                    }
+                    .keyboardShortcut("q")
                 }
-                .keyboardShortcut("q")
             }
         }
 

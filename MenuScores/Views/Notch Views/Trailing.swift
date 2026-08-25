@@ -253,16 +253,28 @@ struct CompactTrailing: View {
             }
         }
 
-        if let tennisGame = notchViewModel.tennisCompetition {
+        if let competition = notchViewModel.tennisCompetition {
             if sport == "Tennis" {
                 HStack {
-                    if let set = tennisGame.status?.period {
-                        Text("S\(set)")
-                            .contentTransition(.numericText(countsDown: false))
-                            .font(.system(size: 14, weight: .semibold))
-                    } else {
-                        Text("S -")
-                            .font(.system(size: 14, weight: .semibold))
+                    Text("\(competition.competitors?.dropFirst().first?.linescores?.last?.value ?? 0)")
+                        .contentTransition(.numericText(countsDown: false))
+                        .font(.system(size: 14, weight: .semibold))
+
+                    AsyncImage(
+                        url: URL(string: competition.competitors?.dropFirst().first?.athlete?.flag?.href ?? competition.competitors?.dropFirst().first?.roster?.athletes?.first?.flag?.href ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
+                    ) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .interpolation(.high)
+                                .scaledToFit()
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        } else {
+                            Color.clear
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        }
                     }
                 }
                 .contextMenu {
