@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CompactLeading: View {
-    @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
     @ObservedObject var notchViewModel: NotchViewModel
 
     @State private var newGame: Bool = false
@@ -76,38 +75,6 @@ struct CompactLeading: View {
 
                     notchViewModel.triggerAlert()
                 }
-                .contextMenu {
-                    Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                            Text(screen.localizedName)
-                                .tag(index)
-                        }
-                    }
-                    .onChange(of: notchScreenIndex) { newIndex in
-                        let screens = NSScreen.screens
-                        guard screens.indices.contains(newIndex) else { return }
-
-                        let targetScreen = screens[newIndex]
-
-                        Task {
-                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
-                        }
-                    }
-
-                    Button {
-                        SettingsWindowController.shared.showWindow()
-                    } label: {
-                        Text("Preferences")
-                    }
-                    .keyboardShortcut(",")
-
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Text("Quit")
-                    }
-                    .keyboardShortcut("q")
-                }
             }
 
             if sport == "Golf" {
@@ -133,38 +100,6 @@ struct CompactLeading: View {
                     }
                 }
                 .transition(.opacity)
-                .contextMenu {
-                    Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                            Text(screen.localizedName)
-                                .tag(index)
-                        }
-                    }
-                    .onChange(of: notchScreenIndex) { newIndex in
-                        let screens = NSScreen.screens
-                        guard screens.indices.contains(newIndex) else { return }
-
-                        let targetScreen = screens[newIndex]
-
-                        Task {
-                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
-                        }
-                    }
-
-                    Button {
-                        SettingsWindowController.shared.showWindow()
-                    } label: {
-                        Text("Preferences")
-                    }
-                    .keyboardShortcut(",")
-
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Text("Quit")
-                    }
-                    .keyboardShortcut("q")
-                }
             }
         }
 
@@ -191,38 +126,6 @@ struct CompactLeading: View {
                 }
             }
             .transition(.opacity)
-            .contextMenu {
-                Picker("Choose Display", selection: $notchScreenIndex) {
-                    ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                        Text(screen.localizedName)
-                            .tag(index)
-                    }
-                }
-                .onChange(of: notchScreenIndex) { newIndex in
-                    let screens = NSScreen.screens
-                    guard screens.indices.contains(newIndex) else { return }
-
-                    let targetScreen = screens[newIndex]
-
-                    Task {
-                        await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
-                    }
-                }
-
-                Button {
-                    SettingsWindowController.shared.showWindow()
-                } label: {
-                    Text("Preferences")
-                }
-                .keyboardShortcut(",")
-
-                Button {
-                    NSApplication.shared.terminate(nil)
-                } label: {
-                    Text("Quit")
-                }
-                .keyboardShortcut("q")
-            }
         }
 
         if sport == "Racing" {
@@ -248,38 +151,6 @@ struct CompactLeading: View {
                 }
             }
             .transition(.opacity)
-            .contextMenu {
-                Picker("Choose Display", selection: $notchScreenIndex) {
-                    ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                        Text(screen.localizedName)
-                            .tag(index)
-                    }
-                }
-                .onChange(of: notchScreenIndex) { newIndex in
-                    let screens = NSScreen.screens
-                    guard screens.indices.contains(newIndex) else { return }
-
-                    let targetScreen = screens[newIndex]
-
-                    Task {
-                        await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
-                    }
-                }
-
-                Button {
-                    SettingsWindowController.shared.showWindow()
-                } label: {
-                    Text("Preferences")
-                }
-                .keyboardShortcut(",")
-
-                Button {
-                    NSApplication.shared.terminate(nil)
-                } label: {
-                    Text("Quit")
-                }
-                .keyboardShortcut("q")
-            }
         }
 
         if let competition = notchViewModel.tennisCompetition {
@@ -321,38 +192,6 @@ struct CompactLeading: View {
 
                     NotchViewModel.shared.triggerAlert()
                 }
-                .contextMenu {
-                    Picker("Choose Display", selection: $notchScreenIndex) {
-                        ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                            Text(screen.localizedName)
-                                .tag(index)
-                        }
-                    }
-                    .onChange(of: notchScreenIndex) { newIndex in
-                        let screens = NSScreen.screens
-                        guard screens.indices.contains(newIndex) else { return }
-
-                        let targetScreen = screens[newIndex]
-
-                        Task {
-                            await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
-                        }
-                    }
-
-                    Button {
-                        SettingsWindowController.shared.showWindow()
-                    } label: {
-                        Text("Preferences")
-                    }
-                    .keyboardShortcut(",")
-
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Text("Quit")
-                    }
-                    .keyboardShortcut("q")
-                }
             }
         }
 
@@ -379,38 +218,6 @@ struct CompactLeading: View {
                 }
             }
             .transition(.opacity)
-            .contextMenu {
-                Picker("Choose Display", selection: $notchScreenIndex) {
-                    ForEach(Array(NSScreen.screens.enumerated()), id: \.offset) { index, screen in
-                        Text(screen.localizedName)
-                            .tag(index)
-                    }
-                }
-                .onChange(of: notchScreenIndex) { newIndex in
-                    let screens = NSScreen.screens
-                    guard screens.indices.contains(newIndex) else { return }
-
-                    let targetScreen = screens[newIndex]
-
-                    Task {
-                        await NotchViewModel.shared.notch?.updateScreen(on: targetScreen)
-                    }
-                }
-
-                Button {
-                    SettingsWindowController.shared.showWindow()
-                } label: {
-                    Text("Preferences")
-                }
-                .keyboardShortcut(",")
-
-                Button {
-                    NSApplication.shared.terminate(nil)
-                } label: {
-                    Text("Quit")
-                }
-                .keyboardShortcut("q")
-            }
         }
     }
 }
