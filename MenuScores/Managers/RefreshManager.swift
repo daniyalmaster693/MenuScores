@@ -125,7 +125,7 @@ class RefreshManager: NSObject, ObservableObject {
     ) async {
         await viewModel.populateRacing(from: fetchURL())
 
-        if let race = viewModel.races.first(where: { $0.id == currentGameID.wrappedValue }) {
+        if let race = viewModel.races.first(where: { $0.competitionId == currentGameID.wrappedValue }) {
             let notificationTitle: String
 
             if league == "F1" {
