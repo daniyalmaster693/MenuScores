@@ -39,7 +39,6 @@ struct LeagueSettingsView: View {
     @AppStorage("enableLPGA") private var enableLPGA = false
 
     @AppStorage("enableMLS") private var enableMLS = true
-    @AppStorage("enableNWSL") private var enableNWSL = false
     @AppStorage("enableUEFA") private var enableUEFA = false
     @AppStorage("enableEUEFA") private var enableEUEFA = false
     @AppStorage("enableWUEFA") private var enableWUEFA = false
@@ -48,6 +47,7 @@ struct LeagueSettingsView: View {
     @AppStorage("enableNED") private var enableNED = false
     @AppStorage("enablePOR") private var enablePOR = false
     @AppStorage("enableEPL") private var enableEPL = false
+    @AppStorage("enableNWSL") private var enableNWSL = false
     @AppStorage("enableWEPL") private var enableWEPL = false
     @AppStorage("enableESP") private var enableESP = false
     @AppStorage("enableGER") private var enableGER = false
@@ -305,14 +305,6 @@ struct LeagueSettingsView: View {
                         }
                     }
 
-                    Toggle(isOn: $enableNWSL) {
-                        HStack {
-                            Image(systemName: "soccerball")
-                                .foregroundColor(.primary)
-                            Text("NWSL")
-                        }
-                    }
-
                     Toggle(isOn: $enableUEFA) {
                         HStack {
                             Image(systemName: "soccerball")
@@ -342,6 +334,14 @@ struct LeagueSettingsView: View {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.primary)
                             Text("Premier League")
+                        }
+                    }
+
+                    Toggle(isOn: $enableNWSL) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.primary)
+                            Text("NWSL")
                         }
                     }
 
