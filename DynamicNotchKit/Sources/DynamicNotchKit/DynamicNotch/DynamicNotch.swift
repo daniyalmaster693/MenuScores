@@ -187,7 +187,7 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
             }
 
             hoverWorkItem = task
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: task)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: task)
         } else {
             let debounce = DispatchWorkItem { [weak self] in
                 Task { @MainActor in
