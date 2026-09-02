@@ -34,8 +34,6 @@ struct RaceEvent: Decodable {
     let summary: String?
     let period: Int?
     let laps: String?
-    let trackText: String?
-    let track: Track?
     let competitors: [Driver]?
 }
 
@@ -60,11 +58,6 @@ struct RacingStatus: Decodable {
     let description: String
     let detail: String
     let shortDetail: String
-}
-
-struct Track: Decodable {
-    let length: Double?
-    let displayLength: String?
 }
 
 struct Driver: Decodable {

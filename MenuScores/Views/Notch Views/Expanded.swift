@@ -826,7 +826,7 @@ struct Info: View {
                                                 .font(.system(size: 12))
                                                 .foregroundColor(.gray)
 
-                                            Text("\(race.location ?? "Unknown")   \(race.track?.displayLength ?? "0 km")")
+                                            Text("\(race.location ?? "Unknown")")
                                                 .font(.system(size: 14, weight: .medium))
                                                 .truncationMode(.tail)
                                         }
