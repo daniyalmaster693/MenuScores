@@ -59,6 +59,7 @@ class RefreshManager: NSObject, ObservableObject {
         case racing
         case tennis
         case fighting
+        case cricket
     }
 
     @MainActor
@@ -260,11 +261,58 @@ class RefreshManager: NSObject, ObservableObject {
     }
 
     @MainActor
+    func cricketRefresh(
+        viewModel: CricketListView,
+        league: String,
+        fetchURL: () -> URL,
+
+        currentTitle: Binding<String>,
+        currentGameID: Binding<String>,
+        currentGameState: Binding<String>,
+        previousGameState: Binding<String?>,
+
+        pinnedByMenubar: Binding<Bool>,
+        pinnedByNotch: Binding<Bool>,
+
+        notchViewModel: NotchViewModel
+    ) async {
+        await viewModel.populateCricket(from: fetchURL())
+
+        if let cricketGame = viewModel.cricketGames.first(where: { $0.id == currentGameID.wrappedValue }) {
+            let notificationTitle = displayCricketText(for: cricketGame)
+
+            if pinnedByMenubar.wrappedValue {
+                currentTitle.wrappedValue = displayCricketText(for: cricketGame)
+            } else if pinnedByNotch.wrappedValue {
+                currentTitle.wrappedValue = ""
+            }
+
+//            let newState = fight.status.type.state
+
+//            if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
+//                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Fight")
+//            }
+//
+//            if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
+//                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Fight")
+//            }
+
+//            previousGameState.wrappedValue = newState
+//            currentGameState.wrappedValue = newState
+
+            if pinnedByNotch.wrappedValue {
+                notchViewModel.cricketCompetition = cricketGame
+            }
+        }
+    }
+
+    @MainActor
     func performRefresh(
         viewModel: GamesListView? = nil,
         racingViewModel: RacingListView? = nil,
         tennisViewModel: TennisListView? = nil,
         fightingViewModel: FightingListView? = nil,
+        cricketViewModel: CricketListView? = nil,
         league: String,
         fetchURL: () -> URL,
 
@@ -332,6 +380,22 @@ class RefreshManager: NSObject, ObservableObject {
             if let fightingViewModel {
                 await fightingRefresh(
                     viewModel: fightingViewModel,
+                    league: league,
+                    fetchURL: fetchURL,
+                    currentTitle: currentTitle,
+                    currentGameID: currentGameID,
+                    currentGameState: currentGameState,
+                    previousGameState: previousGameState,
+                    pinnedByMenubar: pinnedByMenubar,
+                    pinnedByNotch: pinnedByNotch,
+                    notchViewModel: notchViewModel
+                )
+            }
+
+        case .cricket:
+            if let cricketViewModel {
+                await cricketRefresh(
+                    viewModel: cricketViewModel,
                     league: league,
                     fetchURL: fetchURL,
                     currentTitle: currentTitle,
