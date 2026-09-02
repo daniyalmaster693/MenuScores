@@ -100,6 +100,37 @@ struct RacingMenu: View {
 
                         Divider()
 
+                        Button {
+                            if league == "NC" {
+                                let url = URL(string: "https://www.nascar.com/nascar-cup-series/2026/schedule/")!
+                                NSWorkspace.shared.open(url)
+                            }
+
+                            if league == "NCS" {
+                                let url = URL(string: "https://www.nascar.com/nascar-oreilly-auto-parts-series/2026/schedule/")!
+                                NSWorkspace.shared.open(url)
+                            }
+
+                            if league == "NCT" {
+                                let url = URL(string: "https://www.nascar.com/nascar-craftsman-truck-series/2026/schedule/")!
+                                NSWorkspace.shared.open(url)
+                            }
+
+                            if league == "IRL" {
+                                let url = URL(string: "https://www.indycar.com/Schedule")!
+                                NSWorkspace.shared.open(url)
+                            }
+
+                        } label: {
+                            HStack {
+                                Image(systemName: "info.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("View Race Details")
+                            }
+                        }
+
                     } label: {
                         HStack {
                             AsyncImage(
