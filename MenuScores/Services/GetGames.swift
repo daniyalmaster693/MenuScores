@@ -24,6 +24,7 @@ class getGames {
         let decoded = try JSONDecoder().decode(
             ScoreboardResponse.self, from: data
         )
+
         return decoded.events
     }
 
@@ -71,6 +72,7 @@ class getGames {
         let decoded = try JSONDecoder().decode(
             TennisResponse.self, from: data
         )
+
         return decoded.events
     }
 
@@ -86,6 +88,7 @@ class getGames {
         let decoded = try JSONDecoder().decode(
             CricketResponse.self, from: data
         )
+
         return decoded.sports.first?.leagues.first?.events ?? []
     }
 
