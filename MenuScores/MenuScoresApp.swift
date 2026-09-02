@@ -169,6 +169,8 @@ struct MenuScoresApp: App {
 
     @StateObject private var ufcVM = FightingListView()
 
+    @StateObject private var iplVM = CricketListView()
+
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
     @StateObject private var lncaamVM = GamesListView()
@@ -745,6 +747,19 @@ struct MenuScoresApp: App {
                     viewModel: ufcVM,
                     league: "UFC",
                     fetchURL: Scoreboard.Urls.ufc,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableIPL {
+                CricketMenu(
+                    title: "IPL",
+                    viewModel: iplVM,
+                    league: "IPL",
+                    fetchURL: Scoreboard.Urls.ipl,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
