@@ -50,7 +50,11 @@ struct F1Menu: View {
                 race.shortName
             }
 
-            let sortedRaces = groupedByRace.keys.sorted()
+            let sortedRaces = viewModel.races.reduce(into: [String]()) { result, race in
+                if !result.contains(race.shortName) {
+                    result.append(race.shortName)
+                }
+            }
 
             if sortedRaces.isEmpty {
                 Text("No Races Scheduled")
