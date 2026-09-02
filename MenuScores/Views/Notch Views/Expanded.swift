@@ -115,25 +115,14 @@ struct Info: View {
                         HStack(spacing: 4) {
                             VStack {
                                 HStack {
-                                    AsyncImage(
-                                        url: URL(string: {
-                                            let team = game.competitions[0].competitors?[1].team
+                                    let team = game.competitions[0].competitors?[1].team
+                                    let logoURL = darkLogoURL(from: team?.logo, teamID: team?.id, league: league) ?? (
+                                        sport == "volleyball"
+                                            ?"https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                            : "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
+                                    )
 
-                                            if sport == "volleyball" {
-                                                return darkLogoURL(
-                                                    from: team?.logo,
-                                                    teamID: team?.id,
-                                                    league: league
-                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                            } else {
-                                                return darkLogoURL(
-                                                    from: team?.logo,
-                                                    teamID: team?.id,
-                                                    league: league
-                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
-                                            }
-                                        }())
-                                    ) { phase in
+                                    AsyncImage(url: URL(string: logoURL)) { phase in
                                         if let image = phase.image {
                                             image
                                                 .resizable()
@@ -209,25 +198,14 @@ struct Info: View {
                                             .font(.system(size: 12, weight: .medium))
                                     }
 
-                                    AsyncImage(
-                                        url: URL(string: {
-                                            let team = game.competitions[0].competitors?[0].team
+                                    let team = game.competitions[0].competitors?[0].team
+                                    let logoURL = darkLogoURL(from: team?.logo, teamID: team?.id, league: league) ?? (
+                                        sport == "volleyball"
+                                            ?"https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
+                                            : "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
+                                    )
 
-                                            if sport == "volleyball" {
-                                                return darkLogoURL(
-                                                    from: team?.logo,
-                                                    teamID: team?.id,
-                                                    league: league
-                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin"
-                                            } else {
-                                                return darkLogoURL(
-                                                    from: team?.logo,
-                                                    teamID: team?.id,
-                                                    league: league
-                                                ) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-\(sport.lowercased()).png&h=80&w=80&scale=crop&cquality=40"
-                                            }
-                                        }())
-                                    ) { phase in
+                                    AsyncImage(url: URL(string: logoURL)) { phase in
                                         if let image = phase.image {
                                             image
                                                 .resizable()
