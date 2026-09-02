@@ -1364,5 +1364,153 @@ struct Info: View {
                 }
             }
         }
+
+        if let cricketGame = notchViewModel.cricketCompetition {
+            if sport == "Cricket" {
+                VStack {
+                    HStack(spacing: 4) {
+                        VStack {
+                            HStack {
+                                HStack {
+                                    AsyncImage(
+                                        url: URL(
+                                            string:
+                                            "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
+                                        )
+                                    ) { phase in
+                                        if let image = phase.image {
+                                            image
+                                                .resizable()
+                                                .interpolation(.high)
+                                                .scaledToFit()
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        } else {
+                                            Color.clear
+                                                .transition(.opacity)
+                                                .frame(width: 18, height: 18)
+                                        }
+                                    }
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 10)
+                                }
+
+                                HStack {
+                                    if cricketGame.fullStatus.type.state == "pre" {
+                                        Text("\(formattedCricketTime(from: cricketGame.date))")
+                                            .contentTransition(.numericText(countsDown: false))
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 15)
+                                    }
+
+                                    if cricketGame.fullStatus.type.state == "in" {
+                                        let periodText = cricketGame.fullStatus.period ?? 0
+                                        let clockText = cricketGame.fullStatus.displayClock ?? "-"
+
+                                        Text("I\(periodText) \(clockText)")
+                                            .contentTransition(.numericText(countsDown: false))
+                                            .font(.system(size: 14, weight: .semibold))
+                                            .padding(.trailing, 15)
+                                    }
+
+                                    if cricketGame.fullStatus.type.state == "post" {
+                                        HStack {
+                                            Text("\(cricketGame.fullStatus.summary ?? "")")
+                                                .lineLimit(1)
+                                                .font(.system(size: 14, weight: .semibold))
+                                                .padding(.trailing, 10)
+                                        }
+                                    }
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                            VStack(spacing: 5) {
+                                Divider()
+
+                                VStack(spacing: 4) {
+                                    HStack(spacing: 4) {
+                                        let awayScore = cricketGame.competitors[1].score ?? "0"
+                                        let cricketAwayScore = awayScore.components(separatedBy: " ").first ?? awayScore
+
+                                        let logoURL = cricketGame.competitors[1].logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
+
+                                        AsyncImage(url: URL(string: logoURL)) { phase in
+                                            if let image = phase.image {
+                                                image
+                                                    .resizable()
+                                                    .interpolation(.high)
+                                                    .scaledToFit()
+                                                    .transition(.opacity)
+                                                    .frame(width: 23, height: 23)
+                                            } else {
+                                                Color.clear
+                                                    .transition(.opacity)
+                                                    .frame(width: 23, height: 23)
+                                            }
+                                        }
+                                        .padding(.trailing, 5)
+
+                                        Text(cricketGame.competitors[1].displayName)
+                                            .font(.system(size: 14, weight: .medium))
+                                            .lineLimit(1)
+                                            .frame(maxWidth: 190, alignment: .leading)
+                                            .truncationMode(.tail)
+
+                                        Spacer()
+
+                                        Text(cricketAwayScore)
+                                            .frame(minWidth: 20)
+                                            .font(.system(size: 14, weight: .medium))
+                                            .contentTransition(.numericText(countsDown: false))
+                                            .padding(.leading, 10)
+                                    }
+
+                                    HStack(spacing: 4) {
+                                        let homeScore = cricketGame.competitors[0].score ?? "0"
+                                        let cricketHomeScore = homeScore.components(separatedBy: " ").first ?? homeScore
+
+                                        let logoURL = cricketGame.competitors[0].logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
+
+                                        AsyncImage(url: URL(string: logoURL)) { phase in
+                                            if let image = phase.image {
+                                                image
+                                                    .resizable()
+                                                    .interpolation(.high)
+                                                    .scaledToFit()
+                                                    .transition(.opacity)
+                                                    .frame(width: 23, height: 23)
+                                            } else {
+                                                Color.clear
+                                                    .transition(.opacity)
+                                                    .frame(width: 23, height: 23)
+                                            }
+                                        }
+                                        .padding(.trailing, 5)
+
+                                        Text(cricketGame.competitors[0].displayName)
+                                            .font(.system(size: 14, weight: .medium))
+                                            .lineLimit(1)
+                                            .frame(maxWidth: 190, alignment: .leading)
+                                            .truncationMode(.tail)
+
+                                        Spacer()
+
+                                        Text(cricketHomeScore)
+                                            .frame(minWidth: 20)
+                                            .font(.system(size: 14, weight: .medium))
+                                            .contentTransition(.numericText(countsDown: false))
+                                            .padding(.leading, 10)
+                                    }
+                                }
+                            }
+                            .frame(maxHeight: 140)
+                            .padding(.top, 10)
+                            .padding(.bottom, 5)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

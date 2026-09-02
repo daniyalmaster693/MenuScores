@@ -195,7 +195,7 @@ func displayCricketText(for cricketGame: CricketEvent) -> String {
     let cricketHomeScore = homeScore.components(separatedBy: " ").first ?? homeScore
 
     let periodText = cricketGame.fullStatus.period ?? 0
-    let clockText = cricketGame.fullStatus.displayClock
+    let clockText = cricketGame.fullStatus.displayClock ?? "-"
 
     switch cricketState {
     case "pre":

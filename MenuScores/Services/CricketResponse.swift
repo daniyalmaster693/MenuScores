@@ -42,7 +42,7 @@ struct CricketLinks: Decodable {
 }
 
 struct CricketFullStatus: Decodable {
-    let displayClock: String
+    let displayClock: String?
     let period: Int?
     let type: CricketStatusType
     let summary: String?
@@ -62,4 +62,5 @@ struct CricketCompetitors: Decodable {
     let color: String
     let score: String?
     let logo: String?
+    let id: String
 }
