@@ -178,38 +178,38 @@ func displayTennisText(for competition: TennisCompetition) -> String {
     return "\(team1)  \(team1Scores) - \(team2Scores)  \(team2) \(statusSuffix)"
 }
 
-func displayCricketText(for cricketGame: CricketEvent) -> String {
-    let cricketState = cricketGame.fullStatus.type.state
-
-    let cricketShortName = cricketGame.shortName
-        .replacingOccurrences(of: " v ", with: " vs ")
-        .replacingOccurrences(of: " V ", with: " vs ")
-
-    let awayAbbr = cricketGame.competitors[1].abbreviation
-    let homeAbbr = cricketGame.competitors[0].abbreviation
-
-    let awayScore = cricketGame.competitors[1].score ?? "0"
-    let cricketAwayScore = awayScore.components(separatedBy: " ").first ?? awayScore
-
-    let homeScore = cricketGame.competitors[0].score ?? "0"
-    let cricketHomeScore = homeScore.components(separatedBy: " ").first ?? homeScore
-
-    let periodText = cricketGame.fullStatus.period ?? 0
-    let clockText = cricketGame.fullStatus.displayClock ?? "-"
-
-    switch cricketState {
-    case "pre":
-        return "\(cricketShortName) - \(formattedCricketTime(from: cricketGame.date))"
-
-    case "in":
-        return
-            "\(awayAbbr) \(cricketAwayScore) - \(homeAbbr) \(cricketHomeScore)    I\(periodText) \(clockText)"
-
-    case "post":
-        return
-            "\(awayAbbr) \(cricketAwayScore) - \(homeAbbr) \(cricketHomeScore)     (Final)"
-
-    default:
-        return cricketGame.shortName
-    }
-}
+// func displayCricketText(for cricketGame: CricketEvent) -> String {
+//    let cricketState = cricketGame.fullStatus.type.state
+//
+//    let cricketShortName = cricketGame.shortName
+//        .replacingOccurrences(of: " v ", with: " vs ")
+//        .replacingOccurrences(of: " V ", with: " vs ")
+//
+//    let awayAbbr = cricketGame.competitors[1].abbreviation
+//    let homeAbbr = cricketGame.competitors[0].abbreviation
+//
+//    let awayScore = cricketGame.competitors[1].score ?? "0"
+//    let cricketAwayScore = awayScore.components(separatedBy: " ").first ?? awayScore
+//
+//    let homeScore = cricketGame.competitors[0].score ?? "0"
+//    let cricketHomeScore = homeScore.components(separatedBy: " ").first ?? homeScore
+//
+//    let periodText = cricketGame.fullStatus.period ?? 0
+//    let clockText = cricketGame.fullStatus.displayClock ?? "-"
+//
+//    switch cricketState {
+//    case "pre":
+//        return "\(cricketShortName) - \(formattedCricketTime(from: cricketGame.date))"
+//
+//    case "in":
+//        return
+//            "\(awayAbbr) \(cricketAwayScore) - \(homeAbbr) \(cricketHomeScore)    I\(periodText) \(clockText)"
+//
+//    case "post":
+//        return
+//            "\(awayAbbr) \(cricketAwayScore) - \(homeAbbr) \(cricketHomeScore)     (Final)"
+//
+//    default:
+//        return cricketGame.shortName
+//    }
+// }

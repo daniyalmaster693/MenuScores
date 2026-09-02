@@ -62,7 +62,7 @@ struct LeagueSettingsView: View {
 
     @AppStorage("enableUFC") private var enableUFC = false
 
-    @AppStorage("enableIPL") private var enableIPL = false
+//    @AppStorage("enableIPL") private var enableIPL = false
 
     @AppStorage("enableNLL") private var enableNLL = false
     @AppStorage("enablePLL") private var enablePLL = false
@@ -532,15 +532,15 @@ struct LeagueSettingsView: View {
                     }
                 }
 
-                Section("Cricket") {
-                    Toggle(isOn: $enableIPL) {
-                        HStack {
-                            Image(systemName: "cricket.ball.fill")
-                                .foregroundColor(.primary)
-                            Text("IPL")
-                        }
-                    }
-                }
+//                Section("Cricket") {
+//                    Toggle(isOn: $enableIPL) {
+//                        HStack {
+//                            Image(systemName: "cricket.ball.fill")
+//                                .foregroundColor(.primary)
+//                            Text("IPL")
+//                        }
+//                    }
+//                }
 
                 Section("Lacrosse") {
                     Toggle(isOn: $enableNLL) {

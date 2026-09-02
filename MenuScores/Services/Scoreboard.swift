@@ -310,12 +310,12 @@ enum Scoreboard {
             )!
         }
 
-        static let ipl: () -> URL = {
-            URL(
-                string:
-                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=cricket&league=8048"
-            )!
-        }
+//        static let ipl: () -> URL = {
+//            URL(
+//                string:
+//                "https://site.web.api.espn.com/apis/personalized/v2/scoreboard/header?sport=cricket&league=8048"
+//            )!
+//        }
 
         static let nll: () -> URL = {
             URL(

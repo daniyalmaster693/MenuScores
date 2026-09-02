@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CricketMenu: View {
     let title: String
-    @ObservedObject var viewModel: CricketListView
+//    @ObservedObject var viewModel: CricketListView
     let league: String
     let fetchURL: () -> URL
 
@@ -46,123 +46,123 @@ struct CricketMenu: View {
 
     var body: some View {
         Menu(title) {
-            if viewModel.cricketGames.isEmpty {
-                Text("No Games Scheduled")
-            } else {
-                Text(formattedCricketDate(from: viewModel.cricketGames.first?.date ?? "Invalid Date"))
-                    .font(.headline)
-
-                Divider().padding(.bottom)
-
-                ForEach(viewModel.cricketGames, id: \.id) { cricketGame in
-                    Menu {
-                        Button {
-                            currentTitle = displayCricketText(for: cricketGame)
-                            currentGameID = cricketGame.id
-                            currentGameState = cricketGame.fullStatus.type.state
-
-                            pinnedByMenubar = true
-                            pinnedByNotch = false
-                        } label: {
-                            HStack {
-                                Image(systemName: "menubar.rectangle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("Pin Game to Menubar")
-                            }
-                        }
-
-                        if enableNotch {
-                            Button {
-                                currentGameID = cricketGame.id
-                                currentGameState = cricketGame.fullStatus.type.state
-
-                                pinnedByNotch = true
-                                pinnedByMenubar = false
-
-                                Task {
-                                    await NotchViewModel.shared.pinGame(
-                                        cricketCompetition: cricketGame,
-                                        sport: "Cricket",
-                                        league: league,
-                                        gameID: cricketGame.id,
-                                        gameState: cricketGame.fullStatus.type.state
-                                    )
-                                }
-                            } label: {
-                                HStack {
-                                    Image(systemName: "macbook")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 20, height: 20)
-                                    Text("Pin Game to Notch")
-                                }
-                            }
-                        }
-
-                        Divider()
-
-                        Button {
-                            if let urlString = cricketGame.links?.first?.href, let url = URL(string: urlString) {
-                                NSWorkspace.shared.open(url)
-                            }
-
-                        } label: {
-                            HStack {
-                                Image(systemName: "info.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                Text("View Game Details")
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            AsyncImage(
-                                url: URL(
-                                    string: cricketGame.competitors[1].logo ??
-                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
-                                )
-                            ) { image in
-                                image.resizable().scaledToFit()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 40, height: 40)
-
-                            Text(displayCricketText(for: cricketGame))
-                        }
-                    }
-                }
-            }
+//            if viewModel.cricketGames.isEmpty {
+//                Text("No Games Scheduled")
+//            } else {
+//                Text(formattedCricketDate(from: viewModel.cricketGames.first?.date ?? "Invalid Date"))
+//                    .font(.headline)
+//
+//                Divider().padding(.bottom)
+//
+//                ForEach(viewModel.cricketGames, id: \.id) { cricketGame in
+//                    Menu {
+//                        Button {
+//                            currentTitle = displayCricketText(for: cricketGame)
+//                            currentGameID = cricketGame.id
+//                            currentGameState = cricketGame.fullStatus.type.state
+//
+//                            pinnedByMenubar = true
+//                            pinnedByNotch = false
+//                        } label: {
+//                            HStack {
+//                                Image(systemName: "menubar.rectangle")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 20, height: 20)
+//                                Text("Pin Game to Menubar")
+//                            }
+//                        }
+//
+//                        if enableNotch {
+//                            Button {
+//                                currentGameID = cricketGame.id
+//                                currentGameState = cricketGame.fullStatus.type.state
+//
+//                                pinnedByNotch = true
+//                                pinnedByMenubar = false
+//
+//                                Task {
+//                                    await NotchViewModel.shared.pinGame(
+//                                        cricketCompetition: cricketGame,
+//                                        sport: "Cricket",
+//                                        league: league,
+//                                        gameID: cricketGame.id,
+//                                        gameState: cricketGame.fullStatus.type.state
+//                                    )
+//                                }
+//                            } label: {
+//                                HStack {
+//                                    Image(systemName: "macbook")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 20, height: 20)
+//                                    Text("Pin Game to Notch")
+//                                }
+//                            }
+//                        }
+//
+//                        Divider()
+//
+//                        Button {
+//                            if let urlString = cricketGame.links?.first?.href, let url = URL(string: urlString) {
+//                                NSWorkspace.shared.open(url)
+//                            }
+//
+//                        } label: {
+//                            HStack {
+//                                Image(systemName: "info.circle")
+//                                    .resizable()
+//                                    .scaledToFit()
+//                                    .frame(width: 20, height: 20)
+//                                Text("View Game Details")
+//                            }
+//                        }
+//                    } label: {
+//                        HStack {
+//                            AsyncImage(
+//                                url: URL(
+//                                    string: cricketGame.competitors[1].logo ??
+//                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
+//                                )
+//                            ) { image in
+//                                image.resizable().scaledToFit()
+//                            } placeholder: {
+//                                ProgressView()
+//                            }
+//                            .frame(width: 40, height: 40)
+//
+//                            Text(displayCricketText(for: cricketGame))
+//                        }
+//                    }
+//                }
+//            }
         }
-        .onAppear {
-            RefreshManager.shared.registerRefreshAction(
-                for: league,
-                currentGameID: $currentGameID,
-                currentGameState: $currentGameState,
-                currentTitle: $currentTitle
-            ) {
-                Task {
-                    await RefreshManager.shared.performRefresh(
-                        cricketViewModel: viewModel,
-                        league: league,
-                        fetchURL: fetchURL,
-                        currentTitle: $currentTitle,
-                        currentGameID: $currentGameID,
-                        currentGameState: $currentGameState,
-                        previousGameState: $previousGameState,
-                        type: .cricket,
-                        pinnedByMenubar: $pinnedByMenubar,
-                        pinnedByNotch: $pinnedByNotch,
-                        notchViewModel: NotchViewModel.shared
-                    )
-                }
-            }
-        }
-        .onDisappear {
-            RefreshManager.shared.unregisterRefreshAction(for: league)
-        }
+//        .onAppear {
+//            RefreshManager.shared.registerRefreshAction(
+//                for: league,
+//                currentGameID: $currentGameID,
+//                currentGameState: $currentGameState,
+//                currentTitle: $currentTitle
+//            ) {
+//                Task {
+//                    await RefreshManager.shared.performRefresh(
+//                        cricketViewModel: viewModel,
+//                        league: league,
+//                        fetchURL: fetchURL,
+//                        currentTitle: $currentTitle,
+//                        currentGameID: $currentGameID,
+//                        currentGameState: $currentGameState,
+//                        previousGameState: $previousGameState,
+//                        type: .cricket,
+//                        pinnedByMenubar: $pinnedByMenubar,
+//                        pinnedByNotch: $pinnedByNotch,
+//                        notchViewModel: NotchViewModel.shared
+//                    )
+//                }
+//            }
+//        }
+//        .onDisappear {
+//            RefreshManager.shared.unregisterRefreshAction(for: league)
+//        }
     }
 }

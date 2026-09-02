@@ -99,23 +99,23 @@ struct TennisGameListView {
 
 // MARK: Cricket Only
 
-@MainActor
-class CricketListView: ObservableObject {
-    @Published var cricketGames: [CricketEvent] = []
-
-    func populateCricket(from url: URL) async {
-        do {
-            self.cricketGames = try await getGames().getCricketArray(url: url)
-        } catch {
-            print("Failed to fetch matches:", error)
-        }
-    }
-}
-
-struct CricketGameListView {
-    private var game: CricketEvent
-
-    init(game: CricketEvent) {
-        self.game = game
-    }
-}
+// @MainActor
+// class CricketListView: ObservableObject {
+//    @Published var cricketGames: [CricketEvent] = []
+//
+//    func populateCricket(from url: URL) async {
+//        do {
+//            self.cricketGames = try await getGames().getCricketArray(url: url)
+//        } catch {
+//            print("Failed to fetch matches:", error)
+//        }
+//    }
+// }
+//
+// struct CricketGameListView {
+//    private var game: CricketEvent
+//
+//    init(game: CricketEvent) {
+//        self.game = game
+//    }
+// }
