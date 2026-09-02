@@ -185,17 +185,25 @@ func displayCricketText(for cricketGame: CricketEvent) -> String {
         .replacingOccurrences(of: " v ", with: " vs ")
         .replacingOccurrences(of: " V ", with: " vs ")
 
+    let awayAbbr = cricketGame.competitors[1].abbreviation
+    let homeAbbr = cricketGame.competitors[0].abbreviation
+    let awayScore = cricketGame.competitors[1].score
+    let homeScore = cricketGame.competitors[0].score
+
+    let periodText = cricketGame.fullStatus.period ?? 0
+    let clockText = cricketGame.fullStatus.displayClock
+
     switch cricketState {
     case "pre":
         return "\(cricketShortName) - \(formattedCricketTime(from: cricketGame.date))"
 
     case "in":
         return
-            ""
+            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    I\(periodText) \(clockText)"
 
     case "post":
         return
-            "(Final)"
+            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")     (Final)"
 
     default:
         return cricketGame.shortName

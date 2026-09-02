@@ -60,6 +60,6 @@ struct CricketCompetitors: Decodable {
     let abbreviation: String
     let location: String
     let color: String
-    let score: String
+    let score: String?
     let logo: String?
 }
