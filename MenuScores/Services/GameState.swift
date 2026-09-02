@@ -179,27 +179,25 @@ func displayTennisText(for competition: TennisCompetition) -> String {
 }
 
 func displayCricketText(for cricketGame: CricketEvent) -> String {
-//    let cricketState = race.fullStatus.type.state
+    let cricketState = cricketGame.fullStatus.type.state
 
     let cricketShortName = cricketGame.shortName
         .replacingOccurrences(of: " v ", with: " vs ")
         .replacingOccurrences(of: " V ", with: " vs ")
 
-//    switch cricketState {
-//    case "pre":
-//        return "\(cricketShortName) - \(formattedCricketTime(from: cricketGame.date))"
-//
-//    case "in":
-//        return
-//            ""
-//
-//    case "post":
-//        return
-//            "(Final)"
-//
-//    default:
-//        return cricketGame.shortName
-//    }
+    switch cricketState {
+    case "pre":
+        return "\(cricketShortName) - \(formattedCricketTime(from: cricketGame.date))"
 
-    return cricketShortName
+    case "in":
+        return
+            ""
+
+    case "post":
+        return
+            "(Final)"
+
+    default:
+        return cricketGame.shortName
+    }
 }

@@ -26,8 +26,21 @@ struct CricketEvent: Decodable {
     let name: String
     let shortName: String
     let links: [CricketLinks]?
+    let fullStatus: CricketFullStatus
 }
 
 struct CricketLinks: Decodable {
     let href: String
+}
+
+struct CricketFullStatus: Decodable {
+    let displayClock: String
+    let period: Int?
+    let type: CricketStatusType
+    let summary: String?
+    let longSummary: String?
+}
+
+struct CricketStatusType: Decodable {
+    let state: String
 }
