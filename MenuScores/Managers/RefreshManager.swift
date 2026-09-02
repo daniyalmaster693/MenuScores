@@ -279,7 +279,7 @@ class RefreshManager: NSObject, ObservableObject {
         await viewModel.populateCricket(from: fetchURL())
 
         if let cricketGame = viewModel.cricketGames.first(where: { $0.id == currentGameID.wrappedValue }) {
-            let notificationTitle = displayCricketText(for: cricketGame)
+//            let notificationTitle = displayCricketText(for: cricketGame)
 
             if pinnedByMenubar.wrappedValue {
                 currentTitle.wrappedValue = displayCricketText(for: cricketGame)

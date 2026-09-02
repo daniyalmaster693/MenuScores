@@ -9,7 +9,6 @@ import Foundation
 
 struct CricketResponse: Decodable {
     let sports: [CricketSport]
-    let events: [CricketEvent]
 }
 
 struct CricketSport: Decodable {

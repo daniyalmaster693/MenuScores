@@ -49,7 +49,7 @@ struct CricketMenu: View {
             if viewModel.cricketGames.isEmpty {
                 Text("No Games Scheduled")
             } else {
-                Text(formattedDate(from: viewModel.cricketGames.first?.date ?? "Invalid Date"))
+                Text(formattedCricketDate(from: viewModel.cricketGames.first?.date ?? "Invalid Date"))
                     .font(.headline)
 
                 Divider().padding(.bottom)
