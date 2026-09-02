@@ -12,8 +12,6 @@ struct FavoritesSettingsView: View {
     @StateObject private var favoritesManager = FavoritesManager.shared
 
     @AppStorage("autoPinFavorites") private var autoPinFavorites = false
-    @AppStorage("autoClearFavorites") private var autoClearFavorites = true
-
     @AppStorage("selectedPinType") private var selectedPinType: PinType = .menubar
     @AppStorage("enableNotch") private var enableNotch = true
 
@@ -150,15 +148,6 @@ struct FavoritesSettingsView: View {
                             Text("Auto Pin Favorite Team Games")
                         }
                     }
-
-                    Toggle(isOn: $autoClearFavorites) {
-                        HStack {
-                            Image(systemName: "checkmark.circle")
-                                .foregroundColor(.primary)
-                            Text("Auto Remove Completed Games")
-                        }
-                    }
-                    .disabled(!self.autoPinFavorites)
 
                     HStack {
                         Label("Auto Pin Preference", systemImage: "display")
