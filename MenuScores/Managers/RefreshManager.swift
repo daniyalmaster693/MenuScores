@@ -279,7 +279,7 @@ class RefreshManager: NSObject, ObservableObject {
         await viewModel.populateCricket(from: fetchURL())
 
         if let cricketGame = viewModel.cricketGames.first(where: { $0.id == currentGameID.wrappedValue }) {
-//            let notificationTitle = displayCricketText(for: cricketGame)
+            let notificationTitle = displayCricketText(for: cricketGame)
 
             if pinnedByMenubar.wrappedValue {
                 currentTitle.wrappedValue = displayCricketText(for: cricketGame)
@@ -287,18 +287,18 @@ class RefreshManager: NSObject, ObservableObject {
                 currentTitle.wrappedValue = ""
             }
 
-//            let newState = fight.status.type.state
+            let newState = cricketGame.fullStatus.type.state
 
-//            if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
-//                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Fight")
-//            }
-//
-//            if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
-//                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Fight")
-//            }
+            if notiGameStart && previousGameState.wrappedValue != "in" && newState == "in" {
+                gameStartNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Game")
+            }
 
-//            previousGameState.wrappedValue = newState
-//            currentGameState.wrappedValue = newState
+            if notiGameComplete && previousGameState.wrappedValue != "post" && newState == "post" {
+                gameCompleteNotification(gameId: currentGameID.wrappedValue, gameTitle: notificationTitle, newState: newState, eventType: "Game")
+            }
+
+            previousGameState.wrappedValue = newState
+            currentGameState.wrappedValue = newState
 
             if pinnedByNotch.wrappedValue {
                 notchViewModel.cricketCompetition = cricketGame

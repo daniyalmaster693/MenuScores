@@ -59,7 +59,7 @@ struct CricketMenu: View {
                         Button {
                             currentTitle = displayCricketText(for: cricketGame)
                             currentGameID = cricketGame.id
-//                            currentGameState = fight.status.type.state
+                            currentGameState = cricketGame.fullStatus.type.state
 
                             pinnedByMenubar = true
                             pinnedByNotch = false
@@ -76,7 +76,7 @@ struct CricketMenu: View {
                         if enableNotch {
                             Button {
                                 currentGameID = cricketGame.id
-//                                currentGameState = fight.status.type.state
+                                currentGameState = cricketGame.fullStatus.type.state
 
                                 pinnedByNotch = true
                                 pinnedByMenubar = false
