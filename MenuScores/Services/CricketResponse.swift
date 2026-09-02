@@ -61,5 +61,5 @@ struct CricketCompetitors: Decodable {
     let location: String
     let color: String
     let score: String
-    let logo: String
+    let logo: String?
 }

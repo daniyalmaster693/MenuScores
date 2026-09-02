@@ -121,8 +121,8 @@ struct CricketMenu: View {
                         HStack {
                             AsyncImage(
                                 url: URL(
-                                    string: /* fight.competitors?.first?.athlete?.flag.href ?? */
-                                    "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
+                                    string: cricketGame.competitors[1].logo ??
+                                        "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
                                 )
                             ) { image in
                                 image.resizable().scaledToFit()
