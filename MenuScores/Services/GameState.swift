@@ -187,8 +187,12 @@ func displayCricketText(for cricketGame: CricketEvent) -> String {
 
     let awayAbbr = cricketGame.competitors[1].abbreviation
     let homeAbbr = cricketGame.competitors[0].abbreviation
-    let awayScore = cricketGame.competitors[1].score
-    let homeScore = cricketGame.competitors[0].score
+
+    let awayScore = cricketGame.competitors[1].score ?? "0"
+    let cricketAwayScore = awayScore.components(separatedBy: " ").first ?? awayScore
+
+    let homeScore = cricketGame.competitors[0].score ?? "0"
+    let cricketHomeScore = homeScore.components(separatedBy: " ").first ?? homeScore
 
     let periodText = cricketGame.fullStatus.period ?? 0
     let clockText = cricketGame.fullStatus.displayClock
@@ -199,11 +203,11 @@ func displayCricketText(for cricketGame: CricketEvent) -> String {
 
     case "in":
         return
-            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")    I\(periodText) \(clockText)"
+            "\(awayAbbr) \(cricketAwayScore) - \(homeAbbr) \(cricketHomeScore)    I\(periodText) \(clockText)"
 
     case "post":
         return
-            "\(awayAbbr) \(awayScore ?? "-") - \(homeAbbr) \(homeScore ?? "-")     (Final)"
+            "\(awayAbbr) \(cricketAwayScore) - \(homeAbbr) \(cricketHomeScore)     (Final)"
 
     default:
         return cricketGame.shortName

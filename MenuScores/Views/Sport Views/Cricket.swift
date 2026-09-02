@@ -81,15 +81,15 @@ struct CricketMenu: View {
                                 pinnedByNotch = true
                                 pinnedByMenubar = false
 
-//                                Task {
-//                                    await NotchViewModel.shared.pinGame(
-//                                        fightCompetition: fight,
-//                                        sport: "Fighting",
-//                                        league: league,
-//                                        gameID: fight.id,
-//                                        gameState: fight.status.type.state
-//                                    )
-//                                }
+                                Task {
+                                    await NotchViewModel.shared.pinGame(
+                                        cricketCompetition: cricketGame,
+                                        sport: "Cricket",
+                                        league: league,
+                                        gameID: cricketGame.id,
+                                        gameState: cricketGame.fullStatus.type.state
+                                    )
+                                }
                             } label: {
                                 HStack {
                                     Image(systemName: "macbook")

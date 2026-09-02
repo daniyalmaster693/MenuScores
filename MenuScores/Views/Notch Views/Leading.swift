@@ -209,5 +209,36 @@ struct CompactLeading: View {
             }
             .transition(.opacity)
         }
+
+        if let cricketGame = notchViewModel.cricketCompetition {
+            if sport == "Cricket" {
+                let awayScore = cricketGame.competitors[1].score ?? "0"
+                let cricketAwayScore = awayScore.components(separatedBy: " ").first ?? awayScore
+
+                HStack {
+                    AsyncImage(
+                        url: URL(string: cricketGame.competitors[1].logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40")
+                    ) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .interpolation(.high)
+                                .scaledToFit()
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        } else {
+                            Color.clear
+                                .transition(.opacity)
+                                .frame(width: 18, height: 18)
+                        }
+                    }
+
+                    Text("\(cricketAwayScore)")
+                        .contentTransition(.numericText(countsDown: false))
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .transition(.opacity)
+            }
+        }
     }
 }
