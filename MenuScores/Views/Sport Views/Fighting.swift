@@ -69,7 +69,7 @@ struct FightingMenu: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
-                                Text("Pin Race to Menubar")
+                                Text("Pin Fight to Menubar")
                             }
                         }
 
@@ -96,7 +96,7 @@ struct FightingMenu: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
-                                    Text("Pin Race to Notch")
+                                    Text("Pin Fight to Notch")
                                 }
                             }
                         }
