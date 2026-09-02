@@ -45,6 +45,42 @@ struct CricketMenu: View {
     }
 
     var body: some View {
-        Menu(title) {}
+        Menu(title) {
+            if viewModel.cricketGames.isEmpty {
+                Text("No Games Scheduled")
+            } else {
+                Text(formattedDate(from: viewModel.cricketGames.first?.date ?? "Invalid Date"))
+                    .font(.headline)
+
+                Divider().padding(.bottom)
+            }
+        }
+//        .onAppear {
+//            RefreshManager.shared.registerRefreshAction(
+//                for: league,
+//                currentGameID: $currentGameID,
+//                currentGameState: $currentGameState,
+//                currentTitle: $currentTitle
+//            ) {
+//                Task {
+//                    await RefreshManager.shared.performRefresh(
+//                        fightingViewModel: viewModel,
+//                        league: league,
+//                        fetchURL: fetchURL,
+//                        currentTitle: $currentTitle,
+//                        currentGameID: $currentGameID,
+//                        currentGameState: $currentGameState,
+//                        previousGameState: $previousGameState,
+//                        type: .fighting,
+//                        pinnedByMenubar: $pinnedByMenubar,
+//                        pinnedByNotch: $pinnedByNotch,
+//                        notchViewModel: NotchViewModel.shared
+//                    )
+//                }
+//            }
+//        }
+//        .onDisappear {
+//            RefreshManager.shared.unregisterRefreshAction(for: league)
+//        }
     }
 }

@@ -177,3 +177,7 @@ func displayTennisText(for competition: TennisCompetition) -> String {
 
     return "\(team1)  \(team1Scores) - \(team2Scores)  \(team2) \(statusSuffix)"
 }
+
+func displayCricketText(for competition: CricketEvent) -> String {
+    return "Placeholder Text"
+}
