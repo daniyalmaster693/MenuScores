@@ -25,8 +25,16 @@ struct CricketEvent: Decodable {
     let endDate: String?
     let name: String
     let shortName: String
+    let description: String
+    let location: String
+    let notes: [CricketNotes]?
     let links: [CricketLinks]?
     let fullStatus: CricketFullStatus
+    let competitors: [CricketCompetitors]
+}
+
+struct CricketNotes: Decodable {
+    let text: String
 }
 
 struct CricketLinks: Decodable {
@@ -43,4 +51,15 @@ struct CricketFullStatus: Decodable {
 
 struct CricketStatusType: Decodable {
     let state: String
+}
+
+struct CricketCompetitors: Decodable {
+    let winner: Bool
+    let displayName: String
+    let name: String
+    let abbreviation: String
+    let location: String
+    let color: String
+    let score: String
+    let logo: String
 }
