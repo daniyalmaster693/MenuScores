@@ -62,6 +62,8 @@ struct LeagueSettingsView: View {
 
     @AppStorage("enableUFC") private var enableUFC = false
 
+    @AppStorage("enableIPL") private var enableIPL = false
+
     @AppStorage("enableNLL") private var enableNLL = false
     @AppStorage("enablePLL") private var enablePLL = false
     @AppStorage("enableLNCAAM") private var enableLNCAAM = false
@@ -526,6 +528,16 @@ struct LeagueSettingsView: View {
                             Image(systemName: "figure.boxing")
                                 .foregroundColor(.primary)
                             Text("UFC")
+                        }
+                    }
+                }
+
+                Section("Cricket") {
+                    Toggle(isOn: $enableIPL) {
+                        HStack {
+                            Image(systemName: "cricket.ball.fill")
+                                .foregroundColor(.primary)
+                            Text("IPL")
                         }
                     }
                 }
