@@ -99,23 +99,24 @@ struct FightingMenu: View {
                                     Text("Pin Race to Notch")
                                 }
                             }
+                        }
 
-                            Divider()
+                        Divider()
 
-                            Button {
-                                let url = URL(string: "https://www.espn.com/mma/fightcenter")!
-                                NSWorkspace.shared.open(url)
+                        Button {
+                            let url = URL(string: "https://www.espn.com/mma/fightcenter")!
+                            NSWorkspace.shared.open(url)
 
-                            } label: {
-                                HStack {
-                                    Image(systemName: "info.circle")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 20, height: 20)
-                                    Text("View Fight Details")
-                                }
+                        } label: {
+                            HStack {
+                                Image(systemName: "info.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("View Fight Details")
                             }
                         }
+
                     } label: {
                         HStack {
                             AsyncImage(

@@ -53,6 +53,88 @@ struct CricketMenu: View {
                     .font(.headline)
 
                 Divider().padding(.bottom)
+
+                ForEach(viewModel.cricketGames, id: \.id) { cricketGame in
+                    Menu {
+                        Button {
+                            currentTitle = displayCricketText(for: cricketGame)
+                            currentGameID = cricketGame.id
+//                            currentGameState = fight.status.type.state
+
+                            pinnedByMenubar = true
+                            pinnedByNotch = false
+                        } label: {
+                            HStack {
+                                Image(systemName: "menubar.rectangle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("Pin Race to Menubar")
+                            }
+                        }
+
+                        if enableNotch {
+                            Button {
+                                currentGameID = cricketGame.id
+//                                currentGameState = fight.status.type.state
+
+                                pinnedByNotch = true
+                                pinnedByMenubar = false
+
+//                                Task {
+//                                    await NotchViewModel.shared.pinGame(
+//                                        fightCompetition: fight,
+//                                        sport: "Fighting",
+//                                        league: league,
+//                                        gameID: fight.id,
+//                                        gameState: fight.status.type.state
+//                                    )
+//                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "macbook")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("Pin Race to Notch")
+                                }
+                            }
+                        }
+
+                        Divider()
+
+                        Button {
+                            if let urlString = cricketGame.links?.first?.href, let url = URL(string: urlString) {
+                                NSWorkspace.shared.open(url)
+                            }
+
+                        } label: {
+                            HStack {
+                                Image(systemName: "info.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("View Game Details")
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            AsyncImage(
+                                url: URL(
+                                    string: /* fight.competitors?.first?.athlete?.flag.href ?? */
+                                    "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-cricket.png&h=80&w=80&scale=crop&cquality=40"
+                                )
+                            ) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayCricketText(for: cricketGame))
+                        }
+                    }
+                }
             }
         }
         .onAppear {
