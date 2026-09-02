@@ -51,7 +51,7 @@ extension NSScreen {
         if let notchFrame {
             return notchFrame
         } else {
-            let arbitraryNotchWidth: CGFloat = 230
+            let arbitraryNotchWidth: CGFloat = 215
             let arbitraryNotchHeight: CGFloat = menubarHeight
 
             let arbitraryNotchFrame = NSRect(
