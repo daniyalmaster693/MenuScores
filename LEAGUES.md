@@ -14,10 +14,13 @@ Don't see your favorite league? [Open a new issue](https://github.com/daniyalmas
 - WNBA
 - Men's College Basketball
 - Women's College Basketball
+- NBA Summer
+- NBA G League
 
 **Football**
 
 - NFL
+- AFL
 - College Football
 
 **Baseball**
@@ -42,6 +45,10 @@ Don't see your favorite league? [Open a new issue](https://github.com/daniyalmas
 - Ligue 1
 - Eredivisie
 - Primeira Liga
+- Turkish Super Lig
+- Brazilian Serie A
+- Brazilian Serie B
+- Saudi Pro League
 
 **Racing**
 
@@ -60,6 +67,10 @@ Don't see your favorite league? [Open a new issue](https://github.com/daniyalmas
 
 - ATP
 - WTA
+
+**Fighting**
+
+- Tennis
 
 **Lacrosse**
 
