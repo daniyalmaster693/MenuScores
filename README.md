@@ -67,8 +67,6 @@ xattr -dr com.apple.quarantine /Applications/MenuScores.app
 2. Hovering over a league will show you different games. From there you can select a game to pin to the **menu bar**, **notch**, or open it on ESPN.
 3. Configure enabled leagues, favorite teams, notifications, and other preferences from the **Settings** window.
 
-**Note:** The notch display works best on MacBooks with a notch. On Macs without a notch, the notch can still be expanded using the **Expand Notch** keyboard shortcut.
-
 ### Auto Pin Games
 
 **Configuration**
