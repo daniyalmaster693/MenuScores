@@ -12,7 +12,7 @@ struct BehaviorSettingsView: View {
     @AppStorage("enableNotch") private var enableNotch = true
     @AppStorage("notchScreenIndex") private var notchScreenIndex = 0
 
-    @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
+    @AppStorage("refreshInterval") private var selectedOption = "30 seconds"
 
     let refreshOptions = [
         "10 seconds", "15 seconds", "20 seconds", "30 seconds", "40 seconds",

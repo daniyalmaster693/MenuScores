@@ -18,7 +18,7 @@ class RefreshManager: NSObject, ObservableObject {
     private var refreshActions: [String: () -> Void] = [:]
 
     private var selectedOption: String {
-        UserDefaults.standard.string(forKey: "refreshInterval") ?? "15 seconds"
+        UserDefaults.standard.string(forKey: "refreshInterval") ?? "30 seconds"
     }
 
     private var currentInterval: TimeInterval {
@@ -391,6 +391,7 @@ class RefreshManager: NSObject, ObservableObject {
                     notchViewModel: notchViewModel
                 )
             }
+
         case .cricket:
             if let cricketViewModel {
                 await cricketRefresh(
