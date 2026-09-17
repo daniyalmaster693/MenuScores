@@ -24,7 +24,7 @@ class NotchViewModel: ObservableObject {
     @Published var racingCompetition: RaceEvent?
     @Published var tennisCompetition: TennisCompetition?
     @Published var fightCompetition: FightCompetitions?
-    @Published var cricketCompetition: CricketEvent?
+//    @Published var cricketCompetition: CricketEvent?
     
     @Published var sport: String = ""
     @Published var league: String = ""
@@ -43,7 +43,7 @@ class NotchViewModel: ObservableObject {
         racingCompetition: RaceEvent? = nil,
         fightCompetition: FightCompetitions? = nil,
         tennisCompetition: TennisCompetition? = nil,
-        cricketCompetition: CricketEvent? = nil,
+//        cricketCompetition: CricketEvent? = nil,
         sport: String,
         league: String,
         gameID: String = "",
@@ -54,7 +54,7 @@ class NotchViewModel: ObservableObject {
             self.racingCompetition = racingCompetition
             self.fightCompetition = fightCompetition
             self.tennisCompetition = tennisCompetition
-            self.cricketCompetition = cricketCompetition
+//            self.cricketCompetition = cricketCompetition
             
             self.sport = sport
             self.league = league
