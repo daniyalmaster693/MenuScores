@@ -3,13 +3,13 @@
   <channel>
     <title>MenuScores Updates</title>
     <item>
-      <title>Version 2.3.0</title>
-      <sparkle:releaseNotesLink>https://github.com/daniyalmaster693/MenuScores/releases/tag/2.3.0</sparkle:releaseNotesLink>
-      <pubDate>Sun, 06 September 2026 17:10:00 +0000</pubDate>
+      <title>Version 2.3.1</title>
+      <sparkle:releaseNotesLink>https://github.com/daniyalmaster693/MenuScores/releases/tag/2.3.1</sparkle:releaseNotesLink>
+      <pubDate>Wed, 16 September 2026 22:45:00 +0000</pubDate>
       <enclosure
-        url="https://github.com/daniyalmaster693/MenuScores/releases/download/2.3.0/MenuScores.dmg"
-        sparkle:version="10"
-        sparkle:shortVersionString="2.3.0"
+        url="https://github.com/daniyalmaster693/MenuScores/releases/download/2.3.1/MenuScores.dmg"
+        sparkle:version="11"
+        sparkle:shortVersionString="2.3.1"
         length="12345678"
         type="application/octet-stream"/>
     </item>
