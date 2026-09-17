@@ -11,35 +11,35 @@ enum Scoreboard {
     enum Urls {
         static let nhl: () -> URL = {
             URL(
-                string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard"
             )!
         }
 
         static let hncaam: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/scoreboard"
             )!
         }
 
         static let hncaaf: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/hockey/womens-college-hockey/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/hockey/womens-college-hockey/scoreboard"
             )!
         }
 
         static let nba: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
             )!
         }
 
         static let wnba: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard"
             )!
         }
 
@@ -60,7 +60,7 @@ enum Scoreboard {
         static let snba: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-summer/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-summer/scoreboard"
 
             )!
         }
@@ -68,49 +68,49 @@ enum Scoreboard {
         static let gnba: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-development/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-development/scoreboard"
             )!
         }
 
         static let nfl: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
             )!
         }
 
         static let afl: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/australian-football/afl/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/australian-football/afl/scoreboard"
             )!
         }
 
         static let fncaa: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
             )!
         }
 
         static let mlb: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard"
             )!
         }
 
         static let bncaa: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard"
             )!
         }
 
         static let sncaa: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/baseball/college-softball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/baseball/college-softball/scoreboard"
             )!
         }
 
@@ -152,14 +152,14 @@ enum Scoreboard {
         static let pga: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard"
             )!
         }
 
         static let lpga: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard"
             )!
         }
 
@@ -320,70 +320,70 @@ enum Scoreboard {
         static let nll: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/nll/scoreboard"
             )!
         }
 
         static let pll: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/pll/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/pll/scoreboard"
             )!
         }
 
         static let lncaam: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/mens-college-lacrosse/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/mens-college-lacrosse/scoreboard"
             )!
         }
 
         static let lncaaf: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/lacrosse/womens-college-lacrosse/scoreboard"
             )!
         }
 
         static let vncaam: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard"
             )!
         }
 
         static let vncaaf: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard"
             )!
         }
 
         static let omihc: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-mens-ice-hockey/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-mens-ice-hockey/scoreboard"
             )!
         }
 
         static let owihc: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-womens-ice-hockey/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/hockey/olympics-womens-ice-hockey/scoreboard"
             )!
         }
 
         static let omb: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
             )!
         }
 
         static let owb: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard?dates=\(getRangeStart())-\(getRangeEnd())"
+                "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-olympics-basketball/scoreboard"
             )!
         }
 
