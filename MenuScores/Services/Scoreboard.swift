@@ -89,7 +89,7 @@ enum Scoreboard {
         static let fncaa: () -> URL = {
             URL(
                 string:
-                "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
+                "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=80"
             )!
         }
 
