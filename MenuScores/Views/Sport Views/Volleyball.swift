@@ -46,80 +46,70 @@ struct VolleyballMenu: View {
 
     var body: some View {
         Menu(title) {
-            let groupedGames = Dictionary(grouping: viewModel.games) { game in
-                formattedDate(from: game.date)
-            }
+            Text(formattedDate(from: viewModel.games.first?.date ?? "Invalid Date"))
+                .font(.headline)
+            Divider().padding(.bottom)
 
-            let sortedDates = groupedGames.keys.sorted()
+            if !viewModel.games.isEmpty {
+                ForEach(Array(viewModel.games.enumerated()), id: \.1.id) { _, game in
+                    Menu {
+                        Button {
+                            currentTitle = displayText(for: game, league: league)
+                            currentGameID = game.id
+                            currentGameState = game.status.type.state
 
-            if sortedDates.isEmpty {
-                Text("No Games Scheduled")
-            } else {
-                ForEach(sortedDates, id: \.self) { date in
-                    if let gamesForDate = groupedGames[date] {
-                        Menu(date) {
-                            ForEach(gamesForDate, id: \.id) { game in
-                                Menu {
-                                    Button {
-                                        currentTitle = displayText(for: game, league: league)
-                                        currentGameID = game.id
-                                        currentGameState = game.status.type.state
+                            pinnedByMenubar = true
+                            pinnedByNotch = false
+                        } label: {
+                            HStack {
+                                Image(systemName: "menubar.rectangle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("Pin Game to Menubar")
+                            }
+                        }
 
-                                        pinnedByMenubar = true
-                                        pinnedByNotch = false
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "menubar.rectangle")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 20, height: 20)
-                                            Text("Pin Game to Menubar")
-                                        }
-                                    }
+                        if enableNotch {
+                            Button {
+                                currentGameID = game.id
+                                currentGameState = game.status.type.state
 
-                                    if enableNotch {
-                                        Button {
-                                            currentGameID = game.id
-                                            currentGameState = game.status.type.state
+                                pinnedByNotch = true
+                                pinnedByMenubar = false
 
-                                            pinnedByNotch = true
-                                            pinnedByMenubar = false
-
-                                            Task {
-                                                await NotchViewModel.shared.pinGame(
-                                                    game: game,
-                                                    sport: "Volleyball",
-                                                    league: league,
-                                                    gameID: game.id,
-                                                    gameState: game.status.type.state
-                                                )
-                                            }
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: "macbook")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 20, height: 20)
-                                                Text("Pin Game to Notch")
-                                            }
-                                        }
-                                    }
-
-                                } label: {
-                                    HStack {
-                                        AsyncImage(
-                                            url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin")
-                                        ) { image in
-                                            image.resizable().scaledToFit()
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
-                                        .frame(width: 40, height: 40)
-
-                                        Text(displayText(for: game, league: league))
-                                    }
+                                Task {
+                                    await NotchViewModel.shared.pinGame(
+                                        game: game,
+                                        sport: "Volleyball",
+                                        league: league,
+                                        gameID: game.id,
+                                        gameState: game.status.type.state
+                                    )
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "macbook")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("Pin Game to Notch")
                                 }
                             }
+                        }
+
+                    } label: {
+                        HStack {
+                            AsyncImage(
+                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin")
+                            ) { image in
+                                image.resizable().scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width: 40, height: 40)
+
+                            Text(displayText(for: game, league: league))
                         }
                     }
                 }
