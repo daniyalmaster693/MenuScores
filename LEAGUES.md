@@ -70,7 +70,7 @@ Don't see your favorite league? [Open a new issue](https://github.com/daniyalmas
 
 **Fighting**
 
-- Tennis
+- UFC
 
 **Lacrosse**
 
