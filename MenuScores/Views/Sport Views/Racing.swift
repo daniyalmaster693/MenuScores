@@ -124,13 +124,14 @@ struct RacingMenu: View {
                             }
 
                         } label: {
-                            HStack {
-                                Image(systemName: "info.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
+                            Label {
                                 Text("View Race Details")
+                            } icon: {
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 18))
+                                    .frame(width: 20, height: 20)
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                     } label: {

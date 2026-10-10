@@ -110,13 +110,14 @@ struct FightingMenu: View {
                             NSWorkspace.shared.open(url)
 
                         } label: {
-                            HStack {
-                                Image(systemName: "info.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
+                            Label {
                                 Text("View Fight Details")
+                            } icon: {
+                                Image(systemName: "info.circle")
+                                    .font(.system(size: 18))
+                                    .frame(width: 20, height: 20)
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                     } label: {
