@@ -158,7 +158,9 @@ struct TennisMenu: View {
                                                 .labelStyle(.titleAndIcon)
                                             }
                                         } label: {
-                                            HStack {
+                                            Label {
+                                                Text("\(tennisTitle)")
+                                            } icon: {
                                                 AsyncImage(
                                                     url: URL(string: competition.competitors?.first?.athlete?.flag?.href ?? competition.competitors?.first?.roster?.athletes?.first?.flag?.href ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
                                                 ) { image in
@@ -167,16 +169,17 @@ struct TennisMenu: View {
                                                     ProgressView()
                                                 }
                                                 .frame(width: 40, height: 40)
-
-                                                Text("\(tennisTitle)")
                                             }
+                                            .labelStyle(.titleAndIcon)
                                         }
                                     }
                                 }
                             }
                         }
                     } label: {
-                        HStack {
+                        Label {
+                            Text(game.shortName ?? "")
+                        } icon: {
                             AsyncImage(
                                 url: URL(string: "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png&h=80&w=80&scale=crop&cquality=40")
                             ) { image in
@@ -185,9 +188,8 @@ struct TennisMenu: View {
                                 ProgressView()
                             }
                             .frame(width: 40, height: 40)
-
-                            Text(game.shortName ?? "")
                         }
+                        .labelStyle(.titleAndIcon)
                     }
                 }
             }

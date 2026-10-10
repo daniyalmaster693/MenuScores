@@ -101,7 +101,9 @@ struct VolleyballMenu: View {
                         }
 
                     } label: {
-                        HStack {
+                        Label {
+                            Text(displayText(for: game, league: league))
+                        } icon: {
                             AsyncImage(
                                 url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-all-sports-college.png&w=64&h=64&scale=crop&cquality=40&location=origin")
                             ) { image in
@@ -110,9 +112,8 @@ struct VolleyballMenu: View {
                                 ProgressView()
                             }
                             .frame(width: 40, height: 40)
-
-                            Text(displayText(for: game, league: league))
                         }
+                        .labelStyle(.titleAndIcon)
                     }
                 }
             }

@@ -121,7 +121,9 @@ struct FightingMenu: View {
                         }
 
                     } label: {
-                        HStack {
+                        Label {
+                            Text(displayFightingText(for: fight))
+                        } icon: {
                             AsyncImage(
                                 url: URL(
                                     string: fight.competitors?.first?.athlete?.flag.href ??
@@ -133,9 +135,8 @@ struct FightingMenu: View {
                                 ProgressView()
                             }
                             .frame(width: 40, height: 40)
-
-                            Text(displayFightingText(for: fight))
                         }
+                        .labelStyle(.titleAndIcon)
                     }
                 }
             }

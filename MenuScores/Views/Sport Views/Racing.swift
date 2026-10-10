@@ -135,7 +135,9 @@ struct RacingMenu: View {
                         }
 
                     } label: {
-                        HStack {
+                        Label {
+                            Text(displayRacingText(for: race))
+                        } icon: {
                             AsyncImage(
                                 url: URL(
                                     string:
@@ -147,9 +149,8 @@ struct RacingMenu: View {
                                 ProgressView()
                             }
                             .frame(width: 40, height: 40)
-
-                            Text(displayRacingText(for: race))
                         }
+                        .labelStyle(.titleAndIcon)
                     }
                 }
             } else {

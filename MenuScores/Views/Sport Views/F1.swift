@@ -137,7 +137,9 @@ struct F1Menu: View {
                                                     .labelStyle(.titleAndIcon)
                                                 }
                                             } label: {
-                                                HStack {
+                                                Label {
+                                                    Text(displayF1Text(for: race))
+                                                } icon: {
                                                     AsyncImage(
                                                         url: URL(
                                                             string:
@@ -149,16 +151,17 @@ struct F1Menu: View {
                                                         ProgressView()
                                                     }
                                                     .frame(width: 40, height: 40)
-
-                                                    Text(displayF1Text(for: race))
                                                 }
+                                                .labelStyle(.titleAndIcon)
                                             }
                                         }
                                     }
                                 }
                             }
                         } label: {
-                            HStack {
+                            Label {
+                                Text(raceName)
+                            } icon: {
                                 AsyncImage(
                                     url: URL(
                                         string: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
@@ -169,9 +172,8 @@ struct F1Menu: View {
                                     ProgressView()
                                 }
                                 .frame(width: 20, height: 20)
-
-                                Text(raceName)
                             }
+                            .labelStyle(.titleAndIcon)
                         }
                     }
                 }

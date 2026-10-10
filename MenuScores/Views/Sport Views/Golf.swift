@@ -117,7 +117,9 @@ struct GolfMenu: View {
                             .labelStyle(.titleAndIcon)
                         }
                     } label: {
-                        HStack {
+                        Label {
+                            Text(displayText(for: game, league: league))
+                        } icon: {
                             AsyncImage(
                                 url: URL(string: leagueLogoURL(for: league))
                             ) { image in
@@ -126,8 +128,8 @@ struct GolfMenu: View {
                                 ProgressView()
                             }
                             .frame(width: 40, height: 40)
-                            Text(displayText(for: game, league: league))
                         }
+                        .labelStyle(.titleAndIcon)
                     }
                 }
             }

@@ -117,7 +117,9 @@ struct BaseballMenu: View {
                             .labelStyle(.titleAndIcon)
                         }
                     } label: {
-                        HStack {
+                        Label {
+                            Text(displayText(for: game, league: league))
+                        } icon: {
                             AsyncImage(
                                 url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-baseball.png&h=80&w=80&scale=crop&cquality=40")
                             ) { image in
@@ -126,9 +128,8 @@ struct BaseballMenu: View {
                                 ProgressView()
                             }
                             .frame(width: 40, height: 40)
-
-                            Text(displayText(for: game, league: league))
                         }
+                        .labelStyle(.titleAndIcon)
                     }
                 }
             }
