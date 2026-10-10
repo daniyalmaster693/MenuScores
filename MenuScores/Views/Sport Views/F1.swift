@@ -81,13 +81,14 @@ struct F1Menu: View {
                                                     pinnedByMenubar = true
                                                     pinnedByNotch = false
                                                 } label: {
-                                                    HStack {
-                                                        Image(systemName: "menubar.rectangle")
-                                                            .resizable()
-                                                            .scaledToFit()
-                                                            .frame(width: 20, height: 20)
+                                                    Label {
                                                         Text("Pin Race to Menubar")
+                                                    } icon: {
+                                                        Image(systemName: "menubar.rectangle")
+                                                            .font(.system(size: 18))
+                                                            .frame(width: 20, height: 20)
                                                     }
+                                                    .labelStyle(.titleAndIcon)
                                                 }
 
                                                 if enableNotch {
