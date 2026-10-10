@@ -89,13 +89,14 @@ struct RacingMenu: View {
                                     )
                                 }
                             } label: {
-                                HStack {
-                                    Image(systemName: "macbook")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 20, height: 20)
+                                Label {
                                     Text("Pin Race to Notch")
+                                } icon: {
+                                    Image(systemName: "macbook")
+                                        .font(.system(size: 18))
+                                        .frame(width: 20, height: 20)
                                 }
+                                .labelStyle(.titleAndIcon)
                             }
                         }
 
