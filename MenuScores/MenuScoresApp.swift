@@ -54,6 +54,7 @@ struct MenuScoresApp: App {
     @AppStorage("enableMLS") private var enableMLS = true
     @AppStorage("enableNWSL") private var enableNWSL = false
     @AppStorage("enableUEFA") private var enableUEFA = false
+    @AppStorage("enableUEFAN") private var enableUEFAN = false
     @AppStorage("enableEUEFA") private var enableEUEFA = false
     @AppStorage("enableWUEFA") private var enableWUEFA = false
     @AppStorage("enableMEX") private var enableMEX = false
@@ -146,6 +147,7 @@ struct MenuScoresApp: App {
     @StateObject private var lpgaVM = GamesListView()
 
     @StateObject private var uefaVM = GamesListView()
+    @StateObject private var uefanVM = GamesListView()
     @StateObject private var euefaVM = GamesListView()
     @StateObject private var wuefaVM = GamesListView()
     @StateObject private var mlsVM = GamesListView()
@@ -422,6 +424,19 @@ struct MenuScoresApp: App {
                     viewModel: uefaVM,
                     league: "UEFA",
                     fetchURL: Scoreboard.Urls.uefa,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
+
+            if enableUEFAN {
+                SoccerMenu(
+                    title: "UEFA Nations League",
+                    viewModel: uefanVM,
+                    league: "UEFAN",
+                    fetchURL: Scoreboard.Urls.uefan,
                     currentTitle: $currentTitle,
                     currentGameID: $currentGameID,
                     currentGameState: $currentGameState,
@@ -1027,6 +1042,7 @@ struct MenuScoresApp: App {
                         pga: pgaVM,
                         lpga: lpgaVM,
                         uefa: uefaVM,
+                        uefan: uefanVM,
                         euefa: euefaVM,
                         wuefa: wuefaVM,
                         mls: mlsVM,

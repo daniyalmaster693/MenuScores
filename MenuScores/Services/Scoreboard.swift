@@ -170,6 +170,13 @@ enum Scoreboard {
             )!
         }
 
+        static let uefan: () -> URL = {
+            URL(
+                string:
+                "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.nations/scoreboard"
+            )!
+        }
+
         static let euefa: () -> URL = {
             URL(
                 string:

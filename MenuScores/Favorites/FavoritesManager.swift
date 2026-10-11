@@ -269,7 +269,7 @@ class FavoritesManager: ObservableObject {
         mlb: GamesListView, bncaa: GamesListView, sncaa: GamesListView,
         f1: RacingListView, nc: RacingListView, ncs: RacingListView, nct: RacingListView, irl: RacingListView,
         pga: GamesListView, lpga: GamesListView,
-        uefa: GamesListView, euefa: GamesListView, wuefa: GamesListView,
+        uefa: GamesListView, uefan: GamesListView, euefa: GamesListView, wuefa: GamesListView,
         mls: GamesListView, nwsl: GamesListView, mex: GamesListView, fra: GamesListView,
         ned: GamesListView, por: GamesListView, epl: GamesListView, wepl: GamesListView,
         esp: GamesListView, ger: GamesListView, ita: GamesListView, tur: GamesListView, bra1: GamesListView, bra2: GamesListView, ksa: GamesListView,
