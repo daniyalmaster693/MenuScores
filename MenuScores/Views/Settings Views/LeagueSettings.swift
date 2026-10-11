@@ -40,6 +40,7 @@ struct LeagueSettingsView: View {
 
     @AppStorage("enableMLS") private var enableMLS = true
     @AppStorage("enableUEFA") private var enableUEFA = false
+    @AppStorage("enableUEFAN") private var enableUEFAN = false
     @AppStorage("enableEUEFA") private var enableEUEFA = false
     @AppStorage("enableWUEFA") private var enableWUEFA = false
     @AppStorage("enableMEX") private var enableMEX = false
@@ -145,6 +146,7 @@ struct LeagueSettingsView: View {
                                 enablePGA = false
                                 enableLPGA = false
                                 enableUEFA = false
+                                enableUEFAN = false
                                 enableEUEFA = false
                                 enableWUEFA = false
                                 enableMLS = false
@@ -312,6 +314,14 @@ struct LeagueSettingsView: View {
                             Image(systemName: "soccerball")
                                 .foregroundColor(.primary)
                             Text("Champions League")
+                        }
+                    }
+
+                    Toggle(isOn: $enableUEFAN) {
+                        HStack {
+                            Image(systemName: "soccerball")
+                                .foregroundColor(.primary)
+                            Text("UEFA Nations League")
                         }
                     }
 
