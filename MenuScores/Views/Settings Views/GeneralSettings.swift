@@ -25,7 +25,7 @@ struct GeneralSettingsView: View {
     var body: some View {
         VStack(spacing: 4) {
             Form {
-                Section {
+                Section("General") {
                     HStack {
                         Image(systemName: "person.crop.circle")
                             .foregroundColor(.primary)
