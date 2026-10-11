@@ -11,6 +11,8 @@ import SwiftUI
 
 struct GeneralSettingsView: View {
     @StateObject private var updateManager = UpdateManager()
+    @AppStorage("autoUpdate") private var autoUpdate = true
+
     @AppStorage("showInDock") private var showInDock = false
 
     func updateActivationPolicy() {
@@ -52,13 +54,30 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                Section {
+                Section("Updates") {
+                    Toggle(isOn: self.$autoUpdate) {
+                        HStack {
+                            Image(systemName: "clock.arrow.2.circlepath")
+                                .foregroundColor(.primary)
+                            Text("Automatically Check for Updates")
+                        }
+                    }
+                    .onChange(of: self.autoUpdate) { isEnabled in
+                        if isEnabled {
+                            self.updateManager.startTimer {
+                                self.updateManager.getUpdateData()
+                            }
+                        } else {
+                            self.updateManager.stopTimer()
+                        }
+                    }
+
                     HStack {
                         Label("Updates", systemImage: "arrow.2.circlepath")
                             .foregroundColor(.primary)
                         Spacer()
                         Button("Check for Updates") {
-                            updateManager.getUpdateData(manualCheck: true)
+                            self.updateManager.getUpdateData(manualCheck: true)
                         }
                         .buttonStyle(.bordered)
                     }

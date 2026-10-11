@@ -7,8 +7,11 @@
 
 import AppKit
 import Foundation
+import SwiftUI
 
 class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
+    @AppStorage("autoUpdate") private var autoUpdate = true
+
     @Published var updateAvailable: Bool = false
     @Published var latestVersion: String = ""
     @Published var latestRelease: String = ""
@@ -117,6 +120,8 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
     // Auto Update System
 
     func startTimer(action: @escaping () -> Void) {
+        guard autoUpdate else { return }
+
         timer = Timer.scheduledTimer(withTimeInterval: 28800, repeats: true) { _ in
             action()
         }
