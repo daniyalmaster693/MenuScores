@@ -303,6 +303,7 @@ class FavoritesManager: ObservableObject {
         leagueVMs["PGA"] = pga
         leagueVMs["LPGA"] = lpga
         leagueVMs["UEFA"] = uefa
+        leagueVMs["UEFAN"] = uefan
         leagueVMs["EUEFA"] = euefa
         leagueVMs["WUEFA"] = wuefa
         leagueVMs["MLS"] = mls

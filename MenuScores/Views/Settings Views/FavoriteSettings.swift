@@ -46,6 +46,7 @@ struct FavoritesSettingsView: View {
     @AppStorage("enableMLS") private var enableMLS = true
     @AppStorage("enableNWSL") private var enableNWSL = false
     @AppStorage("enableUEFA") private var enableUEFA = false
+    @AppStorage("enableUEFAN") private var enableUEFAN = false
     @AppStorage("enableEUEFA") private var enableEUEFA = false
     @AppStorage("enableWUEFA") private var enableWUEFA = false
     @AppStorage("enableMEX") private var enableMEX = false

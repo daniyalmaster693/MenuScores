@@ -37,6 +37,7 @@ enum FavoriteTeams {
         "MLS": LeagueInfo(sport: "soccer", league: "usa.1", displayName: "MLS"),
         "NWSL": LeagueInfo(sport: "soccer", league: "usa.nwsl", displayName: "NWSL"),
         "UEFA": LeagueInfo(sport: "soccer", league: "uefa.champions", displayName: "Champions League"),
+        "UEFAN": LeagueInfo(sport: "soccer", league: "uefa.nations", displayName: "UEFA Nations League"),
         "EUEFA": LeagueInfo(sport: "soccer", league: "uefa.europa", displayName: "Europa League"),
         "WUEFA": LeagueInfo(sport: "soccer", league: "uefa.wchampions", displayName: "Women's Champions League"),
         "EPL": LeagueInfo(sport: "soccer", league: "eng.1", displayName: "Premier League"),
@@ -160,6 +161,7 @@ enum FavoriteTeams {
             case "MLS": return defaults.bool(forKey: "enableMLS")
             case "NWSL": return defaults.bool(forKey: "enableNWSL")
             case "UEFA": return defaults.bool(forKey: "enableUEFA")
+            case "UEFAN": return defaults.bool(forKey: "enableUEFAN")
             case "EUEFA": return defaults.bool(forKey: "enableEUEFA")
             case "WUEFA": return defaults.bool(forKey: "enableWUEFA")
             case "EPL": return defaults.bool(forKey: "enableEPL")
