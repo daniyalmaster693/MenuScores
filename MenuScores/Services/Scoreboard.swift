@@ -11,7 +11,7 @@ enum Scoreboard {
     enum Urls {
         static let nhl: () -> URL = {
             URL(
-                string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard"
+                string: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?week=\(getNHLWeek())"
             )!
         }
 

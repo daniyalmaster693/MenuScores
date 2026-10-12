@@ -46,89 +46,99 @@ struct HockeyMenu: View {
 
     var body: some View {
         Menu(title) {
-            Text(formattedDate(from: viewModel.games.first?.date ?? "Invalid Date"))
-                .font(.headline)
-            Divider().padding(.bottom)
+            let groupedGames = Dictionary(grouping: viewModel.games) { game in
+                formattedDate(from: game.date)
+            }
 
-            if !viewModel.games.isEmpty {
-                ForEach(Array(viewModel.games.enumerated()), id: \.1.id) { _, game in
-                    Menu {
-                        Button {
-                            currentTitle = displayText(for: game, league: league)
-                            currentGameID = game.id
-                            currentGameState = game.status.type.state
+            let sortedDates = groupedGames.keys.sorted()
 
-                            pinnedByMenubar = true
-                            pinnedByNotch = false
-                        } label: {
-                            Label {
-                                Text("Pin Game to Menubar")
-                            } icon: {
-                                Image(systemName: "menubar.rectangle")
-                                    .font(.system(size: 18))
-                                    .frame(width: 20, height: 20)
-                            }
-                            .labelStyle(.titleAndIcon)
-                        }
+            if sortedDates.isEmpty {
+                Text("No Games Scheduled")
+            } else {
+                ForEach(sortedDates, id: \.self) { date in
+                    if let gamesForDate = groupedGames[date] {
+                        Menu(date) {
+                            ForEach(gamesForDate, id: \.id) { game in
+                                Menu {
+                                    Button {
+                                        currentTitle = displayText(for: game, league: league)
+                                        currentGameID = game.id
+                                        currentGameState = game.status.type.state
 
-                        if enableNotch {
-                            Button {
-                                currentGameID = game.id
-                                currentGameState = game.status.type.state
+                                        pinnedByMenubar = true
+                                        pinnedByNotch = false
+                                    } label: {
+                                        Label {
+                                            Text("Pin Game to Menubar")
+                                        } icon: {
+                                            Image(systemName: "menubar.rectangle")
+                                                .font(.system(size: 18))
+                                                .frame(width: 20, height: 20)
+                                        }
+                                        .labelStyle(.titleAndIcon)
+                                    }
 
-                                pinnedByNotch = true
-                                pinnedByMenubar = false
+                                    if enableNotch {
+                                        Button {
+                                            currentGameID = game.id
+                                            currentGameState = game.status.type.state
 
-                                Task {
-                                    await NotchViewModel.shared.pinGame(
-                                        game: game,
-                                        sport: "Hockey",
-                                        league: league,
-                                        gameID: game.id,
-                                        gameState: game.status.type.state
-                                    )
+                                            pinnedByNotch = true
+                                            pinnedByMenubar = false
+
+                                            Task {
+                                                await NotchViewModel.shared.pinGame(
+                                                    game: game,
+                                                    sport: "Hockey",
+                                                    league: league,
+                                                    gameID: game.id,
+                                                    gameState: game.status.type.state
+                                                )
+                                            }
+                                        } label: {
+                                            Label {
+                                                Text("Pin Game to Notch")
+                                            } icon: {
+                                                Image(systemName: "macbook")
+                                                    .font(.system(size: 18))
+                                                    .frame(width: 20, height: 20)
+                                            }
+                                            .labelStyle(.titleAndIcon)
+                                        }
+                                    }
+
+                                    Button {
+                                        if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
+                                            NSWorkspace.shared.open(url)
+                                        }
+                                    } label: {
+                                        Label {
+                                            Text("View Game Details")
+                                        } icon: {
+                                            Image(systemName: "info.circle")
+                                                .font(.system(size: 18))
+                                                .frame(width: 20, height: 20)
+                                        }
+                                        .labelStyle(.titleAndIcon)
+                                    }
+
+                                } label: {
+                                    Label {
+                                        Text(displayText(for: game, league: league))
+                                    } icon: {
+                                        AsyncImage(
+                                            url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-hockey.png&h=80&w=80&scale=crop&cquality=40")
+                                        ) { image in
+                                            image.resizable().scaledToFit()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                        .frame(width: 40, height: 40)
+                                    }
+                                    .labelStyle(.titleAndIcon)
                                 }
-                            } label: {
-                                Label {
-                                    Text("Pin Game to Notch")
-                                } icon: {
-                                    Image(systemName: "macbook")
-                                        .font(.system(size: 18))
-                                        .frame(width: 20, height: 20)
-                                }
-                                .labelStyle(.titleAndIcon)
                             }
                         }
-
-                        Button {
-                            if let urlString = game.links?.first?.href, let url = URL(string: urlString) {
-                                NSWorkspace.shared.open(url)
-                            }
-                        } label: {
-                            Label {
-                                Text("View Game Details")
-                            } icon: {
-                                Image(systemName: "info.circle")
-                                    .font(.system(size: 18))
-                                    .frame(width: 20, height: 20)
-                            }
-                            .labelStyle(.titleAndIcon)
-                        }
-
-                    } label: {
-                        Label {
-                            Text(displayText(for: game, league: league))
-                        } icon: {
-                            AsyncImage(
-                                url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-hockey.png&h=80&w=80&scale=crop&cquality=40")
-                            ) { image in
-                                image.resizable().scaledToFit()
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(width: 40, height: 40)
-                        }
-                        .labelStyle(.titleAndIcon)
                     }
                 }
             }
