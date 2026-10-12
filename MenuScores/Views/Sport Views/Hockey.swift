@@ -126,8 +126,11 @@ struct HockeyMenu: View {
                                     Label {
                                         Text(displayText(for: game, league: league))
                                     } icon: {
+                                        let team = game.competitions[0].competitors?[1].team
+                                        let logoURL = darkLogoURL(from: team?.logo, teamID: team?.id, league: league) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-hockey.png&h=80&w=80&scale=crop&cquality=40"
+
                                         AsyncImage(
-                                            url: URL(string: game.competitions[0].competitors?[1].team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-hockey.png&h=80&w=80&scale=crop&cquality=40")
+                                            url: URL(string: logoURL)
                                         ) { image in
                                             image.resizable().scaledToFit()
                                         } placeholder: {
