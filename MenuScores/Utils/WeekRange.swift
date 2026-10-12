@@ -16,7 +16,7 @@ func getNHLWeek() -> String {
     var startDateComponents = DateComponents()
     startDateComponents.year = 2026
     startDateComponents.month = 9
-    startDateComponents.day = 28
+    startDateComponents.day = 15
 
     let today = Date()
 
@@ -30,6 +30,6 @@ func getNHLWeek() -> String {
         return "1"
     }
 
-    let weekNumber = weeksElapsed + 1
+    let weekNumber = weeksElapsed
     return String(weekNumber)
 }
