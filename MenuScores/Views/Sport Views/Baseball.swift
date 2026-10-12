@@ -117,12 +117,20 @@ struct BaseballMenu: View {
                             .labelStyle(.titleAndIcon)
                         }
                     } label: {
-                        Label {
+                        let team = game.competitions[0].competitors?[1].team
+                        let logoURL: String
+
+                        let isDarkMode = NSApp.effectiveAppearance.name.rawValue.contains("Dark")
+
+                        if isDarkMode {
+                            logoURL = darkLogoURL(from: team?.logo, teamID: team?.id, league: league) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-baseball.png&h=80&w=80&scale=crop&cquality=40"
+                        } else {
+                            logoURL = team?.logo ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-baseball.png&h=80&w=80&scale=crop&cquality=40"
+                        }
+
+                        return Label {
                             Text(displayText(for: game, league: league))
                         } icon: {
-                            let team = game.competitions[0].competitors?[1].team
-                            let logoURL = darkLogoURL(from: team?.logo, teamID: team?.id, league: league) ?? "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-baseball.png&h=80&w=80&scale=crop&cquality=40"
-
                             AsyncImage(
                                 url: URL(string: logoURL)
                             ) { image in
