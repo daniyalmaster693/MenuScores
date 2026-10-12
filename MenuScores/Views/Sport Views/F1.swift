@@ -164,7 +164,7 @@ struct F1Menu: View {
                             } icon: {
                                 AsyncImage(
                                     url: URL(
-                                        string: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/f1.png&w=100&h=100&transparent=true"
+                                        string: "https://a.espncdn.com/combiner/i?img=/i/teamlogos/countries/500/\(f1CountryCode(for: raceName)).png&scale=crop&cquality=40&location=origin&w=80&h=80"
                                     )
                                 ) { image in
                                     image.resizable().scaledToFit()
