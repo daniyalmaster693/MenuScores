@@ -5,7 +5,6 @@
 //  Created by Kai Azim on 2023-08-24.
 //
 
-import SkyLightWindow
 import SwiftUI
 
 struct NotchView<Expanded, CompactLeading, CompactTrailing>: View where Expanded: View, CompactLeading: View, CompactTrailing: View {
@@ -82,7 +81,6 @@ struct NotchView<Expanded, CompactLeading, CompactTrailing>: View where Expanded
             compactContent()
                 .fixedSize()
                 .offset(x: dynamicNotch.state == .compact ? 0 : compactXOffset)
-                .moveToSky()
                 .frame(
                     width: dynamicNotch.state == .compact ? nil : dynamicNotch.notchSize.width,
                     height: (dynamicNotch.state == .compact && dynamicNotch.isHovering) ? dynamicNotch.menubarHeight : dynamicNotch.notchSize.height
@@ -90,12 +88,11 @@ struct NotchView<Expanded, CompactLeading, CompactTrailing>: View where Expanded
 
             expandedContent()
                 .fixedSize()
-                .offset(x: dynamicNotch.state == .compact ? -compactXOffset : 0)
-                .moveToSky()
                 .frame(
                     maxWidth: dynamicNotch.state == .expanded ? nil : 0,
                     maxHeight: dynamicNotch.state == .expanded ? nil : 0
                 )
+                .offset(x: dynamicNotch.state == .compact ? -compactXOffset : 0)
         }
         .padding(.horizontal, topCornerRadius)
         .fixedSize()
@@ -112,7 +109,6 @@ struct NotchView<Expanded, CompactLeading, CompactTrailing>: View where Expanded
                     .safeAreaInset(edge: .top, spacing: 0) { Color.clear.frame(height: 4) }
                     .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 8) }
                     .onGeometryChange(for: CGFloat.self, of: \.size.width) { compactLeadingWidth = $0 }
-                    .moveToSky()
                     .transition(.blur(intensity: 10).combined(with: .scale(x: 0, anchor: .trailing)).combined(with: .opacity))
             }
 
@@ -126,7 +122,6 @@ struct NotchView<Expanded, CompactLeading, CompactTrailing>: View where Expanded
                     .safeAreaInset(edge: .top, spacing: 0) { Color.clear.frame(height: 4) }
                     .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 8) }
                     .onGeometryChange(for: CGFloat.self, of: \.size.width) { compactTrailingWidth = $0 }
-                    .moveToSky()
                     .transition(.blur(intensity: 10).combined(with: .scale(x: 0, anchor: .leading)).combined(with: .opacity))
             }
         }
@@ -147,7 +142,6 @@ struct NotchView<Expanded, CompactLeading, CompactTrailing>: View where Expanded
         HStack(spacing: 0) {
             if dynamicNotch.state == .expanded {
                 dynamicNotch.expandedContent
-                    .moveToSky()
                     .transition(.blur(intensity: 10).combined(with: .scale(y: 0.6, anchor: .top)).combined(with: .opacity))
             }
         }
