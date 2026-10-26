@@ -59,8 +59,6 @@ struct FavoritesSettingsView: View {
     @AppStorage("enableGER") private var enableGER = false
     @AppStorage("enableITA") private var enableITA = false
 
-    @AppStorage("enableIPL") private var enableIPL = false
-
     @AppStorage("enableNLL") private var enableNLL = false
     @AppStorage("enablePLL") private var enablePLL = false
     @AppStorage("enableLNCAAM") private var enableLNCAAM = false

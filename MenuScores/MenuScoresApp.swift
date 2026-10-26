@@ -1060,7 +1060,6 @@ struct MenuScoresApp: App {
                         bra1: bra1VM,
                         bra2: bra2VM,
                         ksa: ksaVM,
-                        ipl: iplVM,
                         nll: nllVM,
                         pll: pllVM,
                         lncaam: lncaamVM,
