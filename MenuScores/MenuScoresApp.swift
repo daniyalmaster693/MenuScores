@@ -171,7 +171,7 @@ struct MenuScoresApp: App {
 
     @StateObject private var ufcVM = FightingListView()
 
-//    @StateObject private var iplVM = CricketListView()
+    @StateObject private var iplVM = CricketListView()
 
     @StateObject private var nllVM = GamesListView()
     @StateObject private var pllVM = GamesListView()
@@ -769,18 +769,18 @@ struct MenuScoresApp: App {
                 )
             }
 
-//            if enableIPL {
-//                CricketMenu(
-//                    title: "IPL",
-//                    viewModel: iplVM,
-//                    league: "IPL",
-//                    fetchURL: Scoreboard.Urls.ipl,
-//                    currentTitle: $currentTitle,
-//                    currentGameID: $currentGameID,
-//                    currentGameState: $currentGameState,
-//                    previousGameState: $previousGameState
-//                )
-//            }
+            if enableIPL {
+                CricketMenu(
+                    title: "IPL",
+                    viewModel: iplVM,
+                    league: "IPL",
+                    fetchURL: Scoreboard.Urls.ipl,
+                    currentTitle: $currentTitle,
+                    currentGameID: $currentGameID,
+                    currentGameState: $currentGameState,
+                    previousGameState: $previousGameState
+                )
+            }
 
             if enableNLL {
                 LacrosseMenu(
@@ -1060,6 +1060,7 @@ struct MenuScoresApp: App {
                         bra1: bra1VM,
                         bra2: bra2VM,
                         ksa: ksaVM,
+                        ipl: iplVM,
                         nll: nllVM,
                         pll: pllVM,
                         lncaam: lncaamVM,
