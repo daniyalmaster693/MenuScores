@@ -173,21 +173,6 @@ struct FavoritesSettingsView: View {
                         .disabled(!self.autoPinFavorites)
                         .frame(width: 150)
                     }
-
-                    HStack {
-                        Label("Select League", systemImage: "sportscourt")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Picker("", selection: $selectedLeague) {
-                            ForEach(FavoriteTeams.supportedLeagueKeys, id: \.self) { league in
-                                Text(FavoriteTeams.displayName(for: league))
-                                    .tag(league)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .frame(width: 190)
-                        .disabled(!autoPinFavorites)
-                    }
                 }
 
                 Section {
@@ -308,6 +293,21 @@ struct FavoritesSettingsView: View {
                 }
 
                 Section {
+                    HStack {
+                        Label("Select League", systemImage: "sportscourt")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: $selectedLeague) {
+                            ForEach(FavoriteTeams.supportedLeagueKeys, id: \.self) { league in
+                                Text(FavoriteTeams.displayName(for: league))
+                                    .tag(league)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(width: 190)
+                        .disabled(!autoPinFavorites)
+                    }
+
                     TextField("Search teams...", text: $searchText)
                         .textFieldStyle(.roundedBorder)
 
